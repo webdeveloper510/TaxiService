@@ -38,13 +38,13 @@ const  Header=()=> {
       >
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/get-a-car">Get a Car</a></li>
-          <li><a href="/booking">Booking</a></li>
-          <li><a href="/contact">Contact Us</a></li>
+          <li><Link to="/about">About Us</Link></li>
+          <li><Link to="/get-a-car">Get a Car</Link></li>
+          <li><Link to="/booking">Booking</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
           <div class="mobile-login-btn">
-          <li class="user-login"><a href="/login">Login</a></li>
-          <li class="sign-list"><a href="/contact">Sign Up</a></li>
+          <li class="user-login"><Link to="/login">Login</Link></li>
+          <li class="sign-list"><Link to="/signup">Sign Up</Link></li>
           </div>
         </ul>
       </div>
@@ -53,7 +53,7 @@ const  Header=()=> {
 
         <div class="header-buttons">
         <button class="login-btn"><Link to="/login">Login</Link></button>
-        <button class="sign-up-btn">Sign Up</button>
+        <button class="sign-up-btn"><Link to="/signup">Sign Up</Link></button>
         </div>
         </div>
       </header>

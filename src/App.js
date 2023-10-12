@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
-import Routing from '../src/routes/route';
+import './assets/css/App.css';
+import Routerpage from '../src/routes/router';
 function App() {
   return (
     <div className="App">
-      <Routing />
+      <Routerpage/>
     </div>
   );
 }

@@ -1,3 +1,56 @@
+@font-face {
+  font-family: 'larken_demoregular';
+  src: url('../fonts/larkendemo-regular-webfont.woff2') format('woff2'),
+       url('../fonts/larkendemo-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'larken_demobold';
+  src: url('../fonts/larkendemo-bold-webfont.woff2') format('woff2'),
+       url('../fonts/larkendemo-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'larken_demoextrabold';
+  src: url('../fonts/larkendemo-extrabold-webfont.woff2') format('woff2'),
+       url('../fonts/larkendemo-extrabold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'larken_demolight';
+  src: url('../fonts/larkendemo-light-webfont.woff2') format('woff2'),
+       url('../fonts/larkendemo-light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'larken_demomedium';
+  src: url('../fonts/larkendemo-medium-webfont.woff2') format('woff2'),
+       url('../fonts/larkendemo-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+:root {
+  --body-font: 'larken_demoregular', sans-serif;
+  --heading-font: 'larken_demobold';
+}
+
+p , a , body{
+   font-family: var(--body-font);
+}
 .main-page {
   text-align: center;
 }
@@ -194,6 +247,7 @@ button.sign-up-btn {
   float: left;
   width: 100%;
   text-transform: uppercase;
+  font-family: var(--heading-font);
 }
 .banner-text h4 {
   text-transform: uppercase;
@@ -201,7 +255,7 @@ button.sign-up-btn {
   float: left;
   width: 100%;
   margin: 0;
-
+  font-family: var(--heading-font);
 }
 .banner-text h4 span {
   color: #FDC101;

@@ -6,7 +6,7 @@ import aboutImg from '../../assets/images/about-car.png'
 const Home=()=> {
    
       return (
-        
+        <div className="main-page">
         <div class="container-outer">
             <section className="hero-section">
         <div className="hero-banner">
@@ -43,6 +43,7 @@ const Home=()=> {
         </div>
         </div><br/><br/>
         </section>
+        </div>
         </div>
       );
     };
