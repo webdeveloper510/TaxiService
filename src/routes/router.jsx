@@ -1,9 +1,11 @@
 import React from 'react';
 import { Router, Route, Routes, useLocation } from 'react-router-dom';
 import Login from "../components/Login/Login";
-import MainPage from '../components/HomePage/Home';
+//import MainPage from '../components/HomePage/Home';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/footer';
+import Home from '../components/HomePage/Home';
+
 
   const Routerpage = () => {
     const location = useLocation();
@@ -15,7 +17,7 @@ import Footer from '../components/Footer/footer';
       <>
         {!isLoginPage && <Header />}
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
         </Routes>
         {!isLoginPage && <Footer />}

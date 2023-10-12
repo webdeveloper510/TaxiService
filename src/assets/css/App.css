@@ -48,11 +48,14 @@
   --heading-font: 'larken_demobold';
 }
 
-p , a , body{
+p , a , body, label, input, button, h3, h4, h2{
    font-family: var(--body-font);
 }
 .main-page {
   text-align: center;
+}
+button {
+  font-family: 'larken_demoregular' !important;
 }
 
 /* .App-logo {
@@ -348,6 +351,10 @@ footer {
   text-align: left;
   float: left;
 }
+.about-footer p {
+  text-transform: uppercase;
+  font-size: 15px;
+}
 .news-footer h4 {
   text-transform: uppercase;
   font-weight: 400;
@@ -399,12 +406,21 @@ button.custom-login.btn.btn-primary {
   background: #FDC101;
   border: none;
   text-transform: uppercase;
-  width: 35%;
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+  padding: 16px;
+  border-radius: 25px;
+  color: #000;
+  font-size: 22px;
+  font-family: 'larken_demoregular';
 }
 .custom-login-form label {
-  text-transform: uppercase;
+  text-transform: capitalize;
   text-align: left !important;
   width: 100%;
+  font-weight: 600;
 }
 .login-left-content {
   text-align: center;
@@ -421,8 +437,8 @@ p.lead {
   color: #FDC101;
   float: left;
   width: 100%;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   font-size: 30px;
   font-weight: 500;
 }
@@ -437,9 +453,32 @@ p.lead {
 img.login-imgg {
   width: 50%;
 }
+img.img-fluid-login {
+  width: 73%;
+  float: right;
+}
+.svg-outer {
+  cursor: pointer;
+  margin-top: 7px;
+  margin-left: 13px;
+}
+label.form-check-label {
+  text-transform: capitalize;
+  font-size: 18px;
+  font-weight: 300;
+}
+a.forgot-pwd {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+}
 @media screen and (max-width: 1150px) {
   .banner-text {
     bottom: 5rem;
+  }
+  img.img-fluid-login {
+    width: 100%;
+    float: left;
   }
 }
 @media screen and (max-width: 992px) {
@@ -522,7 +561,17 @@ img.login-imgg {
   float: left;
   width: 100%;
 }
+p.lead {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 25px;
 
+}
+.login-left-content {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+}
 }
 @media screen and (max-width: 768px) {
   .nav-bar {
@@ -580,6 +629,25 @@ img.login-imgg {
   display: block;
   padding-left: 25px;
   width: 90%;
+}
+.login-left-content {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+p.lead {
+  font-size: 25px;
+  text-align: center;
+  margin-right: 0 !important;
+}
+img.login-imgg {
+  width: 65%;
+}
+img.img-fluid-login {
+  width: 100%;
+  float: left;
+  margin-top: 21px;
 }
 }
 @media screen and (max-width: 440px) {
