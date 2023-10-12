@@ -2,17 +2,20 @@
   text-align: center;
 }
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
+} */
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
+img.App-logo {
+  width: 129px;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +38,450 @@
   to {
     transform: rotate(360deg);
   }
+}
+/*******navbar*css********/
+header {
+  position: relative;
+  z-index: 1;
+}
+.container-header {
+  background-color: #ffffff80;
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  padding-bottom: 0;
+  padding-top: 6px;
+  float: left;
+  width: 100%;
+}
+.logo {
+  font-size: 1.5rem;
+}
+
+.navigation {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  padding: 0.5rem 0rem;
+  color: #fff;
+}
+.navigation-menu ul li a {
+  color: #fff;
+  text-transform: uppercase;
+}
+.navigation-menu {
+  margin-left: auto;
+}
+
+.navigation-menu ul {
+  display: flex;
+  padding: 0;
+}
+
+.navigation-menu li {
+  list-style-type: none;
+  margin: 0 1rem;
+}
+
+.navigation-menu li a {
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+.mobile-login-btn {
+  display: none;
+}
+.hamburger {
+  border: 0;
+  height: 40px;
+  width: 40px;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: #fdbd1b;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  display: none;
+}
+
+.hamburger:hover {
+  background-color: #FDC101;
+} 
+li.user-login a {
+  background: #FDC101;
+  border-radius: 25px;
+  border: 1px solid #FDC101;
+  padding: 10px 20px 10px 20px !important;
+  font-size: 16px;
+  font-weight: 400;
+  width: 96px !important;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 auto;
+}
+li.sign-list a {
+  background: #fff;
+  border-radius: 25px;
+  border: 1px solid #FDC101;
+  padding: 10px 20px 10px 20px !important;
+  font-size: 16px;
+  font-weight: 400;
+  width: 96px !important;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 12px auto;
+}
+/********login-sign-up-btn**************/
+button.login-btn {
+  background: #FDC101;
+  border-radius: 25px;
+  border: 1px solid #FDC101;
+  padding: 10px 20px 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 150px;
+  margin-right: 14px;
+
+}
+button.sign-up-btn {
+  background: #fff;
+  border-radius: 25px;
+  border: 1px solid #fff;
+  padding: 10px 20px 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 150px;
+}
+/********hero--banner-css*************/
+.hero-banner {
+  float: left;
+  width: 100%;
+  position: relative;
+  top: -110px;
+}
+.hero-banner img {
+  float: left;
+  width: 100%;
+}
+.banner-text {
+  position: absolute;
+  bottom: 10rem;
+  left: 0;
+  right: 0;
+  color: #fff;
+}
+.banner-text h3 {
+  color: #FDC101;
+  font-size: 25px;
+  font-weight: 500;
+  float: left;
+  width: 100%;
+  text-transform: uppercase;
+}
+.banner-text h4 {
+  text-transform: uppercase;
+  font-size: 60px;
+  float: left;
+  width: 100%;
+  margin: 0;
+
+}
+.banner-text h4 span {
+  color: #FDC101;
+}
+.banner-text p {
+  float: left;
+  width: 100%;
+  text-transform: uppercase;
+}
+button.about-me-btn, button.learn-more-btn{
+  background: #FDC101;
+  border-radius: 25px;
+  border: 1px solid #FDC101;
+  padding: 10px 20px 10px 20px;
+  font-size: 16px;
+  font-weight: 400;
+  width: 150px;
+  margin-right: 14px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.banner-buttons {
+  float: left;
+  width: 100%;
+  margin-top: 40px;
+}
+/*********about--us--section********************/
+section.about-us-section {
+  float: left;
+  width: 100%;
+}
+.about {
+  width: 100%;
+  float: left;
+  display: flex;
+  justify-content: space-around;
+  text-align: left;
+  align-items: center;
+}
+.about-right h2 {
+  color: #FDC101;
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-color: #FDC101;
+  text-decoration-style: solid;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 10px;
+}
+.about-right h3 span {
+  color: #FDC101;
+}
+.about-right h3 {
+  font-size: 50px;
+  text-transform: uppercase;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  float: left;
+  width: 100%;
+}
+.about-right p {
+  text-transform: uppercase;
+  font-size: 16px;
+}
+/*******footer---css*******************/
+footer {
+  float: left;
+  width: 100%;
+  background: #2C2C2C;
+  color:#fff;
+  margin-top: 50px;
+  text-align: left;
+  padding-bottom: 15px;
+}
+.footer-outer {
+  float: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.footer-outer h3 {
+  color: #FDC101;
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: 400;
+}
+.about-footer img {
+  text-align: left;
+  float: left;
+}
+.news-footer h4 {
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.footer-inner {
+  float: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+form.newsletter-email-form input::placeholder {
+  color: #fff;
+}
+form.newsletter-email-form input {
+  background: #464646;
+  color: #fff;
+  border-radius: 25px;
+  padding: 20px 29px 20px 20px;
+  border: none;
+  width: -webkit-fill-available; 
+}
+form.newsletter-email-form {
+  float: left;
+  width: 100%;
+}
+form.newsletter-email-form input:focus {
+  outline: none;
+  box-shadow: none;
+}
+button.news-btn {
+  background: #FDC101;
+  color: #fff;
+  border-radius: 25px;
+  border: none;
+  padding: 14px 22px 14px 20px;
+  width: 100%;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 15px;
+
+}
+@media screen and (max-width: 1150px) {
+  .banner-text {
+    bottom: 5rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  .hero-banner {
+    top: 0;
+}
+.mobile-login-btn {
+  display: block;
+}
+.navigation-menu ul li a {
+  color: #000;
+}
+  .container-header {
+    display: block;
+    padding: 0;
+}
+.header-buttons {
+  float: left;
+  width: 100%;
+  display: none;
+}
+.nav-bar {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+.logo {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+  .hamburger {
+    display: block;
+  }
+  .banner-text {
+    bottom: 64px;
+  }
+  .navigation-menu ul {
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    /* height: calc(100vh - 60px); */
+    background-color: white;
+    border-top: 1px solid black;
+    display: none;
+  }
+
+  .navigation-menu li {
+    text-align: center;
+    margin: 0;
+  }
+
+  .navigation-menu li a {
+    color: black;
+    width: 100%;
+    padding: 15px 0;
+    border-bottom: 1px solid #cccccc61;
+  }
+  .mobile-login-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.mobile-login-btn li a {
+  border-bottom: 1px solid #fdbd1b;
+}
+  .navigation-menu li:hover {
+    background-color: #eee;
+  }
+
+  .navigation-menu.expanded ul {
+    display: block;
+  }
+  .about {
+    display: block;
+    text-align: center;
+}
+.about-left, .about-right{
+  float: left;
+  width: 100%;
+}
+
+}
+@media screen and (max-width: 768px) {
+  .nav-bar {
+    float: left;
+    width: 100%;
+    text-align: left;
+}
+.logo {
+  float: left;
+  width: 0%;
+  text-align: left;
+}
+  .about-left img {
+    width: 100%;
+}
+.hamburger {
+  right: 15px;
+}
+.about-right h3 {
+  font-size: 25px;
+}
+.about-right p {
+  font-size: 14px;
+  float: left;
+  width: 100%;
+}
+.footer-outer {
+  display: block;
+}
+.about-footer, .contact-footer, .news-footer {
+  float: left;
+  width: 100%;
+  /* padding-left: 25px; */
+}
+.about-inner-text {
+  padding: 10px;
+}
+/* .footer-inner {
+  padding-left: 25px;
+} */
+.banner-text {
+  bottom: 0;
+}
+.banner-text {
+  position: unset;
+}
+.banner-text {
+  color: #2c2c2c;
+}
+.banner-text h4 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+.footer-inner {
+  display: block;
+  padding-left: 25px;
+  width: 90%;
+}
+}
+@media screen and (max-width: 440px) {
+.banner-text p {
+  float: none;
+  width: 90%;
+  text-transform: uppercase;
+  margin: 0 auto;
+  font-size: 14px;
+}
+button.about-me-btn {
+  margin-bottom: 20px;
+}
 }
