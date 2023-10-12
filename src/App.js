@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Routing from '../src/routes/Routes';
+import Routing from '../src/routes/route';
 function App() {
   return (
     <div className="App">

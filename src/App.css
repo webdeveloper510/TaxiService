@@ -365,6 +365,23 @@ button.custom-login.btn.btn-primary {
 }
 p.lead {
   color: #FDC101;
+  float: left;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: 30px;
+  font-weight: 500;
+}
+.custom-login-form {
+  overflow-x: hidden;
+}
+.login-left-content {
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+}
+img.login-imgg {
+  width: 50%;
 }
 @media screen and (max-width: 1150px) {
   .banner-text {

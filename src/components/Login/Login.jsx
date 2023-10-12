@@ -4,20 +4,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'mdb-react-ui-kit';
 import loginImg from '../../assets/images/login-img.png';
 import loginLogo from '../../assets/images/login-logo.png'
+import loginbg from '../../assets/images/login-bg.png'
 
 import {MDBContainer, MDBCol, MDBRow, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
 function Login() {
    
       return (
         
-        <div className="container-login">
-      <MDBContainer fluid className="p-3 my-0 h-custom custom-login-form">
+        <div className="container-login" style={{ backgroundImage: `url(${loginbg})`, backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '100%'}}>
+      <MDBContainer fluid className="p-0 ps-0 pe-0 my-0 h-custom custom-login-form">
         <MDBRow>
-          <MDBCol col='4' md='6'>
+          <MDBCol col='4' md='8'>
             <div className="login-left-content">
             <img src={loginLogo} className="login-imgg" alt="Logo" />
             <div className="d-flex flex-row align-items-center justify-content-center">
-              <p className="lead fw-normal mb-0 me-3">LOG IN AS SUPER-ADMIN</p>
+              <p className="lead me-3">LOG IN AS SUPER-ADMIN</p>
             </div>
 
             <div className="mb-4">
@@ -61,10 +64,8 @@ function Login() {
             </div>
           </MDBCol>
 
-          <MDBCol col='10' md='6' style={{ backgroundImage: `url(${loginImg})` , backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: '100%' }}>
-            {/* <img src={loginImg} className="img-fluid" alt="login image" /> */}
+          <MDBCol col='10' md='4'>
+            <img src={loginImg} className="img-fluid" alt="login image" />
           </MDBCol>
         </MDBRow>
       </MDBContainer>
