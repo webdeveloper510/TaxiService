@@ -1,4 +1,4 @@
-.App {
+.main-page {
   text-align: center;
 }
 
@@ -121,7 +121,7 @@ li.user-login a {
   padding: 10px 20px 10px 20px !important;
   font-size: 16px;
   font-weight: 400;
-  width: 96px !important;
+  width: 130px !important;
   color: #fff;
   text-transform: uppercase;
   text-align: center;
@@ -134,7 +134,7 @@ li.sign-list a {
   padding: 10px 20px 10px 20px !important;
   font-size: 16px;
   font-weight: 400;
-  width: 96px !important;
+  width: 130px !important;
   color: #fff;
   text-transform: uppercase;
   text-align: center;
@@ -150,7 +150,13 @@ button.login-btn {
   font-weight: 700;
   width: 150px;
   margin-right: 14px;
+  text-transform: uppercase;
+  color: #000;
 
+}
+button.sign-up-btn a, button.login-btn a  {
+  color: #000;
+  text-decoration: none;
 }
 button.sign-up-btn {
   background: #fff;
@@ -160,6 +166,8 @@ button.sign-up-btn {
   font-size: 16px;
   font-weight: 700;
   width: 150px;
+  text-transform: uppercase;
+
 }
 /********hero--banner-css*************/
 .hero-banner {
@@ -274,6 +282,7 @@ footer {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  padding-top: 30px;
 }
 .footer-outer h3 {
   color: #FDC101;
@@ -288,6 +297,8 @@ footer {
 .news-footer h4 {
   text-transform: uppercase;
   font-weight: 400;
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 .footer-inner {
   float: left;
@@ -297,12 +308,13 @@ footer {
 }
 form.newsletter-email-form input::placeholder {
   color: #fff;
+  text-transform: uppercase;
 }
 form.newsletter-email-form input {
   background: #464646;
   color: #fff;
   border-radius: 25px;
-  padding: 20px 29px 20px 20px;
+  padding: 14px 29px 14px 20px;
   border: none;
   width: -webkit-fill-available; 
 }
@@ -327,6 +339,32 @@ button.news-btn {
   text-align: center;
   margin-top: 15px;
 
+}
+/**********login--css************/
+button.custom-login.btn.btn-primary {
+  background: #FDC101;
+  border: none;
+  text-transform: uppercase;
+  width: 35%;
+}
+.custom-login-form label {
+  text-transform: uppercase;
+  text-align: left !important;
+  width: 100%;
+}
+.login-left-content {
+  text-align: center;
+}
+.custom-login-form input {
+  box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+}
+.custom-login-form input:focus {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid #cccccc69;
+}
+p.lead {
+  color: #FDC101;
 }
 @media screen and (max-width: 1150px) {
   .banner-text {
@@ -483,5 +521,9 @@ button.news-btn {
 }
 button.about-me-btn {
   margin-bottom: 20px;
+}
+.news-footer h4 {
+  font-size: 16px;
+  margin-bottom: 29px;
 }
 }

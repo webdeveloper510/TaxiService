@@ -1,18 +1,10 @@
 import React from 'react';
-import Header from './components/Header';
 import './App.css';
-import Home from './components/Home';
-import Footer from './components/footer';
-
+import Routing from '../src/routes/Routes';
 function App() {
   return (
     <div className="App">
-    
-     <Header/>
-     <Home/>
-     <Footer/>
-      {/* Other content of your application */}
-  
+      <Routing />
     </div>
   );
 }
