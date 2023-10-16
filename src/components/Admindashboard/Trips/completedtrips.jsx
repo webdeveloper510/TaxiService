@@ -19,31 +19,35 @@ const tableExample = [
   SrNo : '1',
   tripId: 'ID123',
   drivername: 'Yiorgos Avraamu',
-  tripfrom: 'Shimla',
-  tripto: 'Delhi',
-  time:'10:10AM',
+  tripfrom: '34,Alx Street',
+  starttime: '12:34',
+  endtime: '01:15',
+  distance:'4.5KM',
+  fare: '$10'
 //  action: { checkicon: checkiconimg },
   },
   {
-  SrNo : '2',
-  tripId: 'ID456',
-  drivername: 'Avraamu',
-  tripfrom: 'Shimla',
-  tripto: 'Delhi',
-  time:'10:10AM',
-    //  action: { checkicon: cibCcMastercard },
+    SrNo : '2',
+    tripId: 'ID123',
+    drivername: 'Avraamu',
+    tripfrom: '34,Alx Street',
+    starttime: '12:34',
+    endtime: '01:15',
+    distance:'4.5KM',
+    fare: '$10'
       },
       {
- SrNo : '3',
- tripId: 'ID456',
-drivername: 'Avraamu',
- tripfrom: 'Shimla',
- tripto: 'Delhi',
-  time:'10:10AM',
-          //  action: { checkicon: cibCcMastercard },
+        SrNo : '3',
+        tripId: 'ID123',
+        drivername: 'Yiorgos Avraamu',
+        tripfrom: '34,Alx Street',
+        starttime: '12:34',
+        endtime: '01:15',
+        distance:'4.5KM',
+        fare: '$10'
             },
 ]
-const ActiveTrip=()=> {
+const CompletedTrip=()=> {
    
       return (
        <>
@@ -57,12 +61,12 @@ const ActiveTrip=()=> {
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
         <div className="body flex-grow-1 px-3">
-          <h1 class="heading-for-every-page">Active Trip</h1>
+          <h1 class="heading-for-every-page">Completed Trip </h1>
           <div class="active-trip-outer"> 
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
             <div className="left-trip-content">
-          <h2>Active Trip</h2>
+          <h2>Completed Trip</h2>
           </div>
           <div className="right-trip-content">
             <img src={refreshImg}/>
@@ -83,15 +87,17 @@ const ActiveTrip=()=> {
                     <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">End Time</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Distance</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Fare</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
                   {tableExample.map((item, index) => (
                     <CTableRow className="text-center" v-for="item in tableItems" key={index}>
-                      <CTableDataCell >
+                      <CTableDataCell>
                         <div>{item.SrNo}</div>
                       </CTableDataCell>
                       <CTableDataCell>
@@ -104,12 +110,18 @@ const ActiveTrip=()=> {
                         <div>{item.tripfrom}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.tripto}</div>
+                        <div>{item.starttime}</div>
                       </CTableDataCell>
 
                       <CTableDataCell>
-                        <div>{item.time}</div>
-                      </CTableDataCell>                    
+                        <div>{item.endtime}</div>
+                      </CTableDataCell>   
+                      <CTableDataCell>
+                        <div>{item.distance}</div>
+                      </CTableDataCell>   
+                      <CTableDataCell>
+                        <div>{item.fare}</div>
+                      </CTableDataCell>              
                       <CTableDataCell className="text-center location-icons">
                        <div><img src={locationimg}/></div> 
                       
@@ -134,4 +146,4 @@ const ActiveTrip=()=> {
       );
     };
   
-   export default ActiveTrip; 
+   export default CompletedTrip; 

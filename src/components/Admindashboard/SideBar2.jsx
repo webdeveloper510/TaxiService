@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
@@ -8,6 +9,8 @@ import 'simplebar-react/dist/simplebar.min.css';
 import applogo from '../../assets/images/taxi-logo.png'
 // sidebar nav config
 import navigation from '../../_nav';
+
+
 console.log(navigation,'nav')
 //const SideBar2 = () => (
 //   <SimpleBar style={{ maxHeight: 300 }}>
@@ -39,10 +42,10 @@ const SideBar2 = () => {
             <AppSidebarNav items={navigation} />
           </SimpleBar>
         </CSidebarNav>
-        <CSidebarToggler
+        {/* <CSidebarToggler
           className="d-none d-lg-flex"
           onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
-        />
+        /> */}
       </CSidebar>
     )
   }

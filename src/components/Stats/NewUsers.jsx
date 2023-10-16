@@ -7,23 +7,26 @@ import {
     MDBCardImage,
   
   } from 'mdb-react-ui-kit';
-import trips from "../../assets/images/bookedtrips.png"
+import newuserimg from "../../assets/images/newuser.png"
 
 const NewUsers=()=> {
    
       return (
        <>
+       <br/>
       <MDBCard>
-          <MDBCardBody className="d-flex">
+          <MDBCardBody className="d-flex new-users">
           <MDBCol sm='4'>
-          <MDBCardImage position='top' alt='...' src={trips} />
+          <MDBCardImage position='top' alt='...' src={newuserimg} />
           </MDBCol>
           <MDBCol sm='8'>
             <MDBCardText>
-                <h5>New Users</h5><br/>
-            <span>450</span><br/>
-            <hr></hr><br/>
+              <div>
+                <h5>New Users</h5>
+            <span>450</span>
+            <hr></hr>
             <p>60% increase in 20 days</p>
+            </div>
             </MDBCardText>
             </MDBCol>
           </MDBCardBody>

@@ -1,31 +1,38 @@
 import React from "react";
-import AppHeader from "../TopBar/AppHeader";
-import SideBar2 from "../Admindashboard/SideBar2";
+import AppHeader from "../../TopBar/AppHeader";
+import SideBar2 from "../SideBar2"
+//import background from '../assets/images/heroimg.png';
 
-const CompanyDetails=()=> {
+const AddNewVehicle=()=> {
    
       return (
        <>
        <div className="container-fluidd">
+       
         <div className="col-md-12">
+       
         <div>
         <SideBar2/>
+
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
         <div className="body flex-grow-1 px-0">
-          <div class="map-outer"> 
-          <h2>Company Details</h2>
-          </div>
+          <h1>Add New Vehicle</h1>
+          <div class="active-trip-outer"> 
+          <h2>Add New Vehicle</h2>
           
+          </div>
         
         </div>
        
       </div>
     </div>
+      
        </div>
        </div>
+       
        </>
       );
     };
   
-   export default CompanyDetails; 
+   export default AddNewVehicle; 

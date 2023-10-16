@@ -9,7 +9,7 @@ const CompanyDetails=()=> {
         <div className="col-md-12">
         <div className="row">
             <div className="col-md-12">
-           <img src={map} alt="map"/>
+           <img src={map} alt="map" className="map-img"/>
             </div>
           
        </div>

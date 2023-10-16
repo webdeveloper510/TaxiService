@@ -1,8 +1,8 @@
 import React from "react";
-import AppHeader from "../TopBar/AppHeader";
-import SideBar2 from "../Admindashboard/SideBar2";
+import AppHeader from "../../TopBar/AppHeader";
+import SideBar2 from "../SideBar2";
 
-const CompanyDetails=()=> {
+const FareManagement=()=> {
    
       return (
        <>
@@ -14,7 +14,7 @@ const CompanyDetails=()=> {
         <AppHeader />
         <div className="body flex-grow-1 px-0">
           <div class="map-outer"> 
-          <h2>Company Details</h2>
+          <h2>Fare Management</h2>
           </div>
           
         
@@ -28,4 +28,4 @@ const CompanyDetails=()=> {
       );
     };
   
-   export default CompanyDetails; 
+   export default FareManagement; 

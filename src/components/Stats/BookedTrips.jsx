@@ -15,16 +15,18 @@ const BookedTrips=()=> {
       return (
        <>
       <MDBCard>
-          <MDBCardBody className="d-flex">
+          <MDBCardBody className="d-flex booked-trips-card">
           <MDBCol sm='4'>
           <MDBCardImage position='top' alt='...' src={trips} />
           </MDBCol>
           <MDBCol sm='8'>
             <MDBCardText>
-                <h5>Booked Trips</h5><br/>
-            <span>450</span><br/>
-            <hr></hr><br/>
+              <div>
+                <h5>Booked Trips</h5>
+            <span>450</span>
+            <hr></hr>
             <p>60% increase in 20 days</p>
+            </div>
             </MDBCardText>
             </MDBCol>
           </MDBCardBody>

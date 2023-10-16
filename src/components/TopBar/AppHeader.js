@@ -12,10 +12,8 @@ import {
   CNavItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons';
 
-//import { AppBreadcrumb } from './index'
-// import { AppHeaderDropdown } from './header/index'
 // import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
@@ -70,7 +68,7 @@ const AppHeader = () => {
       </CContainer>
       <CHeaderDivider />
       {/* <CContainer fluid>
-        <AppBreadcrumb />
+        <AppBreadCrumb />
       </CContainer> */}
     </CHeader>
   )

@@ -44,20 +44,15 @@ const tableExample = [
       },
        activity: 'Offline',
     },
-    {
-      avatar: { src: avatar1, status: 'danger' },
-      user: {
-        name: 'Friderik Dávid',
-      },
-       activity: 'In a Ride',
-    },
+ 
   ]
 const RiderStatusTable=()=> {
    
       return (
        <>
       <div className="booking-request-table">
-          <CTable align="middle" className="mb-0 border" hover responsive>
+        <h2 className="head-rider">Rider's Status</h2>
+          <CTable align="middle" className="mb-0" hover responsive>
                
                 <CTableBody>
                   {tableExample.map((item, index) => (
@@ -66,7 +61,7 @@ const RiderStatusTable=()=> {
                         <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.user.name}</div>
+                        <div className="user-name">{item.user.name}</div>
                         
                       </CTableDataCell>
                       <CTableDataCell>

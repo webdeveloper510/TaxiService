@@ -15,9 +15,10 @@ const DashboardStats=()=> {
    
       return (
        <>
+       <br/>
        <div className="container-fluidd">
        
-        <div className="col-md-12">
+        <div className="col-md-12 body flex-grow-1 px-0">
        
         <div>
        
@@ -26,7 +27,7 @@ const DashboardStats=()=> {
   
        <div className="col-md-6">
 
-        <div className="booked-trips">
+        <div className="booked-trips-outer">
         <MDBRow>
         <MDBCol sm='6' className="booked-trips">
        < BookedTrips/>
@@ -53,6 +54,8 @@ const DashboardStats=()=> {
    
        </div>
        </div>
+       <br/>
+       
        
        </>
       );
