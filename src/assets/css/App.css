@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
 @font-face {
   font-family: 'larken_demoregular';
   src: url('../fonts/larkendemo-regular-webfont.woff2') format('woff2'),
@@ -665,4 +668,79 @@ button.about-me-btn {
   font-size: 16px;
   margin-bottom: 29px;
 }
+}
+.top-bar {
+  width: 100%;
+  display: flex;
+  background: #fff;
+  float: left;
+  box-shadow: 0px 2px 2px 0px #ccc;
+  padding-bottom: 11px;
+}
+.sidebar.nav {
+  background: #cccccc30;
+  height: 100vh;
+  padding-top: 20px;
+}
+a.nav-link {
+  color: #2c2c2c !important;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none !important;
+}
+a.navv-link {
+  color: #2c2c2c;
+  text-decoration: none;
+}
+a.navv-link {
+  font-family: 'Poppins', sans-serif;
+  padding-left: 20px;
+  width: 90%;
+  float: left;
+  padding: 15px 20px 15px 20px;
+  
+}
+a.navv-link.active {
+  background: #FFF2CF;
+  border-radius: 25px;
+  /* padding: 10px 20px 10px 20px; */
+}
+.container-fluidd {
+  padding: 0;
+  overflow-x: hidden;
+}
+.nav-item {
+  line-height: 30px;
+  float: left;
+  width: 100%;
+
+}
+
+.nav-item.dropdown {
+  position: relative;
+}
+
+.nav-item.dropdown::after {
+  content: '\25BE'; /* Unicode character for down arrow */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 10px;
+}
+
+/* Rotate the arrow for the open dropdown */
+.nav-item.dropdown.show::after {
+  transform: rotate(180deg);
+}
+.map-outer {
+  background: #fff;
+  padding: 14px;
+}
+ .card {
+  background-image: linear-gradient( #FFF3B0, #C7EAE4);
+}
+img.card-img-top {
+  width: auto;
+}
+td.d-flex.action-icons {
+  justify-content: space-evenly;
 }

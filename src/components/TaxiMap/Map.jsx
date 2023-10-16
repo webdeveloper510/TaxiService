@@ -1,0 +1,22 @@
+import React from "react";
+import map from '../../assets/images/map.png'
+const CompanyDetails=()=> {
+   
+      return (
+       <>
+       <div className="container-fluidd">
+      
+        <div className="col-md-12">
+        <div className="row">
+            <div className="col-md-12">
+           <img src={map} alt="map"/>
+            </div>
+          
+       </div>
+       </div>
+       </div>
+       </>
+      );
+    };
+  
+   export default CompanyDetails; 

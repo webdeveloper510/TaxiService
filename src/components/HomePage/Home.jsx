@@ -1,11 +1,15 @@
 import React from "react";
+import Header from "../Header/Header";
+import Footer from "../Footer/footer";
 
 import hero from '../../assets/images/hero-image.png';
 import aboutImg from '../../assets/images/about-car.png'
 //import background from '../assets/images/heroimg.png';
 const Home=()=> {
-   
+  
       return (
+        <>
+        <Header />
         <div className="main-page">
         <div class="container-outer">
             <section className="hero-section">
@@ -45,6 +49,8 @@ const Home=()=> {
         </section>
         </div>
         </div>
+        <Footer />
+        </>
       );
     };
   
