@@ -780,3 +780,16 @@ img.map-img {
   border-radius: 10px;
   padding: 7px;
 }
+.status {
+  background-image: linear-gradient( #05D41F, #26E40F);
+  border-radius: 10px;
+  padding: 5px 10px 5px 10px;
+  color: #fff;
+}
+.driver-icons div {
+  margin-top: 5px;
+}
+.driver-icons {
+  border-bottom: none;
+  padding-bottom: 12px;
+}
