@@ -6,8 +6,10 @@ import ActiveTrip from '../components/Admindashboard/Trips/activetrips';
 import AddNewDriver from '../components/Admindashboard/Driver/addnewdriver';
 import FareManagement from '../components/Admindashboard/FareManagement/faremanagement';
 import AddNewVehicle from '../components/Admindashboard/Vehicle/addnewvehicle';
+import ViewAllVehicle from '../components/Admindashboard/Vehicle/viewallvehicle';
 import CompletedTrip from '../components/Admindashboard/Trips/completedtrips';
 import BookingRequestTable from '../components/Admindashboard/Trips/BookingRequestTable';
+import DriverList from '../components/Admindashboard/Driver/driverlist';
 
 const PrivateRoute = () => {
     const token = localStorage.getItem('token');
@@ -24,8 +26,10 @@ const PrivateRoute = () => {
             <Route path="/trips/completetrips" element={<CompletedTrip />} />
             <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
             <Route path="/driver/addnewdriver" element={<AddNewDriver />} />
+            <Route path="/driver/listofdrivers" element={<DriverList />} />
             <Route path="/faremanagement" element={<FareManagement />} />
             <Route path="/vehicle/addnewvehicle" element={<AddNewVehicle />} />
+            <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />
 
         </Routes>
