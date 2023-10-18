@@ -161,14 +161,18 @@ body::-webkit-scrollbar {
     background-color: #ccc;
     outline: none;
   }
-  .add_bookings {
+  div#fare_management_page .trips-head {
+    margin-bottom: 16px;
+}
+  .add_booking, .add_fare, .fare_list {
     background: #FFD04E;
     border: #FFD04E;
     font-family: 'Poppins', sans-serif !important;
 }
-.add_bookings:hover {
+.add_bookings:hover, .add_fare:hover, .fare_list:hover {
     background: #FFD04E;
 }
+
 .table-responsive th {
     font-weight: 600;
 }
@@ -242,3 +246,53 @@ body::-webkit-scrollbar {
 .p-4.vehicle-cards.container .col-md-4 {
     margin-bottom: 20px;
 }
+.driver-icons button {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+}
+div#recent-trip-outer {
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+.upload-file-input input {
+    opacity: 0;
+    background: #fff;
+    box-shadow: 0px 1px 4px rgb(0 0 0 / 0%);
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.files-outer {
+    text-align: center;
+    padding: 50px;
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+    margin-top: 12px;
+    border-radius: 10px;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+}
+.upload-file-input img {
+    width: 100%;
+}
+img.upload-icon {
+    width: auto;
+}
+label.custom-file-upload {
+    width: 100%;
+}
+.form-control:focus, .form-select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+}
+.form-control, .form-select {
+    box-shadow: 0px 1px 4px 0px #00000040;
+    border-radius: 10px;
+}
+

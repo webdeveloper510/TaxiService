@@ -66,7 +66,7 @@ const RiderStatusTable=()=> {
                       </CTableDataCell>
                       <CTableDataCell>
                         
-                        <strong>{item.activity}</strong>
+                     <div>{item.activity}</div>
                       </CTableDataCell>
                     </CTableRow>
                   ))}

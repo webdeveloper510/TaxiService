@@ -3,6 +3,7 @@ import AppHeader from "../TopBar/AppHeader";
 import Map from "../TaxiMap/Map";
 import Sidebar2 from "../Admindashboard/SideBar2";
 import DashboardStats from "../Stats/DashBoardStats";
+import RecentTrips from "./Trips/recenttrips";
 //import BookingRequestTable from "./BookingRequestTable";
 //import background from '../assets/images/heroimg.png';
 
@@ -30,9 +31,10 @@ const Dashboard=()=> {
           </div>
 
           
-          {/* <div className="booking-table">
-          <BookingRequestTable/>
-          </div> */}
+          <div className="booking-table">
+          {/* <BookingRequestTable/> */}
+          <RecentTrips/>
+          </div>
         </div>
        
       </div>

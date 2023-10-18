@@ -73,6 +73,11 @@ const _nav = [
     items: [
       {
         component: CNavItem,
+        name: 'Add New Trip',
+        to: '/trips/addnewtrip',
+      },
+      {
+        component: CNavItem,
         name: 'Active Trip',
         to: '/trips/activetrips',
       },
@@ -83,7 +88,7 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'New Bookings',
+        name: 'Booked Trips',
         to: '/trips/requestbookings',
       },
     

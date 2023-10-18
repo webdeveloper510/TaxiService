@@ -18,12 +18,13 @@ import {
 } from '@coreui/react'
 import  DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import uploadfileImg from '../../../assets/images/upload-btn.png'
 //import background from '../assets/images/heroimg.png';
 
 const AddNewDriver=()=> {
   const [renewalDate, setRenewalDate] = useState(new Date()); // Initialize with the current date for tax renewal date
   const [insuranceDate, setInsuranceDate] = useState(new Date()); // Initialize with the current date for insurance renewal date
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleRenewalDateChange = (date) => {
     setRenewalDate(date);
@@ -31,6 +32,17 @@ const AddNewDriver=()=> {
 
   const handleInsuranceDateChange = (date) => {
     setInsuranceDate(date);
+  };
+
+  const handleImageUpload = (event) => {
+    const files = event.target.files;
+    const imageArray = [];
+
+    for (let i = 0; i < files.length; i++) {
+      imageArray.push(URL.createObjectURL(files[i]));
+    }
+
+    setUploadedImages(imageArray);
   };
 
       return (
@@ -121,12 +133,41 @@ const AddNewDriver=()=> {
                   </CCol>
                 </fieldset>
                 </CCol>
-                <CCol md={6}>
-                  <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
-                  <CFormLabel htmlFor="formFile"></CFormLabel>
-                  <CFormInput type="file" id="formFile"/>
-                 
-                </CCol>
+            
+                <CCol md={12} className="upload-file-input">
+                              <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel><br />
+                              {uploadedImages.length > 0 ? (
+                                <div className="uploaded-images">
+                                  {uploadedImages.map((url, index) => (
+                                    <img key={index} src={url} alt={`Uploaded ${index + 1}`} />
+                                  ))}
+                                </div>
+                              ) : (
+                                <>
+                                  <input
+                                    type="file"
+                                    id="formFile"
+                                    onChange={handleImageUpload}
+                                    multiple // Allow multiple file selection
+                                    style={{ display: "none" }}
+                                  />
+                                  <label htmlFor="formFile" className="custom-file-upload">
+                                  <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
+                                    <span>Drop files here or click to upload.</span>
+                                    </div>
+                                  </label>
+                                </>
+                              )}
+                            </CCol>
+
+
+                <CCol xs={12}>
+              <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
+                <CButton type="submit" className="submit-btn">Submit</CButton>
+                <CButton type="submit" className="cancel-btn">Cancel</CButton>
+                </div>
+              </CCol>
 
               </CForm>
           

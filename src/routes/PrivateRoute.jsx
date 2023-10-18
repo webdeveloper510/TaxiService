@@ -10,6 +10,9 @@ import ViewAllVehicle from '../components/Admindashboard/Vehicle/viewallvehicle'
 import CompletedTrip from '../components/Admindashboard/Trips/completedtrips';
 import BookingRequestTable from '../components/Admindashboard/Trips/BookingRequestTable';
 import DriverList from '../components/Admindashboard/Driver/driverlist';
+import AddFare from '../components/Admindashboard/FareManagement/addfare';
+import RecentTrips from '../components/Admindashboard/Trips/recenttrips';
+import AddNewTrip from '../components/Admindashboard/Trips/addnewtrip';
 
 const PrivateRoute = () => {
     const token = localStorage.getItem('token');
@@ -22,12 +25,15 @@ const PrivateRoute = () => {
         <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/companydetails" element={<CompanyDetails />} />
+            <Route path="/trips/recenttrips" element={<RecentTrips />} />
             <Route path="/trips/activetrips" element={<ActiveTrip />} />
+            <Route path="/trips/addnewtrip" element={<AddNewTrip />} />
             <Route path="/trips/completetrips" element={<CompletedTrip />} />
             <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
             <Route path="/driver/addnewdriver" element={<AddNewDriver />} />
             <Route path="/driver/listofdrivers" element={<DriverList />} />
             <Route path="/faremanagement" element={<FareManagement />} />
+            <Route path="/addfare" element={<AddFare />} />
             <Route path="/vehicle/addnewvehicle" element={<AddNewVehicle />} />
             <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />
