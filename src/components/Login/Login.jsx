@@ -51,7 +51,7 @@ function Login() {
       }).then((response) => {
         console.log("response---->>>>", response)
         // navige to dashboard if user role is super admin
-        if (response.data.code === 200 && response.data.result.role === "SUPER_ADMIN") {
+        if (response.data.code === 200 && response.data.result.role === "SUB_ADMIN") {
           toast.success(`${response.data.message}`, {
             position: 'top-right',
             autoClose: 1000,

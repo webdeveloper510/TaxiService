@@ -48,6 +48,7 @@ export const getVehicle = async () => {
     });
 };
 
+
 export const addDriver = async (data) => {
   return await Axios.post(`admin/add_driver`, data, {
     headers: {
@@ -62,5 +63,20 @@ export const addDriver = async (data) => {
       console.log("ADD_DRIVER", error);
     });
 };
+
+
+export const getDriver = async() => {
+  return await Axios.get(`admin/get_drivers` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) .then((res) => {
+    console.log(res.data, "get Driver");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_DRIVER", error);
+  });
+}
 
 

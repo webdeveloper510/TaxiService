@@ -99,7 +99,7 @@ const AddNewDriver = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-         
+          navigate("/driver/listofdrivers")
         }else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
