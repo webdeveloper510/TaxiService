@@ -6,6 +6,7 @@ import DashboardStats from "../Stats/DashBoardStats";
 import RecentTrips from "./Trips/recenttrips";
 //import BookingRequestTable from "./BookingRequestTable";
 //import background from '../assets/images/heroimg.png';
+import RiderStatusTable from '../Stats/RiderStatusTable'
 
 const Dashboard=()=> {
    
@@ -26,15 +27,30 @@ const Dashboard=()=> {
           <h2>Taxi Live Location</h2>
           <Map /></div>
           
+          {/* <div className="home-dashobard-chart">
+            <DashboardGraph/>
+          </div> */}
           <div className="stats-outer">
             <DashboardStats/>
           </div>
 
-          
-          <div className="booking-table">
-          {/* <BookingRequestTable/> */}
-          <RecentTrips/>
+          <div className="row driver-recent-trips">
+     
+      <div className="col-md-8 dashboard-grph-img">
+      <RecentTrips/>
+        
+        </div>
+       <div className="col-md-4">
+
+        <div className="booked-trips-outer">
+        <RiderStatusTable/>
+
           </div>
+        </div>
+       
+      
+      </div>
+         
         </div>
        
       </div>

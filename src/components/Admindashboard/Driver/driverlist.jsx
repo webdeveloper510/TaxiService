@@ -75,7 +75,7 @@ const DriverList = () => {
                       {driver?.length ?  driver.map((item, index) => (
                         <CTableRow className="text-center"  key={index}>
 
-                          <CTableDataCell className="text-center">
+                          <CTableDataCell className="text-center profle-pic">
                             <CAvatar size="md" alt='img' src={`${image}${item.profile_image}`} style={{width:42 , height:42}} />
                           </CTableDataCell>
 

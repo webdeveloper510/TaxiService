@@ -20,13 +20,21 @@ import "react-datepicker/dist/react-datepicker.css";
 //import background from '../assets/images/heroimg.png';
 
 const AddNewTrip=()=> {
-  const [renewalDate, setRenewalDate] = useState(new Date()); // Initialize with the current date for tax renewal date
-  const [insuranceDate, setInsuranceDate] = useState(new Date()); // Initialize with the current date for insurance renewal date
+  const [pickupDate, setpickupDate] = useState(new Date()); // Initialize with the current date for tax renewal date
+  const [passengers, setPassengers] = useState([]);
 
-  const handleRenewalDateChange = (date) => {
-    setRenewalDate(date);
+  const handlepickupDateChange = (date) => {
+    setpickupDate(date);
   };
 
+  const addPassenger = () => {
+    setPassengers([...passengers, {}]);
+  };
+
+  const removePassenger = (index) => {
+    const updatedPassengers = passengers.filter((_, i) => i !== index);
+    setPassengers(updatedPassengers);
+  };
 
       return (
        <>
@@ -54,55 +62,43 @@ const AddNewTrip=()=> {
         
             <CForm className="row g-3">
             <CCol md={6}>
-                <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
-                <CFormInput aria-label="vehicle no." />
+                <CFormLabel htmlFor="inputtripdname">Driver Name</CFormLabel>
+                <CFormSelect>
+
+                                <option >Rajesh</option>
+                                <option>Ravi</option>
+                                <option>Anil</option>
+                                <option>Gautam</option>
+
+                              </CFormSelect>
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
-                <CFormInput aria-label="vehicle type" />
+                <CFormLabel htmlFor="inputvehicletype">Vehicle</CFormLabel>
+                <CFormSelect>
+
+                                <option >SUV</option>
+                                <option>Hatchback</option>
+                                <option>Convertible</option>
+                                <option>Sedan</option>
+
+                              </CFormSelect>
               </CCol>
               <CCol xs={6}>
-                <CFormLabel htmlFor="inputvehivlemodal">Vehicle Modal</CFormLabel>
-                <CFormInput id="inputvehiclemodal" />
+                <CFormLabel htmlFor="inputtripfrom">Trip From</CFormLabel>
+                <CFormInput id="inputtripfrom" />
               </CCol>
               <CCol xs={6}>
-                <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
-                <CFormInput id="inputseating" />
+                <CFormLabel htmlFor="inputtripto">Trip To</CFormLabel>
+                <CFormInput id="inputtripto" />
               </CCol>
               <CCol md={3}>
-                <CFormLabel htmlFor="inputrenewaldate">Tax Renewal Date</CFormLabel><br/>
+                <CFormLabel htmlFor="inputpickupdate">Pickup Date and Time</CFormLabel><br/>
                 <DatePicker
-        selected={renewalDate}
-          onChange={handleRenewalDateChange }
+           selected={pickupDate}
+          onChange={handlepickupDateChange }
           dateFormat="MM/dd/yyyy"
           className="form-control"
         />
-          {/* <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      className="bi bi-calendar"
-      viewBox="0 0 16 16"
-    >
-      <path d="M3.5 0a.5.5 0 01.5.5V1h8V.5a.5.5 0 011 0V1h1a2 2 0 012 2v11a2 2 0 01-2 2H2a2 2 0 01-2-2V3a2 2 0 012-2h1V.5a.5.5 0 01.5-.5zM1 4v10a1 1 0 001 1h12a1 1 0 001-1V4H1z"></path>
-    </svg> */}
-     
-              </CCol>
-            
-              
-              <CCol md={6}>
-                <CFormLabel htmlFor="inputmobile">Upload Vehicle Documents</CFormLabel>
-                <CFormLabel htmlFor="formFile"></CFormLabel>
-                <CFormInput type="file" id="formFile"/>
-               
-              </CCol>
-           
-              <CCol xs={12}>
-              <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                <CButton type="submit" className="submit-btn">Submit</CButton>
-                <CButton type="submit" className="cancel-btn">Cancel</CButton>
-                </div>
               </CCol>
             </CForm>
         
@@ -110,6 +106,117 @@ const AddNewTrip=()=> {
       </CCard>
     </CCol>
   </CRow>
+
+  {/* <CRow className="passenger-deails"> 
+    
+    <CCol xs={12}>
+      <CCard className="mb-4">
+        <CCardHeader>
+          <strong>Passenger Details</strong> 
+        </CCardHeader>
+        <CCardBody>
+        
+            <CForm className="row g-3">
+            <CCol md={6}>
+                <CFormLabel htmlFor="inputname">Name</CFormLabel>
+                <CFormInput aria-label="name" />
+              </CCol>
+            
+              <CCol xs={6}>
+                <CFormLabel htmlFor="inputphnno">Phone</CFormLabel>
+                <CFormInput id="inputphnno" />
+              </CCol>
+              <CCol xs={6}>
+                <CFormLabel htmlFor="inputtemailadd">Email Address</CFormLabel>
+                <CFormInput id="inputemailadd" />
+              </CCol>
+
+              <CCol xs={6}>
+                <CFormLabel htmlFor="inputaddress">Address</CFormLabel>
+                <CFormInput id="inputaddress" />
+              </CCol>
+              <CCol xs={12}>
+              <div className="d-flex justify-content-end" style={{ marginTop: "40px" }}>
+                <CButton type="button" className="add_passenger_btn">+ Add Passenger</CButton>
+                </div>
+              </CCol>
+
+             
+            </CForm>
+            <CCol xs={12}>
+              <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
+                <CButton type="submit" className="submit-btn">Submit</CButton>
+                <CButton type="submit" className="cancel-btn">Cancel</CButton>
+                </div>
+              </CCol>
+        </CCardBody>
+      </CCard>
+    </CCol>
+  </CRow> */}
+
+<CRow className="passenger-details">
+                  {passengers.map((passenger, index) => (
+                    <CCol xs={12} key={index}>
+                      <CCard className="mb-4">
+                        <CCardHeader>
+                          <strong>Passenger Details</strong>
+                          {index > 0 && (
+                            <CButton
+                              type="button"
+                              onClick={() => removePassenger(index)}
+                              className="remove_passenger_btn"
+                            >
+                              - Remove Passenger
+                            </CButton>
+                          )}
+                        </CCardHeader>
+                        <CCardBody>
+                          <CForm className="row g-3">
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputname">Name</CFormLabel>
+                              <CFormInput aria-label="name" />
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputphnno">Phone</CFormLabel>
+                              <CFormInput id="inputphnno" />
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtemailadd">
+                                Email Address
+                              </CFormLabel>
+                              <CFormInput id="inputemailadd" />
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputaddress">Address</CFormLabel>
+                              <CFormInput id="inputaddress" />
+                            </CCol>
+                          </CForm>
+                        </CCardBody>
+                      </CCard>
+                    </CCol>
+                  ))}
+                  <CCol xs={12}>
+                    <div
+                      className="d-flex justify-content-end"
+                      style={{ marginTop: "40px" }}
+                    >
+                      <CButton
+                        type="button"
+                        onClick={addPassenger}
+                        className="add_passenger_btn"
+                      >
+                        + Add Passenger
+                      </CButton>
+                    </div>
+                  </CCol>    
+                </CRow>
+                <CCol xs={12}>
+              <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
+                <CButton type="submit" className="submit-btn">Submit</CButton>
+                <CButton type="submit" className="cancel-btn">Cancel</CButton>
+                </div>
+              </CCol>
+
           </div>
         
         </div>

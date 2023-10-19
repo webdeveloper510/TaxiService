@@ -22,7 +22,7 @@ import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import "react-datepicker/dist/react-datepicker.css";
 import { addVehicle } from "../../../utils/api";
-
+import uploadfileImg from '../../../assets/images/upload-btn.png'
 const AddNewVehicle = () => {
 
 
@@ -364,7 +364,7 @@ const AddNewVehicle = () => {
 
                             </CCol>
 
-                            <CCol md={6}>
+                            <CCol md={12} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Vehicle Documents</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
                               <CFormInput type="file" id="formFile"  onChange={(e) => {uploadFile(e)}}
@@ -386,7 +386,12 @@ const AddNewVehicle = () => {
                               {formik.errors.file && formik.touched.file ? (
                                 <div className="text-danger">{formik.errors.file}</div>
                               ) : null}
-
+                                 <label htmlFor="formFile" className="custom-file-upload">
+                                  <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
+                                    <span>Drop files here or click to upload.</span>
+                                    </div>
+                                  </label>
                             </CCol>
 
                             <CCol xs={12}>

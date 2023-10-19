@@ -51,7 +51,7 @@ const RiderStatusTable=()=> {
       return (
        <>
       <div className="booking-request-table">
-        <h2 className="head-rider">Rider's Status</h2>
+        <h2 className="head-rider">Driver's Status</h2>
           <CTable align="middle" className="mb-0" hover responsive>
                
                 <CTableBody>

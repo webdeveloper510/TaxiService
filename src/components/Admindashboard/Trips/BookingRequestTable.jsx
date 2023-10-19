@@ -10,32 +10,34 @@ import {
   } from '@coreui/react'
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
-import checkiconimg from '../../../assets/images/check-icon.png'
-import crossicon from '../../../assets/images/crossicon.png'
 import { getTrip } from "../../../utils/api";
-
-  const tableExample = [
-    {
-    tripId: '123',
-    name: 'Yiorgos Avraamu',
-    vechileType: 'SUV',
-    from: 'Shimla',
-    to: 'Delhi',
-    address: '34 Alex, Street',
-    dateandtime:'23,Aug,2023 10:10AM',
-  //  action: { checkicon: checkiconimg },
-    },
-    {
-        tripId: '145',
-        name: 'Yiorgos Avr',
-        vechileType: 'SUV',
-        from: 'Shimla',
-        to: 'Delhi',
-        address: '34 Alex, Street',
-        dateandtime:'23,Aug,2023 10:10AM',
-      //  action: { checkicon: cibCcMastercard },
-        },
-  ]
+import refreshImg from '../../../assets/images/refresh.png';
+import crossImg from '../../../assets/images/cross-arrow.png';
+import downarrowImg from '../../../assets/images/down-arrow.png'
+import editiconimg from '../../../assets/images/editicon.png'
+import deleteiconimg from '../../../assets/images/deleteicon.png'
+  // const tableExample = [
+  //   {
+  //   tri: '123',
+  //   name: 'Yiorgos Avraamu',
+  //   vechileType: 'SUV',
+  //   from: 'Shimla',
+  //   to: 'Delhi',
+  //   address: '34 Alex, Street',
+  //   dateandtime:'23,Aug,2023 10:10AM',
+  // //  action: { checkicon: checkiconimg },
+  //   },
+  //   {
+  //       tripId: '145',
+  //       name: 'Yiorgos Avr',
+  //       vechileType: 'SUV',
+  //       from: 'Shimla',
+  //       to: 'Delhi',
+  //       address: '34 Alex, Street',
+  //       dateandtime:'23,Aug,2023 10:10AM',
+  //     //  action: { checkicon: cibCcMastercard },
+  //       },
+  // ]
 const BookingRequestTable=()=> {
 
   const [bookingTrip , setBookingTrip] = useState()
@@ -63,15 +65,19 @@ const BookingRequestTable=()=> {
      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
        <AppHeader />
        <div className="body flex-grow-1 px-3">
-         <h1 class="heading-for-every-page">New Bookings Request </h1>
+         <h1 class="heading-for-every-page">Booked Trip</h1>
          <div class="active-trip-outer"> 
          <div className="trips-head d-flex justify-content-between">
            <div className="box-shd d-flex justify-content-between">
            <div className="left-trip-content">
-         <h2>New Bookings Request</h2>
+         <h2>Booked Trip</h2>
          </div>
          <div className="right-trip-content">
-         <CButton className="add_bookings">Add New Bookings</CButton>
+         <div className="right-trip-content">
+            <img src={refreshImg}/>
+            <img src={downarrowImg}/>
+            <img src={crossImg}/>
+            </div>
         
            </div>
            </div>
@@ -84,13 +90,13 @@ const BookingRequestTable=()=> {
                     {/* <CTableHeaderCell className="text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell> */}
-                    <CTableHeaderCell className="text-center">Trip Id</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Name</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">From</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">To</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Address</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Date & Time</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Sr No.</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Trip  ID</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Passenger Count</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Allocate Driver</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -120,9 +126,9 @@ const BookingRequestTable=()=> {
                       <CTableDataCell>
                         <div>{item.pickup_date_time}</div>
                       </CTableDataCell>                    
-                      <CTableDataCell className="d-flex action-icons">
-                       <div><img src={checkiconimg}/></div> 
-                       <div><img src={crossicon}/></div>
+                      <CTableDataCell className="d-flex action-icons booking-icons">
+                                <div><img src={editiconimg} /></div>
+                            <div><img src={deleteiconimg} /></div>
                       </CTableDataCell>         
                     </CTableRow>
                   )) : "No Results"}

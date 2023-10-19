@@ -256,6 +256,9 @@ div#recent-trip-outer {
     padding-left: 0;
     padding-right: 0;
 }
+.col-md-12.upload-file-input {
+    position: relative;
+}
 .upload-file-input input {
     opacity: 0;
     background: #fff;
@@ -277,6 +280,12 @@ div#recent-trip-outer {
     position: relative;
     cursor: pointer;
 }
+.profle-pic img {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    border-radius: 100%;
+}
 .upload-file-input img {
     width: 100%;
 }
@@ -296,3 +305,45 @@ label.custom-file-upload {
     border-radius: 10px;
 }
 
+.row.passenger-deails {
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 17%);
+    width: 96%;
+    margin: 0 auto;
+    padding: 6px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+.add_passenger_btn:hover{
+    background: #FFD04E;   
+}
+.add_passenger_btn {
+    background: #FFD04E;
+    border: #FFD04E;
+    margin-left: 10px;
+    font-size: 18px;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif !important;
+}
+.remove_passenger_btn:hover{
+    background: red;
+}
+.remove_passenger_btn {
+    background: red;
+    border: red;
+    margin-left: 10px;
+    font-size: 18px;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif !important;
+    justify-content: end;
+    float: right;
+}
+.dashboard-chart img {
+    width: 100%;
+}
+table.table.align-middle.table-hover.mb-0 tr td {
+    font-size: 14px;
+}

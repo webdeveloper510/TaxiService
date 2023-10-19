@@ -23,7 +23,7 @@ import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import { addDriver } from "../../../utils/api";
 import { toast } from 'react-toastify';
-
+import uploadfileImg from '../../../assets/images/upload-btn.png'
 //import background from '../assets/images/heroimg.png';
 
 const AddNewDriver = () => {
@@ -343,7 +343,7 @@ const AddNewDriver = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
                               <fieldset className="row mb-12">
-                                <CCol sm={12}>
+                               <CCol sm={12}>
                                   <CFormCheck inline
                                     type="radio"
                                     name="gridRadios"
@@ -351,7 +351,6 @@ const AddNewDriver = () => {
                                     value="Male"
                                     label="Male"
 
-                                    onChange={handleRadioChange}
                                   />
                                   <CFormCheck inline
                                     type="radio"
@@ -359,15 +358,49 @@ const AddNewDriver = () => {
                                     id="gridRadios2"
                                     value="Female"
                                     label="Female"
-                                    onChange={handleRadioChange}
+                                   
                                   />
                                 </CCol>
                               </fieldset>
                             </CCol>
 
-                            <CCol md={6}>
+
+
+
+{/* 
+                            <CCol md={12} className="upload-file-input">
+                              <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel><br />
+                              {uploadedImages.length > 0 ? (
+                                <div className="uploaded-images">
+                                  {uploadedImages.map((url, index) => (
+                                    <img key={index} src={url} alt={`Uploaded ${index + 1}`} />
+                                  ))}
+                                </div>
+                              ) : (
+                                <>
+                                  <input
+                                    type="file"
+                                    id="formFile"
+                                    onChange={handleImageUpload}
+                                    multiple // Allow multiple file selection
+                                    style={{ display: "none" }}
+                                  />
+                                  <label htmlFor="formFile" className="custom-file-upload">
+                                  <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
+                                    <span>Drop files here or click to upload.</span>
+                                    </div>
+                                  </label>
+                                </>
+                              )}
+                            </CCol> */}
+
+
+
+
+                            <CCol md={12}  className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
-                              <CFormLabel htmlFor="formFile"></CFormLabel>
+                              
                               <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"
@@ -387,7 +420,12 @@ const AddNewDriver = () => {
                               {formik.errors.file && formik.touched.file ? (
                                 <div className="text-danger">{formik.errors.file}</div>
                               ) : null}
-
+                                  <label htmlFor="formFile" className="custom-file-upload">
+                                  <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
+                                    <span>Drop files here or click to upload.</span>
+                                    </div>
+                                  </label>
                             </CCol>
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>

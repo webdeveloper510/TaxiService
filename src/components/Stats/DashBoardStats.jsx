@@ -9,7 +9,7 @@ import {
 import CancelledTrips from "./CancelledTrips";
 import NewUsers from "./NewUsers";
 import TotalEarnings from "./TotalEarnings";
-import RiderStatusTable from "./RiderStatusTable";
+import DashboardGraph from "../Admindashboard/DashboardChart/dashboardgraph";
 
 const DashboardStats=()=> {
    
@@ -24,7 +24,10 @@ const DashboardStats=()=> {
        
       <div className="row">
      
-  
+      <div className="col-md-6 dashboard-grph-img">
+        <DashboardGraph/>
+        
+        </div>
        <div className="col-md-6">
 
         <div className="booked-trips-outer">
@@ -46,9 +49,7 @@ const DashboardStats=()=> {
           </div>
         </div>
        
-        <div className="col-md-6">
-        <RiderStatusTable/>
-        </div>
+      
       </div>
     </div>
    
