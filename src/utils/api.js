@@ -77,6 +77,38 @@ export const getDriver = async() => {
   .catch((error) => {
     console.log("GET_DRIVER", error);
   });
+};
+
+
+export const addFare = async (data) => {
+  return await Axios.post(`admin/add_fare` ,data , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) .then((res) => {
+    console.log(res, "add Fare");
+    return res;
+  })
+  .catch((error) => {
+    console.log("ADD_FARE", error);
+  });
 }
+
+
+
+export const getFare = async() => {
+  return await Axios.get(`admin/get_fares` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) .then((res) => {
+    console.log(res.data, "get Fare");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_FARE", error);
+  });
+};
+
 
 

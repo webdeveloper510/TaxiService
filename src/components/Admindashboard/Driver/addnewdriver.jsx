@@ -65,12 +65,15 @@ const AddNewDriver = () => {
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
+    console.log(selectedFile)
   }
 
   const handleRadioChange = (event) => {
     formik.setFieldValue('Gender', event.target.value)
 
   };
+
+  
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
@@ -79,28 +82,28 @@ const AddNewDriver = () => {
 
       const formData = new FormData();
 
-      formData.append('first_name' , values.FirstName );
-      formData.append('last_name' , values.LastName);
-      formData.append('address_1' , values.Address1);
-      formData.append('address_2' , values.Address2);
-      formData.append('city' , values.Country);
-      formData.append('country' , values.City);
-      formData.append('zip_code' , values.Zip);
-      formData.append('email' , values.Email);
-      formData.append('phone' ,values.MobileNo);
-      formData.append('gender' , values.Gender);
-      formData.append('profile_image'  , values.file);
-      formData.append('password' , '12587574545');
+      formData.append('first_name', values.FirstName);
+      formData.append('last_name', values.LastName);
+      formData.append('address_1', values.Address1);
+      formData.append('address_2', values.Address2);
+      formData.append('city', values.Country);
+      formData.append('country', values.City);
+      formData.append('zip_code', values.Zip);
+      formData.append('email', values.Email);
+      formData.append('phone', values.MobileNo);
+      formData.append('gender', values.Gender);
+      formData.append('driver_image', values.file);
+      formData.append('password', '12587574545');
 
       addDriver(formData).then((res) => {
         console.log("response---->>>>", res)
-        if(res.data.code === 200) {
+        if (res.data.code === 200) {
           toast.success(`${res.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
           navigate("/driver/listofdrivers")
-        }else {
+        } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
@@ -108,7 +111,7 @@ const AddNewDriver = () => {
         }
       })
 
-    
+
     },
   });
 
@@ -137,12 +140,12 @@ const AddNewDriver = () => {
                         </CCardHeader>
                         <CCardBody>
 
-                         
 
-                            <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputfirstname">First Name</CFormLabel>
-                                <CFormInput aria-label="First name" {...formik.getFieldProps("FirstName")}
+
+                          <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputfirstname">First Name</CFormLabel>
+                              <CFormInput aria-label="First name" {...formik.getFieldProps("FirstName")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -159,11 +162,11 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.FirstName && formik.touched.FirstName ? (
                                 <div className="text-danger">{formik.errors.FirstName}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputlastname">Last Name</CFormLabel>
-                                <CFormInput aria-label="Last name" {...formik.getFieldProps("LastName")}
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputlastname">Last Name</CFormLabel>
+                              <CFormInput aria-label="Last name" {...formik.getFieldProps("LastName")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -180,11 +183,11 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.LastName && formik.touched.LastName ? (
                                 <div className="text-danger">{formik.errors.LastName}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol xs={6}>
-                                <CFormLabel htmlFor="inputAddress">Street Address 1</CFormLabel>
-                                <CFormInput id="inputAddress" {...formik.getFieldProps("Address1")}
+                              ) : null}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputAddress">Street Address 1</CFormLabel>
+                              <CFormInput id="inputAddress" {...formik.getFieldProps("Address1")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -201,11 +204,11 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.Address1 && formik.touched.Address1 ? (
                                 <div className="text-danger">{formik.errors.Address1}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol xs={6}>
-                                <CFormLabel htmlFor="inputAddress2">Street Address 2</CFormLabel>
-                                <CFormInput id="inputAddress2"  {...formik.getFieldProps("Address2")}
+                              ) : null}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputAddress2">Street Address 2</CFormLabel>
+                              <CFormInput id="inputAddress2"  {...formik.getFieldProps("Address2")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -222,11 +225,11 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.Address2 && formik.touched.Address2 ? (
                                 <div className="text-danger">{formik.errors.Address2}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol md={4}>
-                                <CFormLabel htmlFor="inputcountry">Country</CFormLabel>
-                                <CFormSelect id="inputcountry" {...formik.getFieldProps("Country")}
+                              ) : null}
+                            </CCol>
+                            <CCol md={4}>
+                              <CFormLabel htmlFor="inputcountry">Country</CFormLabel>
+                              <CFormSelect id="inputcountry" {...formik.getFieldProps("Country")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -241,17 +244,17 @@ const AddNewDriver = () => {
                                 )}
                                 name="Country"
                                 autoComplete="off" >
-                                  <option>Choose...</option>
-                                  <option>...</option>
-                                </CFormSelect>
+                                <option>Choose...</option>
+                                <option>...</option>
+                              </CFormSelect>
 
-                                {formik.errors.Country && formik.touched.Country ? (
+                              {formik.errors.Country && formik.touched.Country ? (
                                 <div className="text-danger">{formik.errors.Country}</div>
                               ) : null}
-                              </CCol>
-                              <CCol md={4}>
-                                <CFormLabel htmlFor="inputCity">City</CFormLabel>
-                                <CFormInput id="inputCity" {...formik.getFieldProps("City")}
+                            </CCol>
+                            <CCol md={4}>
+                              <CFormLabel htmlFor="inputCity">City</CFormLabel>
+                              <CFormInput id="inputCity" {...formik.getFieldProps("City")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -268,12 +271,12 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.City && formik.touched.City ? (
                                 <div className="text-danger">{formik.errors.City}</div>
-                              ) : null} 
-                              </CCol>
+                              ) : null}
+                            </CCol>
 
-                              <CCol md={4}>
-                                <CFormLabel htmlFor="inputZip">Zip</CFormLabel>
-                                <CFormInput id="inputZip" {...formik.getFieldProps("Zip")}
+                            <CCol md={4}>
+                              <CFormLabel htmlFor="inputZip">Zip</CFormLabel>
+                              <CFormInput id="inputZip" {...formik.getFieldProps("Zip")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -290,11 +293,11 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.Zip && formik.touched.Zip ? (
                                 <div className="text-danger">{formik.errors.Zip}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputEmail4">Email</CFormLabel>
-                                <CFormInput type="email" id="inputEmail4" {...formik.getFieldProps("Email")}
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputEmail4">Email</CFormLabel>
+                              <CFormInput type="email" id="inputEmail4" {...formik.getFieldProps("Email")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -311,11 +314,11 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.Email && formik.touched.Email ? (
                                 <div className="text-danger">{formik.errors.Email}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputmobile">Mobile No.</CFormLabel>
-                                <CFormInput type="number" id="inputmobile" {...formik.getFieldProps("MobileNo")}
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputmobile">Mobile No.</CFormLabel>
+                              <CFormInput type="number" id="inputmobile" {...formik.getFieldProps("MobileNo")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -332,38 +335,38 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                               {formik.errors.MobileNo && formik.touched.MobileNo ? (
                                 <div className="text-danger">{formik.errors.MobileNo}</div>
-                              ) : null} 
-                              </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
-                                <fieldset className="row mb-12">
-                                  <CCol sm={12}>
-                                    <CFormCheck inline
-                                      type="radio"
-                                      name="gridRadios"
-                                      id="gridRadios1"
-                                      value="Male"
-                                      label="Male"
-                                     
-                                      onChange={handleRadioChange}
-                                    />
-                                    <CFormCheck inline
-                                      type="radio"
-                                      name="gridRadios"
-                                      id="gridRadios2"
-                                      value="Female"
-                                      label="Female"
-                                      onChange={handleRadioChange}
-                                    />
-                                  </CCol>
-                                </fieldset>
-                              </CCol>
-                              
-                              <CCol md={6}>
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
+                              <fieldset className="row mb-12">
+                                <CCol sm={12}>
+                                  <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios1"
+                                    value="Male"
+                                    label="Male"
+
+                                    onChange={handleRadioChange}
+                                  />
+                                  <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios2"
+                                    value="Female"
+                                    label="Female"
+                                    onChange={handleRadioChange}
+                                  />
+                                </CCol>
+                              </fieldset>
+                            </CCol>
+
+                            <CCol md={6}>
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
-                              <CFormInput type="file" id="formFile"  onChange={(e) => {uploadFile(e)}}
-                                
+                              <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -383,14 +386,14 @@ const AddNewDriver = () => {
                               ) : null}
 
                             </CCol>
-                              <CCol xs={12}>
-                                <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                  <CButton type="submit" className="submit-btn">Submit</CButton>
-                                  <CButton type="button" className="cancel-btn">Cancel</CButton>
-                                </div>
-                              </CCol>
-                            </form>
-                         
+                            <CCol xs={12}>
+                              <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
+                                <CButton type="submit" className="submit-btn">Submit</CButton>
+                                <CButton type="button" className="cancel-btn">Cancel</CButton>
+                              </div>
+                            </CCol>
+                          </form>
+
 
                         </CCardBody>
                       </CCard>
