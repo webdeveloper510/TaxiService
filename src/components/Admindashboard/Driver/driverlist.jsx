@@ -14,37 +14,14 @@ import SideBar2 from "../SideBar2"
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 
-import avatar1 from '../../../assets/images/avtar1.jpg'
 import { getDriver } from "../../../utils/api";
 
-const tableExample = [
-  {
-    avatar: { src: avatar1 },
-    name: 'Rajesh',
-    mobileno: '9812365478',
-    email: 'test@gmail.com',
-    address: '34 Alex, Street',
-    joiningdate: '23 Fed 2023',
-    trips: '212',
-    status: 'On Trip'
-    //  action: { checkicon: checkiconimg },
-  },
-  {
-    avatar: { src: avatar1 },
-    name: 'Pardeep',
-    mobileno: '9812365478',
-    email: 'test@gmail.com',
-    address: '36 Alex, Street',
-    joiningdate: '23 June 2023',
-    trips: '100',
-    status: 'Available'
-    //  action: { checkicon: checkiconimg },
-  },
-]
+
 const DriverList = () => {
 
 
   const [driver, setDriver] = useState()
+  const image = process.env.REACT_APP_IMAGE_URL
 
 
   useEffect(() => {
@@ -99,7 +76,7 @@ const DriverList = () => {
                         <CTableRow className="text-center"  key={index}>
 
                           <CTableDataCell className="text-center">
-                            <CAvatar size="md"  />
+                            <CAvatar size="md" alt='img' src={`${image}${item.profile_image}`} />
                           </CTableDataCell>
 
                           <CTableDataCell>
