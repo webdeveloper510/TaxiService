@@ -111,4 +111,19 @@ export const getFare = async() => {
 };
 
 
+export const getTrip = async(data) => {
+  return await Axios.get(`admin/get_trip/${data}` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) .then((res) => {
+    console.log(res.data, "get Trip");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};
+
+
 

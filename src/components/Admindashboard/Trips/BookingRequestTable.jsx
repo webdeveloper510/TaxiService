@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState , useEffect} from "react";
 import {
     CTable,
     CTableBody,
@@ -12,6 +12,7 @@ import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
 import checkiconimg from '../../../assets/images/check-icon.png'
 import crossicon from '../../../assets/images/crossicon.png'
+import { getTrip } from "../../../utils/api";
 
   const tableExample = [
     {
@@ -36,6 +37,18 @@ import crossicon from '../../../assets/images/crossicon.png'
         },
   ]
 const BookingRequestTable=()=> {
+
+  const [bookingTrip , setBookingTrip] = useState()
+
+
+  useEffect(() => {
+    getTrip("Booked").then(res => {
+      console.log(res.result, 'vehicle')
+      if (res.code === 200) {
+        setBookingTrip(res.result)
+      }
+    })
+  }, []);
    
       return (
        <>
@@ -82,37 +95,37 @@ const BookingRequestTable=()=> {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
+                   {bookingTrip?.length ? bookingTrip.map((item, index) => (
                     <CTableRow  className="text-center" v-for="item in tableItems" key={index}>
                       
                       <CTableDataCell>
-                        <div>{item.tripId}</div>
+                        <div>{item._id}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.name}</div>
+                        <div>{item.driver_name}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.vechileType}</div>
+                        <div>{item.vehicle}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.from}</div>
+                        <div>{item.trip_from.log}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.to}</div>
+                        <div>{item.trip_to.log}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item.address}</div>
                       </CTableDataCell>
 
                       <CTableDataCell>
-                        <div>{item.dateandtime}</div>
+                        <div>{item.pickup_date_time}</div>
                       </CTableDataCell>                    
                       <CTableDataCell className="d-flex action-icons">
                        <div><img src={checkiconimg}/></div> 
                        <div><img src={crossicon}/></div>
                       </CTableDataCell>         
                     </CTableRow>
-                  ))}
+                  )) : "No Results"}
                 </CTableBody>
               </CTable>
          

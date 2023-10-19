@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState  , useEffect} from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
 import {
@@ -14,124 +14,114 @@ import refreshImg from '../../../assets/images/refresh.png';
 import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
 //import background from '../assets/images/heroimg.png';
-const tableExample = [
-  {
-  SrNo : '1',
-  tripId: 'ID123',
-  drivername: 'Yiorgos Avraamu',
-  tripfrom: 'Shimla',
-  tripto: 'Delhi',
-  time:'10:10AM',
-//  action: { checkicon: checkiconimg },
-  },
-  {
-  SrNo : '2',
-  tripId: 'ID456',
-  drivername: 'Avraamu',
-  tripfrom: 'Shimla',
-  tripto: 'Delhi',
-  time:'10:10AM',
-    //  action: { checkicon: cibCcMastercard },
-      },
-      {
- SrNo : '3',
- tripId: 'ID456',
-drivername: 'Avraamu',
- tripfrom: 'Shimla',
- tripto: 'Delhi',
-  time:'10:10AM',
-          //  action: { checkicon: cibCcMastercard },
-            },
-]
-const ActiveTrip=()=> {
-   
-      return (
-       <>
-       <div className="container-fluidd">
-       
-        <div className="col-md-12">
-       
-        <div>
-        <SideBar2/>
+import { getTrip } from "../../../utils/api";
 
-      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <AppHeader />
-        <div className="body flex-grow-1 px-3">
-          <h1 class="heading-for-every-page">Active Trip</h1>
-          <div class="active-trip-outer"> 
-          <div className="trips-head d-flex justify-content-between">
-            <div className="box-shd d-flex justify-content-between">
-            <div className="left-trip-content">
-          <h2>Active Trip</h2>
-          </div>
-          <div className="right-trip-content">
-            <img src={refreshImg}/>
-            <img src={downarrowImg}/>
-            <img src={crossImg}/>
-            </div>
-            </div>
-          </div>
-          <CTable align="middle" className="mb-0" hover responsive>
-          
-                <CTableHead>
-                
-                  <CTableRow>
-                    {/* <CTableHeaderCell className="text-center">
+
+
+
+
+const ActiveTrip = () => {
+
+  const [activeTrip , setActiveTrip] = useState()
+
+
+  useEffect(() => {
+    getTrip("Active").then(res => {
+      console.log(res.result, 'vehicle')
+      if (res.code === 200) {
+        setActiveTrip(res.result)
+      }
+    })
+  }, []);
+
+
+  return (
+    <>
+      <div className="container-fluidd">
+
+        <div className="col-md-12">
+
+          <div>
+            <SideBar2 />
+
+            <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+              <AppHeader />
+              <div className="body flex-grow-1 px-3">
+                <h1 class="heading-for-every-page">Active Trip</h1>
+                <div class="active-trip-outer">
+                  <div className="trips-head d-flex justify-content-between">
+                    <div className="box-shd d-flex justify-content-between">
+                      <div className="left-trip-content">
+                        <h2>Active Trip</h2>
+                      </div>
+                      <div className="right-trip-content">
+                        <img src={refreshImg} />
+                        <img src={downarrowImg} />
+                        <img src={crossImg} />
+                      </div>
+                    </div>
+                  </div>
+                  <CTable align="middle" className="mb-0" hover responsive>
+
+                    <CTableHead>
+
+                      <CTableRow>
+                        {/* <CTableHeaderCell className="text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell> */}
-                     <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
-                      <CTableDataCell >
-                        <div>{item.SrNo}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.tripId}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.drivername}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.tripfrom}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.tripto}</div>
-                      </CTableDataCell>
+                        <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {activeTrip?.length ? activeTrip.map((item, index) => (
+                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                          <CTableDataCell >
+                            <div>{index + 1}</div>
+                          </CTableDataCell>
+                          <CTableDataCell>
+                            <div>{item._id}</div>
+                          </CTableDataCell>
+                          <CTableDataCell>
+                            <div>{item.driver_name}</div>
+                          </CTableDataCell>
+                          <CTableDataCell>
+                            <div>{item.trip_from.lat}</div>
+                          </CTableDataCell>
+                          <CTableDataCell>
+                            <div>{item.trip_to.lat}</div>
+                          </CTableDataCell>
 
-                      <CTableDataCell>
-                        <div>{item.time}</div>
-                      </CTableDataCell>                    
-                      <CTableDataCell className="text-center location-icons">
-                       <div><img src={locationimg}/></div> 
-                      
-                      </CTableDataCell>         
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
-          
+                          <CTableDataCell>
+                            <div>{item.pickup_date_time}</div>
+                          </CTableDataCell>
+                          <CTableDataCell className="text-center location-icons">
+                            <div><img src={locationimg} /></div>
+
+                          </CTableDataCell>
+                        </CTableRow>
+                      )) : 'NO RESULT FOUND'}
+                    </CTableBody>
+                  </CTable>
+
+                </div>
+
+              </div>
+
+            </div>
           </div>
-        
+
         </div>
-       
       </div>
-    </div>
-      
-       </div>
-       </div>
-       <br/>
-       
-       </>
-      );
-    };
-  
-   export default ActiveTrip; 
+      <br />
+
+    </>
+  );
+};
+
+export default ActiveTrip; 

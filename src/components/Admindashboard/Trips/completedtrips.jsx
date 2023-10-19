@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState , useEffect} from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
 import {
@@ -14,40 +14,27 @@ import refreshImg from '../../../assets/images/refresh.png';
 import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
 //import background from '../assets/images/heroimg.png';
-const tableExample = [
-  {
-  SrNo : '1',
-  tripId: 'ID123',
-  drivername: 'Yiorgos Avraamu',
-  tripfrom: '34,Alx Street',
-  starttime: '12:34',
-  endtime: '01:15',
-  distance:'4.5KM',
-  fare: '$10'
-//  action: { checkicon: checkiconimg },
-  },
-  {
-    SrNo : '2',
-    tripId: 'ID123',
-    drivername: 'Avraamu',
-    tripfrom: '34,Alx Street',
-    starttime: '12:34',
-    endtime: '01:15',
-    distance:'4.5KM',
-    fare: '$10'
-      },
-      {
-        SrNo : '3',
-        tripId: 'ID123',
-        drivername: 'Yiorgos Avraamu',
-        tripfrom: '34,Alx Street',
-        starttime: '12:34',
-        endtime: '01:15',
-        distance:'4.5KM',
-        fare: '$10'
-            },
-]
+
+import { getTrip } from "../../../utils/api";
+
+
+
+
+
 const CompletedTrip=()=> {
+
+  const [completeTrip , setCompleteTrip] = useState()
+
+
+  useEffect(() => {
+    getTrip("Completed").then(res => {
+      console.log(res.result, 'vehicle')
+      if (res.code === 200) {
+        setCompleteTrip(res.result)
+      }
+    })
+  }, []);
+
    
       return (
        <>
@@ -95,26 +82,26 @@ const CompletedTrip=()=> {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
+                  {completeTrip?.length  ? completeTrip.map((item, index) => (
                     <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                       <CTableDataCell>
-                        <div>{item.SrNo}</div>
+                        <div>{index + 1}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.tripId}</div>
+                        <div>{item._id}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.drivername}</div>
+                        <div>{item.driver_name}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.tripfrom}</div>
+                        <div>{item.trip_from.log}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.starttime}</div>
+                        <div>{item.pickup_date_time}</div>
                       </CTableDataCell>
 
                       <CTableDataCell>
-                        <div>{item.endtime}</div>
+                        <div>{item.pickup_date_time}</div>
                       </CTableDataCell>   
                       <CTableDataCell>
                         <div>{item.distance}</div>
@@ -127,7 +114,7 @@ const CompletedTrip=()=> {
                       
                       </CTableDataCell>         
                     </CTableRow>
-                  ))}
+                  )) : 'No ResulT Found'}
                 </CTableBody>
               </CTable>
           
