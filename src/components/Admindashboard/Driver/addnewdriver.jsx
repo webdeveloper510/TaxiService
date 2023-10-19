@@ -244,8 +244,11 @@ const AddNewDriver = () => {
                                 )}
                                 name="Country"
                                 autoComplete="off" >
-                                <option>Choose...</option>
-                                <option>...</option>
+                                <option>India</option>
+                                <option>USA</option>
+                                <option>UK</option>
+                                <option>USA</option>
+                                <option>AUS</option>
                               </CFormSelect>
 
                               {formik.errors.Country && formik.touched.Country ? (

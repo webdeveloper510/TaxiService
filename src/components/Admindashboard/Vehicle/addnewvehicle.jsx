@@ -174,8 +174,11 @@ const AddNewVehicle = () => {
                                 name="vehicleType"
                                 autoComplete="off" >
 
-                                <option >Choose...</option>
-                                <option>...</option>
+                                <option >SUV</option>
+                                <option>Hatchback</option>
+                                <option>Convertible</option>
+                                <option>Sedan</option>
+
                               </CFormSelect>
                               {formik.errors.vehicleType && formik.touched.vehicleType ? (
                                 <div className="text-danger">{formik.errors.vehicleType}</div>
