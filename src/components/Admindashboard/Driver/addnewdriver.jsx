@@ -68,10 +68,18 @@ const AddNewDriver = () => {
     console.log(selectedFile)
   }
 
-  const handleRadioChange = (event) => {
-    formik.setFieldValue('Gender', event.target.value)
+  const [selectedGender, setSelectedGender] = useState('');
 
+  const handleGenderChange = (event) => {
+    setSelectedGender(event.target.value);
+    console.log(event.target.value);
+    formik.setFieldValue('Gender', event.target.value)
   };
+
+  // const handleRadioChange = (event) => {
+   
+
+  // };
 
   
   const formik = useFormik({
@@ -343,24 +351,26 @@ const AddNewDriver = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
                               <fieldset className="row mb-12">
-                               <CCol sm={12}>
-                                  <CFormCheck inline
-                                    type="radio"
-                                    name="gridRadios"
-                                    id="gridRadios1"
-                                    value="Male"
-                                    label="Male"
-
-                                  />
-                                  <CFormCheck inline
-                                    type="radio"
-                                    name="gridRadios"
-                                    id="gridRadios2"
-                                    value="Female"
-                                    label="Female"
-                                   
-                                  />
-                                </CCol>
+                              <CCol sm={12}>
+          <CFormCheck inline
+            type="radio"
+            name="gridRadios"
+            id="gridRadios1"
+            value="Male"
+            label="Male"
+            onChange={handleGenderChange} // Add the onChange event handler
+            checked={selectedGender === 'Male'} // Set the checked state if Male is selected
+          />
+          <CFormCheck inline
+            type="radio"
+            name="gridRadios"
+            id="gridRadios2"
+            value="Female"
+            label="Female"
+            onChange={handleGenderChange} // Add the onChange event handler
+            checked={selectedGender === 'Female'} // Set the checked state if Female is selected
+          />
+        </CCol>
                               </fieldset>
                             </CCol>
 

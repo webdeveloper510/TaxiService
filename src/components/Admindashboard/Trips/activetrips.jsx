@@ -1,4 +1,4 @@
-import React, { useState  , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
 import {
@@ -19,20 +19,26 @@ import { getTrip } from "../../../utils/api";
 
 
 
-
 const ActiveTrip = () => {
 
-  const [activeTrip , setActiveTrip] = useState()
+  const [activeTrip, setActiveTrip] = useState()
+
+  const [address, setAddress] = useState({});
+
+  
 
 
   useEffect(() => {
+   
     getTrip("Active").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setActiveTrip(res.result)
       }
     })
+  
   }, []);
+
 
 
   return (
@@ -47,8 +53,8 @@ const ActiveTrip = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Active Trip</h1>
-                <div class="active-trip-outer">
+                <h1 className="heading-for-every-page">Active Trip</h1>
+                <div className="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
@@ -80,32 +86,33 @@ const ActiveTrip = () => {
                     </CTableHead>
                     <CTableBody>
                       {activeTrip?.length ? activeTrip.map((item, index) => (
-                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
-                          <CTableDataCell >
-                            <div>{index + 1}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item._id}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.driver_name}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.trip_from.lat}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.trip_to.lat}</div>
-                          </CTableDataCell>
+                        <>
+                          <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
+                            <CTableDataCell >
+                              <div>{index + 1}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item._id}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item.driver_name}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item.trip_from.address}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item.trip_to.address}</div>
+                            </CTableDataCell>
 
-                          <CTableDataCell>
-                            <div>{item.pickup_date_time}</div>
-                          </CTableDataCell>
-                          <CTableDataCell className="text-center location-icons">
-                            <div><img src={locationimg} /></div>
+                            <CTableDataCell>
+                              <div>{item.pickup_date_time}</div>
+                            </CTableDataCell>
+                            <CTableDataCell className="text-center location-icons">
+                              <div><img src={locationimg} /></div>
 
-                          </CTableDataCell>
-                        </CTableRow>
-                      )) : 'NO RESULT FOUND'}
+                            </CTableDataCell>
+                          </CTableRow>
+                        </>)) : 'NO RESULT FOUND'}
                     </CTableBody>
                   </CTable>
 

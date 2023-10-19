@@ -13,8 +13,9 @@ import locationimg from '../../../assets/images/location.png';
 import refreshImg from '../../../assets/images/refresh.png';
 import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
+import moment from "moment"
 //import background from '../assets/images/heroimg.png';
-
+import * as geolib  from "geolib";
 import { getTrip } from "../../../utils/api";
 
 
@@ -48,8 +49,8 @@ const CompletedTrip=()=> {
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
         <div className="body flex-grow-1 px-3">
-          <h1 class="heading-for-every-page">Completed Trip </h1>
-          <div class="active-trip-outer"> 
+          <h1 className="heading-for-every-page">Completed Trip </h1>
+          <div className="active-trip-outer"> 
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
             <div className="left-trip-content">
@@ -83,7 +84,7 @@ const CompletedTrip=()=> {
                 </CTableHead>
                 <CTableBody>
                   {completeTrip?.length  ? completeTrip.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                    <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
                       <CTableDataCell>
                         <div>{index + 1}</div>
                       </CTableDataCell>
@@ -97,14 +98,24 @@ const CompletedTrip=()=> {
                         <div>{item.trip_from.log}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.pickup_date_time}</div>
+                        <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
                       </CTableDataCell>
 
                       <CTableDataCell>
-                        <div>{item.pickup_date_time}</div>
+                        <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
                       </CTableDataCell>   
                       <CTableDataCell>
-                        <div>{item.distance}</div>
+                        <div>{`${ 
+                        geolib.getDistance({
+                          latitude: item.trip_from.log,
+                          longitude: item.trip_from.lat
+                        },
+                        {
+                          latitude: item.trip_to.log,
+                          longitude: item.trip_to.lat
+                        }
+                        )/1000
+                        } Km`}</div>
                       </CTableDataCell>   
                       <CTableDataCell>
                         <div>{item.fare}</div>

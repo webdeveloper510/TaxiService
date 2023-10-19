@@ -16,6 +16,7 @@ import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
+import moment from "moment"
   // const tableExample = [
   //   {
   //   tri: '123',
@@ -105,26 +106,26 @@ const BookingRequestTable=()=> {
                     <CTableRow  className="text-center" v-for="item in tableItems" key={index}>
                       
                       <CTableDataCell>
+                        <div>{index + 1}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
                         <div>{item._id}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <div>{item.passenger_detail.length}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                      <div>{item.trip_from.address}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                      <div>{item.trip_to.address}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item.driver_name}</div>
                       </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.vehicle}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.trip_from.log}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.trip_to.log}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.address}</div>
-                      </CTableDataCell>
 
                       <CTableDataCell>
-                        <div>{item.pickup_date_time}</div>
+                      <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
                       </CTableDataCell>                    
                       <CTableDataCell className="d-flex action-icons booking-icons">
                                 <div><img src={editiconimg} /></div>

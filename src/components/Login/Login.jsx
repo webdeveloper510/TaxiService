@@ -60,7 +60,7 @@ function Login() {
           navigate("/dashboard")
 
         } else {
-          toast.warning(`${response.data.message}`, {
+          toast.warning("Invalid Credentials", {
             position: 'top-right',
             autoClose: 1000,
           });
