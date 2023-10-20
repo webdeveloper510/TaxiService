@@ -1,10 +1,10 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import background from '../assets/images/heroimg.png';
 import {
   CButton,
@@ -35,9 +35,9 @@ const AddNewVehicle = () => {
     vehicleType: "",
     vehicleModal: "",
     seatingCapacity: "",
-    pricePerKm: "",
-    minimumFare: "",
-    commission: "",
+    // pricePerKm: "",
+    // minimumFare: "",
+    // commission: "",
     passengerTimeLimit: "",
     passengerCharges: "",
     vehicleinsuranceDate: new Date(),
@@ -50,9 +50,9 @@ const AddNewVehicle = () => {
     vehicleType: Yup.string().required("Vehicle Type is required"),
     vehicleModal: Yup.string().required("Vehicle Modal is required"),
     seatingCapacity: Yup.string().required("Seating Capacity is required"),
-    pricePerKm: Yup.string().required("Price per km is required"),
-    minimumFare: Yup.string().required("Minimum Fare is required"),
-    commission: Yup.string().required("Commission is required"),
+    // pricePerKm: Yup.string().required("Price per km is required"),
+    // minimumFare: Yup.string().required("Minimum Fare is required"),
+    // commission: Yup.string().required("Commission is required"),
     passengerTimeLimit: Yup.string().required("Passenger Time Limit is required"),
     passengerCharges: Yup.string().required("Passenger Cancellation Charges is required"),
     vehicleinsuranceDate: Yup.date().required("Insurance Renewal Date is required"),
@@ -60,7 +60,7 @@ const AddNewVehicle = () => {
     AC: Yup.string().required("Gender is required"),
   });
 
-  const [vehicleType , setVehicleType] = useState()
+  const [vehicleType, setVehicleType] = useState()
 
   const [selectedAC, setSelectedAC] = useState('');
 
@@ -71,14 +71,14 @@ const AddNewVehicle = () => {
   };
 
   useEffect(() => {
-   
+
     getVehicleType("Active").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setVehicleType(res.result)
       }
     })
-  
+
   }, []);
 
 
@@ -96,7 +96,7 @@ const AddNewVehicle = () => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
   }
- 
+
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
@@ -105,28 +105,28 @@ const AddNewVehicle = () => {
 
       const formData = new FormData();
 
-      formData.append('vehicle_number' , values.vehicleNo );
-      formData.append('vehicle_type' , values.vehicleType);
-      formData.append('vehicle_model' , values.vehicleModal);
-      formData.append('seating_capacity' , values.seatingCapacity);
-      formData.append('price_per_km' , values.pricePerKm);
-      formData.append('minimum_fare' , values.minimumFare);
-      formData.append('commision' , values.commission);
-      formData.append('cancelation_time_limit' , values.passengerTimeLimit);
-      formData.append('cancelation_charges' ,values.passengerCharges);
-      formData.append('insurance_renewal_date' , values.vehicleinsuranceDate);
-      formData.append('vehicle_photo'  , values.file)
-      formData.append('AC' , values.AC)
+      formData.append('vehicle_number', values.vehicleNo);
+      formData.append('vehicle_type', values.vehicleType);
+      formData.append('vehicle_model', values.vehicleModal);
+      formData.append('seating_capacity', values.seatingCapacity);
+      // formData.append('price_per_km', values.pricePerKm);
+      // formData.append('minimum_fare', values.minimumFare);
+      // formData.append('commision', values.commission);
+      formData.append('cancelation_time_limit', values.passengerTimeLimit);
+      formData.append('cancelation_charges', values.passengerCharges);
+      formData.append('insurance_renewal_date', values.vehicleinsuranceDate);
+      formData.append('vehicle_photo', values.file)
+      formData.append('AC', values.AC)
 
       addVehicle(formData).then((res) => {
         console.log("response---->>>>", res)
-        if(res.data.code === 200) {
+        if (res.data.code === 200) {
           toast.success(`${res.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
           navigate("/vehicle/viewallvehicle")
-        }else {
+        } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
@@ -134,7 +134,7 @@ const AddNewVehicle = () => {
         }
       })
 
-    
+
     },
   });
 
@@ -257,7 +257,8 @@ const AddNewVehicle = () => {
                                 <div className="text-danger">{formik.errors.seatingCapacity}</div>
                               ) : null}
                             </CCol>
-                            <CCol xs={6}>
+                            
+                            {/* <CCol xs={6}>
                               <CFormLabel htmlFor="inputpricekm">Price per k/m (in $) </CFormLabel>
                               <CFormInput  {...formik.getFieldProps("pricePerKm")}
                                 maxLength="50"
@@ -320,7 +321,9 @@ const AddNewVehicle = () => {
                               {formik.errors.commission && formik.touched.commission ? (
                                 <div className="text-danger">{formik.errors.commission}</div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
+
+
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minute)</CFormLabel>
                               <CFormInput id="inputpassengertimelimit"  {...formik.getFieldProps("passengerTimeLimit")}
@@ -398,34 +401,34 @@ const AddNewVehicle = () => {
                             <CCol md={6}>
                               {/* <CFormLabel htmlFor="inputgender">Gender</CFormLabel> */}
                               <fieldset className="row mb-12">
-                              <CCol sm={12}>
-          <CFormCheck inline
-            type="radio"
-            name="gridRadios"
-            id="gridRadios1"
-            value="true"
-            label="AC"
-            onChange={handleACtype} // Add the onChange event handler
-            checked={selectedAC === 'true'} // Set the checked state if Male is selected
-          />
-          <CFormCheck inline
-            type="radio"
-            name="gridRadios"
-            id="gridRadios2"
-            value="false"
-            label="NON-AC"
-            onChange={handleACtype} // Add the onChange event handler
-            checked={selectedAC === 'false'} // Set the checked state if Female is selected
-          />
-        </CCol>
+                                <CCol sm={12}>
+                                  <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios1"
+                                    value="true"
+                                    label="AC"
+                                    onChange={handleACtype} // Add the onChange event handler
+                                    checked={selectedAC === 'true'} // Set the checked state if Male is selected
+                                  />
+                                  <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios2"
+                                    value="false"
+                                    label="NON-AC"
+                                    onChange={handleACtype} // Add the onChange event handler
+                                    checked={selectedAC === 'false'} // Set the checked state if Female is selected
+                                  />
+                                </CCol>
                               </fieldset>
                             </CCol>
 
                             <CCol md={12} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Vehicle Documents</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
-                              <CFormInput type="file" id="formFile"  onChange={(e) => {uploadFile(e)}}
-                                
+                              <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -443,12 +446,12 @@ const AddNewVehicle = () => {
                               {formik.errors.file && formik.touched.file ? (
                                 <div className="text-danger">{formik.errors.file}</div>
                               ) : null}
-                                 <label htmlFor="formFile" className="custom-file-upload">
-                                  <div className="files-outer">
-                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
-                                    <span>Drop files here or click to upload.</span>
-                                    </div>
-                                  </label>
+                              <label htmlFor="formFile" className="custom-file-upload">
+                                <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg} /><br /><br />
+                                  <span>Drop files here or click to upload.</span>
+                                </div>
+                              </label>
                             </CCol>
 
                             <CCol xs={12}>
