@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
   CFormInput,
   CFormLabel,
   CRow,
+  CFormSelect
 } from '@coreui/react'
 import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
@@ -19,7 +20,7 @@ import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import { addFare } from "../../../utils/api";
 import { toast } from 'react-toastify';
-
+import { getVehicleType } from "../../../utils/api";
 //import background from '../assets/images/heroimg.png';
 
 const AddFare = () => {
@@ -45,6 +46,23 @@ const AddFare = () => {
     waiting_fare: Yup.string().required("Waiting Fare is required"),
 
   });
+
+  const [vehicleType , setVehicleType] = useState()
+
+  useEffect(() => {
+   
+    getVehicleType("Active").then(res => {
+      console.log(res.result, 'vehicle')
+      if (res.code === 200) {
+        setVehicleType(res.result)
+      }
+    })
+  
+  }, []);
+
+  const back = () => {
+    formik.resetForm();
+  }
 
 
   const formik = useFormik({
@@ -111,7 +129,38 @@ const AddFare = () => {
 
                          
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
-                            <CCol md={6}>
+                          <CCol md={6}>
+                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
+                              <CFormSelect  {...formik.getFieldProps("vehicle_type")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.vehicle_type && formik.errors.vehicle_type,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.vehicle_type && !formik.errors.vehicle_type,
+                                  }
+                                )}
+                                name="vehicle_type"
+                                autoComplete="off" >
+
+                                <option >Select</option>
+                                {vehicleType?.map((e, i) => {
+                                  return (
+                                    <>
+                                      <option value={e.name} >{e.name}</option>
+                                    </>
+                                  )
+                                })}
+                              </CFormSelect>
+                              {formik.errors.vehicle_type && formik.touched.vehicle_type ? (
+                                <div className="text-danger">{formik.errors.vehicle_type}</div>
+                              ) : null}
+                            </CCol>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicle_type">Vehicle Type</CFormLabel>
                               <CFormInput aria-label="vehicle type"  {...formik.getFieldProps("vehicle_type")}
                                 maxLength="50"
@@ -131,7 +180,7 @@ const AddFare = () => {
                               {formik.errors.vehicle_type && formik.touched.vehicle_type ? (
                                 <div className="text-danger">{formik.errors.vehicle_type}</div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare Per KM</CFormLabel>
                               <CFormInput aria-label="vehicle fare" {...formik.getFieldProps("vehicle_fare_per_km")}
@@ -221,7 +270,7 @@ const AddFare = () => {
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                                 <CButton type="submit" className="submit-btn">Submit</CButton>
-                                <CButton type="button" className="cancel-btn">Cancel</CButton>
+                                <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                               </div>
                             </CCol>
                           </form>

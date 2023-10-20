@@ -76,6 +76,11 @@ const AddNewDriver = () => {
     formik.setFieldValue('Gender', event.target.value)
   };
 
+
+  const back = () => {
+    formik.resetForm();
+  }
+
   // const handleRadioChange = (event) => {
    
 
@@ -252,6 +257,7 @@ const AddNewDriver = () => {
                                 )}
                                 name="Country"
                                 autoComplete="off" >
+                                  <option>Select...</option>
                                 <option>India</option>
                                 <option>USA</option>
                                 <option>UK</option>
@@ -440,7 +446,7 @@ const AddNewDriver = () => {
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                                 <CButton type="submit" className="submit-btn">Submit</CButton>
-                                <CButton type="button" className="cancel-btn">Cancel</CButton>
+                                <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                               </div>
                             </CCol>
                           </form>

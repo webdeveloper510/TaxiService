@@ -82,6 +82,11 @@ const AddNewVehicle = () => {
   }, []);
 
 
+  const back = () => {
+    formik.resetForm();
+  }
+
+
   const handlevehicleInsuranceDateChange = (date) => {
     setInsuranceDate(date);
     formik.setFieldValue('vehicleinsuranceDate', date)
@@ -449,7 +454,7 @@ const AddNewVehicle = () => {
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                                 <CButton type="submit" className="submit-btn">Submit</CButton>
-                                <CButton type="button" className="cancel-btn">Cancel</CButton>
+                                <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                               </div>
                             </CCol>
                           </form>
