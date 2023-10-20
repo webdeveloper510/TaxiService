@@ -99,7 +99,7 @@ const DriverList = () => {
                             <div>Delhi to Chd</div>
                           </CTableDataCell>
                           <CTableDataCell>
-                            <div class="status">{item.city}</div>
+                            <div class="status">Available</div>
                           </CTableDataCell>
                           <CTableDataCell className="d-flex action-icons driver-icons">
                             <div><img src={editiconimg} /></div>
