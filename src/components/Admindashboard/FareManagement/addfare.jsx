@@ -147,7 +147,7 @@ const AddFare = () => {
                                 name="vehicle_type"
                                 autoComplete="off" >
 
-                                <option >Select</option>
+                                <option default>Select Vehicle</option>
                                 {vehicleType?.map((e, i) => {
                                   return (
                                     <>
