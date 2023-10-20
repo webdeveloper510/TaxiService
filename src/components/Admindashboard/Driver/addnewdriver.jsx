@@ -143,7 +143,7 @@ const AddNewDriver = () => {
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                 <h1 class="heading-for-every-page">Add New Driver</h1>
                 <div class="active-trip-outer">
-                  <h2>Add New Driver</h2>
+                  {/* <h2>Add New Driver</h2> */}
                   <CRow>
 
                     <CCol xs={12}>
@@ -257,7 +257,7 @@ const AddNewDriver = () => {
                                 )}
                                 name="Country"
                                 autoComplete="off" >
-                                  <option>Select...</option>
+                                  <option default>Select Country</option>
                                 <option>India</option>
                                 <option>USA</option>
                                 <option>UK</option>
@@ -439,7 +439,7 @@ const AddNewDriver = () => {
                                   <label htmlFor="formFile" className="custom-file-upload">
                                   <div className="files-outer">
                                   <img className="upload-icon" src={uploadfileImg}/><br/><br/>
-                                    <span>Drop files here or click to upload.</span>
+                                    <span>Drop Image Here ...</span>
                                     </div>
                                   </label>
                             </CCol>

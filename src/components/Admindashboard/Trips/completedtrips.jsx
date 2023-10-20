@@ -54,7 +54,7 @@ const CompletedTrip=()=> {
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
             <div className="left-trip-content">
-          <h2>Completed Trip</h2>
+          {/* <h2>Completed Trip</h2> */}
           </div>
           <div className="right-trip-content">
             <img src={refreshImg}/>
@@ -75,10 +75,11 @@ const CompletedTrip=()=> {
                     <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">End Time</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Distance</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Fare</CTableHeaderCell>
+                    {/* <CTableHeaderCell className="text-center">Fare</CTableHeaderCell> */}
                     <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -89,13 +90,16 @@ const CompletedTrip=()=> {
                         <div>{index + 1}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item._id}</div>
+                        <div>{item.trip_id}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item.driver_name}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.trip_from.log}</div>
+                        <div>{item.trip_from.address}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <div>{item.trip_to.address}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
@@ -105,7 +109,7 @@ const CompletedTrip=()=> {
                         <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
                       </CTableDataCell>   
                       <CTableDataCell>
-                        <div>{`${ 
+                        <div>{`${(
                         geolib.getDistance({
                           latitude: item.trip_from.log,
                           longitude: item.trip_from.lat
@@ -114,18 +118,18 @@ const CompletedTrip=()=> {
                           latitude: item.trip_to.log,
                           longitude: item.trip_to.lat
                         }
-                        )/1000
-                        } Km`}</div>
+                        )* 0.00062137).toFixed(2)
+                        } Miles`}</div>
                       </CTableDataCell>   
-                      <CTableDataCell>
+                      {/* <CTableDataCell>
                         <div>{item.fare}</div>
-                      </CTableDataCell>              
+                      </CTableDataCell>               */}
                       <CTableDataCell className="text-center location-icons">
                        <div><img src={locationimg}/></div> 
                       
                       </CTableDataCell>         
                     </CTableRow>
-                  )) : 'No ResulT Found'}
+                  )) : ''}
                 </CTableBody>
               </CTable>
           

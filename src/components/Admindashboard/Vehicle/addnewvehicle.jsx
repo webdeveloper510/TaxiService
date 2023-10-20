@@ -63,6 +63,8 @@ const AddNewVehicle = () => {
   const [vehicleType, setVehicleType] = useState()
 
   const [selectedAC, setSelectedAC] = useState('');
+  // const [image , setImage] = useState(false);
+  // const[showimg , setShowingImage] = useState(true);
 
   const handleACtype = (event) => {
     setSelectedAC(event.target.value);
@@ -95,6 +97,8 @@ const AddNewVehicle = () => {
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
+  
+   
   }
 
   const formik = useFormik({
@@ -152,7 +156,7 @@ const AddNewVehicle = () => {
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                 <h1 class="heading-for-every-page">Add New Vehicle</h1>
                 <div class="active-trip-outer">
-                  <h2>Add New Vehicle</h2>
+                  {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
                   <CRow>
 
@@ -202,7 +206,7 @@ const AddNewVehicle = () => {
                                 name="vehicleType"
                                 autoComplete="off" >
 
-                                <option >Select</option>
+                                <option default>Select Vehicle Type</option>
                                 {vehicleType?.map((e, i) => {
                                   return (
                                     <>
@@ -216,7 +220,7 @@ const AddNewVehicle = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Modal</CFormLabel>
+                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
                               <CFormInput   {...formik.getFieldProps("vehicleModal")}
                                 maxLength="50"
                                 className={clsx(
@@ -325,7 +329,7 @@ const AddNewVehicle = () => {
 
 
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minute)</CFormLabel>
+                              <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
                               <CFormInput id="inputpassengertimelimit"  {...formik.getFieldProps("passengerTimeLimit")}
                                 maxLength="50"
                                 className={clsx(
@@ -346,7 +350,7 @@ const AddNewVehicle = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in $) </CFormLabel>
+                              <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
                               <CFormInput id="inputpassengercharges"  {...formik.getFieldProps("passengerCharges")}
                                 maxLength="50"
                                 className={clsx(
@@ -425,8 +429,9 @@ const AddNewVehicle = () => {
                             </CCol>
 
                             <CCol md={12} className="upload-file-input">
-                              <CFormLabel htmlFor="inputmobile">Upload Vehicle Documents</CFormLabel>
+                              <CFormLabel htmlFor="inputmobile">Upload Vehicle Image</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
+                              {}
                               <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"
@@ -449,7 +454,7 @@ const AddNewVehicle = () => {
                               <label htmlFor="formFile" className="custom-file-upload">
                                 <div className="files-outer">
                                   <img className="upload-icon" src={uploadfileImg} /><br /><br />
-                                  <span>Drop files here or click to upload.</span>
+                                  <span>Drop Image Here ...</span>
                                 </div>
                               </label>
                             </CCol>

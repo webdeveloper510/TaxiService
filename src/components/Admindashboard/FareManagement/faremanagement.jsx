@@ -100,10 +100,10 @@ const FareManagement = () => {
                     </CTableHeaderCell> */}
                         <CTableHeaderCell className="text-center">Sr No.</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Fare Per KM</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Minimum Fare</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Minimum Distance</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Waiting Fare</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Fare Per Miles</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Minimum Fare (€)</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Minimum Distance Per Miles</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Waiting Fare (€)</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                       </CTableRow>
                     </CTableHead>

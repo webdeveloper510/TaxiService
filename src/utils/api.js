@@ -4,7 +4,7 @@ Axios.defaults.baseURL = API_URL;
 let token = localStorage.getItem("token");
 
 export const userLogin = async (data) => {
-  return await Axios.post(`/admin/login`, data, {
+  const response = await Axios.post(`/admin/login`, data, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -16,6 +16,9 @@ export const userLogin = async (data) => {
     .catch((error) => {
       console.log("USER-LOGIN", error);
     });
+    console.log("response userlogin >>>>>>>",response);
+    token = response.data.jwtToken
+    return response
 };
 
 export const addVehicle = async (data) => {

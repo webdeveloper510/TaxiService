@@ -49,11 +49,11 @@ const DriverList = () => {
                 <h1 class="heading-for-every-page">List of all Drivers </h1>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
-                      <div className="left-trip-content">
-                        <h2>List of all Drivers </h2>
-                      </div>
-                    </div>
+                    {/* <div className="box-shd d-flex justify-content-between"> */}
+                      {/* <div className="left-trip-content"> */}
+                        {/* <h2>List of all Drivers </h2> */}
+                      {/* </div> */}
+                    {/* </div> */}
                   </div>
                   <CTable align="middle" className="mb-0" hover responsive>
 

@@ -144,16 +144,16 @@ const AddNewTrip = () => {
 
                     <CCol xs={12}>
                       <CCard className="mb-4">
-                        <CCardHeader>
+                        {/* <CCardHeader>
                           <strong>Add Trip Details</strong>
-                        </CCardHeader>
+                        </CCardHeader> */}
                         <CCardBody>
 
                           <CForm className="row g-3">
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputtripdname">Driver Name</CFormLabel>
                               <CFormSelect name="driver_name" onChange={inputHandler}>
-                                <option value="">select</option>
+                                <option default>Select Driver</option>
                                 {driver?.map((e, i) => {
                                   return (
                                     <>
@@ -168,7 +168,7 @@ const AddNewTrip = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">Vehicle</CFormLabel>
                               <CFormSelect name="vehicle" onChange={inputHandler}>
-                                <option value="">select</option>
+                                <option default>Select Vehicle</option>
                                 {vehicle?.map((e, i) => {
                                   return (
                                     <>

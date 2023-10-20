@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink  , useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
@@ -20,6 +20,14 @@ import expandicon from '../../assets/images/hedercrossicon.png'
 const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+const navigate = useNavigate()
+
+ const  logout = () => {
+  console.log("herlo")
+    localStorage.clear()
+    navigate("/")
+  }
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -63,6 +71,7 @@ const AppHeader = () => {
               <CIcon icon={cilEnvelopeOpen} size="lg" />
             </CNavLink>
           </CNavItem>
+          <button className='btn btn-warning text-white  '  onClick={logout} >Logout</button>
         </CHeaderNav>
         {/* <CHeaderNav className="ms-3">
           <AppHeaderDropdown />

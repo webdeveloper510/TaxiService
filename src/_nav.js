@@ -170,7 +170,7 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'View All Vehicle',
+        name: 'View All Vehicles',
         to: '/vehicle/viewallvehicle',
         
       },

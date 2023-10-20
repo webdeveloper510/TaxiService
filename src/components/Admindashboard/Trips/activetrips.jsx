@@ -58,7 +58,7 @@ const ActiveTrip = () => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Active Trip</h2>
+                        {/* <h2>Active Trip</h2> */}
                       </div>
                       <div className="right-trip-content">
                         <img src={refreshImg} />
@@ -92,7 +92,7 @@ const ActiveTrip = () => {
                               <div>{index + 1}</div>
                             </CTableDataCell>
                             <CTableDataCell>
-                              <div>{item._id}</div>
+                              <div>{item.trip_id}</div>
                             </CTableDataCell>
                             <CTableDataCell>
                               <div>{item.driver_name}</div>
@@ -112,7 +112,7 @@ const ActiveTrip = () => {
 
                             </CTableDataCell>
                           </CTableRow>
-                        </>)) : 'NO RESULT FOUND'}
+                        </>)) : ''}
                     </CTableBody>
                   </CTable>
 
