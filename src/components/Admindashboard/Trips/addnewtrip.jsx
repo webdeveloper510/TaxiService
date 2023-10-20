@@ -17,9 +17,14 @@ import {
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getDriver, getVehicle } from "../../../utils/api";
-
+import { addTrip } from "../../../utils/api";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const AddNewTrip = () => {
+
+  const navigate = useNavigate();
+
   const [pickupDate, setpickupDate] = useState(new Date());
   const [passengers, setPassengers] = useState([]);
   const [vehicle, setVehicle] = useState();
@@ -28,10 +33,10 @@ const AddNewTrip = () => {
   const [inputData, setInputData] = useState({
     driver_name: '',
     vehicle: '',
-    trip_from: '',
-    trip_to: '',
-    date: '',
-    passenger_detail: [{ name: '', email: '', phone: '', address: '' }]
+    trip_from: { address: '' },
+    trip_to: { address: '' },
+    pick_up_date: '',
+    passenger_detail: []
   })
 
   const handlepickupDateChange = (date) => {
@@ -39,13 +44,13 @@ const AddNewTrip = () => {
 
     setInputData({
       ...inputData,
-      date: date
+      pick_up_date: date
     })
 
   };
 
   const addPassenger = () => {
-    setPassengers([...passengers, {}]);
+    setPassengers([...passengers, { name: '', email: '', phone: '', address: '' }]);
   };
 
   const removePassenger = (index) => {
@@ -75,29 +80,48 @@ const AddNewTrip = () => {
   }, [])
 
   const inputHandler = (e) => {
-
-    setInputData({
-      ...inputData,
-      [e.target.name]: e.target.value
-    })
+    if (e.target.name === "trip_from" || e.target.name === "trip_to") {
+      let trip = inputData[e.target.name]
+      trip.address = e.target.value;
+      setInputData({ ...inputData, [e.target.name]: trip })
+    } else {
+      setInputData({
+        ...inputData,
+        [e.target.name]: e.target.value
+      })
+    }
   }
 
-  // console.log(inputData)
 
   const addOnChangeHandler = (e, index) => {
     let arr = passengers;
+    console.log(passengers)
     let obj = arr[index]
     obj[e.target.name] = e.target.value
     arr[index] = obj;
     setPassengers([...arr])
   }
 
-  // console.log(passengers)
 
   const adddata = () => {
-    inputData.passenger_detail.push(passengers)
+    let data = inputData
+    data.passenger_detail = passengers
+    addTrip(data).then((res) => {
+      console.log("response---->>>>", res)
+      if (res.data.code === 200) {
+        toast.success(`${res.data.message}`, {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        navigate("/trips/requestbookings")
+      } else {
+        toast.warning(`${res.data.message}`, {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      }
+    })
 
-    console.log(inputData)
 
   }
 
@@ -129,10 +153,11 @@ const AddNewTrip = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputtripdname">Driver Name</CFormLabel>
                               <CFormSelect name="driver_name" onChange={inputHandler}>
+                                <option value="">select</option>
                                 {driver?.map((e, i) => {
                                   return (
                                     <>
-                                      <option >{e.first_name}</option>
+                                      <option value={e._id}>{e.first_name}</option>
                                     </>
                                   )
                                 })}
@@ -143,11 +168,11 @@ const AddNewTrip = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">Vehicle</CFormLabel>
                               <CFormSelect name="vehicle" onChange={inputHandler}>
-
+                                <option value="">select</option>
                                 {vehicle?.map((e, i) => {
                                   return (
                                     <>
-                                      <option >{e.vehicle_model}</option>
+                                      <option value={e._id} >{e.vehicle_model}</option>
                                     </>
                                   )
                                 })}
@@ -186,7 +211,7 @@ const AddNewTrip = () => {
                         <CCard className="mb-4">
                           <CCardHeader>
                             <strong>Passenger Details</strong>
-                            {index > 0 && (
+                            {index >= 0 && (
                               <CButton
                                 type="button"
                                 onClick={() => removePassenger(index)}

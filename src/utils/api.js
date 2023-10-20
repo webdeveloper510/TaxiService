@@ -127,3 +127,16 @@ export const getTrip = async(data) => {
 
 
 
+export const addTrip = async (data) => {
+  return await Axios.post(`admin/add_trip` ,data , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) .then((res) => {
+    console.log(res, "add_trip");
+    return res;
+  })
+  .catch((error) => {
+    console.log("ADD_TRIP", error);
+  });
+}
