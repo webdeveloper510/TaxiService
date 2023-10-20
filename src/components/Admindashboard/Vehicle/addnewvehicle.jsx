@@ -364,7 +364,7 @@ const AddNewVehicle = () => {
                               ) : null}
                             </CCol>
 
-                            <CCol md={6}>
+                            <CCol md={6} className="date_pic">
                               <CFormLabel htmlFor="inputinsurancedate">Insurance Renewal Date</CFormLabel><br />
                               <DatePicker
                                 selected={vehicleinsuranceDate}

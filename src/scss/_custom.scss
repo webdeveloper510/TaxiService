@@ -347,3 +347,32 @@ label.custom-file-upload {
 table.table.align-middle.table-hover.mb-0 tr td {
     font-size: 14px;
 }
+.dashboard-chart {
+    background: #fff;
+    padding: 14px;
+}
+.dashboard-chart p {
+    font-size: 14px;
+    font-weight: 500;
+}
+.d-flex.chart-stats {
+    justify-content: space-evenly;
+}
+.d-flex.chart-stats {
+    justify-content: space-evenly;
+    padding-top: 10px;
+    margin-bottom: 6px;
+    text-align: center;
+}
+.d-flex.chart-stats strong {
+    font-size: 19px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+}
+.date_pic {
+    z-index: 999;
+}
+.upload-file-input {
+    position: relative;
+    z-index: 9;
+}
