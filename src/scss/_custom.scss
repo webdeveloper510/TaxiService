@@ -376,7 +376,14 @@ table.table.align-middle.table-hover.mb-0 tr td {
     position: relative;
     z-index: 9;
 }
+
+
+.body.flex-grow-1.px-3 {
+    padding-top: 90px;
+}
+
 .header.header-sticky {
     position: fixed;
     width: -webkit-fill-available;
+    padding-top: 6px;
 }
