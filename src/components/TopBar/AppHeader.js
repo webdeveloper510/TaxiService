@@ -13,7 +13,8 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons';
-
+import menubar from '../../assets/images/menu-bar.png'
+import expandicon from '../../assets/images/hedercrossicon.png'
 // import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
@@ -27,7 +28,8 @@ const AppHeader = () => {
           className="ps-1"
           onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
         >
-          <CIcon icon={cilMenu} size="lg" />
+          {/* <CIcon icon={cilMenu} size="lg" /> */}
+          <img src={menubar}/>
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
           {/* <CIcon icon={logo} height={48} alt="Logo" /> */}
@@ -35,15 +37,15 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/dashboard" component={NavLink}>
-              Dashboard
+            <img src={expandicon}/>
             </CNavLink>
           </CNavItem>
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink href="#">Users</CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink href="#">Settings</CNavLink>
-          </CNavItem>
+          </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav>
           <CNavItem>

@@ -376,3 +376,7 @@ table.table.align-middle.table-hover.mb-0 tr td {
     position: relative;
     z-index: 9;
 }
+.header.header-sticky {
+    position: fixed;
+    width: -webkit-fill-available;
+}

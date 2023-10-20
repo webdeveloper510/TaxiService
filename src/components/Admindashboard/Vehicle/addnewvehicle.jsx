@@ -257,7 +257,7 @@ const AddNewVehicle = () => {
                                 <div className="text-danger">{formik.errors.seatingCapacity}</div>
                               ) : null}
                             </CCol>
-                            
+
                             {/* <CCol xs={6}>
                               <CFormLabel htmlFor="inputpricekm">Price per k/m (in $) </CFormLabel>
                               <CFormInput  {...formik.getFieldProps("pricePerKm")}
@@ -399,9 +399,9 @@ const AddNewVehicle = () => {
                             </CCol>
 
                             <CCol md={6}>
-                              {/* <CFormLabel htmlFor="inputgender">Gender</CFormLabel> */}
+                              <CFormLabel htmlFor="inputgender" ></CFormLabel>
                               <fieldset className="row mb-12">
-                                <CCol sm={12}>
+                                <CCol sm={12} className="mt-3">
                                   <CFormCheck inline
                                     type="radio"
                                     name="gridRadios"
