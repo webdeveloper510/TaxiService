@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
 import { useFormik } from "formik";
@@ -16,12 +16,13 @@ import {
   CFormInput,
   CFormLabel,
   CFormSelect,
+  CFormCheck,
   CRow,
 } from '@coreui/react'
 import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import "react-datepicker/dist/react-datepicker.css";
-import { addVehicle } from "../../../utils/api";
+import { addVehicle, getVehicleType } from "../../../utils/api";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 const AddNewVehicle = () => {
 
@@ -41,6 +42,7 @@ const AddNewVehicle = () => {
     passengerCharges: "",
     vehicleinsuranceDate: new Date(),
     file: "",
+    AC: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -55,9 +57,29 @@ const AddNewVehicle = () => {
     passengerCharges: Yup.string().required("Passenger Cancellation Charges is required"),
     vehicleinsuranceDate: Yup.date().required("Insurance Renewal Date is required"),
     file: Yup.mixed().required("Vehicle Documents are required"),
+    AC: Yup.string().required("Gender is required"),
   });
 
+  const [vehicleType , setVehicleType] = useState()
+
+  const [selectedAC, setSelectedAC] = useState('');
+
+  const handleACtype = (event) => {
+    setSelectedAC(event.target.value);
+    console.log(event.target.value);
+    formik.setFieldValue('AC', event.target.value)
+  };
+
+  useEffect(() => {
+   
+    getVehicleType("Active").then(res => {
+      console.log(res.result, 'vehicle')
+      if (res.code === 200) {
+        setVehicleType(res.result)
+      }
+    })
   
+  }, []);
 
 
   const handlevehicleInsuranceDateChange = (date) => {
@@ -89,6 +111,7 @@ const AddNewVehicle = () => {
       formData.append('cancelation_charges' ,values.passengerCharges);
       formData.append('insurance_renewal_date' , values.vehicleinsuranceDate);
       formData.append('vehicle_photo'  , values.file)
+      formData.append('AC' , values.AC)
 
       addVehicle(formData).then((res) => {
         console.log("response---->>>>", res)
@@ -174,11 +197,14 @@ const AddNewVehicle = () => {
                                 name="vehicleType"
                                 autoComplete="off" >
 
-                                <option >SUV</option>
-                                <option>Hatchback</option>
-                                <option>Convertible</option>
-                                <option>Sedan</option>
-
+                                <option >Select</option>
+                                {vehicleType?.map((e, i) => {
+                                  return (
+                                    <>
+                                      <option value={e.name} >{e.name}</option>
+                                    </>
+                                  )
+                                })}
                               </CFormSelect>
                               {formik.errors.vehicleType && formik.touched.vehicleType ? (
                                 <div className="text-danger">{formik.errors.vehicleType}</div>
@@ -362,6 +388,32 @@ const AddNewVehicle = () => {
 
 
 
+                            </CCol>
+
+                            <CCol md={6}>
+                              {/* <CFormLabel htmlFor="inputgender">Gender</CFormLabel> */}
+                              <fieldset className="row mb-12">
+                              <CCol sm={12}>
+          <CFormCheck inline
+            type="radio"
+            name="gridRadios"
+            id="gridRadios1"
+            value="true"
+            label="AC"
+            onChange={handleACtype} // Add the onChange event handler
+            checked={selectedAC === 'true'} // Set the checked state if Male is selected
+          />
+          <CFormCheck inline
+            type="radio"
+            name="gridRadios"
+            id="gridRadios2"
+            value="false"
+            label="NON-AC"
+            onChange={handleACtype} // Add the onChange event handler
+            checked={selectedAC === 'false'} // Set the checked state if Female is selected
+          />
+        </CCol>
+                              </fieldset>
                             </CCol>
 
                             <CCol md={12} className="upload-file-input">

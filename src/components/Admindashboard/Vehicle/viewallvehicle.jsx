@@ -14,9 +14,9 @@ import { getVehicle } from "../../../utils/api";
 const ViewAllVehicle = () => {
 
   const [vehicle, setVehicle] = useState();
-  const image = process.env.REACT_APP_IMAGE_URL
+  // const image = process.env.REACT_APP_IMAGE_URL
 
-  console.log('inageuRl' , image)
+  // console.log('inageuRl' , image)
 
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const ViewAllVehicle = () => {
                     return (
                       <Col md={4}>
                       <Card>
-                        <Card.Img variant="top" src={`${image}${data.vehicle_photo}`} style={{height: 250 , width:293}}/>
+                        <Card.Img variant="top" src={data.vehicle_photo} style={{height: 250 , width:293}}/>
                         <Card.Body>
                           <Card.Title>{data.vehicle_model}</Card.Title>
                           <Card.Text>

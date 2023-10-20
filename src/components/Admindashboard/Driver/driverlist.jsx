@@ -21,7 +21,7 @@ const DriverList = () => {
 
 
   const [driver, setDriver] = useState()
-  const image = process.env.REACT_APP_IMAGE_URL1
+  // const image = process.env.REACT_APP_IMAGE_URL1
 
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const DriverList = () => {
                         <CTableRow className="text-center"  key={index}>
 
                           <CTableDataCell className="text-center profle-pic">
-                            <CAvatar size="md" alt='img' src={`${image}${item.profile_image}`} style={{width:42 , height:42}} />
+                            <CAvatar size="md" alt='img' src={item.profile_image} style={{width:42 , height:42}} />
                           </CTableDataCell>
 
                           <CTableDataCell>

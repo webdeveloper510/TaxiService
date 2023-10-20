@@ -140,3 +140,18 @@ export const addTrip = async (data) => {
     console.log("ADD_TRIP", error);
   });
 }
+
+
+export const getVehicleType = async() => {
+  return await Axios.get(`admin/get_vehicle_types` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) .then((res) => {
+    console.log(res.data, "getVehicleType");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_VEHICLE_TYPE", error);
+  });
+};
