@@ -69,11 +69,12 @@ export const addDriver = async (data) => {
 
 
 export const getDriver = async() => {
-  return await Axios.get(`admin/get_drivers` , {
+  return await Axios.get(`admin/get_drivers`,{
     headers: {
       "x-access-token": token,
     },
-  }) .then((res) => {
+  }) 
+  .then((res) => {
     console.log(res.data, "get Driver");
     return res.data;
   })
@@ -88,7 +89,8 @@ export const addFare = async (data) => {
     headers: {
       "x-access-token": token,
     },
-  }) .then((res) => {
+  })
+   .then((res) => {
     console.log(res, "add Fare");
     return res;
   })
@@ -104,7 +106,8 @@ export const getFare = async() => {
     headers: {
       "x-access-token": token,
     },
-  }) .then((res) => {
+  }) 
+  .then((res) => {
     console.log(res.data, "get Fare");
     return res.data;
   })
@@ -119,7 +122,8 @@ export const getTrip = async(data) => {
     headers: {
       "x-access-token": token,
     },
-  }) .then((res) => {
+  }) 
+  .then((res) => {
     console.log(res.data, "get Trip");
     return res.data;
   })
@@ -135,7 +139,8 @@ export const addTrip = async (data) => {
     headers: {
       "x-access-token": token,
     },
-  }) .then((res) => {
+  })
+   .then((res) => {
     console.log(res, "add_trip");
     return res;
   })
@@ -150,7 +155,8 @@ export const getVehicleType = async() => {
     headers: {
       "x-access-token": token,
     },
-  }) .then((res) => {
+  }) 
+  .then((res) => {
     console.log(res.data, "getVehicleType");
     return res.data;
   })

@@ -31,7 +31,7 @@ const AddNewDriver = () => {
   const navigate = useNavigate();
 
 
-
+  const [image, setImage] = useState('');
 
   const initialValues = {
     FirstName: "",
@@ -65,7 +65,7 @@ const AddNewDriver = () => {
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
-    console.log(selectedFile)
+    setImage(URL.createObjectURL(selectedFile))
   }
 
   const [selectedGender, setSelectedGender] = useState('');
@@ -82,11 +82,11 @@ const AddNewDriver = () => {
   }
 
   // const handleRadioChange = (event) => {
-   
+
 
   // };
 
-  
+
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
@@ -257,7 +257,7 @@ const AddNewDriver = () => {
                                 )}
                                 name="Country"
                                 autoComplete="off" >
-                                  <option default>Select Country</option>
+                                <option default>Select Country</option>
                                 <option>India</option>
                                 <option>USA</option>
                                 <option>UK</option>
@@ -357,33 +357,33 @@ const AddNewDriver = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
                               <fieldset className="row mb-12">
-                              <CCol sm={12}>
-          <CFormCheck inline
-            type="radio"
-            name="gridRadios"
-            id="gridRadios1"
-            value="Male"
-            label="Male"
-            onChange={handleGenderChange} // Add the onChange event handler
-            checked={selectedGender === 'Male'} // Set the checked state if Male is selected
-          />
-          <CFormCheck inline
-            type="radio"
-            name="gridRadios"
-            id="gridRadios2"
-            value="Female"
-            label="Female"
-            onChange={handleGenderChange} // Add the onChange event handler
-            checked={selectedGender === 'Female'} // Set the checked state if Female is selected
-          />
-        </CCol>
+                                <CCol sm={12}>
+                                  <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios1"
+                                    value="Male"
+                                    label="Male"
+                                    onChange={handleGenderChange} // Add the onChange event handler
+                                    checked={selectedGender === 'Male'} // Set the checked state if Male is selected
+                                  />
+                                  <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios2"
+                                    value="Female"
+                                    label="Female"
+                                    onChange={handleGenderChange} // Add the onChange event handler
+                                    checked={selectedGender === 'Female'} // Set the checked state if Female is selected
+                                  />
+                                </CCol>
                               </fieldset>
                             </CCol>
 
 
 
 
-{/* 
+                            {/* 
                             <CCol md={12} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel><br />
                               {uploadedImages.length > 0 ? (
@@ -414,9 +414,15 @@ const AddNewDriver = () => {
 
 
 
-                            <CCol md={12}  className="upload-file-input">
+                            <CCol md={12} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
-                              
+
+                              {image?.length > 0 ?
+                                (
+                                  <img src={image} alt='img' height={100} width={100} />
+                                ) :
+                                ""}
+
                               <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"
@@ -436,12 +442,12 @@ const AddNewDriver = () => {
                               {formik.errors.file && formik.touched.file ? (
                                 <div className="text-danger">{formik.errors.file}</div>
                               ) : null}
-                                  <label htmlFor="formFile" className="custom-file-upload">
-                                  <div className="files-outer">
-                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
-                                    <span>Drop Image Here ...</span>
-                                    </div>
-                                  </label>
+                              <label htmlFor="formFile" className="custom-file-upload">
+                                <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
+                                  <span>Drop Image Here ...</span>
+                                </div>
+                              </label>
                             </CCol>
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
