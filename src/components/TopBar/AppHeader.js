@@ -1,5 +1,5 @@
-import React from 'react'
-import { NavLink  , useNavigate} from 'react-router-dom'
+import React, {useState} from 'react'
+import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
@@ -16,18 +16,16 @@ import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons';
 import menubar from '../../assets/images/menu-bar.png'
 import expandicon from '../../assets/images/hedercrossicon.png'
 // import { logo } from 'src/assets/brand/logo'
+import AppHeaderDropdown from './AppHeaderdropdown'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
-const navigate = useNavigate()
-
- const  logout = () => {
-  console.log("herlo")
-    localStorage.clear()
-    navigate("/")
-  }
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -71,11 +69,11 @@ const navigate = useNavigate()
               <CIcon icon={cilEnvelopeOpen} size="lg" />
             </CNavLink>
           </CNavItem>
-          <button className='btn btn-warning text-white  '  onClick={logout} >Logout</button>
+          {/* <button className='btn btn-warning text-white  '  onClick={logout} >Logout</button> */}
         </CHeaderNav>
-        {/* <CHeaderNav className="ms-3">
+        <CHeaderNav className="ms-3">
           <AppHeaderDropdown />
-        </CHeaderNav> */}
+        </CHeaderNav>
       </CContainer>
       <CHeaderDivider />
       {/* <CContainer fluid>

@@ -58,7 +58,7 @@ const ActiveTrip = () => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>Active Trip</h2> */}
+                        <h2>List of Active Trip</h2>
                       </div>
                       <div className="right-trip-content">
                         <img src={refreshImg} />

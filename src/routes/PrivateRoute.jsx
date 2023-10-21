@@ -12,7 +12,9 @@ import BookingRequestTable from '../components/Admindashboard/Trips/BookingReque
 import DriverList from '../components/Admindashboard/Driver/driverlist';
 import AddFare from '../components/Admindashboard/FareManagement/addfare';
 import RecentTrips from '../components/Admindashboard/Trips/recenttrips';
-import AddNewTrip from '../components/Admindashboard/Trips/addnewtrip';
+import RequestNewTrip from '../components/Admindashboard/Trips/requesttrip';
+import PendingTrip from '../components/Admindashboard/Trips/pedingtrips';
+
 
 const PrivateRoute = () => {
     const token = localStorage.getItem('token');
@@ -27,7 +29,8 @@ const PrivateRoute = () => {
             <Route path="/companydetails" element={<CompanyDetails />} />
             <Route path="/trips/recenttrips" element={<RecentTrips />} />
             <Route path="/trips/activetrips" element={<ActiveTrip />} />
-            <Route path="/trips/addnewtrip" element={<AddNewTrip />} />
+            <Route path="/trips/requestnewtrip" element={<RequestNewTrip />} />
+            <Route path="/trips/pendingtrips" element={<PendingTrip />} />
             <Route path="/trips/completetrips" element={<CompletedTrip />} />
             <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
             <Route path="/driver/addnewdriver" element={<AddNewDriver />} />

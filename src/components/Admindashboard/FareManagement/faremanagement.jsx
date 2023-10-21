@@ -84,9 +84,9 @@ const FareManagement = () => {
                         <h2>Fare List </h2>
                       </div>
                       <div className="right-trip-content">
-                        <Link to="/addfare">
+                        {/* <Link to="/addfare">
                           <CButton className="add_fare">Add Fare</CButton>
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
                   </div>
@@ -198,6 +198,7 @@ const FareManagement = () => {
           <CButton color="primary">Save changes</CButton>
         </CModalFooter> */}
                   </CModal>
+
 
 
 

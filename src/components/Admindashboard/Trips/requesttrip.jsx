@@ -21,7 +21,7 @@ import { addTrip } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
-const AddNewTrip = () => {
+const RequestNewTrip = () => {
 
   const navigate = useNavigate();
 
@@ -150,7 +150,7 @@ const AddNewTrip = () => {
                         <CCardBody>
 
                           <CForm className="row g-3">
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputtripdname">Driver Name</CFormLabel>
                               <CFormSelect name="driver_name" onChange={inputHandler}>
                                 <option default>Select Driver</option>
@@ -164,9 +164,9 @@ const AddNewTrip = () => {
 
 
                               </CFormSelect>
-                            </CCol>
+                            </CCol> */}
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicletype">Vehicle</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
                               <CFormSelect name="vehicle" onChange={inputHandler}>
                                 <option default>Select Vehicle</option>
                                 {vehicle?.map((e, i) => {
@@ -179,15 +179,8 @@ const AddNewTrip = () => {
 
                               </CFormSelect>
                             </CCol>
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputtripfrom">Trip From</CFormLabel>
-                              <CFormInput id="inputtripfrom" name="trip_from" onChange={inputHandler} />
-                            </CCol>
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputtripto">Trip To</CFormLabel>
-                              <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} />
-                            </CCol>
-                            <CCol md={3}>
+
+                            <CCol md={6}>
                               <CFormLabel htmlFor="inputpickupdate">Pickup Date and Time</CFormLabel><br />
                               <DatePicker
                                 selected={pickupDate}
@@ -197,6 +190,16 @@ const AddNewTrip = () => {
 
                               />
                             </CCol>
+
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">Trip From</CFormLabel>
+                              <CFormInput id="inputtripfrom" name="trip_from" onChange={inputHandler} />
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripto">Trip To</CFormLabel>
+                              <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} />
+                            </CCol>
+                           
                           </CForm>
 
                         </CCardBody>
@@ -282,4 +285,4 @@ const AddNewTrip = () => {
   );
 };
 
-export default AddNewTrip; 
+export default RequestNewTrip; 

@@ -71,7 +71,7 @@ const BookingRequestTable = () => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>Booked Trip</h2> */}
+                        <h2>Upcoming Trips</h2>
                       </div>
                       <div className="right-trip-content">
                         <div className="right-trip-content">

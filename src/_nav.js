@@ -73,13 +73,18 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Add New Trip',
-        to: '/trips/addnewtrip',
+        name: 'Request Trip',
+        to: '/trips/requestnewtrip',
       },
       {
         component: CNavItem,
         name: 'Active Trip',
         to: '/trips/activetrips',
+      },
+      {
+        component: CNavItem,
+        name: 'Pending Trip',
+        to: '/trips/pendingtrips',
       },
       {
         component: CNavItem,
@@ -111,11 +116,6 @@ const _nav = [
     ></path>
   </svg></div>,
     items: [
-      {
-        component: CNavItem,
-        name: 'Add New Driver',
-        to: '/driver/addnewdriver',
-      }, 
       {
         component: CNavItem,
         name: 'List Of All Drivers',
@@ -162,12 +162,6 @@ const _nav = [
     ></path>
   </svg></div>,
     items: [
-      {
-        component: CNavItem,
-        name: 'Add New Vehicle',
-        to: '/vehicle/addnewvehicle',
-        
-      },
       {
         component: CNavItem,
         name: 'View All Vehicles',
