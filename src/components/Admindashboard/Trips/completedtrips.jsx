@@ -17,7 +17,7 @@ import moment from "moment"
 //import background from '../assets/images/heroimg.png';
 import * as geolib  from "geolib";
 import { getTrip } from "../../../utils/api";
-
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 
@@ -25,14 +25,17 @@ import { getTrip } from "../../../utils/api";
 const CompletedTrip=()=> {
 
   const [completeTrip , setCompleteTrip] = useState()
+  const [loader, setLoader] = useState(false);
 
 
   useEffect(() => {
+    setLoader(true)
     getTrip("Completed").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setCompleteTrip(res.result)
       }
+      setLoader(false)
     })
   }, []);
 
@@ -63,75 +66,91 @@ const CompletedTrip=()=> {
             </div>
             </div>
           </div>
-          <CTable align="middle" className="mb-0" hover responsive>
+          {
+            loader ? (<>
+             <div className=" d-flex justify-content-center align-items-center"
+                    style={{ height: 400 }}>
+                    <PulseLoader
+                      color="#FFD04E"
+                      loading={true}
+                      margin={4}
+                      size={60}
+                      speedMultiplier={0.5}
+                    />
+                  </div>
+            </>) : (<>
+              <CTable align="middle" className="mb-0" hover responsive>
           
-                <CTableHead>
-                
-                  <CTableRow>
-                    {/* <CTableHeaderCell className="text-center">
-                      <CIcon icon={cilPeople} />
-                    </CTableHeaderCell> */}
-                     <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">End Time</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Distance</CTableHeaderCell>
-                    {/* <CTableHeaderCell className="text-center">Fare</CTableHeaderCell> */}
-                    <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {completeTrip?.length  ? completeTrip.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
-                      <CTableDataCell>
-                        <div>{index + 1}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.trip_id}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.driver_name}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.trip_from.address}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.trip_to.address}</div>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
-                      </CTableDataCell>
+          <CTableHead>
+          
+            <CTableRow>
+              {/* <CTableHeaderCell className="text-center">
+                <CIcon icon={cilPeople} />
+              </CTableHeaderCell> */}
+               <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">End Time</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Distance</CTableHeaderCell>
+              {/* <CTableHeaderCell className="text-center">Fare</CTableHeaderCell> */}
+              <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            {completeTrip?.length  ? completeTrip.map((item, index) => (
+              <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
+                <CTableDataCell>
+                  <div>{index + 1}</div>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <div>{item.trip_id}</div>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <div>{item.driver_name}</div>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <div>{item.trip_from.address}</div>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <div>{item.trip_to.address}</div>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                </CTableDataCell>
 
-                      <CTableDataCell>
-                        <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
-                      </CTableDataCell>   
-                      <CTableDataCell>
-                        <div>{`${(
-                        geolib.getDistance({
-                          latitude: item.trip_from.log,
-                          longitude: item.trip_from.lat
-                        },
-                        {
-                          latitude: item.trip_to.log,
-                          longitude: item.trip_to.lat
-                        }
-                        )* 0.00062137).toFixed(2)
-                        } Miles`}</div>
-                      </CTableDataCell>   
-                      {/* <CTableDataCell>
-                        <div>{item.fare}</div>
-                      </CTableDataCell>               */}
-                      <CTableDataCell className="text-center location-icons">
-                       <div><img src={locationimg}/></div> 
-                      
-                      </CTableDataCell>         
-                    </CTableRow>
-                  )) : ''}
-                </CTableBody>
-              </CTable>
+                <CTableDataCell>
+                  <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                </CTableDataCell>   
+                <CTableDataCell>
+                  <div>{`${(
+                  geolib.getDistance({
+                    latitude: item.trip_from.log,
+                    longitude: item.trip_from.lat
+                  },
+                  {
+                    latitude: item.trip_to.log,
+                    longitude: item.trip_to.lat
+                  }
+                  )* 0.00062137).toFixed(2)
+                  } Miles`}</div>
+                </CTableDataCell>   
+                {/* <CTableDataCell>
+                  <div>{item.fare}</div>
+                </CTableDataCell>               */}
+                <CTableDataCell className="text-center location-icons">
+                 <div><img src={locationimg}/></div> 
+                
+                </CTableDataCell>         
+              </CTableRow>
+            )) : ''}
+          </CTableBody>
+        </CTable>
+            </>)
+          }
+         
           
           </div>
         

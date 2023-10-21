@@ -17,39 +17,21 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import moment from "moment"
-// const tableExample = [
-//   {
-//   tri: '123',
-//   name: 'Yiorgos Avraamu',
-//   vechileType: 'SUV',
-//   from: 'Shimla',
-//   to: 'Delhi',
-//   address: '34 Alex, Street',
-//   dateandtime:'23,Aug,2023 10:10AM',
-// //  action: { checkicon: checkiconimg },
-//   },
-//   {
-//       tripId: '145',
-//       name: 'Yiorgos Avr',
-//       vechileType: 'SUV',
-//       from: 'Shimla',
-//       to: 'Delhi',
-//       address: '34 Alex, Street',
-//       dateandtime:'23,Aug,2023 10:10AM',
-//     //  action: { checkicon: cibCcMastercard },
-//       },
-// ]
+import PulseLoader from "react-spinners/PulseLoader";
+
 const BookingRequestTable = () => {
 
   const [bookingTrip, setBookingTrip] = useState()
-
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    setLoader(true)
     getTrip("Booked").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setBookingTrip(res.result)
       }
+      setLoader(false)
     })
   }, []);
 
@@ -83,58 +65,74 @@ const BookingRequestTable = () => {
                       </div>
                     </div>
                   </div>
-                  <CTable align="middle" className="mb-0" hover responsive>
+                  {
+                    loader ? (<>
+                     <div className=" d-flex justify-content-center align-items-center"
+                    style={{ height: 400 }}>
+                    <PulseLoader
+                      color="#FFD04E"
+                      loading={true}
+                      margin={4}
+                      size={60}
+                      speedMultiplier={0.5}
+                    />
+                  </div>
+                    </>) : (<>
+                      <CTable align="middle" className="mb-0" hover responsive>
 
-                    <CTableHead>
+<CTableHead>
 
-                      <CTableRow>
-                        {/* <CTableHeaderCell className="text-center">
-                      <CIcon icon={cilPeople} />
-                    </CTableHeaderCell> */}
-                        <CTableHeaderCell className="text-center">Sr No.</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip  ID</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Passenger Count</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Allocated Driver</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                      {bookingTrip?.length ? bookingTrip.map((item, index) => (
-                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+  <CTableRow>
+    {/* <CTableHeaderCell className="text-center">
+  <CIcon icon={cilPeople} />
+</CTableHeaderCell> */}
+    <CTableHeaderCell className="text-center">Sr No.</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Trip  ID</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Passenger Count</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Allocated Driver</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Start Time</CTableHeaderCell>
+    <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
+  </CTableRow>
+</CTableHead>
+<CTableBody>
+  {bookingTrip?.length ? bookingTrip.map((item, index) => (
+    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
 
-                          <CTableDataCell>
-                            <div>{index + 1}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.trip_id}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.passenger_detail.length}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.trip_from.address}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.trip_to.address}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.driver_name}</div>
-                          </CTableDataCell>
+      <CTableDataCell>
+        <div>{index + 1}</div>
+      </CTableDataCell>
+      <CTableDataCell>
+        <div>{item.trip_id}</div>
+      </CTableDataCell>
+      <CTableDataCell>
+        <div>{item.passenger_detail.length}</div>
+      </CTableDataCell>
+      <CTableDataCell>
+        <div>{item.trip_from.address}</div>
+      </CTableDataCell>
+      <CTableDataCell>
+        <div>{item.trip_to.address}</div>
+      </CTableDataCell>
+      <CTableDataCell>
+        <div>{item.driver_name}</div>
+      </CTableDataCell>
 
-                          <CTableDataCell>
-                            <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
-                          </CTableDataCell>
-                          <CTableDataCell className="d-flex action-icons booking-icons">
-                            <div><img src={editiconimg} /></div>
-                            <div><img src={deleteiconimg} /></div>
-                          </CTableDataCell>
-                        </CTableRow>
-                      )) : ""}
-                    </CTableBody>
-                  </CTable>
+      <CTableDataCell>
+        <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
+      </CTableDataCell>
+      <CTableDataCell className="d-flex action-icons booking-icons">
+        <div><img src={editiconimg} /></div>
+        <div><img src={deleteiconimg} /></div>
+      </CTableDataCell>
+    </CTableRow>
+  )) : ""}
+</CTableBody>
+</CTable>
+                    </>)
+                  }
+                 
 
                 </div>
 

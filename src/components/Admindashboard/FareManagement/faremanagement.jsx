@@ -29,41 +29,25 @@ import { getFare } from "../../../utils/api";
 
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
+import PulseLoader from "react-spinners/PulseLoader";
 
-const tableExample = [
-  {
-    srnum: '1',
-    vehivletype: 'SUV',
-    fareperkm: '$30',
-    minfare: '$10',
-    mindistance: '30KM',
-    waitingfare: '$10',
-    //  action: { checkicon: checkiconimg },
-  },
-  {
-    srnum: '2',
-    vehivletype: 'NON-AC',
-    fareperkm: '$30',
-    minfare: '$10',
-    mindistance: '30KM',
-    waitingfare: '$10',
-    //  action: { checkicon: checkiconimg },
-  },
-]
+
 
 
 const FareManagement = () => {
 
   const [visible, setVisible] = useState(false)
   const [fare, setFare] = useState()
-
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    setLoader(true)
     getFare().then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setFare(res.result)
       }
+      setLoader(false)
     })
   }, [])
 
@@ -83,14 +67,22 @@ const FareManagement = () => {
                       <div className="left-trip-content">
                         <h2>Fare List </h2>
                       </div>
-                      <div className="right-trip-content">
-                        {/* <Link to="/addfare">
-                          <CButton className="add_fare">Add Fare</CButton>
-                        </Link> */}
-                      </div>
                     </div>
                   </div>
-                  <CTable align="middle" className="mb-0" hover responsive>
+                  {
+                    loader ? (<>
+                     <div className=" d-flex justify-content-center align-items-center"
+                    style={{ height: 400 }}>
+                    <PulseLoader
+                      color="#FFD04E"
+                      loading={true}
+                      margin={4}
+                      size={60}
+                      speedMultiplier={0.5}
+                    />
+                  </div>
+                    </>) : (<>
+                      <CTable align="middle" className="mb-0" hover responsive>
 
                     <CTableHead>
 
@@ -137,7 +129,9 @@ const FareManagement = () => {
                         </CTableRow>
                       )) : ""}
                     </CTableBody>
-                  </CTable>
+                  </CTable></>)
+                  }
+                
 
 
                   {/* farelistmodalpopup */}

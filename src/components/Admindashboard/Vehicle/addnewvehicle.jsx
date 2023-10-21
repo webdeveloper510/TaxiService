@@ -63,8 +63,8 @@ const AddNewVehicle = () => {
   const [vehicleType, setVehicleType] = useState()
 
   const [selectedAC, setSelectedAC] = useState('');
-  // const [image , setImage] = useState(false);
-  // const[showimg , setShowingImage] = useState(true);
+
+  const [image, setImage] = useState('');
 
   const handleACtype = (event) => {
     setSelectedAC(event.target.value);
@@ -97,6 +97,7 @@ const AddNewVehicle = () => {
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
+    setImage(URL.createObjectURL(selectedFile))
   
    
   }
@@ -166,7 +167,9 @@ const AddNewVehicle = () => {
                           <strong>Vehicle Infromation</strong>
                         </CCardHeader>
                         <CCardBody>
+                          
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
                               <CFormInput aria-label="vehicle no."  {...formik.getFieldProps("vehicleNo")}
@@ -188,6 +191,7 @@ const AddNewVehicle = () => {
                                 <div className="text-danger">{formik.errors.vehicleNo}</div>
                               ) : null}
                             </CCol>
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
                               <CFormSelect  {...formik.getFieldProps("vehicleType")}
@@ -219,6 +223,7 @@ const AddNewVehicle = () => {
                                 <div className="text-danger">{formik.errors.vehicleType}</div>
                               ) : null}
                             </CCol>
+
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
                               <CFormInput   {...formik.getFieldProps("vehicleModal")}
@@ -240,6 +245,7 @@ const AddNewVehicle = () => {
                                 <div className="text-danger">{formik.errors.vehicleModal}</div>
                               ) : null}
                             </CCol>
+
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
                               <CFormInput  {...formik.getFieldProps("seatingCapacity")}
@@ -431,7 +437,11 @@ const AddNewVehicle = () => {
                             <CCol md={12} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Vehicle Image</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
-                              {}
+                              {image?.length > 0 ?
+                                (
+                                  <img src={image} alt='img' height={300} width={100} />
+                                ) :
+                                ""}
                               <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"

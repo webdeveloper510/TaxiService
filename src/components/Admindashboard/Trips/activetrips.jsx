@@ -15,7 +15,7 @@ import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
 //import background from '../assets/images/heroimg.png';
 import { getTrip } from "../../../utils/api";
-
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 
@@ -23,20 +23,20 @@ const ActiveTrip = () => {
 
   const [activeTrip, setActiveTrip] = useState()
 
-  const [address, setAddress] = useState({});
+  const [loader, setLoader] = useState(false);
 
-  
 
 
   useEffect(() => {
-   
+    setLoader(true)
     getTrip("Active").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setActiveTrip(res.result)
       }
+      setLoader(false)
     })
-  
+
   }, []);
 
 
@@ -67,54 +67,70 @@ const ActiveTrip = () => {
                       </div>
                     </div>
                   </div>
-                  <CTable align="middle" className="mb-0" hover responsive>
+                  {
+                    loader ? (<>
+                      <div className=" d-flex justify-content-center align-items-center"
+                        style={{ height: 400 }}>
+                        <PulseLoader
+                          color="#FFD04E"
+                          loading={true}
+                          margin={4}
+                          size={60}
+                          speedMultiplier={0.5}
+                        />
+                      </div>
+                    </>) : (<>
+                      <CTable align="middle" className="mb-0" hover responsive>
 
-                    <CTableHead>
+                        <CTableHead>
 
-                      <CTableRow>
-                        {/* <CTableHeaderCell className="text-center">
-                      <CIcon icon={cilPeople} />
-                    </CTableHeaderCell> */}
-                        <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                      {activeTrip?.length ? activeTrip.map((item, index) => (
-                        <>
-                          <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
-                            <CTableDataCell >
-                              <div>{index + 1}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.trip_id}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.driver_name}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.trip_from.address}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.trip_to.address}</div>
-                            </CTableDataCell>
-
-                            <CTableDataCell>
-                              <div>{item.pickup_date_time}</div>
-                            </CTableDataCell>
-                            <CTableDataCell className="text-center location-icons">
-                              <div><img src={locationimg} /></div>
-
-                            </CTableDataCell>
+                          <CTableRow>
+                            {/* <CTableHeaderCell className="text-center">
+  <CIcon icon={cilPeople} />
+</CTableHeaderCell> */}
+                            <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">View Route</CTableHeaderCell>
                           </CTableRow>
-                        </>)) : ''}
-                    </CTableBody>
-                  </CTable>
+                        </CTableHead>
+                        <CTableBody>
+                          {activeTrip?.length ? activeTrip.map((item, index) => (
+                            <>
+                              <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
+                                <CTableDataCell >
+                                  <div>{index + 1}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.trip_id}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.driver_name}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.trip_from.address}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.trip_to.address}</div>
+                                </CTableDataCell>
+
+                                <CTableDataCell>
+                                  <div>{item.pickup_date_time}</div>
+                                </CTableDataCell>
+                                <CTableDataCell className="text-center location-icons">
+                                  <div><img src={locationimg} /></div>
+
+                                </CTableDataCell>
+                              </CTableRow>
+                            </>)) : ''}
+                        </CTableBody>
+                      </CTable>
+                    </>)
+                  }
+
 
                 </div>
 

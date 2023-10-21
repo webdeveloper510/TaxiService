@@ -419,7 +419,7 @@ const AddNewDriver = () => {
 
                               {image?.length > 0 ?
                                 (
-                                  <img src={image} alt='img' height={100} width={100} />
+                                  <img src={image} alt='img' height={300} width={100} />
                                 ) :
                                 ""}
 

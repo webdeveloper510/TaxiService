@@ -13,7 +13,7 @@ import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
-
+import PulseLoader from "react-spinners/PulseLoader";
 import { getDriver } from "../../../utils/api";
 
 
@@ -21,15 +21,18 @@ const DriverList = () => {
 
 
   const [driver, setDriver] = useState()
+  const [loader, setLoader] = useState(false);
   // const image = process.env.REACT_APP_IMAGE_URL1
 
 
   useEffect(() => {
+    setLoader(true)
     getDriver().then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setDriver(res.result)
       }
+      setLoader(false)
     })
   }, [])
 
@@ -48,14 +51,21 @@ const DriverList = () => {
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">List of all Drivers </h1>
                 <div class="active-trip-outer">
-                  <div className="trips-head d-flex justify-content-between">
-                    {/* <div className="box-shd d-flex justify-content-between"> */}
-                      {/* <div className="left-trip-content"> */}
-                        {/* <h2>List of all Drivers </h2> */}
-                      {/* </div> */}
-                    {/* </div> */}
+                  {
+                    loader ? (<>
+                    <div className=" d-flex justify-content-center align-items-center"
+                    style={{ height: 400 }}>
+                    <PulseLoader
+                      color="#FFD04E"
+                      loading={true}
+                      margin={4}
+                      size={60}
+                      speedMultiplier={0.5}
+                    />
                   </div>
-                  <CTable align="middle" className="mb-0" hover responsive>
+
+                    </>) : (<>
+                      <CTable align="middle" className="mb-0" hover responsive>
 
                     <CTableHead>
 
@@ -109,6 +119,9 @@ const DriverList = () => {
                       )) :  ""}
                     </CTableBody>
                   </CTable>
+                    </>)
+                  }
+                
 
                 </div>
 

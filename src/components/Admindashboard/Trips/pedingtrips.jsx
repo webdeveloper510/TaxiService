@@ -29,7 +29,7 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 //import accepticonimg from '../../../assets/images/accept.png'
 import rejecticonimg from '../../../assets/images/rejecticon.png'
 import editicon from '../../../assets/images/editicon.png'
-
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 const tableExample = [
@@ -46,6 +46,7 @@ const tableExample = [
 const PendingTrip = () => {
     
     const [visible, setVisible] = useState(false)
+    const [loader, setLoader] = useState(false);
    
   return (
     <>
