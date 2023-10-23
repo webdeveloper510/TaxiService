@@ -21,6 +21,7 @@ import { addTrip } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
+
 const RequestNewTrip = () => {
 
   const navigate = useNavigate();
@@ -28,16 +29,17 @@ const RequestNewTrip = () => {
   const [pickupDate, setpickupDate] = useState(new Date());
   const [passengers, setPassengers] = useState([]);
   const [vehicle, setVehicle] = useState();
-  const [driver, setDriver] = useState();
 
   const [inputData, setInputData] = useState({
-    driver_name: '',
     vehicle: '',
     trip_from: { address: '' },
     trip_to: { address: '' },
     pick_up_date: '',
     passenger_detail: []
   })
+
+ 
+
 
   const handlepickupDateChange = (date) => {
     setpickupDate(date);
@@ -58,8 +60,8 @@ const RequestNewTrip = () => {
     setPassengers(updatedPassengers);
   };
 
-  useEffect(() => {
 
+  useEffect(() => {
     getVehicle().then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
@@ -70,14 +72,16 @@ const RequestNewTrip = () => {
 
 
 
-  useEffect(() => {
-    getDriver().then(res => {
-      console.log(res.result, 'vehicle')
-      if (res.code === 200) {
-        setDriver(res.result)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   getDriver().then(res => {
+  //     console.log(res.result, 'vehicle')
+  //     if (res.code === 200) {
+  //       setDriver(res.result)
+  //     }
+  //   })
+  // }, [])
+
+
 
   const inputHandler = (e) => {
     if (e.target.name === "trip_from" || e.target.name === "trip_to") {
@@ -106,21 +110,30 @@ const RequestNewTrip = () => {
   const adddata = () => {
     let data = inputData
     data.passenger_detail = passengers
-    addTrip(data).then((res) => {
-      console.log("response---->>>>", res)
-      if (res.data.code === 200) {
-        toast.success(`${res.data.message}`, {
-          position: 'top-right',
-          autoClose: 1000,
-        });
-        navigate("/trips/requestbookings")
-      } else {
-        toast.warning(`${res.data.message}`, {
-          position: 'top-right',
-          autoClose: 1000,
-        });
-      }
-    })
+
+    if (data.passenger_detail.length > 0) {
+      addTrip(data).then((res) => {
+        console.log("response---->>>>", res)
+        if (res.data.code === 200) {
+          toast.success(`${res.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+          navigate("/trips/requestbookings")
+        } else {
+          toast.warning(`${res.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+        }
+      })
+    }else{
+      toast.warning("Please Enter Passenger Detail", {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    }
+
 
 
   }
@@ -199,7 +212,7 @@ const RequestNewTrip = () => {
                               <CFormLabel htmlFor="inputtripto">Trip To</CFormLabel>
                               <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} />
                             </CCol>
-                           
+
                           </CForm>
 
                         </CCardBody>

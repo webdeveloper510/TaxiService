@@ -23,8 +23,8 @@ function Login() {
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     phoneNo: Yup.string()
-      .min(7, "Phone number must be greater then 7")
-      .max(16, "Phone number not be greater then 17")
+      .min(7, "Phone number must be greater than 7")
+      .max(16, "Phone number not be greater than 17")
       .required("Phone Number is required"),
     password: Yup.string()
       .min(6, "Password must be 6 characters long")
