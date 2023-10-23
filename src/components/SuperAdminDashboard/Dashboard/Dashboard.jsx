@@ -6,7 +6,9 @@ import RecentTrips from "../../Admindashboard/Trips/recenttrips";
 //import BookingRequestTable from "./BookingRequestTable";
 //import background from '../assets/images/heroimg.png';
 import RiderStatusTable from "../../Stats/RiderStatusTable";
-import SideBar2 from "../../Admindashboard/SideBar2";
+//import SideBar2 from "../../Admindashboard/SideBar2";
+import SuperSideBar from "../SiderNavBar/Sidebar";
+
 
 const SuperAdminDashboard=()=> {
    
@@ -17,7 +19,7 @@ const SuperAdminDashboard=()=> {
         <div className="col-md-12">
        
         <div>
-        <SideBar2/>
+       <SuperSideBar/>
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
     

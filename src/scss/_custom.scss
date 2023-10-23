@@ -447,6 +447,9 @@ option[default] {
     margin-right: 0 !important;
     padding-right: 0;
 }
+button.btn.btn-primary:active {
+    background: #FFD04E !important;
+}
 @media screen and (max-width: 768px) {
 img.card-img-top {
     width: auto !important;

@@ -28,7 +28,7 @@ const PrivateRoute = () => {
     return (
         <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/companydetails" element={<CompanyDetails />} />
+            <Route path="/dashboard/companydetails" element={<CompanyDetails />} />
             <Route path="/add-company" element={<AddCompany />} />
             <Route path="/trips/recenttrips" element={<RecentTrips />} />
             <Route path="/trips/activetrips" element={<ActiveTrip />} />
