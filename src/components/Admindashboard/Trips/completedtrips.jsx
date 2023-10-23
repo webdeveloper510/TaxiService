@@ -17,7 +17,8 @@ import moment from "moment"
 //import background from '../assets/images/heroimg.png';
 import * as geolib  from "geolib";
 import { getTrip } from "../../../utils/api";
-import PulseLoader from "react-spinners/PulseLoader";
+//import PulseLoader from "react-spinners/PulseLoader";
+import { PulseLoader } from "react-spinners";
 
 
 

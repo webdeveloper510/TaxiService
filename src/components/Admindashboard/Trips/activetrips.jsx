@@ -18,7 +18,6 @@ import { getTrip } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 
 
-
 const ActiveTrip = () => {
 
   const [activeTrip, setActiveTrip] = useState()
