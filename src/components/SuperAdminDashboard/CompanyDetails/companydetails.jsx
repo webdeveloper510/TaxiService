@@ -1,7 +1,7 @@
 import React from "react";
+import SideBar2 from "../../Admindashboard/SideBar2";
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../SideBar2";
-
+import { Link } from 'react-router-dom';
 import {
   CTable,
   CTableBody,
@@ -9,7 +9,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CButton,
 } from '@coreui/react'
+
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 
@@ -52,10 +54,15 @@ const CompanyDetails=()=> {
             <div className="left-trip-content">
           <h2>Listing all Companies</h2>
           </div>
-          <div className="right-trip-content">
+         
             {/* <img src={refreshImg}/>
             <img src={downarrowImg}/>
             <img src={crossImg}/> */}
+             <div className="right-trip-content">
+                        <Link to="/add-company">
+                          <CButton className="add_company_btn">Add Company</CButton>
+                        </Link>
+                     
             </div>
             </div>
           </div>

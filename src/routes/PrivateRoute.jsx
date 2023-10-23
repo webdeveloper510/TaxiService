@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Navigate, Routes } from 'react-router-dom';
 import Dashboard from '../components/Admindashboard/dashboard';
-import CompanyDetails from '../components/Admindashboard/CompanyDetails/companydetails';
 import ActiveTrip from '../components/Admindashboard/Trips/activetrips';
 import AddNewDriver from '../components/Admindashboard/Driver/addnewdriver';
 import FareManagement from '../components/Admindashboard/FareManagement/faremanagement';
@@ -14,6 +13,9 @@ import AddFare from '../components/Admindashboard/FareManagement/addfare';
 import RecentTrips from '../components/Admindashboard/Trips/recenttrips';
 import RequestNewTrip from '../components/Admindashboard/Trips/requesttrip';
 import PendingTrip from '../components/Admindashboard/Trips/pedingtrips';
+import SuperAdminDashboard from '../components/SuperAdminDashboard/Dashboard/Dashboard';
+import CompanyDetails from '../components/SuperAdminDashboard/CompanyDetails/companydetails';
+import AddCompany from '../components/SuperAdminDashboard/CompanyDetails/AddCompany';
 
 
 const PrivateRoute = () => {
@@ -27,6 +29,7 @@ const PrivateRoute = () => {
         <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/companydetails" element={<CompanyDetails />} />
+            <Route path="/add-company" element={<AddCompany />} />
             <Route path="/trips/recenttrips" element={<RecentTrips />} />
             <Route path="/trips/activetrips" element={<ActiveTrip />} />
             <Route path="/trips/requestnewtrip" element={<RequestNewTrip />} />
@@ -39,6 +42,7 @@ const PrivateRoute = () => {
             <Route path="/addfare" element={<AddFare />} />
             <Route path="/vehicle/addnewvehicle" element={<AddNewVehicle />} />
             <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
+            <Route path="/dashboard/superadmindashboard" element={<SuperAdminDashboard />} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />
 
         </Routes>
