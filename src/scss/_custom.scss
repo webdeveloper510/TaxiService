@@ -164,12 +164,12 @@ body::-webkit-scrollbar {
   div#fare_management_page .trips-head {
     margin-bottom: 16px;
 }
-  .add_booking, .add_fare, .fare_list {
+  .add_booking, .add_fare, .fare_list, .add_company_btn, .company_list {
     background: #FFD04E;
     border: #FFD04E;
     font-family: 'Poppins', sans-serif !important;
 }
-.add_bookings:hover, .add_fare:hover, .fare_list:hover {
+.add_bookings:hover, .add_fare:hover, .fare_list:hover, .add_company_btn:hover, .company_list:hover {
     background: #FFD04E;
 }
 
@@ -435,4 +435,20 @@ option[default] {
 }
 .allocate_accept_driver:hover{
     background: none !important;
+}
+.company-list-icons {
+    justify-content: space-evenly;
+}
+.add_company_row {
+    margin-top: 16px;
+    padding-right: 0;
+}
+.add_company_row .col-md-6 {
+    margin-right: 0 !important;
+    padding-right: 0;
+}
+@media screen and (max-width: 768px) {
+img.card-img-top {
+    width: auto !important;
+}
 }
