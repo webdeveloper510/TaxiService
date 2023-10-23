@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import chartImg from '../../../assets/images/dashboard-map-image.png'
+import userContext from "../../../utils/context";
 
 
 const DashboardGraph=()=> {
-   
+  const {user,setUser} = useContext(userContext)
+      useEffect(() => {
+        console.log("userIs=====>>>>>", user)
+      }, [])
+      
       return (
        <>
       <div className="dashboard-chart">

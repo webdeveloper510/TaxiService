@@ -165,3 +165,20 @@ export const getVehicleType = async() => {
     console.log("GET_VEHICLE_TYPE", error);
   });
 };
+
+
+export const addCompany = async(data) => {
+  console.log("addCompany token is", data)
+  return await Axios.post(`admin/add_sub_admin` ,data, {
+    headers: {
+      "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTM2NjQ1NTc2MzNhMzFjMTAxZjYzOGUiLCJpYXQiOjE2OTgwNjM2ODUsImV4cCI6MTcyOTU5OTY4NX0.c4bAR7Bjn2Rz3SUmnHez9geWG2HGmRbf4uI6rF1h9Hs",
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "addCompany");
+    return res;
+  })
+  .catch((error) => {
+    console.log("ADD_COMPANY", error);
+  });
+};

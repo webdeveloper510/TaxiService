@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import 'bootstrap/dist/js/bootstrap.bundle.min';
 //import 'mdb-react-ui-kit';
@@ -18,8 +18,10 @@ import * as Yup from "yup";
 import clsx from "clsx";
 import { userLogin } from "../../utils/api";
 import { toast } from 'react-toastify';
+import userContext from "../../utils/context";
 
 function Login() {
+  const {user,setUser} = useContext(userContext)
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     phoneNo: Yup.string()
@@ -51,7 +53,10 @@ function Login() {
       }).then((response) => {
         console.log("response---->>>>", response)
         // navige to dashboard if user role is super admin
-        if (response.data.code === 200 && response.data.result.role === "SUB_ADMIN") {
+        if (response.data.code === 200
+          // && response.data.result.role === "SUB_ADMIN"
+           ) {
+            setUser(response.data.result)
           toast.success(`${response.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
