@@ -1,4 +1,4 @@
-import React, { useState}  from "react";
+import React, { useEffect, useState}  from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
 import {
@@ -17,6 +17,7 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 //import accepticonimg from '../../../assets/images/accept.png'
 import rejecticonimg from '../../../assets/images/rejecticon.png'
 import editicon from '../../../assets/images/editicon.png'
+import { getTrip } from "../../../utils/api";
 
 
 
@@ -32,8 +33,20 @@ const tableExample = [
     },  
   ]
 const PendingTrip = () => {
+  const [pendinTrip, setPendingTrip] = useState([])
+    const [visible, setVisible] = useState(false)
     const [loader, setLoader] = useState(false);
-   
+    useEffect(() => {
+      setLoader(true)
+      getTrip("Pending").then(res => {
+
+        console.log(res.result, 'pending trip vehicle')
+        if (res.code === 200) {
+          setPendingTrip(res.result)
+        }
+        setLoader(false)
+      })
+    }, []);
   return (
     <>
       <div className="container-fluidd">

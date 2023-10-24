@@ -9,6 +9,7 @@ const Routerpage = () => {
 
   const auth = () => {
     if(localStorage.getItem("token")){
+      
       return <Navigate to={"/dashboard"}/>
     } else {
       return <MainPage/>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   CButton,
   CCard,
@@ -17,10 +17,30 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { addCompany } from "../../../utils/api";
+import { addCompany, getCompanyById } from "../../../utils/api";
 import { toast } from "react-toastify";
 
 const AddCompany = () => {
+  const {companyId} = useParams();
+  const [companyData, setCompanyData] = useState(null)
+  const [loading , setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    console.log("companyId: " + companyId);
+    if(companyId){
+      getCompanyById(companyId).then(res => {
+        console.log(res?.result, 'companyData')
+        if (res?.code === 200) {
+          setCompanyData(res?.result)
+        }else{
+          setError(true);
+        }
+        
+      }).catch(err => {setError(true)});
+      setLoading(false)
+    }
+  }, [])
+  
   const navigate = useNavigate()
   const initialValues = {
     company_name: "",
@@ -73,7 +93,7 @@ const AddCompany = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/companydetails")
+          navigate("/superadmindashboard/companydetails")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
@@ -123,7 +143,29 @@ const AddCompany = () => {
     tel_contact_number: null,
     email: null,
   })
-  
+  const handleMobile = (event, max) => {
+    const pattern = /^[0-9]+$/;
+    if (event.key === 'Backspace' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'Shift' || event.key === 'ArrowLeft' || event.key === "ArrowRight") {
+
+      formik.setFieldValue(event.target.name, event.target.value)
+      formik.setFieldTouched(event.target.name, true)
+    } else {
+
+      let value = event.target.value.toString()
+      if (value.length > max) {
+        event.stopPropagation()
+        event.preventDefault()
+      } else {
+        if (!pattern.test(event.key)) {
+          event.preventDefault();
+          event.stopPropagation()
+        } else {
+          formik.setFieldValue(event.target.name, event.target.value)
+          formik.setFieldTouched(event.target.name, true)
+        }
+      }
+    }
+  }
 const inputHandler = (e) => {
   console.log("errors====>>>>",inputData)
   setInputData({
@@ -143,12 +185,12 @@ const inputHandler = (e) => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add Company</h1>
+                <h1 class="heading-for-every-page">{companyId?"Edit Company": "Add Company"}</h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Add Company</h2>
+                        <h2>{companyId?"Edit Company": "Add Company"}</h2>
                       </div>
                       <div className="right-trip-content">
                         <Link to="/superadmindashboard/companydetails">
@@ -311,6 +353,7 @@ const inputHandler = (e) => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputphnnum">Phone Number</CFormLabel>
                               <CFormInput aria-label="phone number"
+                              onKeyDown={(e) => { handleMobile(e, 17) }}
                               {...formik.getFieldProps("phone")}
                               maxLength="50"
                               className={clsx(
@@ -516,6 +559,7 @@ const inputHandler = (e) => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcon_num">Tel Contact Number</CFormLabel>
                               <CFormInput id="tel_Con_nu"
+                              onKeyDown={(e) => { handleMobile(e, 17) }}
                              {...formik.getFieldProps("tel_contact_number")}
                              maxLength="50"
                              className={clsx(

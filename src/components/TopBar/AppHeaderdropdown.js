@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   CAvatar,
   CDropdown,
@@ -13,12 +13,15 @@ import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
 
 import threedots from '../../assets/images/threedots.png'
+import UsersStats from '../SuperAdminDashboard/DashboardStats/UsersStats'
+import userContext from '../../utils/context'
 const AppHeaderDropdown = () => {
-
+  const {user, setUser} = useContext(userContext);
     const navigate = useNavigate()
 
  const  logout = () => {
-  console.log("herlo")
+  console.log("logout run please")
+    setUser(null);
     localStorage.clear()
     navigate("/")
   }
@@ -32,9 +35,11 @@ const AppHeaderDropdown = () => {
       <CDropdownMenu className="pt-0" placement="bottom-end">
         {/* <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
         <CDropdownDivider /> */}
-        <CDropdownItem href="#" className='logout-dropdown'>
+        <CDropdownItem onClick={()=>{
+            logout()
+          }} className='logout-dropdown'>
           <CIcon icon={cilLockLocked} className="me-2" />
-          <button className='text-black btn-logout '  onClick={logout} >Logout</button>
+          <button className='text-black btn-logout '   >Logout</button>
        
         </CDropdownItem>
       </CDropdownMenu>

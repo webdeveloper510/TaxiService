@@ -21,7 +21,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 const BookingRequestTable = () => {
 
-  const [bookingTrip, setBookingTrip] = useState()
+  const [bookingTrip, setBookingTrip] = useState([])
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {

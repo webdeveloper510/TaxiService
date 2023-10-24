@@ -13,8 +13,9 @@ import AppHeader from "../../TopBar/AppHeader";
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import PulseLoader from "react-spinners/PulseLoader";
-import { getDriver } from "../../../utils/api";
+import { deleteCompany, deleteDriver, getDriver } from "../../../utils/api";
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import { toast } from "react-toastify";
 
 
 const ListOfDrivers = () => {
@@ -35,6 +36,29 @@ const ListOfDrivers = () => {
       setLoader(false)
     })
   }, [])
+  const deleteDriverHandler = async (id) => {
+    try {
+      console.log(id, 'driver deleted id')
+      const deleteData = await deleteDriver(id);
+      console.log(deleteData,"delete driver data")
+      if(deleteData.code === 200) {
+        toast.success(`${deleteData.message}`, {
+
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        const newData = driver.filter(d => d._id != id);
+        setDriver(newData)
+      }else{
+        toast.warning(`${deleteData.message}`, {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -113,7 +137,16 @@ const ListOfDrivers = () => {
                           </CTableDataCell>
                           <CTableDataCell className="d-flex action-icons driver-icons">
                             <div><img src={editiconimg} /></div>
-                            <div><img src={deleteiconimg} /></div>
+                            <div
+                            style={{
+                              cursor:"pointer"
+                            }
+                            
+                          }
+                          onClick={()=>{
+                            deleteDriverHandler(item._id)
+                          }}
+                            ><img src={deleteiconimg} /></div>
                           </CTableDataCell>
                         </CTableRow>
                       )) :  ""}
