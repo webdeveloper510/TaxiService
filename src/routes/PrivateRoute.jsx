@@ -19,14 +19,23 @@ import AddSuperVehicle from '../components/SuperAdminDashboard/Vehicles/addnewve
 import LisOfVehicles from '../components/SuperAdminDashboard/Vehicles/listofvehicles';
 import AddFare from '../components/SuperAdminDashboard/Fares/addfare';
 import ListOfFares from '../components/SuperAdminDashboard/Fares/fareslisting';
+import { getProfile } from '../utils/api';
 
 
 const PrivateRoute = () => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        return <Navigate to="/login" />;
-    }
+    // const token = localStorage.getItem('token');
+    // console.log('token: from local storage' + token);
+    // getProfile().then(res => {
+    //     console.log(res, 'profile data')
+    //     if (res?.code === 200) {
+          
+    //     }else{
+    //         return <Navigate to="/login" />;
+    //     }
+    //   })
+    // if (!token) {
+    //     return <Navigate to="/login" />;
+    // }
 
     return (
         <Routes>

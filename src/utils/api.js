@@ -225,3 +225,35 @@ export const getCompanyById = async(id) => {
     console.log("GET_COMPANY_By_Id", error);
   });
 };
+
+
+export const deleteDriver = async(id) => {
+  return await Axios.delete(`admin/remove_driver/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "delete driver");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("DELETE_DRIVER", error);
+  });
+};
+
+export const getProfile = async(tokenFromLocal) => {
+  console.log("GET_PROFILE_token", tokenFromLocal);
+  return await Axios.get(`admin/get_token_detail`,{
+    headers: {
+      "x-access-token": tokenFromLocal,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "getProfile");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_PROFILE", error);
+  });
+};
