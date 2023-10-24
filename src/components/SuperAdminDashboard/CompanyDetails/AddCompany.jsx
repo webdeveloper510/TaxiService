@@ -93,7 +93,7 @@ const AddCompany = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/companydetails")
+          navigate("/superadmindashboard/companydetails")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
@@ -143,7 +143,29 @@ const AddCompany = () => {
     tel_contact_number: null,
     email: null,
   })
-  
+  const handleMobile = (event, max) => {
+    const pattern = /^[0-9]+$/;
+    if (event.key === 'Backspace' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'Shift' || event.key === 'ArrowLeft' || event.key === "ArrowRight") {
+
+      formik.setFieldValue(event.target.name, event.target.value)
+      formik.setFieldTouched(event.target.name, true)
+    } else {
+
+      let value = event.target.value.toString()
+      if (value.length > max) {
+        event.stopPropagation()
+        event.preventDefault()
+      } else {
+        if (!pattern.test(event.key)) {
+          event.preventDefault();
+          event.stopPropagation()
+        } else {
+          formik.setFieldValue(event.target.name, event.target.value)
+          formik.setFieldTouched(event.target.name, true)
+        }
+      }
+    }
+  }
 const inputHandler = (e) => {
   console.log("errors====>>>>",inputData)
   setInputData({
@@ -331,6 +353,7 @@ const inputHandler = (e) => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputphnnum">Phone Number</CFormLabel>
                               <CFormInput aria-label="phone number"
+                              onKeyDown={(e) => { handleMobile(e, 17) }}
                               {...formik.getFieldProps("phone")}
                               maxLength="50"
                               className={clsx(
@@ -536,6 +559,7 @@ const inputHandler = (e) => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcon_num">Tel Contact Number</CFormLabel>
                               <CFormInput id="tel_Con_nu"
+                              onKeyDown={(e) => { handleMobile(e, 17) }}
                              {...formik.getFieldProps("tel_contact_number")}
                              maxLength="50"
                              className={clsx(

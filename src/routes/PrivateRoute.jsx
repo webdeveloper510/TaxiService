@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Route, Navigate, Routes } from 'react-router-dom';
 import Dashboard from '../components/Admindashboard/dashboard';
 import ActiveTrip from '../components/Admindashboard/Trips/activetrips';
@@ -20,45 +20,84 @@ import LisOfVehicles from '../components/SuperAdminDashboard/Vehicles/listofvehi
 import AddFare from '../components/SuperAdminDashboard/Fares/addfare';
 import ListOfFares from '../components/SuperAdminDashboard/Fares/fareslisting';
 import { getProfile } from '../utils/api';
+import userContext from '../utils/context';
+import SecureSuperRoleRoute from '../utils/SecureSuperRoleRoute';
+import SecureSubRoleRoute from '../utils/SecureSubRoleRoute';
 
 
 const PrivateRoute = () => {
-    // const token = localStorage.getItem('token');
-    // console.log('token: from local storage' + token);
-    // getProfile().then(res => {
-    //     console.log(res, 'profile data')
-    //     if (res?.code === 200) {
-          
-    //     }else{
-    //         return <Navigate to="/login" />;
-    //     }
-    //   })
-    // if (!token) {
-    //     return <Navigate to="/login" />;
-    // }
+
 
     return (
         <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/trips/recenttrips" element={<RecentTrips />} />
-            <Route path="/trips/activetrips" element={<ActiveTrip />} />
-            <Route path="/trips/requestnewtrip" element={<RequestNewTrip />} />
-            <Route path="/trips/pendingtrips" element={<PendingTrip />} />
-            <Route path="/trips/completetrips" element={<CompletedTrip />} />
-            <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
-            <Route path="/driver/listofdrivers" element={<DriverList />} />
-            <Route path="/faremanagement" element={<FareManagement />} />
-            <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
-            <Route path="/superadmindashboard/dashboard" element={<SuperAdminDashboard />} />
-            <Route path="/superadmindashboard/companydetails" element={<CompanyDetails />} />
-            <Route path="/superadmindashboard/add-company" element={<AddCompany />} />
-            <Route path="/superadmindashboard/edit-company/:companyId" element={<AddCompany />} />
-            <Route path="/superadmindashboard/driver/addnewdriver" element={<AddNewDriver />} />
-            <Route path="/superadmindashboard/driver/listofdrivers" element={<ListOfDrivers />} />
-            <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
-            <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
-            <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
-            <Route path="/superadmindashboard/fare/listoffares" element={<ListOfFares/>} />
+            <Route path="/dashboard" element={
+                <SecureSubRoleRoute>
+                    <Dashboard />
+                </SecureSubRoleRoute>
+            } />
+            <Route path="/trips/recenttrips" element={<SecureSubRoleRoute>
+                <RecentTrips />
+            </SecureSubRoleRoute>} />
+            <Route path="/trips/activetrips" element={<SecureSubRoleRoute>
+                <ActiveTrip />
+            </SecureSubRoleRoute>} />
+            <Route path="/trips/requestnewtrip" element={<SecureSubRoleRoute>
+                <RequestNewTrip />
+            </SecureSubRoleRoute>} />
+            <Route path="/trips/pendingtrips" element={<SecureSubRoleRoute>
+                <PendingTrip />
+            </SecureSubRoleRoute>} />
+            <Route path="/trips/completetrips" element={<SecureSubRoleRoute>
+                <CompletedTrip />
+            </SecureSubRoleRoute>} />
+            <Route path="/trips/requestbookings" element={<SecureSubRoleRoute>
+                <BookingRequestTable />
+            </SecureSubRoleRoute>} />
+            <Route path="/driver/listofdrivers" element={<SecureSubRoleRoute>
+                <DriverList />
+            </SecureSubRoleRoute>} />
+            <Route path="/faremanagement" element={<SecureSubRoleRoute>
+                <FareManagement />
+            </SecureSubRoleRoute>} />
+            <Route path="/vehicle/viewallvehicle" element={<SecureSubRoleRoute>
+                <ViewAllVehicle />
+            </SecureSubRoleRoute>} />
+            <Route path="/superadmindashboard/dashboard" element={
+                <SecureSuperRoleRoute>
+                    <SuperAdminDashboard />
+                </SecureSuperRoleRoute>
+            } />
+            <Route path="/superadmindashboard/companydetails" element={
+                <SecureSuperRoleRoute>
+                    <CompanyDetails />
+                </SecureSuperRoleRoute>
+            } />
+            <Route path="/superadmindashboard/add-company" element={
+                <SecureSuperRoleRoute>
+                    <AddCompany />
+                </SecureSuperRoleRoute>
+            } />
+            <Route path="/superadmindashboard/edit-company/:companyId" element={<SecureSuperRoleRoute>
+                <AddCompany />
+            </SecureSuperRoleRoute>} />
+            <Route path="/superadmindashboard/driver/addnewdriver" element={<SecureSuperRoleRoute>
+                <AddNewDriver />
+            </SecureSuperRoleRoute>} />
+            <Route path="/superadmindashboard/driver/listofdrivers" element={<SecureSuperRoleRoute>
+                <ListOfDrivers />
+            </SecureSuperRoleRoute>} />
+            <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<SecureSuperRoleRoute>
+                <AddSuperVehicle />
+            </SecureSuperRoleRoute>} />
+            <Route path="/superadmindashboard/vehicle/listofvehicles" element={<SecureSuperRoleRoute>
+                <LisOfVehicles />
+            </SecureSuperRoleRoute>} />
+            <Route path="/superadmindashboard/fare/addfare" element={<SecureSuperRoleRoute>
+                <AddFare />
+            </SecureSuperRoleRoute>} />
+            <Route path="/superadmindashboard/fare/listoffares" element={<SecureSuperRoleRoute>
+                <ListOfFares />
+            </SecureSuperRoleRoute>} />
             {/* <Route path='*' element={<Navigate to={"/dashboard"} />} /> */}
         </Routes>
     );
