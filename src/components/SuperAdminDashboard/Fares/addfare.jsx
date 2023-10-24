@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../SideBar2";
+
 import { Link } from 'react-router-dom';
 import {
   CButton,
@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { addFare } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { getVehicleType } from "../../../utils/api";
+import SuperSideBar from "../SiderNavBar/Sidebar";
 //import background from '../assets/images/heroimg.png';
 
 const AddFare = () => {
@@ -102,7 +103,7 @@ const AddFare = () => {
         <div className="col-md-12">
 
           <div>
-            <SideBar2 />
+            <SuperSideBar/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -114,11 +115,7 @@ const AddFare = () => {
                       <div className="left-trip-content">
                         <h2>Add Fare</h2>
                       </div>
-                      <div className="right-trip-content">
-                        <Link to="/faremanagement">
-                          <CButton className="fare_list">Fare List</CButton>
-                        </Link>
-                      </div>
+                    
                     </div>
                   </div>
                   <CRow>

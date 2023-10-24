@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../SideBar2"
 import {
   CButton,
   CCard,
@@ -24,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { addDriver } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import uploadfileImg from '../../../assets/images/upload-btn.png'
+import SuperSideBar from "../SiderNavBar/Sidebar";
 //import background from '../assets/images/heroimg.png';
 
 const AddNewDriver = () => {
@@ -136,12 +136,12 @@ const AddNewDriver = () => {
         <div className="col-md-12">
 
           <div>
-            <SideBar2 />
+            <SuperSideBar/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add New Driver</h1>
+                <h1 class="heading-for-every-page">Add New Super Driver</h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Driver</h2> */}
                   <CRow>

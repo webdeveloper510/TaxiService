@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../SideBar2"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
@@ -24,7 +23,10 @@ import { toast } from 'react-toastify';
 import "react-datepicker/dist/react-datepicker.css";
 import { addVehicle, getVehicleType } from "../../../utils/api";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
-const AddNewVehicle = () => {
+import SuperSideBar from "../SiderNavBar/Sidebar";
+
+
+const AddSuperVehicle = () => {
 
 
   const navigate = useNavigate();
@@ -150,12 +152,12 @@ const AddNewVehicle = () => {
         <div className="col-md-12">
 
           <div>
-            <SideBar2 />
+          <SuperSideBar/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add New Vehicle</h1>
+                <h1 class="heading-for-every-page">Add New Super Vehicle</h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
@@ -494,4 +496,4 @@ const AddNewVehicle = () => {
   );
 };
 
-export default AddNewVehicle; 
+export default AddSuperVehicle; 

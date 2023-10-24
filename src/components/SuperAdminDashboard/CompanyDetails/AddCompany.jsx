@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../../Admindashboard/SideBar2";
+import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CButton,
@@ -138,7 +138,7 @@ const inputHandler = (e) => {
         <div className="col-md-12">
 
           <div>
-            <SideBar2 />
+            <Sidebar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -151,7 +151,7 @@ const inputHandler = (e) => {
                         <h2>Add Company</h2>
                       </div>
                       <div className="right-trip-content">
-                        <Link to="/companydetails">
+                        <Link to="/superadmindashboard/companydetails">
                           <CButton className="company_list">Company List</CButton>
                         </Link>
                       </div>

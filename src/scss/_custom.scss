@@ -450,6 +450,9 @@ option[default] {
 button.btn.btn-primary:active {
     background: #FFD04E !important;
 }
+.sidebar-nav .nav-link {
+    font-size: 15px;
+}
 @media screen and (max-width: 768px) {
 img.card-img-top {
     width: auto !important;
