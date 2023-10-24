@@ -1,5 +1,5 @@
 import React from "react";
-import SideBar2 from "../../Admindashboard/SideBar2";
+import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
 import AppHeader from "../../TopBar/AppHeader";
 import { Link } from 'react-router-dom';
 import {
@@ -43,7 +43,7 @@ const CompanyDetails=()=> {
        <div className="container-fluidd">
         <div className="col-md-12">
         <div>
-        <SideBar2/>
+        <Sidebar/>
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
         <div className="body flex-grow-1 px-3">
@@ -59,7 +59,7 @@ const CompanyDetails=()=> {
             <img src={downarrowImg}/>
             <img src={crossImg}/> */}
              <div className="right-trip-content">
-                        <Link to="/add-company">
+                        <Link to="/superadmindashboard/add-company">
                           <CButton className="add_company_btn">Add Company</CButton>
                         </Link>
                      

@@ -10,7 +10,7 @@ const _Supernav = [
   {
     component: CNavItem,
     name: 'Dashboard',
-    to: '/dashboard',
+    to: '/superadmindashboard/dashboard',
     icon: <div className='radius-svg'> <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -28,7 +28,7 @@ const _Supernav = [
   {
     component: CNavItem,
     name: 'Company Details',
-    to: '/dashboard/companydetails',
+    to: '/superadmindashboard/companydetails',
     icon:<div className='radius-svg'><svg
     xmlns="http://www.w3.org/2000/svg"
     width="25"
@@ -119,32 +119,49 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'List Of All Drivers',
-        to: '/driver/listofdrivers',
+        to: '/superadmindashboard/driver/listofdrivers',
+      }, 
+      {
+        component: CNavItem,
+        name: 'Add New Driver',
+        to: '/superadmindashboard/driver/addnewdriver',
       }, 
     ],
   },
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Fare Management',
-    to: '/faremanagement',
-    icon: <div className='radius-svg'>
-        <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="25"
-      fill="none"
-      viewBox="0 0 24 25"
-    >
-      <path
-        fill="#FFD04E"
-        d="M2.744 16.549L0 19.293 5.707 25l2.744-2.744-5.707-5.707zm3.475 6.869a.65.65 0 110-1.3.65.65 0 010 1.3zM22.51 10.325c-.683-.636-1.758-.587-2.418.073l-3.82 3.82h-.007a1.67 1.67 0 00.266-.847 1.722 1.722 0 00-1.72-1.785H10.69a4.432 4.432 0 00-3.134 1.299l-3.194 3.193 3.814 3.814.678-.678h5.456a4.432 4.432 0 003.134-1.298l5.112-5.112a1.722 1.722 0 00-.045-2.479z"
-      ></path>
-      <path
-        fill="#FFD04E"
-        d="M18.195 5.706a5.035 5.035 0 00-.59-1.423l1.259-1.556-1.406-1.406-1.556 1.258a5.035 5.035 0 00-1.423-.59L14.269 0H12.28l-.21 1.99a5.037 5.037 0 00-1.423.59L9.09 1.32 7.685 2.727l1.258 1.556a5.036 5.036 0 00-.59 1.423l-1.99.21v1.989l1.99.21c.125.509.325.988.59 1.423l-1.035 1.28a5.932 5.932 0 012.782-.697h4.12a3.16 3.16 0 012.399 1.089l.966-.967-.57-.705c.265-.435.466-.914.59-1.423l1.99-.21V5.917l-1.99-.211zm-4.92 3.533a2.329 2.329 0 110-4.657 2.329 2.329 0 010 4.657z"
-      ></path>
-    </svg>
-    </div>,
+    icon: <div className='radius-svg'>  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="25"
+    fill="none"
+    viewBox="0 0 24 25"
+  >
+    <path
+      fill="#FFD04E"
+      d="M2.744 16.549L0 19.293 5.707 25l2.744-2.744-5.707-5.707zm3.475 6.869a.65.65 0 110-1.3.65.65 0 010 1.3zM22.51 10.325c-.683-.636-1.758-.587-2.418.073l-3.82 3.82h-.007a1.67 1.67 0 00.266-.847 1.722 1.722 0 00-1.72-1.785H10.69a4.432 4.432 0 00-3.134 1.299l-3.194 3.193 3.814 3.814.678-.678h5.456a4.432 4.432 0 003.134-1.298l5.112-5.112a1.722 1.722 0 00-.045-2.479z"
+    ></path>
+    <path
+      fill="#FFD04E"
+      d="M18.195 5.706a5.035 5.035 0 00-.59-1.423l1.259-1.556-1.406-1.406-1.556 1.258a5.035 5.035 0 00-1.423-.59L14.269 0H12.28l-.21 1.99a5.037 5.037 0 00-1.423.59L9.09 1.32 7.685 2.727l1.258 1.556a5.036 5.036 0 00-.59 1.423l-1.99.21v1.989l1.99.21c.125.509.325.988.59 1.423l-1.035 1.28a5.932 5.932 0 012.782-.697h4.12a3.16 3.16 0 012.399 1.089l.966-.967-.57-.705c.265-.435.466-.914.59-1.423l1.99-.21V5.917l-1.99-.211zm-4.92 3.533a2.329 2.329 0 110-4.657 2.329 2.329 0 010 4.657z"
+    ></path>
+  </svg></div>,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Add Fare',
+        to: '/superadmindashboard/fare/addfare',
+        
+      },
+      {
+        component: CNavItem,
+        name: 'View All Fares',
+        to: '/superadmindashboard/fare/listoffares',
+        
+      },
+      
+    ],
   },
   {
     component: CNavGroup,
@@ -164,8 +181,14 @@ const _Supernav = [
     items: [
       {
         component: CNavItem,
+        name: 'Add New Vehicle',
+        to: '/superadmindashboard/vehicle/addnewvehicle',
+        
+      },
+      {
+        component: CNavItem,
         name: 'View All Vehicles',
-        to: '/vehicle/viewallvehicle',
+        to: '/superadmindashboard/vehicle/listofvehicles',
         
       },
       

@@ -1,6 +1,5 @@
 import React from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import Map from "../../TaxiMap/Map"
 import DashboardStats from "../../Stats/DashBoardStats";
 import RecentTrips from "../../Admindashboard/Trips/recenttrips";
 //import BookingRequestTable from "./BookingRequestTable";
@@ -8,7 +7,8 @@ import RecentTrips from "../../Admindashboard/Trips/recenttrips";
 import RiderStatusTable from "../../Stats/RiderStatusTable";
 //import SideBar2 from "../../Admindashboard/SideBar2";
 import SuperSideBar from "../SiderNavBar/Sidebar";
-
+import SuperMap from "../../TaxiMap/Map";
+import AllDashboardStats from "../DashboardStats/AllStats";
 
 const SuperAdminDashboard=()=> {
    
@@ -27,13 +27,15 @@ const SuperAdminDashboard=()=> {
           <h1 className="heading-for-every-page">Super Admin Dashboard</h1>
           <div class="map-outer"> 
           <h2>Taxi Live Location</h2>
-          <Map /></div>
+          <SuperMap/>
+          </div>
           
           {/* <div className="home-dashobard-chart">
             <DashboardGraph/>
           </div> */}
           <div className="stats-outer">
-            <DashboardStats/>
+          
+         <AllDashboardStats/>
           </div>
 
           <div className="row driver-recent-trips">
