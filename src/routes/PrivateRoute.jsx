@@ -19,6 +19,14 @@ import AddSuperVehicle from '../components/SuperAdminDashboard/Vehicles/addnewve
 import LisOfVehicles from '../components/SuperAdminDashboard/Vehicles/listofvehicles';
 import AddFare from '../components/SuperAdminDashboard/Fares/addfare';
 import ListOfFares from '../components/SuperAdminDashboard/Fares/fareslisting';
+import SuperBookedTrips from '../components/SuperAdminDashboard/Trips/Bookedtrips';
+import SuperActiveTrip from '../components/SuperAdminDashboard/Trips/ActiveTrips';
+import SuperPendingTrip from '../components/SuperAdminDashboard/Trips/PendingTrips';
+import SuperCompleteTrip from '../components/SuperAdminDashboard/Trips/CompleteTrips';
+import SuperRequestTrip from '../components/SuperAdminDashboard/Trips/RequestTrips';
+import RequestAcceptTrip from '../components/SuperAdminDashboard/Trips/AcceptRequestTrip';
+import AddNewBookings from '../components/SuperAdminDashboard/Trips/AddNewBookings';
+import EditVehicle from '../components/SuperAdminDashboard/Vehicles/EditVehicle';
 
 
 const PrivateRoute = () => {
@@ -43,10 +51,18 @@ const PrivateRoute = () => {
             <Route path="/superadmindashboard/dashboard" element={<SuperAdminDashboard />} />
             <Route path="/superadmindashboard/companydetails" element={<CompanyDetails />} />
             <Route path="/superadmindashboard/add-company" element={<AddCompany />} />
+            <Route path="/superadmindashboard/trips/bookedtrips" element={<SuperBookedTrips/>} />
+            <Route path="/superadmindashboard/trips/activetrips" element={<SuperActiveTrip/>} />
+            <Route path="/superadmindashboard/trips/pendingtrips" element={<SuperPendingTrip/>} />
+            <Route path="/superadmindashboard/trips/completetrips" element={<SuperCompleteTrip/>} />
+            <Route path="/superadmindashboard/trips/requesttrips" element={<SuperRequestTrip/>} />
+            <Route path="/superadmindashboard/trips/acceptedtrips" element={<RequestAcceptTrip/>} />
+            <Route path="/superadmindashboard/trips/addnewbooking" element={<AddNewBookings/>} />
             <Route path="/superadmindashboard/driver/addnewdriver" element={<AddNewDriver />} />
             <Route path="/superadmindashboard/driver/listofdrivers" element={<ListOfDrivers />} />
             <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
             <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
+            <Route path="/superadmindashboard/vehicle/editvehicle" element={<EditVehicle />} />
             <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
             <Route path="/superadmindashboard/fare/listoffares" element={<ListOfFares/>} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />

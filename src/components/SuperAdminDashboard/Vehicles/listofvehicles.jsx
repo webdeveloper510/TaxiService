@@ -6,15 +6,30 @@ import {
   Row,
   Col,
   Card,
-  Button,
 } from 'react-bootstrap';
+
+import {
+  CButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+  CCardBody,
+  CCol,
+  CRow,
+  CCard,
+} from '@coreui/react'
+import { Link } from 'react-router-dom';
 // import vehicle1 from '../../../assets/images/vehicle1.png';
 import { getVehicle } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
-
+import editvehicleicon from "../../../assets/images/editvehi.png";
+import deletevehicleicon from "../../../assets/images/deletevehi.png"
+import deletepopup from '../../../assets/images/deletepopup.png'
 const LisOfVehicles = () => {
-
+  const [visible, setVisible] = useState(false)
   const [vehicle, setVehicle] = useState();
   const [loader, setLoader] = useState(false);
 
@@ -41,7 +56,8 @@ const LisOfVehicles = () => {
             <h1 className="heading-for-every-page">View All super Vehicles</h1>
             <div className="active-trip-outer">
               {/* <h2>View All Vehicles</h2> */}
-              <Container className='p-4 vehicle-cards'>
+              
+              <div className='p-4 vehicle-cards'>
                 {loader ? (<>
                   <div className=" d-flex justify-content-center align-items-center"
                     style={{ height: 400 }}>
@@ -59,8 +75,19 @@ const LisOfVehicles = () => {
                     {vehicle?.length > 0 ? vehicle.map((data, i) => {
                       return (
                         <Col md={4}>
-                          <Card>
+                          <Card className="cards-for-icons">
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} />
+                          <div class="icons-outer" >
+                          <Link to="/superadmindashboard/vehicle/editvehicle">
+                          <CButton className="edit_vehicle"><img src={editvehicleicon} alt="edit-icon"/></CButton>
+                        </Link>
+
+                       
+                          <CButton className="delete_vehilce" onClick={() => setVisible(!visible)}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
+                       
+                          
+                            
+                            </div>
                             <Card.Body>
                               <Card.Title>{data.vehicle_model}</Card.Title>
                               <Card.Text>
@@ -98,7 +125,44 @@ const LisOfVehicles = () => {
                   </Row></>)}
 
 
-              </Container>
+ {/* StartDeletepopup */}
+
+
+ <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+                    {/* <CModalHeader>
+                      <CModalTitle>Edit Fare</CModalTitle>
+                    </CModalHeader> */}
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                                <img src={deletepopup} alt="danger"/>
+                                 <h2>Are you Sure</h2>
+                                <p>You want to delete this Vehicle ?</p>
+
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                            <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+                             Cancel</CButton>
+
+                            <CButton className="delete_popup">Delete</CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                   
+       
+       
+                  </CModal>
+
+
+
+
+                  {/* enddeletepopup */}
+              </div>
             </div>
           </div>
         </div>

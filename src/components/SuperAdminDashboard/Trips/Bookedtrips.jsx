@@ -9,7 +9,6 @@ import {
   CButton,
 } from '@coreui/react'
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../SideBar2"
 import { getTrip } from "../../../utils/api";
 import refreshImg from '../../../assets/images/refresh.png';
 import crossImg from '../../../assets/images/cross-arrow.png';
@@ -18,6 +17,7 @@ import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import moment from "moment"
 import PulseLoader from "react-spinners/PulseLoader";
+import SuperSideBar from "../SiderNavBar/Sidebar";
 
 const SuperBookedTrips = () => {
 
@@ -43,12 +43,12 @@ const SuperBookedTrips = () => {
         <div className="col-md-12">
 
           <div>
-            <SideBar2 />
+           <SuperSideBar/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Booked Trip</h1>
+                <h1 class="heading-for-every-page">Booked Super Trip</h1>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">

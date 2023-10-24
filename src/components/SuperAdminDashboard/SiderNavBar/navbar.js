@@ -71,30 +71,42 @@ const _Supernav = [
     ></path>
   </svg></div>,
     items: [
+     
+      
       {
         component: CNavItem,
-        name: 'Request Trip',
-        to: '/trips/requestnewtrip',
+        name: 'Active Trips',
+        to: '/superadmindashboard/trips/activetrips',
       },
-      {
-        component: CNavItem,
-        name: 'Active Trip',
-        to: '/trips/activetrips',
-      },
-      {
-        component: CNavItem,
-        name: 'Pending Trip',
-        to: '/trips/pendingtrips',
-      },
-      {
-        component: CNavItem,
-        name: 'Completed Trip',
-        to: '/trips/completetrips',
-      },
+      
       {
         component: CNavItem,
         name: 'Booked Trips',
-        to: '/trips/requestbookings',
+        to: '/superadmindashboard/trips/bookedtrips',
+      },
+
+      {
+        component: CNavItem,
+        name: 'Pending Trips',
+        to: '/superadmindashboard/trips/pendingtrips',
+      },
+
+      {
+        component: CNavItem,
+        name: 'Complete Trips',
+        to: '/superadmindashboard/trips/completetrips',
+      },
+
+      {
+        component: CNavItem,
+        name: 'Request Trips',
+        to: '/superadmindashboard/trips/requesttrips',
+      },
+
+      {
+        component: CNavItem,
+        name: 'Accepted Trips',
+        to: '/superadmindashboard/trips/acceptedtrips',
       },
     
     ],

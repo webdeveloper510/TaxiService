@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import SideBar2 from "../SideBar2"
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -25,9 +24,10 @@ import { getDriver, getVehicle, getVehicleType } from "../../../utils/api";
 import { addTrip } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import SuperSideBar from "../SiderNavBar/Sidebar";
 
 
-const RequestNewTrip = () => {
+const SuperRequestTrip = () => {
 
   const navigate = useNavigate();
 
@@ -215,12 +215,12 @@ const RequestNewTrip = () => {
 
         <div className="col-md-12">
           <div>
-            <SideBar2 />
+           <SuperSideBar/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add New Trip</h1>
+                <h1 class="heading-for-every-page">Add Request Trip</h1>
                 <div class="active-trip-outer">
 
                   <CRow>
@@ -336,7 +336,7 @@ const RequestNewTrip = () => {
                                             {suggestion.description}
                                           </div>
                                         ))}
-                                        </div>
+                                      </div>
                                       </div>
                                     </div>
                                   )}
@@ -385,7 +385,7 @@ const RequestNewTrip = () => {
                                           </div>
                                         ))}
                                       </div>
-                                      </div>
+                                    </div>
                                     </div>
                                   )}
                                 </PlacesAutocomplete>
@@ -477,4 +477,4 @@ const RequestNewTrip = () => {
   );
 };
 
-export default RequestNewTrip; 
+export default SuperRequestTrip; 
