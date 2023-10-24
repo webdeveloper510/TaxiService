@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   CButton,
   CCard,
@@ -17,10 +17,30 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { addCompany } from "../../../utils/api";
+import { addCompany, getCompanyById } from "../../../utils/api";
 import { toast } from "react-toastify";
 
 const AddCompany = () => {
+  const {companyId} = useParams();
+  const [companyData, setCompanyData] = useState(null)
+  const [loading , setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    console.log("companyId: " + companyId);
+    if(companyId){
+      getCompanyById(companyId).then(res => {
+        console.log(res?.result, 'companyData')
+        if (res?.code === 200) {
+          setCompanyData(res?.result)
+        }else{
+          setError(true);
+        }
+        
+      }).catch(err => {setError(true)});
+      setLoading(false)
+    }
+  }, [])
+  
   const navigate = useNavigate()
   const initialValues = {
     company_name: "",
@@ -143,12 +163,12 @@ const inputHandler = (e) => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add Company</h1>
+                <h1 class="heading-for-every-page">{companyId?"Edit Company": "Add Company"}</h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Add Company</h2>
+                        <h2>{companyId?"Edit Company": "Add Company"}</h2>
                       </div>
                       <div className="right-trip-content">
                         <Link to="/superadmindashboard/companydetails">

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
 import AppHeader from "../../TopBar/AppHeader";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import {
   CTable,
   CTableBody,
@@ -37,9 +38,68 @@ const tableExample = [
 
 ]
 const CompanyDetails=()=> {
+  const navigate = useNavigate();
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error,setError] = useState(false);
+
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageLimit, setPageLimit] = React.useState(3);
+  const [maxPage, setMaxPage] = React.useState(3);
+  const [minPage, setMinPage] = React.useState(0);
+  const recordPage = 4;
+  const lastIndex = currentPage * recordPage;
+  const firstIndex = lastIndex - recordPage;
+  const data = company.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(company.length / recordPage);
+  const number = [...Array(nPage + 1).keys()].slice(1);
+
+  const pageNumber = number.map((num, i) => {
+    if (num < maxPage + 1 && num > minPage) {
+      return (
+        <>
+          <li
+            key={i}
+            // className={
+            //   currentPage == num ? `${styles.active} ` : `${styles.page_list}`
+            // }
+          >
+            <button onClick={() => changePage(num)}>{num}</button>
+          </li>
+        </>
+      );
+    } else {
+      return null;
+    }
+  });
+
+  const handlePrePage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      if ((currentPage - 1) % pageLimit == 0) {
+        setMaxPage(maxPage - pageLimit);
+        setMinPage(minPage - pageLimit);
+      }
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage !== nPage) {
+      setCurrentPage(currentPage + 1);
+      if (currentPage + 1 > maxPage) {
+        setMaxPage(maxPage + pageLimit);
+        setMinPage(minPage + pageLimit);
+      }
+    }
+  };
+
+  const changePage = (id) => {
+    setCurrentPage(id);
+  };
+  let pageIncreament = null;
+  if (data.length > maxPage) {
+    pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
+  }
 
     useEffect(() => {
       getCompany().then(res => {
@@ -119,10 +179,10 @@ const CompanyDetails=()=> {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {company.map((item, index) => (
+                  {data?.map((item, index) => (
                     <CTableRow className="text-center" v-for="item in tableItems" key={company._id}>
                       <CTableDataCell >
-                        <div>{index + 1}</div>
+                        <div>{firstIndex  + index + 1}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item._id}</div>
@@ -141,7 +201,9 @@ const CompanyDetails=()=> {
                         <div>{item.first_name}</div>
                       </CTableDataCell>                    
                       <CTableDataCell className="text-center d-flex company-list-icons">
-                       <div><img src={editiconimg}/></div> 
+                       <div  style={{cursor:"pointer"}} 
+                       onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
+                       ><img src={editiconimg}/></div> 
                        <div style={{cursor:"pointer"}} onClick={()=>{
                         deleteCompanyHandler(item._id);
                        }}><img src={deleteiconimg}/></div>
@@ -152,7 +214,31 @@ const CompanyDetails=()=> {
               </CTable>
           
           </div>
-        
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+          }}>
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+          }}>
+            <button  onClick={() => handlePrePage()}>
+              Prev
+              {/* <img src="/prev1.png" alt="previous" /> Prev */}
+            </button>
+          </div>
+          <div>
+            <ul >
+              {pageNumber}
+              <button >{pageIncreament}</button>
+            </ul>
+          </div>
+          <div >
+            <button onClick={() => handleNextPage()}>
+              Next 
+            </button>
+          </div>
+        </div>
         </div>
        
       </div>

@@ -43,13 +43,14 @@ const PrivateRoute = () => {
             <Route path="/superadmindashboard/dashboard" element={<SuperAdminDashboard />} />
             <Route path="/superadmindashboard/companydetails" element={<CompanyDetails />} />
             <Route path="/superadmindashboard/add-company" element={<AddCompany />} />
+            <Route path="/superadmindashboard/edit-company/:companyId" element={<AddCompany />} />
             <Route path="/superadmindashboard/driver/addnewdriver" element={<AddNewDriver />} />
             <Route path="/superadmindashboard/driver/listofdrivers" element={<ListOfDrivers />} />
             <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
             <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
             <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
             <Route path="/superadmindashboard/fare/listoffares" element={<ListOfFares/>} />
-            <Route path='*' element={<Navigate to={"/dashboard"} />} />
+            {/* <Route path='*' element={<Navigate to={"/dashboard"} />} /> */}
         </Routes>
     );
 };

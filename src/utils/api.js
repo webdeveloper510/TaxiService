@@ -211,3 +211,17 @@ export const deleteCompany = async(id) => {
   });
 };
 
+export const getCompanyById = async(id) => {
+  return await Axios.get(`/admin/get_sub_admin_detail/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get company by id");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_COMPANY_By_Id", error);
+  });
+};

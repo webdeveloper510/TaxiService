@@ -78,7 +78,7 @@ const DriverList = () => {
                         <CTableHeaderCell className="text-center">Address</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Trips</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
+                        {/* <CTableHeaderCell className="text-center">Action</CTableHeaderCell> */}
                       </CTableRow>
                     </CTableHead>
                     <CTableBody>
@@ -111,10 +111,10 @@ const DriverList = () => {
                           <CTableDataCell>
                             <div class="status">Available</div>
                           </CTableDataCell>
-                          <CTableDataCell className="d-flex action-icons driver-icons">
+                          {/* <CTableDataCell className="d-flex action-icons driver-icons">
                             <div><img src={editiconimg} /></div>
                             <div><img src={deleteiconimg} /></div>
-                          </CTableDataCell>
+                          </CTableDataCell> */}
                         </CTableRow>
                       )) :  ""}
                     </CTableBody>

@@ -62,9 +62,17 @@ function Login() {
             autoClose: 1000,
           });
           localStorage.setItem("token", response.data.jwtToken)
-          setTimeout(()=>{
-            navigate("/dashboard")
-          } , 1000)
+          if(response.data.result.role === "SUPER_ADMIN") {
+            setTimeout(()=>{
+              navigate("/superadmindashboard/dashboard")
+            } , 1000)
+            
+          }else{
+            setTimeout(()=>{
+              navigate("/dashboard")
+            } , 1000)
+          }
+         
           
 
         } else {
