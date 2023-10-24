@@ -182,3 +182,32 @@ export const addCompany = async(data) => {
     console.log("ADD_COMPANY", error);
   });
 };
+export const getCompany = async() => {
+  return await Axios.get(`admin/get_sub_admins`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get company");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_COMPANY", error);
+  });
+};
+export const deleteCompany = async(id) => {
+  return await Axios.delete(`admin/delete_sub_admin/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "delete company");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("DELETE_COMPANY", error);
+  });
+};
+

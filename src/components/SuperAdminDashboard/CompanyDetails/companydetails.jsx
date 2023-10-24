@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBar2 from "../../Admindashboard/SideBar2";
 import AppHeader from "../../TopBar/AppHeader";
 import { Link } from 'react-router-dom';
@@ -11,10 +11,10 @@ import {
   CTableRow,
   CButton,
 } from '@coreui/react'
-
+import { toast } from 'react-toastify';
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
-
+import { deleteCompany, getCompany } from "../../../utils/api";
 const tableExample = [
   {
   SrNo : '1',
@@ -37,7 +37,42 @@ const tableExample = [
 
 ]
 const CompanyDetails=()=> {
-   
+  const [company, setCompany] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error,setError] = useState(false);
+
+    useEffect(() => {
+      getCompany().then(res => {
+        console.log(res?.result, 'company')
+        if (res?.code === 200) {
+          setCompany(res?.result)
+        }else{
+          setError(true);
+        }
+        
+      }).catch(err => {setError(true)});
+      setLoading(false)
+    }, [])
+    const deleteCompanyHandler = async (id) => {
+      try {
+        const deleteCompanyData = await deleteCompany(id);
+        if(deleteCompanyData.code === 200) {
+          toast.success(`${deleteCompanyData.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+          const newCompanyData = company.filter(company => company._id != id);
+          setCompany(newCompanyData)
+        }else{
+          toast.success(`${deleteCompanyData.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
       return (
        <>
        <div className="container-fluidd">
@@ -76,38 +111,40 @@ const CompanyDetails=()=> {
                     </CTableHeaderCell> */}
                      <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Company ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Company Name</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Post Code</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">No. of Vehicle</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Name</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Email</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Phone</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Address</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                  {company.map((item, index) => (
+                    <CTableRow className="text-center" v-for="item in tableItems" key={company._id}>
                       <CTableDataCell >
-                        <div>{item.SrNo}</div>
+                        <div>{index + 1}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.companyId}</div>
+                        <div>{item._id}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.companyname}</div>
+                        <div>{item.first_name + " " + item.last_name}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.postcode}</div>
+                        <div>{item.email}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.vehiclenumber}</div>
+                        <div>{item.phone}</div>
                       </CTableDataCell>
 
                       <CTableDataCell>
-                        <div>{item.address}</div>
+                        <div>{item.first_name}</div>
                       </CTableDataCell>                    
                       <CTableDataCell className="text-center d-flex company-list-icons">
                        <div><img src={editiconimg}/></div> 
-                       <div><img src={deleteiconimg}/></div>
+                       <div style={{cursor:"pointer"}} onClick={()=>{
+                        deleteCompanyHandler(item._id);
+                       }}><img src={deleteiconimg}/></div>
                       </CTableDataCell>            
                     </CTableRow>
                   ))}
