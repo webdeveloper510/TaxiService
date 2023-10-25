@@ -25,6 +25,7 @@ import { addTrip } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import PassengersComponent from "../../Passengers";
 
 
 const SuperRequestTrip = () => {
@@ -442,7 +443,12 @@ const SuperRequestTrip = () => {
                           </CCardBody>
                         </CCard>
                       </CCol>
-                    ))}
+                    
+                    // <PassengersComponent addOnChangeHandler={addOnChangeHandler}
+                    // removePassenger={removePassenger} index={index}
+                    // ></PassengersComponent>
+                    )
+                    )}
                     <CCol xs={12}>
                       <div
                         className="d-flex justify-content-end"

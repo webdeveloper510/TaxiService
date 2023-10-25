@@ -202,7 +202,8 @@ const AddFare = () => {
                             </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare Per Miles</CFormLabel>
-                              <CFormInput onKeyDown={(e) => { handleFare(e,5) }} aria-label="vehicle fare" {...formik.getFieldProps("vehicle_fare_per_km")}
+                              <CFormInput onKeyDown={(e) => { handleFare(e,5) }} aria-label="vehicle fare"
+                               {...formik.getFieldProps("vehicle_fare_per_km")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",

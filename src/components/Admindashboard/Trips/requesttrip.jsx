@@ -479,7 +479,9 @@ const RequestNewTrip = () => {
                   <CCol xs={12}>
                     <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                       <CButton type="submit" className="submit-btn" onClick={adddata}>Submit</CButton>
-                      <CButton type="button" className="cancel-btn">Cancel</CButton>
+                      <CButton onClick={()=>{
+                        navigate("/trips/pendingtrips")
+                      }} type="button" className="cancel-btn">Cancel</CButton>
                     </div>
                   </CCol>
 

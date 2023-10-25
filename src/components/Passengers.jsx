@@ -1,6 +1,21 @@
+import { useFormik } from 'formik';
 import React from 'react'
 import * as Yup from "yup";
-function Passengers({addOnChangeHandler,removePassenger, index}) {
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormCheck,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react'
+import clsx from 'clsx';
+function PassengersComponent({addOnChangeHandler,removePassenger, index}) {
     const instialValue ={
         name: "",
         email: "",
@@ -17,7 +32,7 @@ function Passengers({addOnChangeHandler,removePassenger, index}) {
         instialValue,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-    
+          
         },
       });
     return (
@@ -39,27 +54,97 @@ function Passengers({addOnChangeHandler,removePassenger, index}) {
               <CForm className="row g-3">
                 <CCol md={6}>
                   <CFormLabel htmlFor="inputname">Name</CFormLabel>
-                  <CFormInput aria-label="name" name="name" onChange={(e) => { addOnChangeHandler(e, index) 
+                  <CFormInput aria-label="name" onChange={(e) => { addOnChangeHandler(e, index) 
                 }
 
                 }
-                
-                 />
-                {error.name && <span style={{color:"red"}}>Name is required</span>}
+                {...formik.getFieldProps("name")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.name && formik.errors.name,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.name && !formik.errors.name,
+                                  }
+                                )}
+                                name="name"
+                                autoComplete="off" />
+                              {formik.errors.name && formik.touched.name ? (
+                                <div className="text-danger">{formik.errors.name}</div>
+                              ) : null}
+               
                 </CCol>
                 <CCol xs={6}>
                   <CFormLabel htmlFor="inputphnno">Phone</CFormLabel>
-                  <CFormInput id="inputphnno" name="phone" onChange={(e) => { addOnChangeHandler(e, index) }} />
+                  <CFormInput id="inputphnno" onChange={(e) => { addOnChangeHandler(e, index) }}
+                  {...formik.getFieldProps("phone")}
+                  maxLength="50"
+                  className={clsx(
+                    "form-control bg-transparent",
+                    {
+                      "is-invalid":
+                        formik.touched.phone && formik.errors.phone,
+                    },
+                    {
+                      "is-valid":
+                        formik.touched.phone && !formik.errors.phone,
+                    }
+                  )}
+                  name="phone"
+                  autoComplete="off" />
+                {formik.errors.phone && formik.touched.phone ? (
+                  <div className="text-danger">{formik.errors.phone}</div>
+                ) : null}
                 </CCol>
                 <CCol xs={6}>
                   <CFormLabel htmlFor="inputtemailadd">
                     Email Address
                   </CFormLabel>
-                  <CFormInput id="inputemailadd" name="email" onChange={(e) => { addOnChangeHandler(e, index) }} />
+                  <CFormInput id="inputemailadd"  onChange={(e) => { addOnChangeHandler(e, index) }} 
+                  {...formik.getFieldProps("email")}
+                  maxLength="50"
+                  className={clsx(
+                    "form-control bg-transparent",
+                    {
+                      "is-invalid":
+                        formik.touched.email && formik.errors.email,
+                    },
+                    {
+                      "is-valid":
+                        formik.touched.email && !formik.errors.email,
+                    }
+                  )}
+                  name="email"
+                  autoComplete="off" />
+                {formik.errors.email && formik.touched.email ? (
+                  <div className="text-danger">{formik.errors.email}</div>
+                ) : null}
                 </CCol>
                 <CCol xs={6}>
                   <CFormLabel htmlFor="inputaddress">Address</CFormLabel>
-                  <CFormInput id="inputaddress" name="address" onChange={(e) => { addOnChangeHandler(e, index) }} />
+                  <CFormInput id="inputaddress" onChange={(e) => { addOnChangeHandler(e, index) }} 
+                  {...formik.getFieldProps("address")}
+                  maxLength="50"
+                  className={clsx(
+                    "form-control bg-transparent",
+                    {
+                      "is-invalid":
+                        formik.touched.address && formik.errors.address,
+                    },
+                    {
+                      "is-valid":
+                        formik.touched.address && !formik.errors.address,
+                    }
+                  )}
+                  name="address"
+                  autoComplete="off" />
+                {formik.errors.address && formik.touched.address ? (
+                  <div className="text-danger">{formik.errors.address}</div>
+                ) : null}
                 </CCol>
               </CForm>
             </CCardBody>
@@ -68,4 +153,4 @@ function Passengers({addOnChangeHandler,removePassenger, index}) {
       )
 }
 
-export default Passengers
+export default PassengersComponent

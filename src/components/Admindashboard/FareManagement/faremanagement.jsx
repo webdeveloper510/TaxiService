@@ -65,7 +65,7 @@ const FareManagement = () => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Fare List </h2>
+                        {/* <h2>Fare List </h2> */}
                       </div>
                     </div>
                   </div>
@@ -96,7 +96,7 @@ const FareManagement = () => {
                         <CTableHeaderCell className="text-center">Minimum Fare (€)</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Minimum Distance Per Miles</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Waiting Fare (€)</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
+                        {/* <CTableHeaderCell className="text-center">Action</CTableHeaderCell> */}
                       </CTableRow>
                     </CTableHead>
                     <CTableBody>
@@ -122,10 +122,10 @@ const FareManagement = () => {
                           <CTableDataCell>
                             <div>{item.waiting_fare}</div>
                           </CTableDataCell>
-                          <CTableDataCell className="d-flex action-icons driver-icons">
+                          {/* <CTableDataCell className="d-flex action-icons driver-icons">
                             <div> <CButton onClick={() => setVisible(!visible)} ><img src={editiconimg} /></CButton></div>
                             <div><img src={deleteiconimg} /></div>
-                          </CTableDataCell>
+                          </CTableDataCell> */}
                         </CTableRow>
                       )) : ""}
                     </CTableBody>

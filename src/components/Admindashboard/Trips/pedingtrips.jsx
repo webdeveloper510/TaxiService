@@ -64,7 +64,7 @@ const PendingTrip = () => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>List of Pending Trips</h2>
+                        {/* <h2>List of Pending Trips</h2> */}
                       </div>
                       <div className="right-trip-content">
                         <img src={refreshImg} />
