@@ -78,7 +78,7 @@ const AddNewDriver = () => {
 
 
   const back = () => {
-    formik.resetForm();
+    navigate("/superadmindashboard/driver/listofdrivers")
   }
 
   // const handleRadioChange = (event) => {

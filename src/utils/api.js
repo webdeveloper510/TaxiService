@@ -145,6 +145,21 @@ export const getTrip = async(data) => {
     console.log("GET_TRIP", error);
   });
 };
+export const getTripSubAdmin = async(data) => {
+  return await Axios.get(`subadmin/get_trip/${data}` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get Trip");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};
+
 
 
 
@@ -184,7 +199,7 @@ export const addCompany = async(data) => {
   console.log("addCompany token is", data)
   return await Axios.post(`admin/add_sub_admin` ,data, {
     headers: {
-      "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTM2NjQ1NTc2MzNhMzFjMTAxZjYzOGUiLCJpYXQiOjE2OTgwNjM2ODUsImV4cCI6MTcyOTU5OTY4NX0.c4bAR7Bjn2Rz3SUmnHez9geWG2HGmRbf4uI6rF1h9Hs",
+      "x-access-token": token,
     },
   }) 
   .then((res) => {
@@ -355,5 +370,19 @@ export const editfare = async (data,id) => {
     })
     .catch((error) => {
       console.log("EDIT_FARE", error);
+    });
+};
+export const allocateDriver = async (data,id) => {
+  return await Axios.put(`admin/alocate_driver/${id}`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "alocate_driver");
+      return res;
+    })
+    .catch((error) => {
+      console.log("ALLOCATE_DRIVER", error);
     });
 };

@@ -10,7 +10,7 @@ import {
 } from '@coreui/react'
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
-import { getTrip } from "../../../utils/api";
+import { getTrip, getTripSubAdmin } from "../../../utils/api";
 import refreshImg from '../../../assets/images/refresh.png';
 import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
@@ -26,7 +26,7 @@ const BookingRequestTable = () => {
 
   useEffect(() => {
     setLoader(true)
-    getTrip("Booked").then(res => {
+    getTripSubAdmin("Booked").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setBookingTrip(res.result)

@@ -36,8 +36,8 @@ const SuperRequestTrip = () => {
   const [vehicle, setVehicle] = useState();
   const [inputData, setInputData] = useState({
     vehicle: '',
-    trip_from: {  address: '', lat: null , log: null },
-    trip_to: { address: '', lat: null , log: null },
+    trip_from: { address: '', lat: null, log: null },
+    trip_to: { address: '', lat: null, log: null },
     pick_up_date: new Date(),
     passenger_detail: []
   })
@@ -94,16 +94,16 @@ const SuperRequestTrip = () => {
 
 
   const inputHandler = (e) => {
-      if(e.target.value.length < 1){
-        setErrors({...errors, [e.target.name]: true })
-      }else{
-        setErrors({...errors, [e.target.name]: false })
-      }
-      console.log("errors====>>>>",errors)
-      setInputData({
-        ...inputData,
-        [e.target.name]: e.target.value
-      })
+    if (e?.target?.value?.length < 1) {
+      setErrors({ ...errors, [e.target.name]: true })
+    } else {
+      setErrors({ ...errors, [e.target.name]: false })
+    }
+    console.log("errors====>>>>", errors)
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value
+    })
   }
 
 
@@ -120,44 +120,46 @@ const SuperRequestTrip = () => {
   const adddata = () => {
     let data = inputData
     let valid = true
-    let newErrors = {...errors}
+    let newErrors = { ...errors }
     console.log("data beafore vehicle", vehicle)
-    if(!data.trip_from.lat || !data.trip_from.log || data.trip_from.address.length < 1){
+    data.vehicle_type = data.vehicle;
+    delete data.vehicle
+    if (!data.trip_from.lat || !data.trip_from.log || data?.trip_from.address?.length < 1) {
       console.log("enter valid trip from")
       valid = false;
       newErrors.trip_from = "Please enter valid trip from address";
     }
-    if(!data.trip_to.lat || !data.trip_to.log || data.trip_to.address.length < 1){
+    if (!data.trip_to.lat || !data.trip_to.log || data?.trip_to?.address?.length < 1) {
       valid = false;
       newErrors.trip_to = "Please enter valid trip to address";
-      
+
     }
-    if(data.vehicle.length < 1){
+    if (data?.vehicle?.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
-      
+
     }
-    if(inputData.pick_up_date.length < 1){
+    if (inputData?.pick_up_date?.length < 1) {
       valid = false;
-      newErrors.pick_up_date=  "Please select valid pick-up date";
+      newErrors.pick_up_date = "Please select valid pick-up date";
     }
-    if(!valid){
+    if (!valid) {
       setErrors(newErrors)
       return console.log(errors)
     }
     data.passenger_detail = passengers
     console.log("data beafore api", data)
-    if (data.passenger_detail.length > 0) {
+    if (data?.passenger_detail?.length > 0) {
       addTrip(data).then((res) => {
         console.log("response---->>>>", res)
-        if (res.data.code === 200) {
-          toast.success(`${res.data.message}`, {
+        if (res?.data?.code === 200) {
+          toast.success(`${res?.data?.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/trips/pendingtrips")
+          navigate("/superadmindashboard/trips/pendingtrips")
         } else {
-          toast.warning(`${res.data.message}`, {
+          toast.warning(`${res?.data?.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
@@ -181,7 +183,7 @@ const SuperRequestTrip = () => {
     try {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
-      setErrors({...errors, trip_from: null})
+      setErrors({ ...errors, trip_from: null })
       const newInputData = inputData;
       inputData.trip_from.address = selectedAddress
       inputData.trip_from.lat = latLng.lat
@@ -197,7 +199,7 @@ const SuperRequestTrip = () => {
     try {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
-      setErrors({...errors, trip_to: null})
+      setErrors({ ...errors, trip_to: null })
       const newInputData = inputData;
       inputData.trip_to.address = selectedAddress
       inputData.trip_to.lat = latLng.lat
@@ -215,7 +217,7 @@ const SuperRequestTrip = () => {
 
         <div className="col-md-12">
           <div>
-           <SuperSideBar/>
+            <SuperSideBar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -251,15 +253,15 @@ const SuperRequestTrip = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
                               <CFormSelect name="vehicle"
-                              onChange={(data)=>{
-                                console.log(data.target.value);
-                                setInputData({...inputData,vehicle:data.target.value});
-                                if(data.target.value < 1){
-                                  setErrors({...errors, vehicle: "Please select vehicle"})
-                                }else{
-                                  setErrors({...errors, vehicle: null})
-                                }
-                              }}
+                                onChange={(data) => {
+                                  console.log(data.target.value);
+                                  setInputData({ ...inputData, vehicle: data.target.value });
+                                  if (data.target.value < 1) {
+                                    setErrors({ ...errors, vehicle: "Please select vehicle" })
+                                  } else {
+                                    setErrors({ ...errors, vehicle: null })
+                                  }
+                                }}
                               >
                                 <option default>Select Vehicle</option>
                                 {vehicle?.map((e, i) => {
@@ -271,7 +273,7 @@ const SuperRequestTrip = () => {
                                 })}
 
                               </CFormSelect>
-                              {errors.vehicle && <span style={{color: "red"}} className="text-danger">{errors.vehicle}</span>}
+                              {errors.vehicle && <span style={{ color: "red" }} className="text-danger">{errors.vehicle}</span>}
                             </CCol>
 
                             <CCol md={6}>
@@ -281,18 +283,18 @@ const SuperRequestTrip = () => {
                                 dateFormat="MM/dd/yyyy"
                                 className="form-control"
                                 minDate={moment().toDate()}
-                                onChange={(data)=>{
+                                onChange={(data) => {
                                   console.log(data);
-                                  setInputData({...inputData, pick_up_date:data});
-                                  if(data < 1){
-                                    setErrors({...errors, pick_up_date: "Please add valid date for pickup date"})
-                                  }else{
-                                    setErrors({...errors, pick_up_date: null})
+                                  setInputData({ ...inputData, pick_up_date: data });
+                                  if (data < 1) {
+                                    setErrors({ ...errors, pick_up_date: "Please add valid date for pickup date" })
+                                  } else {
+                                    setErrors({ ...errors, pick_up_date: null })
                                   }
                                 }}
 
                               />
-                              {errors.pick_up_date && <span style={{color: "red"}} className="text-danger">{errors.pick_up_date}</span>}
+                              {errors.pick_up_date && <span style={{ color: "red" }} className="text-danger">{errors.pick_up_date}</span>}
                             </CCol>
 
                             <CCol xs={6}>
@@ -304,29 +306,29 @@ const SuperRequestTrip = () => {
                                   updateTripFrom(place)
                                 }}
                               /> */}
-                              
-                                <PlacesAutocomplete
-                                  value={tripFrom}
-                                  onChange={(data)=>{
-                                    console.log(data);
-                                    setTripFrom(data);
-                                    if(data < 1){
-                                      setErrors({...errors, trip_from: "Please add valid trip from address"})
-                                    }else{
-                                      setErrors({...errors, trip_from: null})
-                                    }
-                                  }}
-                                  onSelect={handleSelectTripFrom}
-                                >
-                                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                    <div>
-                                      <CFormInput id="inputtripfrom"
-                                        {...getInputProps({
-                                          placeholder: "Enter a location",
-                                        })}
-                                      />
-                                      <div className="suugestion-div">
-                                        <div className="suggestion-inner">
+
+                              <PlacesAutocomplete
+                                value={tripFrom}
+                                onChange={(data) => {
+                                  console.log(data);
+                                  setTripFrom(data);
+                                  if (data < 1) {
+                                    setErrors({ ...errors, trip_from: "Please add valid trip from address" })
+                                  } else {
+                                    setErrors({ ...errors, trip_from: null })
+                                  }
+                                }}
+                                onSelect={handleSelectTripFrom}
+                              >
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                  <div>
+                                    <CFormInput id="inputtripfrom"
+                                      {...getInputProps({
+                                        placeholder: "Enter a location",
+                                      })}
+                                    />
+                                    <div className="suugestion-div">
+                                      <div className="suggestion-inner">
                                         {loading && <div>Loading...</div>}
                                         {suggestions.slice(0, 3).map((suggestion) => (
                                           <div
@@ -337,44 +339,44 @@ const SuperRequestTrip = () => {
                                           </div>
                                         ))}
                                       </div>
-                                      </div>
                                     </div>
-                                  )}
-                                </PlacesAutocomplete>
-                                {/* {tripFromCoordinates && (
+                                  </div>
+                                )}
+                              </PlacesAutocomplete>
+                              {/* {tripFromCoordinates && (
                                   <div>
                                     <p>Latitude: {tripFromCoordinates.lat}</p>
                                     <p>Longitude: {tripFromCoordinates.lng}</p>
                                     <p>Address: {tripFrom}</p>
                                   </div>
                                 )} */}
-                              {errors.trip_from && <span style={{color: "red"}} className="text-danger">{errors.trip_from}</span>}
+                              {errors.trip_from && <span style={{ color: "red" }} className="text-danger">{errors.trip_from}</span>}
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripto">Trip To</CFormLabel>
                               {/* <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} /> */}
                               <PlacesAutocomplete
-                                  value={tripTo}
-                                  onChange={(data)=>{
-                                    console.log(data);
-                                    setTrimTo(data);
-                                    if(data < 1){
-                                      setErrors({...errors, trip_to: "Please add valid trip to address"})
-                                    }else{
-                                      setErrors({...errors, trip_to: null})
-                                    }
-                                  }}
-                                  onSelect={handleSelectTripTo}
-                                >
-                                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                    <div>
-                                      <CFormInput id="inputtripto"
-                                        {...getInputProps({
-                                          placeholder: "Enter a location",
-                                        })}
-                                      />
-                                      <div className="suugestion-div">
-                                        <div className="suggestion-inner">
+                                value={tripTo}
+                                onChange={(data) => {
+                                  console.log(data);
+                                  setTrimTo(data);
+                                  if (data < 1) {
+                                    setErrors({ ...errors, trip_to: "Please add valid trip to address" })
+                                  } else {
+                                    setErrors({ ...errors, trip_to: null })
+                                  }
+                                }}
+                                onSelect={handleSelectTripTo}
+                              >
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                  <div>
+                                    <CFormInput id="inputtripto"
+                                      {...getInputProps({
+                                        placeholder: "Enter a location",
+                                      })}
+                                    />
+                                    <div className="suugestion-div">
+                                      <div className="suggestion-inner">
                                         {loading && <div>Loading...</div>}
                                         {suggestions.slice(0, 3).map((suggestion) => (
                                           <div
@@ -386,10 +388,10 @@ const SuperRequestTrip = () => {
                                         ))}
                                       </div>
                                     </div>
-                                    </div>
-                                  )}
-                                </PlacesAutocomplete>
-                                {errors.trip_to && <span style={{color: "red"}} className="text-danger">{errors.trip_to}</span>}
+                                  </div>
+                                )}
+                              </PlacesAutocomplete>
+                              {errors.trip_to && <span style={{ color: "red" }} className="text-danger">{errors.trip_to}</span>}
                             </CCol>
 
                           </CForm>
@@ -459,7 +461,9 @@ const SuperRequestTrip = () => {
                   <CCol xs={12}>
                     <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                       <CButton type="submit" className="submit-btn" onClick={adddata}>Submit</CButton>
-                      <CButton type="button" className="cancel-btn">Cancel</CButton>
+                      <CButton onClick={() => {
+                        navigate("/superadmindashboard/trips/pendingtrips")
+                      }} type="button" className="cancel-btn">Cancel</CButton>
                     </div>
                   </CCol>
 

@@ -48,12 +48,12 @@ const SuperBookedTrips = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Booked Super Trip</h1>
+                <h1 class="heading-for-every-page">Booked Trip</h1>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Upcoming Trips</h2>
+                        {/* <h2>Upcoming Trips</h2> */}
                       </div>
                       <div className="right-trip-content">
                         <div className="right-trip-content">

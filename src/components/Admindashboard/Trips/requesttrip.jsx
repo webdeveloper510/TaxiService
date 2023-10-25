@@ -147,6 +147,8 @@ const RequestNewTrip = () => {
     data.passenger_detail = passengers
     console.log("data beafore api", data)
     if (data.passenger_detail.length > 0) {
+      data.vehicle_type = data.vehicle
+      delete data.vehicle
       addTrip(data).then((res) => {
         console.log("response---->>>>", res)
         if (res.data.code === 200) {

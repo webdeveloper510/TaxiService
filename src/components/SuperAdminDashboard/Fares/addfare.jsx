@@ -62,7 +62,7 @@ const AddFare = () => {
   }, []);
 
   const back = () => {
-    formik.resetForm();
+    navigate("/superadmindashboard/fare/listoffares")
   }
 
 
@@ -130,12 +130,12 @@ const AddFare = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Fare Management</h1>
+                <h1 class="heading-for-every-page">Add Fare</h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Add Fare</h2>
+                        {/* <h2>Add Fare</h2> */}
                       </div>
                     
                     </div>

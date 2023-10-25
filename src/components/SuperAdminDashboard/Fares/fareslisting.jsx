@@ -184,7 +184,7 @@ const ListOfFares = () => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>Fare List </h2>
+                        {/* <h2>Fare List </h2> */}
                       </div>
                       {/* <div className="right-trip-content">
                         <Link to="/superadmindashboard/add-fare">

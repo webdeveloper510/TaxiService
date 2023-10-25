@@ -17,7 +17,7 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 //import accepticonimg from '../../../assets/images/accept.png'
 import rejecticonimg from '../../../assets/images/rejecticon.png'
 import editicon from '../../../assets/images/editicon.png'
-import { getTrip } from "../../../utils/api";
+import { getTrip, getTripSubAdmin } from "../../../utils/api";
 
 
 
@@ -38,7 +38,7 @@ const PendingTrip = () => {
     const [loader, setLoader] = useState(false);
     useEffect(() => {
       setLoader(true)
-      getTrip("Pending").then(res => {
+      getTripSubAdmin("Pending").then(res => {
 
         console.log(res.result, 'pending trip vehicle')
         if (res.code === 200) {
@@ -99,7 +99,8 @@ const PendingTrip = () => {
                               <div>{item._id}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.vehicletype}</div>
+                              <div>{item.vehicle_type
+}</div>
                      </CTableDataCell>
                       
                      <CTableDataCell>

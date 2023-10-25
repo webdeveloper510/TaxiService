@@ -1,5 +1,8 @@
-import React, { useState}  from "react";
+import React, { useEffect, useState}  from "react";
 import AppHeader from "../../TopBar/AppHeader";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import clsx from "clsx";
 import {
   CTable,
   CTableBody,
@@ -31,6 +34,8 @@ import editicon from '../../../assets/images/editicon.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
 import { Link } from 'react-router-dom';
+import { allocateDriver, getDriver, getTrip, getVehicle } from "../../../utils/api";
+import { toast } from "react-toastify";
 
 const tableExample = [
     {
@@ -45,9 +50,126 @@ const tableExample = [
   ]
 const SuperPendingTrip = () => {
     
+    const [pendinTrip, setPendingTrip] = useState([])
     const [visible, setVisible] = useState(false)
     const [loader, setLoader] = useState(false);
-   
+    const [driver, setDriver] = useState([]);
+    const [vehicle, setVehicle] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
+    useEffect(() => {
+      setLoader(true)
+      getTrip("Pending").then(res => {
+
+        console.log(res.result, 'pending trip vehicle')
+        if (res.code === 200) {
+          setPendingTrip(res.result)
+        }
+      })
+      getDriver().then(res => {
+        console.log(res.result, 'pending trip driver')
+        if (res.code === 200) {
+          setDriver(res.result)
+        }
+      })
+      getVehicle().then(res => {
+        console.log(res.result, 'pending trip vehicle')
+        if (res.code === 200) {
+          setVehicle(res.result)
+        }
+      })
+      setLoader(false)
+    }, []);
+  
+    const [selectDriver, setSelectDriver] = useState();
+    const [selectVehicle, setSelectVehicle] = useState();
+    const [errors, setErrors] = useState({
+      driver_name: false,
+      vehicle: false,
+    });
+    function handeleAllocate(){
+      setLoader(true);
+      
+      const newErrors = {...errors};
+      let valid = true;
+      if(!selectDriver || setSelectDriver.length < 1){
+        
+        newErrors.driver_name = true
+        valid = false;
+      }
+      if(!selectVehicle || selectVehicle.length < 1){
+        newErrors.vehicle = true
+        valid = false
+      }
+      setErrors(newErrors);
+      const data = {
+        driver_name: selectDriver,
+        vehicle: selectVehicle,
+        status: "Accepted",
+      }
+      if(!valid){
+        // setVisible(false);
+        return
+      }
+      console.log("data for allocating driver", data);
+      console.log("errors for allocating driver", errors);
+      console.log("id for allocating driver", selectedId);
+      allocateDriver(data,selectedId).then(res => {
+        console.log(res.result, 'allocated done')
+        if (res?.data?.code === 200) {
+          toast.success(`${res.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+          const newTrips = pendinTrip.filter((item)=>{
+            return item._id != selectedId
+          })
+          setPendingTrip(newTrips);
+        } else {
+          toast.warning(`${res.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+        }
+      })
+      setLoader(false)
+      setVisible(false);
+    }
+    function canceleTrip(id){
+      const data = {
+        status: "Canceled",
+      }
+      allocateDriver(data,id).then(res => {
+        console.log(res.result, 'cancele done')
+        if (res?.data?.code === 200) {
+          toast.success(`${res.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+          const newTrips = pendinTrip.filter((item)=>{
+            return item._id != id
+          })
+          setPendingTrip(newTrips);
+        } else {
+          toast.warning(`${res.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+        }
+      })
+    }
+  
+ 
+    useEffect(() => {
+      if(!visible){
+        setSelectDriver(null);
+        setSelectVehicle(null);
+        setSelectedId(null);
+        setErrors({
+          driver_name: false,
+          vehicle: false,
+        })
+      }
+    },[visible]);
   return (
     <>
       <div className="container-fluidd">
@@ -60,12 +182,12 @@ const SuperPendingTrip = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 className="heading-for-every-page">Pending Super Trips</h1>
+                <h1 className="heading-for-every-page">Pending Trips</h1>
                 <div className="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>List of Pending Trips</h2>
+                        {/* <h2>List of Pending Trips</h2> */}
                       </div>
                       <div className="right-trip-content">
                         {/* <img src={refreshImg} />
@@ -94,30 +216,40 @@ const SuperPendingTrip = () => {
                     </CTableHead>
                
                     <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                  {pendinTrip.map((item, index) => (
+                    <CTableRow className="text-center" v-for="item in tableItems" key={item._id}>
                      <CTableDataCell>
-                              <div>{item.Srnum}</div>
+                              <div>{index+1}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.tripid}</div>
+                              <div>{item._id}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.vehicletype}</div>
+                              <div>{item.vehicle_type}</div>
                      </CTableDataCell>
                       
                      <CTableDataCell>
-                              <div>{item.tripfrom}</div>
+                              <div>{item.trip_from.address}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.tripto}</div>
+                              <div>{item.trip_to.address}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.time}</div>
+                              <div>{item.pickup_date_time}</div>
                      </CTableDataCell>
                      <CTableDataCell className="d-flex pending-trips-icons">
-                            <div><CButton className="allocate_accept_driver" onClick={() => setVisible(!visible)} ><img src={editicon} /></CButton></div>
-                            <div className="reject_icon"><img src={rejecticonimg} /></div>
+                            <div><CButton className="allocate_accept_driver" onClick={() => {
+                              setVisible(!visible);
+                              setSelectedId(item._id);
+                              }} ><img src={editicon} /></CButton></div>
+                            <div
+                            onClick={()=>{
+                              canceleTrip(item._id);
+                            }}
+                            style={{
+                              cursor: 'pointer'
+                            }}
+                             className="reject_icon"><img src={rejecticonimg} /></div>
                           </CTableDataCell>
                     </CTableRow>
                   ))}
@@ -140,27 +272,63 @@ const SuperPendingTrip = () => {
                               <CForm className="row g-3">
 
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
+                                  <CFormLabel htmlFor="inputvehicletype">Vehicle</CFormLabel>
                                   <CFormSelect id="inputallocatevehicle"
                                 name="Vehicle"
-                                autoComplete="off" >
-                                <option default>Select Vehicle</option>
-                                <option>SUV</option>
-                                <option>SEDAN</option>
+                                autoComplete="off"
+                                onChange={(e)=>{
+                                  setSelectVehicle(e.target.value);
+                                  if(!e?.target?.value || e.target.value.length < 1){
+                                    setErrors({...errors, "vehicle": true})
+                                  }else{
+                                    setErrors({...errors, "vehicle": false})
+                                  }
+                                }}
+                                 >
+                                  <option default>Select Vehicle</option>
+                                  {vehicle.map((item)=>{
+                                    return (
+                                      <option value={item._id}>{item.vehicle_model
+                                      }</option>
+                                    )
+                                  })}
+                                
                              
                               </CFormSelect>
+                              {errors.vehicle && <span style={{color: "red"}} className="text-danger">Select Vehicle required</span>}
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputallocatedrivename">Driver Name</CFormLabel>
-                                  <CFormInput aria-label="vehicle driver name" />
+                                <CFormLabel htmlFor="inputdtriver">Driver</CFormLabel>
+                                  <CFormSelect id="inputallocatedriver"
+                                name="Driver"
+                                autoComplete="off"
+                                onChange={(e)=>{
+                                  setSelectDriver(e.target.value)
+                                  if(!e?.target?.value || e.target.value.length < 1){
+                                    setErrors({...errors, "driver_name": true})
+                                  }else{
+                                    setErrors({...errors, "driver_name": false})
+                                  }
+                                }}
+                                 >
+                                  <option default>Select Driver</option>
+                                  {driver.map((item)=>{
+                                    return (
+                                      <option value={item._id}>{`${item.first_name} ${item.last_name}`}</option>
+                                    )
+                                  })}
+                                
+                             
+                              </CFormSelect>
+                              {errors.driver_name && <span style={{color: "red"}} className="text-danger">Select driver</span>}
                                 </CCol>
                                 
 
 
                                 <CCol xs={12}>
                                   <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                    <CButton type="submit" className="submit-btn">Submit</CButton>
-                                    <CButton type="submit" className="cancel-btn">Cancel</CButton>
+                                    <CButton onClick={handeleAllocate} className="submit-btn">Submit</CButton>
+                                    <CButton onClick={()=>{setVisible(false)}} className="cancel-btn">Cancel</CButton>
                                   </div>
                                 </CCol>
                               </CForm>

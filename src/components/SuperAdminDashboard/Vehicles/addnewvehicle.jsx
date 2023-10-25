@@ -85,9 +85,8 @@ const AddSuperVehicle = () => {
 
   }, []);
 
-
   const back = () => {
-    formik.resetForm();
+    navigate("/superadmindashboard/vehicle/listofvehicles")
   }
 
 

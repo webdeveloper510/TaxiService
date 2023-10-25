@@ -74,7 +74,7 @@ const ListOfDrivers = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">List of all super Drivers </h1>
+                <h1 class="heading-for-every-page">Driver List</h1>
                 <div class="active-trip-outer">
                   {
                     loader ? (<>

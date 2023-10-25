@@ -190,7 +190,7 @@ const inputHandler = (e) => {
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        <h2>{companyId?"Edit Company": "Add Company"}</h2>
+                        {/* <h2>{companyId?"Edit Company": "Add Company"}</h2> */}
                       </div>
                       <div className="right-trip-content">
                         <Link to="/superadmindashboard/companydetails">
@@ -604,7 +604,7 @@ const inputHandler = (e) => {
                             <CCol md={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                                 <CButton type="submit" className="submit-btn">Submit</CButton>
-                                <CButton type="button" className="cancel-btn">Cancel</CButton>
+                                <CButton onClick={()=>navigate("/superadmindashboard/companydetails")} type="button" className="cancel-btn">Cancel</CButton>
                               </div>
                             </CCol>
                           </form>

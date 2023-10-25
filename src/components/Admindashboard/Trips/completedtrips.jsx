@@ -16,7 +16,7 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 import moment from "moment"
 //import background from '../assets/images/heroimg.png';
 import * as geolib  from "geolib";
-import { getTrip } from "../../../utils/api";
+import { getTrip, getTripSubAdmin } from "../../../utils/api";
 //import PulseLoader from "react-spinners/PulseLoader";
 import { PulseLoader } from "react-spinners";
 
@@ -31,7 +31,7 @@ const CompletedTrip=()=> {
 
   useEffect(() => {
     setLoader(true)
-    getTrip("Completed").then(res => {
+    getTripSubAdmin("Completed").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setCompleteTrip(res.result)

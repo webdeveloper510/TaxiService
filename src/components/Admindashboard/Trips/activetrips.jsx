@@ -14,7 +14,7 @@ import refreshImg from '../../../assets/images/refresh.png';
 import crossImg from '../../../assets/images/cross-arrow.png';
 import downarrowImg from '../../../assets/images/down-arrow.png'
 //import background from '../assets/images/heroimg.png';
-import { getTrip } from "../../../utils/api";
+import { getTrip, getTripSubAdmin } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 
 
@@ -28,7 +28,7 @@ const ActiveTrip = () => {
 
   useEffect(() => {
     setLoader(true)
-    getTrip("Active").then(res => {
+    getTripSubAdmin("Active").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setActiveTrip(res.result)
