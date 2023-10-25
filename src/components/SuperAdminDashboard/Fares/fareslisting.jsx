@@ -403,7 +403,7 @@ const ListOfFares = () => {
                                 <CCol xs={12}>
                                   <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                                     <CButton type="submit" className="submit-btn">Submit</CButton>
-                                    <CButton type="submit" className="cancel-btn">Cancel</CButton>
+                                    <CButton onClick={()=>setVisible(false)} className="cancel-btn">Cancel</CButton>
                                   </div>
                                 </CCol>
                               </form>
