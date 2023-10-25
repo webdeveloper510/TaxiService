@@ -62,7 +62,7 @@ const PrivateRoute = () => {
             <Route path="/superadmindashboard/driver/listofdrivers" element={<ListOfDrivers />} />
             <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
             <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
-            <Route path="/superadmindashboard/vehicle/editvehicle" element={<EditVehicle />} />
+            <Route path="/superadmindashboard/vehicle/editvehicle/:vehicleId" element={<EditVehicle />} />
             <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
             <Route path="/superadmindashboard/fare/listoffares" element={<ListOfFares/>} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />

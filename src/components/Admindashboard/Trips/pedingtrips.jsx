@@ -90,26 +90,27 @@ const PendingTrip = () => {
                     </CTableHead>
                
                     <CTableBody>
-                  {tableExample.map((item, index) => (
+                  {pendinTrip.map((item, index) => (
                     <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                      <CTableDataCell>
-                              <div>{item.Srnum}</div>
+                              <div>{index+1}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.tripid}</div>
+                              <div>{item._id}</div>
                      </CTableDataCell>
                      <CTableDataCell>
                               <div>{item.vehicletype}</div>
                      </CTableDataCell>
                       
                      <CTableDataCell>
-                              <div>{item.tripfrom}</div>
+                              <div>{item.trip_from.address}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.tripto}</div>
+                              <div>{item.trip_to.address}</div>
                      </CTableDataCell>
                      <CTableDataCell>
-                              <div>{item.time}</div>
+                              <div>{item.pickup_date_time
+}</div>
                      </CTableDataCell>
                      <CTableDataCell className="d-flex pending-trips-icons">
                             <div><CButton className="allocate_accept_driver" ><img src={editicon} /></CButton></div>

@@ -43,7 +43,7 @@ export const getVehicle = async () => {
     },
   })
     .then((res) => {
-      console.log(res.data, "get vehicle");
+
       return res.data;
     })
     .catch((error) => {
@@ -51,7 +51,20 @@ export const getVehicle = async () => {
     });
 };
 
-
+export const editVehicle = async (data,id) => {
+  return await Axios.put(`admin/edit_vehicle/${id}`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "edit vehicle");
+      return res;
+    })
+    .catch((error) => {
+      console.log("EDIT_VEHICLE", error);
+    });
+};
 
 export const addDriver = async (data) => {
   return await Axios.post(`admin/add_driver`, data, {
@@ -241,6 +254,20 @@ export const deleteDriver = async(id) => {
     console.log("DELETE_DRIVER", error);
   });
 };
+export const deleteVehicle = async(id) => {
+  return await Axios.delete(`admin/delete_vehicle/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "delete vehicle");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("DELETE_VEHICLE", error);
+  });
+};
 
 export const getProfile = async(tokenFromLocal) => {
   console.log("GET_PROFILE_token", tokenFromLocal);
@@ -255,5 +282,20 @@ export const getProfile = async(tokenFromLocal) => {
   })
   .catch((error) => {
     console.log("GET_PROFILE", error);
+  });
+};
+
+export const getVehicleById = async(id) => {
+  return await Axios.get(`admin/get_vehicle_detail/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get vehicle by id");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_VEHICLE_By_Id", error);
   });
 };

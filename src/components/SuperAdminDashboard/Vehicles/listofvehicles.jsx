@@ -20,20 +20,22 @@ import {
   CRow,
   CCard,
 } from '@coreui/react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import vehicle1 from '../../../assets/images/vehicle1.png';
-import { getVehicle } from "../../../utils/api";
+import { deleteDriver, deleteVehicle, getVehicle } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import editvehicleicon from "../../../assets/images/editvehi.png";
 import deletevehicleicon from "../../../assets/images/deletevehi.png"
 import deletepopup from '../../../assets/images/deletepopup.png'
+import { toast } from "react-toastify";
 const LisOfVehicles = () => {
   const [visible, setVisible] = useState(false)
   const [vehicle, setVehicle] = useState();
+  const [selectedId, setSelectedId] = useState(null);
   const [loader, setLoader] = useState(false);
 
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoader(true)
@@ -45,7 +47,30 @@ const LisOfVehicles = () => {
       setLoader(false)
     });
   }, [])
+  const deleteVehicleHandler = async () => {
+    try {
+      console.log(selectedId, 'vehicle deleted id')
+      const deleteData = await deleteVehicle(selectedId);
+      console.log(deleteData,"delete vehicle data")
+      if(deleteData.code === 200) {
+        setVisible(false);
+        toast.success(`${deleteData.message}`, {
 
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        const newData = vehicle.filter(d => d._id != selectedId);
+        setVehicle(newData)
+      }else{
+        toast.warning(`${deleteData.message}`, {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="container-fluid">
       <div className="col-md-12">
@@ -78,12 +103,14 @@ const LisOfVehicles = () => {
                           <Card className="cards-for-icons">
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} />
                           <div class="icons-outer" >
-                          <Link to="/superadmindashboard/vehicle/editvehicle">
-                          <CButton className="edit_vehicle"><img src={editvehicleicon} alt="edit-icon"/></CButton>
+                          <Link to={`/superadmindashboard/vehicle/editvehicle/${data._id}`}>
+                          <CButton className="edit_vehicle"
+                       
+                          ><img src={editvehicleicon} alt="edit-icon"/></CButton>
                         </Link>
 
                        
-                          <CButton className="delete_vehilce" onClick={() => setVisible(!visible)}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
+                          <CButton className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
                        
                           
                             
@@ -147,7 +174,11 @@ const LisOfVehicles = () => {
                             <CButton className="cancel_popup" onClick={() => setVisible(false)}>
                              Cancel</CButton>
 
-                            <CButton className="delete_popup">Delete</CButton>
+                            <CButton className="delete_popup"
+                            onClick={()=>{
+                              deleteVehicleHandler()
+                            }}
+                            >Delete</CButton>
                             </div>
                           </CCard>
                         </CCol>

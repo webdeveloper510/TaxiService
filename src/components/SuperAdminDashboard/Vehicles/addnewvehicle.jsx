@@ -3,7 +3,7 @@ import AppHeader from "../../TopBar/AppHeader";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 //import background from '../assets/images/heroimg.png';
 import {
   CButton,
@@ -21,7 +21,7 @@ import {
 import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import "react-datepicker/dist/react-datepicker.css";
-import { addVehicle, getVehicleType } from "../../../utils/api";
+import { addVehicle, getVehicleById, getVehicleType } from "../../../utils/api";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
@@ -31,7 +31,7 @@ const AddSuperVehicle = () => {
 
   const navigate = useNavigate();
   const [vehicleinsuranceDate, setInsuranceDate] = useState(new Date()); // Initialize with the current date for insurance renewal date
-
+  
   const initialValues = {
     vehicleNo: "",
     vehicleType: "",
@@ -157,7 +157,7 @@ const AddSuperVehicle = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add New Super Vehicle</h1>
+                <h1 class="heading-for-every-page">Add New Vehicle</h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
