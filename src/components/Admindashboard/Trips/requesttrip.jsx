@@ -109,7 +109,6 @@ const RequestNewTrip = () => {
 
   const addOnChangeHandler = (e, index) => {
     let arr = passengers;
-    console.log(passengers)
     let obj = arr[index]
     obj[e.target.name] = e.target.value
     arr[index] = obj;
@@ -401,7 +400,14 @@ const RequestNewTrip = () => {
 
 
                   <CRow className="passenger-details">
-                    {passengers.map((passenger, index) => (
+                    {passengers.map((passenger, index) => {
+                      const error = {
+                        name: false,
+                        email: false,
+                        phone: false,
+                        address: false,
+                      };
+                      return (
                       <CCol xs={12} key={index}>
                         <CCard className="mb-4">
                           <CCardHeader>
@@ -420,7 +426,18 @@ const RequestNewTrip = () => {
                             <CForm className="row g-3">
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputname">Name</CFormLabel>
-                                <CFormInput aria-label="name" name="name" onChange={(e) => { addOnChangeHandler(e, index) }} />
+                                <CFormInput aria-label="name" name="name" onChange={(e) => { addOnChangeHandler(e, index) 
+                                if(e.target.value<1){
+                                  error.name = true
+
+                                }else{
+                                  error.name = false
+                                }
+                                console.log(error)
+                              }
+            
+                              } />
+                              {error.name && <span style={{color:"red"}}>Name is required</span>}
                               </CCol>
                               <CCol xs={6}>
                                 <CFormLabel htmlFor="inputphnno">Phone</CFormLabel>
@@ -440,7 +457,8 @@ const RequestNewTrip = () => {
                           </CCardBody>
                         </CCard>
                       </CCol>
-                    ))}
+                    )}
+                    )}
                     <CCol xs={12}>
                       <div
                         className="d-flex justify-content-end"

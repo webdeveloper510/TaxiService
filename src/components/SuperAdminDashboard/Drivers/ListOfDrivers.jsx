@@ -16,10 +16,11 @@ import PulseLoader from "react-spinners/PulseLoader";
 import { deleteCompany, deleteDriver, getDriver } from "../../../utils/api";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 
 const ListOfDrivers = () => {
-
+  const navigate = useNavigate();
 
   const [driver, setDriver] = useState()
   const [loader, setLoader] = useState(false);
@@ -136,7 +137,16 @@ const ListOfDrivers = () => {
                             <div class="status">Available</div>
                           </CTableDataCell>
                           <CTableDataCell className="d-flex action-icons driver-icons">
-                            <div><img src={editiconimg} /></div>
+                            <div style={{
+                              cursor:"pointer"
+                            }
+                            
+                          }
+                          onClick={()=>{
+                            navigate(`/superadmindashboard/driver/editdriver/${item._id}`);
+                          }
+                          }
+                          ><img src={editiconimg} /></div>
                             <div
                             style={{
                               cursor:"pointer"

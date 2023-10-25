@@ -254,6 +254,20 @@ export const deleteDriver = async(id) => {
     console.log("DELETE_DRIVER", error);
   });
 };
+export const deleteFare = async(id) => {
+  return await Axios.delete(`admin/delete_fare/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "delete fare");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("DELETE_Fare", error);
+  });
+};
 export const deleteVehicle = async(id) => {
   return await Axios.delete(`admin/delete_vehicle/${id}`,{
     headers: {
@@ -298,4 +312,48 @@ export const getVehicleById = async(id) => {
   .catch((error) => {
     console.log("GET_VEHICLE_By_Id", error);
   });
+};
+
+export const getDriverById = async(id) => {
+  return await Axios.get(`admin/get_driver_detail/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get driver by id");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_DRIVER_By_Id", error);
+  });
+};
+
+export const editDriver = async (data,id) => {
+  return await Axios.put(`admin/update_driver/${id}`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "edit driver");
+      return res;
+    })
+    .catch((error) => {
+      console.log("EDIT_DRIVER", error);
+    });
+};
+export const editfare = async (data,id) => {
+  return await Axios.put(`admin/edit_fare/${id}`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "edit fare");
+      return res;
+    })
+    .catch((error) => {
+      console.log("EDIT_FARE", error);
+    });
 };

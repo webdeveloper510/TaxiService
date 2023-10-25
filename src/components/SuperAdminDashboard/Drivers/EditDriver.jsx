@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import {
   CButton,
@@ -20,8 +20,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { useNavigate } from "react-router-dom";
-import { addDriver } from "../../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
+import { addDriver, editDriver, getDriverById } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
@@ -29,9 +29,51 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 
 function EditDriver() {
     const navigate = useNavigate();
+    const { driverId } = useParams();
+  const [driver, setDriver] = useState(null)
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+
+  function onLoadComponent() {
+    setLoading(true);
+    if (driverId) {
+      console.log("driver id from param", driverId)
+      getDriverById(driverId).then(res => {
+        console.log(res?.result, 'driver Data')
+        if (res?.code === 200) {
+          const { result } = res;
+          setDriver(res?.result)
+          setImage(result.profile_image)
+          setSelectedGender(result.gender)
+          formik.setValues({
+      FirstName: result.first_name,
+      LastName: result.last_name,
+      Address1: result.address_1,
+      Address2: result.address_2,
+      Country: result.country,
+      City: result.city,
+      Zip: result.zip_code,
+      Email: result.email,
+      MobileNo: result.phone,
+      Gender: result.gender,
+      file: result.profile_image,
+    })
+        } else {
+          setError(true);
+        }
+
+      }).catch(err => { setError(true) });
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+
+    onLoadComponent()
+  }, [])
 
     const [image, setImage] = useState('');
+    const [image1, setImage1] = useState('');
   
     const initialValues = {
       FirstName: "",
@@ -44,7 +86,6 @@ function EditDriver() {
       Email: "",
       MobileNo: "",
       Gender: "",
-      file: "",
     };
   
   
@@ -59,13 +100,13 @@ function EditDriver() {
       Email: Yup.string().required("Email  is required"),
       MobileNo: Yup.string().required("MobileNo is required"),
       Gender: Yup.string().required("Gender is required"),
-      file: Yup.mixed().required("Driver Documents are required"),
     });
   
     const uploadFile = (e) => {
       const selectedFile = e.target.files[0];
-      formik.setFieldValue('file', selectedFile)
+      setImage1(selectedFile);
       setImage(URL.createObjectURL(selectedFile))
+      console.log('selected image: ', selectedFile)
     }
   
     const [selectedGender, setSelectedGender] = useState('');
@@ -78,7 +119,7 @@ function EditDriver() {
   
   
     const back = () => {
-      formik.resetForm();
+      navigate("/superadmindashboard/driver/listofdrivers")
     }
   
     // const handleRadioChange = (event) => {
@@ -99,23 +140,23 @@ function EditDriver() {
         formData.append('last_name', values.LastName);
         formData.append('address_1', values.Address1);
         formData.append('address_2', values.Address2);
-        formData.append('city', values.Country);
-        formData.append('country', values.City);
+        formData.append('country', values.Country);
+        formData.append('city', values.City);
         formData.append('zip_code', values.Zip);
         formData.append('email', values.Email);
         formData.append('phone', values.MobileNo);
         formData.append('gender', values.Gender);
-        formData.append('driver_image', values.file);
         formData.append('password', '12587574545');
+        formData.append('driver_image', image1);
   
-        addDriver(formData).then((res) => {
+        editDriver(formData,driverId).then((res) => {
           console.log("response---->>>>", res)
           if (res.data.code === 200) {
             toast.success(`${res.data.message}`, {
               position: 'top-right',
               autoClose: 1000,
             });
-            navigate("/driver/listofdrivers")
+            // back()
           } else {
             toast.warning(`${res.data.message}`, {
               position: 'top-right',
@@ -141,7 +182,7 @@ function EditDriver() {
               <div className="wrapper d-flex flex-column min-vh-100 bg-light">
                 <AppHeader />
                 <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                  <h1 class="heading-for-every-page">Add New Super Driver</h1>
+                  <h1 class="heading-for-every-page">Edit Driver</h1>
                   <div class="active-trip-outer">
                     {/* <h2>Add New Driver</h2> */}
                     <CRow>
@@ -425,23 +466,11 @@ function EditDriver() {
   
                                 <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
   
-                                  maxLength="50"
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.file && formik.errors.file,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.file && !formik.errors.file,
-                                    }
-                                  )}
+                                 
+                                  
                                   name="file"
                                   autoComplete="off" />
-                                {formik.errors.file && formik.touched.file ? (
-                                  <div className="text-danger">{formik.errors.file}</div>
-                                ) : null}
+                                
                                 <label htmlFor="formFile" className="custom-file-upload">
                                   <div className="files-outer">
                                     <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
