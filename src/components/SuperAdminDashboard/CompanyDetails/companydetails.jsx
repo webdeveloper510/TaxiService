@@ -302,6 +302,7 @@ const CompanyDetails=()=> {
 
 
 
+
                   {/* EditCompanyPopup */}
                   <CModal alignment="center" visible={editVisible} onClose={() => setEditVisible(false)}>
                     <CModalHeader>
