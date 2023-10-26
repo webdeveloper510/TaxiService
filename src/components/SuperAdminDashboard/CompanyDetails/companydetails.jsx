@@ -17,6 +17,10 @@ import {
   CRow,
   CCard,
   CCol,
+  CFormInput,
+  CFormLabel,
+  CModalHeader,
+  CModalTitle,
 } from '@coreui/react'
 import { toast } from 'react-toastify';
 import editiconimg from '../../../assets/images/editicon.png'
@@ -45,7 +49,9 @@ const tableExample = [
 
 ]
 const CompanyDetails=()=> {
-  const [visible, setVisible] = useState(false)
+  // State variables for popups
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
   const navigate = useNavigate();
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -210,14 +216,16 @@ const CompanyDetails=()=> {
                         <div>{item.first_name}</div>
                       </CTableDataCell>                    
                       <CTableDataCell className="text-center d-flex company-list-icons">
-                       <div  style={{cursor:"pointer"}} 
+                      <CButton id="edit_company_btn" onClick={() => setEditVisible(!editVisible)}>
+                       {/* <div  style={{cursor:"pointer"}} 
                        onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
-                       ><img src={editiconimg}/></div> 
+                       ></div> */}
+                       <img src={editiconimg}/> </CButton>
                    
                        {/* <div style={{cursor:"pointer"}} onClick={()=>{
                         deleteCompanyHandler(item._id);
                        }}>   </div> */}
-                         <CButton id="delete_company_btn" onClick={() => setVisible(!visible)}><img src={deleteiconimg}/></CButton>
+                         <CButton id="delete_company_btn" onClick={() => setDeleteVisible(!deleteVisible)}><img src={deleteiconimg}/></CButton>
                       </CTableDataCell>            
                     </CTableRow>
                   ))}
@@ -255,7 +263,7 @@ const CompanyDetails=()=> {
           {/* deletecompanypopup */}
 
 
-          <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+          <CModal alignment="center" visible={deleteVisible} onClose={() => setDeleteVisible(false)}>
                     {/* <CModalHeader>
                       <CModalTitle>Edit Fare</CModalTitle>
                     </CModalHeader> */}
@@ -276,7 +284,7 @@ const CompanyDetails=()=> {
                             <CButton className="delete_popup"
                            
                             >Delete</CButton>
-                                <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+                                <CButton className="cancel_popup">
                              Cancel</CButton>
                             </div>
                           </CCard>
@@ -291,6 +299,179 @@ const CompanyDetails=()=> {
 
 
                   {/* enddeletecompanypopup */}
+
+
+
+                  {/* EditCompanyPopup */}
+                  <CModal alignment="center" visible={editVisible} onClose={() => setEditVisible(false)}>
+                    <CModalHeader>
+                      <CModalTitle>Edit Company</CModalTitle>
+                    </CModalHeader>
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 edit_company_popup">
+                            <CCardBody>
+                            <form noValidate className="row g-3">
+                          <CCol md={6}>
+                              <CFormLabel htmlFor="inputcname">Company Name</CFormLabel>
+                              <CFormInput aria-label="vehicle fare"                    
+                     
+                                maxLength="50"
+                                className=
+                                  "form-control bg-transparent"
+                                name="company_name"
+                                autoComplete="off" />
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputland">Land</CFormLabel>
+                              <CFormInput aria-label="land"
+                                   maxLength="50"
+                                   className=
+                                     "form-control bg-transparent"
+                                   name="land"
+                                   autoComplete="off" />        
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputpcode">Post Code</CFormLabel>
+                              <CFormInput aria-label="postcode"
+                              maxLength="50"
+                              className=
+                                "form-control bg-transparent"
+                              name="post_code"
+                              autoComplete="off" />  
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputhousenum">Building Number</CFormLabel>
+                              <CFormInput aria-label="housenumber"
+                     
+                             maxLength="50"
+                             className=
+                               "form-control bg-transparent"
+                             name="house_number"
+                             autoComplete="off" />
+                              
+                            </CCol>
+                            
+                            <CCol md={12}>
+                              <CFormLabel htmlFor="inputtxinum">Describe Your Taxi Company</CFormLabel>
+                              <CFormInput aria-label="taxi company"   
+                             maxLength="50"
+                             className=
+                               "form-control bg-transparent"
+                             name="describe_your_taxi_company"
+                             autoComplete="off" />
+                            </CCol>
+                            
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputaffi">Affiliated with</CFormLabel>
+                              <CFormInput aria-label="Affiliated"
+                              maxLength="50"
+                              className=
+                                "form-control bg-transparent"
+                              name="affiliated_with"
+                              autoComplete="off" />
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputphnnum">Phone Number</CFormLabel>
+                              <CFormInput aria-label="phone number"
+                              maxLength="50"
+                              className=
+                                "form-control bg-transparent"
+                              name="phone"
+                              autoComplete="off" />    
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputwebsite">Website</CFormLabel>
+                              <CFormInput id="webt_site"
+                              maxLength="50"
+                              className=
+                                "form-control bg-transparent"
+                              name="website"
+                              autoComplete="off" />
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputquality">TX Quality Mark</CFormLabel>
+                              <CFormInput id="iput_quality"
+                             maxLength="50"
+                             className=
+                               "form-control bg-transparent"
+                             name="tx_quality"
+                             autoComplete="off" />
+                            </CCol>
+                            <CCol md={12} className="row add_company_row">
+                            <CCol md={6}>
+                                    <CFormLabel htmlFor="inputfname">First Name</CFormLabel>
+                                    <CFormInput id="f_name"
+                                    maxLength="50"
+                                    className=
+                                      "form-control bg-transparent"
+                                    name="first_name"
+                                    autoComplete="off" />
+                                  
+                                </CCol>
+                                <CCol md={6}>
+                                    <CFormLabel htmlFor="inputlname">Last Name</CFormLabel>
+                                    <CFormInput id="l_name"
+                                    maxLength="50"
+                                    className=
+                                      "form-control bg-transparent"
+                                    name="last_name"
+                                    autoComplete="off" />
+                                
+                                </CCol>
+                                </CCol>
+                                
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputcon_num">Telephone Number</CFormLabel>
+                              <CFormInput id="tel_Con_nu"
+                             maxLength="50"
+                             className=
+                               "form-control bg-transparent"           
+                             name="tel_contact_number"
+                             autoComplete="off" />
+                          
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputmailaddress">Email Address</CFormLabel>
+                              <CFormInput id="email_address"
+                              maxLength="50"
+                              className=
+                                "form-control bg-transparent"
+                              name="email"
+                              autoComplete="off" />
+                         
+                            </CCol>
+                            
+                            <CCol md={12}>
+                              <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
+                                <CButton type="submit" className="submit-btn">Submit</CButton>
+                                <CButton type="button" className="cancel-btn">Cancel</CButton>
+                              </div>
+                            </CCol>
+                         </form>
+
+                            </CCardBody>
+                            {/* <div className="delete_vehicle_popup_outer">
+                        
+
+                            <CButton className="delete_popup"
+                           
+                            >Delete</CButton>
+                                <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+                             Cancel</CButton>
+                            </div> */}
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                   
+       
+       
+                  </CModal>
+
+                  {/* EndEditcompanypopup */}
         </div>
        
       </div>

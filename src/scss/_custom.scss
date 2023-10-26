@@ -467,6 +467,7 @@ img.card-img-top {
     line-height: 30px;
     margin-top: 0;
     width: 100%;
+    cursor: pointer;
 }
 .icons-outer {
     display: none; 
@@ -534,10 +535,11 @@ button.btn.btn-primary.delete_popup {
     margin-bottom: 30px;
     font-weight: 600;
 }
-button#btn_edit_vehicle:active, button#btn_delete_vehicl:active, button#delete_company_btn:active{
+button#btn_edit_vehicle:active, button#btn_delete_vehicl:active, 
+button#delete_company_btn:active, button#edit_company_btn:active{
     background: none !important;
 }
-button#delete_company_btn {
+button#delete_company_btn, button#edit_company_btn {
     background: transparent;
     border: none;
     padding: 0;
@@ -627,6 +629,19 @@ li.unactive_btn button {
     margin: 4px;
     margin-top: 0;
     margin-bottom: 0;
+}
+// .booked-trips-outer img {
+//     width: auto !important;
+// }
+
+h1.heading-for-every-page a img {
+    margin-right: 10px;
+}
+h1.heading-for-every-page a {
+    color: #666666;
+    font-size: 25px;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif !important;
 }
 @media screen and (max-width: 768px) {
 img.card-img-top {

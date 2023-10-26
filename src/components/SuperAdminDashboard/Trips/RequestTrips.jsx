@@ -298,7 +298,7 @@ const SuperRequestTrip = () => {
                 className="body flex-grow-1 px-3"
                 style={{ paddingBottom: "20px" }}
               >
-                <h1 class="heading-for-every-page">Add Request Trip</h1>
+                <h1 class="heading-for-every-page">Request Trip</h1>
                 <div class="active-trip-outer">
                   <CRow>
                     <CCol xs={12}>

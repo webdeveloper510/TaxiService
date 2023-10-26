@@ -44,7 +44,7 @@ const  Header=()=> {
           <li><Link to="/contact">Contact Us</Link></li>
           <div class="mobile-login-btn">
           <li class="user-login"><Link to="/login">Login</Link></li>
-          <li class="sign-list"><Link to="/signup">Sign Up</Link></li>
+          {/* <li class="sign-list"><Link to="/signup">Sign Up</Link></li> */}
           </div>
         </ul>
       </div>
@@ -53,7 +53,7 @@ const  Header=()=> {
 
         <div class="header-buttons">
         <button class="login-btn"><Link to="/login">Login</Link></button>
-        <button class="sign-up-btn"><Link to="/signup">Sign Up</Link></button>
+        {/* <button class="sign-up-btn"><Link to="/signup">Sign Up</Link></button> */}
         </div>
         </div>
       </header>

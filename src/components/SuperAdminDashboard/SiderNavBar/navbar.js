@@ -94,7 +94,7 @@ const _Supernav = [
         name: 'Active Trips',
         to: '/superadmindashboard/trips/activetrips',
       },
-      
+
       {
         component: CNavItem,
         name: 'Request Trips',
@@ -136,14 +136,15 @@ const _Supernav = [
     items: [
       {
         component: CNavItem,
-        name: 'List Of All Drivers',
-        to: '/superadmindashboard/driver/listofdrivers',
-      }, 
-      {
-        component: CNavItem,
         name: 'Add New Driver',
         to: '/superadmindashboard/driver/addnewdriver',
       }, 
+      {
+        component: CNavItem,
+        name: 'List Of All Drivers',
+        to: '/superadmindashboard/driver/listofdrivers',
+      }, 
+      
     ],
   },
   {

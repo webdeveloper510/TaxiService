@@ -141,7 +141,7 @@ const AddNewDriver = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add New Super Driver</h1>
+                {/* <h1 class="heading-for-every-page">Add New Super Driver</h1> */}
                 <div class="active-trip-outer">
                   {/* <h2>Add New Driver</h2> */}
                   <CRow>
