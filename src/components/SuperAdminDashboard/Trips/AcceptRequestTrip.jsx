@@ -17,7 +17,7 @@ import { getTrip } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
-
+import moment from "moment";
 const RequestAcceptTrip = () => {
 
   const [activeTrip, setActiveTrip] = useState()
@@ -28,7 +28,7 @@ const RequestAcceptTrip = () => {
 
   useEffect(() => {
     setLoader(true)
-    getTrip("Active").then(res => {
+    getTrip("Accepted").then(res => {
       console.log(res.result, 'vehicle')
       if (res.code === 200) {
         setActiveTrip(res.result)
@@ -117,7 +117,7 @@ const RequestAcceptTrip = () => {
                                 </CTableDataCell>
 
                                 <CTableDataCell>
-                                  <div>{item.pickup_date_time}</div>
+                                  <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
                                 </CTableDataCell>
                                 <CTableDataCell className="text-center location-icons">
                                   <div><img src={locationimg} /></div>
