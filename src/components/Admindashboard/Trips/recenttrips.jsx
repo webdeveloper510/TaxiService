@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
 import {
@@ -11,6 +11,8 @@ import {
   CButton,
 } from '@coreui/react'
 import locationimg from '../../../assets/images/location.png';
+import { getRecentTrip, getTrip } from "../../../utils/api";
+import moment from "moment";
 //import background from '../assets/images/heroimg.png';
 const tableExample = [
   {
@@ -52,6 +54,16 @@ drivername: 'Avraamu',
 ]
 const RecentTrips=()=> {
    
+  const [pendinTrip, setPendingTrip] = useState([])
+
+  useEffect(()=>{
+    getRecentTrip().then(res => {
+      if (res.code === 200) {
+        setPendingTrip(res.result)
+      }
+    })
+  },[])
+
       return (
        <>
        <div className="container-fluidd">
@@ -91,8 +103,9 @@ const RecentTrips=()=> {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                  {pendinTrip?.slice(0,4).map((item, index) => {                                    
+                    return(                    
+                       <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                       <CTableDataCell >
                         <div>{item.SrNo}</div>
                       </CTableDataCell>
@@ -100,28 +113,30 @@ const RecentTrips=()=> {
                         <div>{item.tripId}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.drivername}</div>
+                        <div>{item.driver_name}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.tripfrom}</div>
+                        <div>{item.trip_from.address}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.tripto}</div>
+                        <div>{item.trip_to.address}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.date}</div>
+                        <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
                       </CTableDataCell> 
                       <CTableDataCell>
-                        <div>{item.time}</div>
+                        <div>{moment(item.pickup_date_time).format("h:mm:ss a")}</div>
                       </CTableDataCell>   
                       <CTableDataCell>
-                        <div>{item.vehicletype}</div>
+                        <div>{item.vehicle_type}</div>
                       </CTableDataCell>                   
                       <CTableDataCell className="text-center location-icons">
-                       <div>{item.activity}</div> 
+                       <div>{item.trip_status}</div> 
                       </CTableDataCell>           
                     </CTableRow>
-                  ))}
+                    
+                    )
+                  })}
                 </CTableBody>
               </CTable>
           
