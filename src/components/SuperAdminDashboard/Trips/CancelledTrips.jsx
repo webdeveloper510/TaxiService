@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 
 import {
@@ -11,6 +11,8 @@ import {
 } from "@coreui/react";
 
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import { getTrip } from "../../../utils/api";
+import moment from "moment";
 
 const tableExample = [
   {
@@ -23,24 +25,96 @@ const tableExample = [
   },
 ];
 const SuperCancelledTrip = () => {
+
+  const [activeTrip, setActiveTrip] = useState([]);
+
+  const [loader, setLoader] = useState(false);
+
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageLimit, setPageLimit] = React.useState(3);
+  const [maxPage, setMaxPage] = React.useState(3);
+  const [minPage, setMinPage] = React.useState(0);
+  const recordPage = 10;
+  const lastIndex = currentPage * recordPage;
+  const firstIndex = lastIndex - recordPage;
+  const data = activeTrip?.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(activeTrip?.length / recordPage);
+  const number = [...Array(nPage + 1).keys()].slice(1);
+
+  const pageNumber = number.map((num, i) => {
+    if (num < maxPage + 1 && num > minPage) {
+      return (
+        <>
+          <li
+            key={i}
+            className={currentPage == num ? `active_btn ` : `unactive_btn`}
+          >
+            <button onClick={() => changePage(num)}>{num}</button>
+          </li>
+        </>
+      );
+    } else {
+      return null;
+    }
+  });
+
+  const handlePrePage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      if ((currentPage - 1) % pageLimit == 0) {
+        setMaxPage(maxPage - pageLimit);
+        setMinPage(minPage - pageLimit);
+      }
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage !== nPage) {
+      setCurrentPage(currentPage + 1);
+      if (currentPage + 1 > maxPage) {
+        setMaxPage(maxPage + pageLimit);
+        setMinPage(minPage + pageLimit);
+      }
+    }
+  };
+
+  const changePage = (id) => {
+    setCurrentPage(id);
+  };
+
+  let pageIncreament = null;
+  if (data.length > maxPage) {
+    pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
+  }
+
+  useEffect(() => {
+    setLoader(true);
+    getTrip("Canceled").then((res) => {
+      console.log(res.result, "vehicle");
+      if (res.code === 200) {
+        setActiveTrip(res.result);
+      }
+      setLoader(false);
+    });
+  }, []);
   return (
     <>
-     
+
       <div className="container-fluidd">
-     
+
         <div className="col-md-12">
-         
+
           <div>
-          <SuperSideBar/>
+            <SuperSideBar />
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-              
+
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-             
+
                 <h1 className="heading-for-every-page">Cancelled Trips</h1>
-               
+
                 <div className="active-trip-outer">
-                 
+
                   {/* <div className="trips-head d-flex justify-content-between">
                    
                     <div className="box-shd d-flex justify-content-between">
@@ -55,102 +129,136 @@ const SuperCancelledTrip = () => {
                     </div>
                   
                   </div> */}
-                
+
                   <CTable align="middle" className="mb-0" hover responsive>
-                  
+
                     <CTableHead>
-                     
+
                       <CTableRow>
-                       
+
                         <CTableHeaderCell className="text-center">
                           Sr.No
                         </CTableHeaderCell>
-                      
+
                         <CTableHeaderCell className="text-center">
                           Trip ID
                         </CTableHeaderCell>
-                       
+
                         <CTableHeaderCell className="text-center">
                           Driver Name
                         </CTableHeaderCell>
-                    
+
                         <CTableHeaderCell className="text-center">
                           Trip From
                         </CTableHeaderCell>
-                       
+
                         <CTableHeaderCell className="text-center">
                           Trip To
                         </CTableHeaderCell>
-                        
+
                         <CTableHeaderCell className="text-center">
                           Time
                         </CTableHeaderCell>
-                        
-                       
-                        
+
+
+
                       </CTableRow>
-                      
+
                     </CTableHead>
-                   
+
                     <CTableBody>
-                      
-                      {tableExample.map((item, index) => (
+
+                      {data?.map((item, index) => (
                         <CTableRow
                           className="text-center"
                           v-for="item in tableItems"
-                          key={index}
+                          key={item._id}
                         >
-                        
+
                           <CTableDataCell>
-                            
-                            <div>{item.Srnum}</div>
+
+                            <div>{index + 1}</div>
                           </CTableDataCell>
-                         
+
                           <CTableDataCell>
-                           
-                            <div>{item.tripid}</div>
+
+                            <div>{item._id}</div>
                           </CTableDataCell>
-                       
+
                           <CTableDataCell>
-                            
-                            <div>{item.drivername}</div>
+
+                            <div>{item.driver_name}</div>
                           </CTableDataCell>
-                          
+
                           <CTableDataCell>
-                           
-                            <div>{item.tripfrom}</div>
+
+                            <div>{item.trip_from.address}</div>
                           </CTableDataCell>
-                         
+
                           <CTableDataCell>
-                            
-                            <div>{item.tripto}</div>
+
+                            <div>{item.trip_to.address}</div>
                           </CTableDataCell>
-                          
+
                           <CTableDataCell>
-                           <div>{item.time}</div>
-                          
+                            <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm:ss a")}</div>
+
                           </CTableDataCell>
-                        
-                         
+
+
                         </CTableRow>
                       ))}
-                     
+
                     </CTableBody>
-                    
+
                   </CTable>
-                 
+                  {
+                    data?.length > 0 ?
+                      <div
+                        className="pagination-outer"
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div
+                          className="prev_btn"
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <button onClick={() => handlePrePage()}>
+                            Previous
+                          </button>
+                        </div>
+                        <div className="previous-page">
+                          <ul>
+                            {pageNumber}
+                            <button className="dots_btn">
+                              {pageIncreament}
+                            </button>
+                          </ul>
+                        </div>
+                        <div className="next_btn">
+                          <button onClick={() => handleNextPage()}>Next</button>
+                        </div>
+                      </div>
+                      : ""
+                  }
+
                 </div>
-                
+
               </div>
-             
+
             </div>
-   
+
           </div>
-        
+
         </div>
-       
+
       </div>
-       <br />
+      <br />
     </>
   );
 };

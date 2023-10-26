@@ -76,10 +76,10 @@ const RecentTrips=()=> {
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
             <div className="left-trip-content">
-          <h2>Recent Trips</h2>
+          <h2>Pending Trips</h2>
           </div>
           <div className="right-trip-content">
-          <CButton className="fare_list">See All</CButton>
+          {/* <CButton className="fare_list">See All</CButton> */}
             </div>
             </div>
           </div>
@@ -107,10 +107,10 @@ const RecentTrips=()=> {
                     return(                    
                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                       <CTableDataCell >
-                        <div>{item.SrNo}</div>
+                        <div>{index+1}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{item.tripId}</div>
+                        <div>{item.trip_id}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item.driver_name}</div>
