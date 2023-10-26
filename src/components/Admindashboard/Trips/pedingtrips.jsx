@@ -18,6 +18,8 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 import rejecticonimg from '../../../assets/images/rejecticon.png'
 import editicon from '../../../assets/images/editicon.png'
 import { getTrip, getTripSubAdmin } from "../../../utils/api";
+import moment from "moment";
+import { PulseLoader } from "react-spinners";
 
 
 
@@ -73,54 +75,63 @@ const PendingTrip = () => {
                       </div>
                     </div>
                   </div>
-                  <CTable align="middle" className="mb-0" hover responsive>
+                {loader? <div className=" d-flex justify-content-center align-items-center"
+                        style={{ height: 400 }}>
+                        <PulseLoader
+                          color="#FFD04E"
+                          loading={true}
+                          margin={4}
+                          size={60}
+                          speedMultiplier={0.5}
+                        />
+                      </div>:<CTable align="middle" className="mb-0" hover responsive>
 
-                    <CTableHead>
+                  <CTableHead>
 
-                      <CTableRow>
-                       
-                        <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
-               
-                    <CTableBody>
-                  {pendinTrip.map((item, index) => (
-                    <CTableRow className="text-center" v-for="item in tableItems" key={index}>
-                     <CTableDataCell>
-                              <div>{index+1}</div>
-                     </CTableDataCell>
-                     <CTableDataCell>
-                              <div>{item._id}</div>
-                     </CTableDataCell>
-                     <CTableDataCell>
-                              <div>{item.vehicle_type
-}</div>
-                     </CTableDataCell>
+                    <CTableRow>
                       
-                     <CTableDataCell>
-                              <div>{item.trip_from.address}</div>
-                     </CTableDataCell>
-                     <CTableDataCell>
-                              <div>{item.trip_to.address}</div>
-                     </CTableDataCell>
-                     <CTableDataCell>
-                              <div>{item.pickup_date_time
-}</div>
-                     </CTableDataCell>
-                     <CTableDataCell className="d-flex pending-trips-icons">
-                            <div><CButton className="allocate_accept_driver" ><img src={editicon} /></CButton></div>
-                            <div className="reject_icon"><img src={rejecticonimg} /></div>
-                          </CTableDataCell>
+                      <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                     </CTableRow>
-                  ))}
-                </CTableBody>
-                  </CTable>
+                  </CTableHead>
+              
+                  <CTableBody>
+                {pendinTrip.map((item, index) => (
+                  <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                    <CTableDataCell>
+                            <div>{index+1}</div>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                            <div>{item._id}</div>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                            <div>{item.vehicle_type
+}</div>
+                    </CTableDataCell>
+                    
+                    <CTableDataCell>
+                            <div>{item.trip_from.address}</div>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                            <div>{item.trip_to.address}</div>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                            <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')
+}</div>
+                    </CTableDataCell>
+                    <CTableDataCell className="d-flex pending-trips-icons">
+                          <div><CButton className="allocate_accept_driver" ><img src={editicon} /></CButton></div>
+                          <div className="reject_icon"><img src={rejecticonimg} /></div>
+                        </CTableDataCell>
+                  </CTableRow>
+                ))}
+              </CTableBody>
+                </CTable>}
 
                 </div>
 

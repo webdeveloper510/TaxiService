@@ -16,6 +16,7 @@ import downarrowImg from '../../../assets/images/down-arrow.png'
 //import background from '../assets/images/heroimg.png';
 import { getTrip, getTripSubAdmin } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
+import moment from "moment";
 
 
 const ActiveTrip = () => {
@@ -117,7 +118,7 @@ const ActiveTrip = () => {
                                 </CTableDataCell>
 
                                 <CTableDataCell>
-                                  <div>{item.pickup_date_time}</div>
+                                  <div>{moment(item.pickup_date_time).format('MMMM Do YYYY, h:mm:ss a')}</div>
                                 </CTableDataCell>
                                 <CTableDataCell className="text-center location-icons">
                                   <div><img src={locationimg} /></div>
