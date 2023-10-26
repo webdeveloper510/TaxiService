@@ -37,8 +37,65 @@ import PulseLoader from "react-spinners/PulseLoader";
 const FareManagement = () => {
 
   const [visible, setVisible] = useState(false)
-  const [fare, setFare] = useState()
+  const [fare, setFare] = useState([])
   const [loader, setLoader] = useState(false);
+
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageLimit, setPageLimit] = React.useState(3);
+  const [maxPage, setMaxPage] = React.useState(3);
+  const [minPage, setMinPage] = React.useState(0);
+  const recordPage = 10;
+  const lastIndex = currentPage * recordPage;
+  const firstIndex = lastIndex - recordPage;
+  const data = fare?.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(fare?.length / recordPage);
+  const number = [...Array(nPage + 1).keys()].slice(1);
+
+  const pageNumber = number.map((num, i) => {
+    if (num < maxPage + 1 && num > minPage) {
+      return (
+        <>
+          <li
+            key={i}
+            className={currentPage == num ? `active_btn ` : `unactive_btn`}
+          >
+            <button onClick={() => changePage(num)}>{num}</button>
+          </li>
+        </>
+      );
+    } else {
+      return null;
+    }
+  });
+
+  const handlePrePage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      if ((currentPage - 1) % pageLimit == 0) {
+        setMaxPage(maxPage - pageLimit);
+        setMinPage(minPage - pageLimit);
+      }
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage !== nPage) {
+      setCurrentPage(currentPage + 1);
+      if (currentPage + 1 > maxPage) {
+        setMaxPage(maxPage + pageLimit);
+        setMinPage(minPage + pageLimit);
+      }
+    }
+  };
+
+  const changePage = (id) => {
+    setCurrentPage(id);
+  };
+
+  let pageIncreament = null;
+  if (data.length > maxPage) {
+    pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
+  }
 
   useEffect(() => {
     setLoader(true)
@@ -100,7 +157,7 @@ const FareManagement = () => {
                       </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                      {fare?.length ?  fare.map((item, index) => (
+                      {data?.length ?  data.map((item, index) => (
                         <CTableRow className="text-center" v-for="item in tableItems" key={index}>
 
 
@@ -129,7 +186,45 @@ const FareManagement = () => {
                         </CTableRow>
                       )) : ""}
                     </CTableBody>
-                  </CTable></>)
+                    
+                  </CTable>
+                  {data?.length > 0 ? (
+                        <div
+                          className="pagination-outer"
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <div
+                            className="prev_btn"
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <button onClick={() => handlePrePage()}>
+                              Previous
+                            </button>
+                          </div>
+                          <div className="previous-page">
+                            <ul>
+                              {pageNumber}
+                              <button className="dots_btn">
+                                {pageIncreament}
+                              </button>
+                            </ul>
+                          </div>
+                          <div className="next_btn">
+                            <button onClick={() => handleNextPage()}>
+                              Next
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                  </>)
                   }
                 
 

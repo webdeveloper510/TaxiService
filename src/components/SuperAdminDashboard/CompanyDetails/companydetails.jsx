@@ -55,11 +55,11 @@ const CompanyDetails=()=> {
   const [pageLimit, setPageLimit] = React.useState(3);
   const [maxPage, setMaxPage] = React.useState(3);
   const [minPage, setMinPage] = React.useState(0);
-  const recordPage = 4;
+  const recordPage = 10;
   const lastIndex = currentPage * recordPage;
   const firstIndex = lastIndex - recordPage;
-  const data = company.slice(firstIndex, lastIndex);
-  const nPage = Math.ceil(company.length / recordPage);
+  const data = company?.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(company?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
 
   const pageNumber = number.map((num, i) => {
@@ -67,7 +67,6 @@ const CompanyDetails=()=> {
       return (
         <>
           <li
-          //  className="pagination-div"
             key={i}
             className={
               currentPage == num ? `active_btn ` : `unactive_btn`
@@ -105,6 +104,7 @@ const CompanyDetails=()=> {
   const changePage = (id) => {
     setCurrentPage(id);
   };
+
   let pageIncreament = null;
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
@@ -212,7 +212,7 @@ const CompanyDetails=()=> {
                       <CTableDataCell className="text-center d-flex company-list-icons">
                        <div  style={{cursor:"pointer"}} 
                        onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
-                       ><img src={editiconimg}/></div> 
+                       ><img src={editiconimg} alt="img"/></div> 
                    
                        {/* <div style={{cursor:"pointer"}} onClick={()=>{
                         deleteCompanyHandler(item._id);
@@ -235,13 +235,12 @@ const CompanyDetails=()=> {
           }}>
             <button  onClick={() => handlePrePage()}>
               Previous
-              {/* <img src="/prev1.png" alt="previous" /> Prev */}
             </button>
           </div>
           <div className="previous-page">
             <ul >
               {pageNumber}
-              {/* <button className="dots_btn">{pageIncreament}</button> */}
+              <button className="dots_btn">{pageIncreament}</button>
             </ul>
           </div>
           <div className="next_btn" >
