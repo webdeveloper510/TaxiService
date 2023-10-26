@@ -115,7 +115,7 @@ const AddNewDriver = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/driver/listofdrivers")
+          navigate("/superadmindashboard/driver/listofdrivers")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
@@ -414,7 +414,7 @@ const AddNewDriver = () => {
 
 
 
-                            <CCol md={12} className="upload-file-input">
+                            <CCol md={6} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
 
                               {image?.length > 0 ?
