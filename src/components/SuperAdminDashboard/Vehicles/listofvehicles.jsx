@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 
 import {
-  Container,
   Row,
   Col,
   Card,
@@ -12,9 +11,6 @@ import {
   CButton,
   CModal,
   CModalBody,
-  CModalFooter,
-  CModalHeader,
-  CModalTitle,
   CCardBody,
   CCol,
   CRow,
@@ -101,20 +97,24 @@ const LisOfVehicles = () => {
                       return (
                         <Col md={4}>
                           <Card className="cards-for-icons">
-                            <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} />
+                            <div className="vehicle_inner">
+                            <div className="image-container">
+                            <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} /> 
                           <div class="icons-outer" >
+                          <div class="overlay">
                           <Link to={`/superadmindashboard/vehicle/editvehicle/${data._id}`}>
-                          <CButton className="edit_vehicle"
+                          <CButton id="btn_edit_vehicle" className="edit_vehicle"
                        
                           ><img src={editvehicleicon} alt="edit-icon"/></CButton>
                         </Link>
 
                        
-                          <CButton className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
-                       
-                          
-                            
-                            </div>
+                          <CButton id="btn_delete_vehicle" className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
+                       </div>
+                          </div>
+                          </div>
+                          </div>
+                           
                             <Card.Body>
                               <Card.Title>{data.vehicle_model}</Card.Title>
                               <Card.Text>
@@ -171,14 +171,15 @@ const LisOfVehicles = () => {
 
                             </CCardBody>
                             <div className="delete_vehicle_popup_outer">
-                            <CButton className="cancel_popup" onClick={() => setVisible(false)}>
-                             Cancel</CButton>
+                            
 
                             <CButton className="delete_popup"
                             onClick={()=>{
                               deleteVehicleHandler()
                             }}
                             >Delete</CButton>
+                            <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+                             Cancel</CButton>
                             </div>
                           </CCard>
                         </CCol>

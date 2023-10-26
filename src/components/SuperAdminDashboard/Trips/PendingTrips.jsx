@@ -28,9 +28,9 @@ import {
 //import crossImg from '../../../assets/images/cross-arrow.png';
 //import downarrowImg from '../../../assets/images/down-arrow.png'
 //import background from '../assets/images/heroimg.png';
-//import accepticonimg from '../../../assets/images/accept.png'
+import accepticonimg from '../../../assets/images/accept.png'
 import rejecticonimg from '../../../assets/images/rejecticon.png'
-import editicon from '../../../assets/images/editicon.png'
+//import editicon from '../../../assets/images/editicon.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
 import { Link } from 'react-router-dom';
@@ -184,21 +184,21 @@ const SuperPendingTrip = () => {
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Pending Trips</h1>
                 <div className="active-trip-outer">
-                  <div className="trips-head d-flex justify-content-between">
+                  {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>List of Pending Trips</h2> */}
+                        <h2>List of Pending Trips</h2>
                       </div>
                       <div className="right-trip-content">
-                        {/* <img src={refreshImg} />
+                        <img src={refreshImg} />
                         <img src={downarrowImg} />
-                        <img src={crossImg} /> */}
+                        <img src={crossImg} />
                         <Link to="/superadmindashboard/trips/addnewbooking">
                           <CButton className="add_company_btn">Add New Booking</CButton>
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <CTable align="middle" className="mb-0" hover responsive>
 
                     <CTableHead>
@@ -241,7 +241,7 @@ const SuperPendingTrip = () => {
                             <div><CButton className="allocate_accept_driver" onClick={() => {
                               setVisible(!visible);
                               setSelectedId(item._id);
-                              }} ><img src={editicon} /></CButton></div>
+                              }} ><img src={accepticonimg} /></CButton></div>
                             <div
                             onClick={()=>{
                               canceleTrip(item._id);
