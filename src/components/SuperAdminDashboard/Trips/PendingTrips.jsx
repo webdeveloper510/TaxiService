@@ -194,21 +194,21 @@ const SuperPendingTrip = () => {
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Pending Trips</h1>
                 <div className="active-trip-outer">
-                   <div className="trips-head d-flex justify-content-between">
+                   {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
                         <h2>List of Pending Trips</h2>
                       </div>
                       <div className="right-trip-content">
-                        {/* <img src={refreshImg} />
+                        <img src={refreshImg} />
                         <img src={downarrowImg} />
-                        <img src={crossImg} /> */}
+                        <img src={crossImg} />
                         <Link to="/superadmindashboard/trips/addnewbooking">
                           <CButton className="add_company_btn">Add New Booking</CButton>
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {loader ? <div className=" d-flex justify-content-center align-items-center"
                     style={{ height: 400 }}>
                     <PulseLoader
