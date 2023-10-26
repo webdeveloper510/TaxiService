@@ -12,7 +12,7 @@ import EarningStats from "./EaringStats";
 //import DashboardGraph from "../Admindashboard/DashboardChart/dashboardgraph";
 
 const AllDashboardStats=()=> {
-   
+
       return (
        <>
        <br/>

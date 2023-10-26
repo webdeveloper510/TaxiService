@@ -9,9 +9,11 @@ import RiderStatusTable from "../../Stats/RiderStatusTable";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import SuperMap from "../../TaxiMap/Map";
 import AllDashboardStats from "../DashboardStats/AllStats";
+import { useSearchParams } from "react-router-dom";
 
 const SuperAdminDashboard=()=> {
    
+  
       return (
        <>
        <div className="container-fluidd">

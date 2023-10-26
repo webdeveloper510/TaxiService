@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     CAvatar,
     CTable,
@@ -7,8 +7,9 @@ import {
     CTableRow,
   } from '@coreui/react'
   
-  
+
   import avatar1 from '../../assets/images/avtar1.jpg'
+import { getDriver } from "../../utils/api";
 const tableExample = [
     {
       avatar: { src: avatar1},
@@ -48,6 +49,19 @@ const tableExample = [
   ]
 const RiderStatusTable=()=> {
    
+  const [driver, setDriver] = useState([])
+
+  useEffect(()=>{
+    getDriver().then(res => {
+      // console.log(res.result, 'vehicle')
+      if (res.code === 200) {
+        setDriver(res.result)
+      }
+    })
+  },[])
+
+  console.log("driver status data=======", driver)
+
       return (
        <>
       <div className="booking-request-table">
@@ -55,21 +69,34 @@ const RiderStatusTable=()=> {
           <CTable align="middle" className="mb-0" hover responsive>
                
                 <CTableBody>
-                  {tableExample.map((item, index) => (
+                  {driver?.length > 0 ?
+                  driver?.map((item, index) => {
+                    let status = "Ofline";
+                    if(item.status){
+                      status = "Online"
+                      if(item.is_available){
+                        status = "In a rider"
+                      }
+                    }
+                    console.log(item._id," ", status)
+                    return(
+                    
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
+                        {/* status={item.avatar.status}  */}
+                        <CAvatar size="md" src={item.profile_image} />
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div className="user-name">{item.user.name}</div>
+                        <div className="user-name">{`${item.first_name} ${item.last_name}`}</div>
                         
                       </CTableDataCell>
                       <CTableDataCell>
                         
-                     <div>{item.activity}</div>
+                     <div>{status}</div>
                       </CTableDataCell>
                     </CTableRow>
-                  ))}
+                  )})
+                :""}
                 </CTableBody>
               </CTable>
           
