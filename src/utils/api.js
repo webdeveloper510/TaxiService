@@ -386,3 +386,34 @@ export const allocateDriver = async (data,id) => {
       console.log("ALLOCATE_DRIVER", error);
     });
 };
+
+
+export const getRecentTrip = async() => {
+  return await Axios.get(`admin/get_recent_trip` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get Trip");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};
+
+// /admin/get_counts_dashboard
+export const getCountDashboard = async() => {
+  return await Axios.get(`admin/get_counts_dashboard` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};

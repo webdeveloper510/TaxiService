@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -8,9 +8,20 @@ import {
   
   } from 'mdb-react-ui-kit';
 import newuserimg from "../../../assets/images/newuser.png"
+import { getCountDashboard } from "../../../utils/api";
 
 const UsersStats=()=> {
    
+  const [count , setCount] = useState([])
+  useEffect(()=>{
+    getCountDashboard().then((res)=>{
+      console.log("dashborad count response=============", res)
+      setCount(res.result)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
+
       return (
        <>
        <br/>
@@ -22,8 +33,8 @@ const UsersStats=()=> {
           <MDBCol sm='8'>
             <MDBCardText>
               <div>
-                <h5>New Users</h5>
-            <span>450</span>
+                <h5>Compinies</h5>
+            <span>{count.companies}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

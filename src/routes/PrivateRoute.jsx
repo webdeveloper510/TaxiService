@@ -28,6 +28,7 @@ import RequestAcceptTrip from '../components/SuperAdminDashboard/Trips/AcceptReq
 import AddNewBookings from '../components/SuperAdminDashboard/Trips/AddNewBookings';
 import EditVehicle from '../components/SuperAdminDashboard/Vehicles/EditVehicle';
 import EditDriver from '../components/SuperAdminDashboard/Drivers/EditDriver';
+import SuperCancelledTrip from '../components/SuperAdminDashboard/Trips/CancelledTrips';
 
 
 const PrivateRoute = () => {
@@ -55,6 +56,7 @@ const PrivateRoute = () => {
             <Route path="/superadmindashboard/trips/bookedtrips" element={<SuperBookedTrips/>} />
             <Route path="/superadmindashboard/trips/activetrips" element={<SuperActiveTrip/>} />
             <Route path="/superadmindashboard/trips/pendingtrips" element={<SuperPendingTrip/>} />
+            <Route path="/superadmindashboard/trips/cancelledtrips" element={<SuperCancelledTrip/>} />
             <Route path="/superadmindashboard/trips/completetrips" element={<SuperCompleteTrip/>} />
             <Route path="/superadmindashboard/trips/requesttrips" element={<SuperRequestTrip/>} />
             <Route path="/superadmindashboard/trips/acceptedtrips" element={<RequestAcceptTrip/>} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -8,8 +8,19 @@ import {
   
   } from 'mdb-react-ui-kit';
 import canceltrip from "../../../assets/images/cancelled-trip.png"
+import { getCountDashboard } from "../../../utils/api";
 
 const CancelledStats=()=> {
+
+  const [count , setCount] = useState([])
+  useEffect(()=>{
+    getCountDashboard().then((res)=>{
+      console.log("dashborad count response=============", res)
+      setCount(res.result)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
    
       return (
        <>
@@ -22,7 +33,7 @@ const CancelledStats=()=> {
             <MDBCardText>
               <div>
                 <h5>Cancelled Trips</h5>
-            <span>450</span>
+            <span>{count.cancelTrips}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

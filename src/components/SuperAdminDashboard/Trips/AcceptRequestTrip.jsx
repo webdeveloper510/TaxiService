@@ -52,9 +52,9 @@ const RequestAcceptTrip = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 className="heading-for-every-page">Accepted Trip</h1>
+                <h1 className="heading-for-every-page">Accepted Trips</h1>
                 <div className="active-trip-outer">
-                  <div className="trips-head d-flex justify-content-between">
+                  {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
                         <h2>List of Accepted Trips</h2>
@@ -65,7 +65,7 @@ const RequestAcceptTrip = () => {
                         <img src={crossImg} />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {
                     loader ? (<>
                       <div className=" d-flex justify-content-center align-items-center"

@@ -1,3 +1,4 @@
+import deletepopup from '../../../assets/images/deletepopup.png'
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
 import AppHeader from "../../TopBar/AppHeader";
@@ -11,6 +12,12 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
+  CModal,
+  CModalBody,
+  CCardBody,
+  CRow,
+  CCard,
+  CCol,
 } from '@coreui/react'
 import { toast } from 'react-toastify';
 import editiconimg from '../../../assets/images/editicon.png'
@@ -39,6 +46,7 @@ const tableExample = [
 
 ]
 const CompanyDetails=()=> {
+  const [visible, setVisible] = useState(false)
   const navigate = useNavigate();
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,10 +68,11 @@ const CompanyDetails=()=> {
       return (
         <>
           <li
+          //  className="pagination-div"
             key={i}
-            // className={
-            //   currentPage == num ? `${styles.active} ` : `${styles.page_list}`
-            // }
+            className={
+              currentPage == num ? `active_btn ` : `unactive_btn`
+            }
           >
             <button onClick={() => changePage(num)}>{num}</button>
           </li>
@@ -208,45 +217,89 @@ const CompanyDetails=()=> {
                        <div  style={{cursor:"pointer"}} 
                        onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
                        ><img src={editiconimg}/></div> 
-                       <div style={{cursor:"pointer"}} onClick={()=>{
+                   
+                       {/* <div style={{cursor:"pointer"}} onClick={()=>{
                         deleteCompanyHandler(item._id);
-                       }}><img src={deleteiconimg}/></div>
+                       }}>   </div> */}
+                         <CButton id="delete_company_btn" onClick={() => setVisible(!visible)}><img src={deleteiconimg}/></CButton>
                       </CTableDataCell>            
                     </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>}
           
-          </div>
-          <div style={{
+          
+          <div className="pagination-outer" style={{
             display: "flex",
             flexDirection: "row",
           }}>
-          <div style={{
+          <div className="prev_btn" style={{
             display: "flex",
             flexDirection: "row",
           }}>
             <button  onClick={() => handlePrePage()}>
-              Prev
+              Previous
               {/* <img src="/prev1.png" alt="previous" /> Prev */}
             </button>
           </div>
-          <div>
+          <div className="previous-page">
             <ul >
               {pageNumber}
-              <button >{pageIncreament}</button>
+              {/* <button className="dots_btn">{pageIncreament}</button> */}
             </ul>
           </div>
-          <div >
+          <div className="next_btn" >
             <button onClick={() => handleNextPage()}>
               Next 
             </button>
           </div>
         </div>
+
+
+          {/* deletecompanypopup */}
+
+
+          <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+                    {/* <CModalHeader>
+                      <CModalTitle>Edit Fare</CModalTitle>
+                    </CModalHeader> */}
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                                <img src={deletepopup} alt="danger"/>
+                                 <h2>Are you Sure</h2>
+                                <p>You want to delete this Vehicle ?</p>
+
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                        
+
+                            <CButton className="delete_popup"
+                           
+                            >Delete</CButton>
+                                <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+                             Cancel</CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                   
+       
+       
+                  </CModal>
+
+
+
+                  {/* enddeletecompanypopup */}
         </div>
        
       </div>
     </div>
+       </div>
        </div>
        </div>
        </>
