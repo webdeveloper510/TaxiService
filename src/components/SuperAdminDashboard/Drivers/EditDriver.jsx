@@ -23,11 +23,12 @@ import clsx from "clsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { addDriver, editDriver, getDriverById } from "../../../utils/api";
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import AppLoader from "../../AppLoader";
 //import background from '../assets/images/heroimg.png';
-
+import backtovehicle from '../../../assets/images/left-arrow.png'
 function EditDriver() {
     const navigate = useNavigate();
     const { driverId } = useParams();
@@ -185,7 +186,12 @@ function EditDriver() {
               <div className="wrapper d-flex flex-column min-vh-100 bg-light">
                 <AppHeader />
                 <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                  <h1 class="heading-for-every-page">Edit Driver</h1>
+                
+                  <h1 class="heading-for-every-page">
+                    <Link to="/superadmindashboard/driver/listofdrivers">
+                    <img src={backtovehicle} alt="edit" />  Edit Driver</Link></h1>
+                 
+                  
                   <div class="active-trip-outer">
                     {/* <h2>Add New Driver</h2> */}
                     {loading?<AppLoader/>:<CRow>
@@ -458,7 +464,7 @@ function EditDriver() {
   
   
   
-                              <CCol md={12} className="upload-file-input">
+                              <CCol md={6} className="upload-file-input">
                                 <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
   
                                 {image?.length > 0 ?

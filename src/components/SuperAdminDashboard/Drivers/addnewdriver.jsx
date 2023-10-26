@@ -115,7 +115,8 @@ const AddNewDriver = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/superadmindashboard/drivernavigate/listofdrivers")
+          // navigate("/superadmindashboard/drivernavigate/listofdrivers")
+          navigate("/superadmindashboard/driver/listofdrivers")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
@@ -141,7 +142,7 @@ const AddNewDriver = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-                <h1 class="heading-for-every-page">Add New Super Driver</h1>
+                {/* <h1 class="heading-for-every-page">Add New Super Driver</h1> */}
                 <div class="active-trip-outer">
                   {/* <h2>Add New Driver</h2> */}
                   <CRow>
@@ -414,7 +415,7 @@ const AddNewDriver = () => {
 
 
 
-                            <CCol md={12} className="upload-file-input">
+                            <CCol md={6} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
 
                               {image?.length > 0 ?

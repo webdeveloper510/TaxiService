@@ -8,11 +8,22 @@ import {
   CTableRow,
   CButton,
   CAvatar,
+  CModal,
+  CModalBody,
+  CCardBody,
+  CRow,
+  CCard,
+  CCol,
+  CFormInput,
+  CFormLabel,
+  CModalHeader,
+  CModalTitle,
 } from '@coreui/react'
 import AppHeader from "../../TopBar/AppHeader";
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import PulseLoader from "react-spinners/PulseLoader";
+import deletepopup from '../../../assets/images/deletepopup.png'
 import { deleteCompany, deleteDriver, getDriver } from "../../../utils/api";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
@@ -20,6 +31,7 @@ import { useNavigate } from "react-router";
 
 
 const ListOfDrivers = () => {
+  const [deleteVisible, setDeleteVisible] = useState(false);
   const navigate = useNavigate();
 
   const [driver, setDriver] = useState()
@@ -74,7 +86,7 @@ const ListOfDrivers = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Driver List</h1>
+                <h1 class="heading-for-every-page">Driver's List</h1>
                 <div class="active-trip-outer">
                   {
                     loader ? (<>
@@ -147,7 +159,8 @@ const ListOfDrivers = () => {
                           }
                           }
                           ><img src={editiconimg} /></div>
-                            <div
+                          
+                            {/* <div
                             style={{
                               cursor:"pointer"
                             }
@@ -156,7 +169,8 @@ const ListOfDrivers = () => {
                           onClick={()=>{
                             deleteDriverHandler(item._id)
                           }}
-                            ><img src={deleteiconimg} /></div>
+                            ><img src={deleteiconimg} /></div> */}
+                             <CButton id="delete_driver_btn" onClick={() => setDeleteVisible(!deleteVisible)}><img src={deleteiconimg} /></CButton>
                           </CTableDataCell>
                         </CTableRow>
                       )) :  ""}
@@ -165,7 +179,45 @@ const ListOfDrivers = () => {
                     </>)
                   }
                 
+      {/* deletedriverpopup */}
 
+
+      <CModal alignment="center" visible={deleteVisible} onClose={() => setDeleteVisible(false)}>
+                    {/* <CModalHeader>
+                      <CModalTitle>Edit Fare</CModalTitle>
+                    </CModalHeader> */}
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                                <img src={deletepopup} alt="danger"/>
+                                 <h2>Are you Sure</h2>
+                                <p>You want to delete this Vehicle ?</p>
+
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                        
+
+                            <CButton className="delete_popup"
+                           
+                            >Delete</CButton>
+                                <CButton className="cancel_popup">
+                             Cancel</CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                   
+       
+       
+                  </CModal>
+
+
+
+                  {/* enddeletedriverpopup */}
                 </div>
 
               </div>

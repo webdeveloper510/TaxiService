@@ -467,6 +467,7 @@ img.card-img-top {
     line-height: 30px;
     margin-top: 0;
     width: 100%;
+    cursor: pointer;
 }
 .icons-outer {
     display: none; 
@@ -534,10 +535,11 @@ button.btn.btn-primary.delete_popup {
     margin-bottom: 30px;
     font-weight: 600;
 }
-button#btn_edit_vehicle:active, button#btn_delete_vehicl:active, button#delete_company_btn:active{
+button#btn_edit_vehicle:active, button#btn_delete_vehicl:active, 
+button#delete_company_btn:active, button#edit_company_btn:active{
     background: none !important;
 }
-button#delete_company_btn {
+button#delete_company_btn, button#edit_company_btn {
     background: transparent;
     border: none;
     padding: 0;
@@ -545,44 +547,6 @@ button#delete_company_btn {
 .vehicle_inner, .image-container {
     width: 100%;
 }
-// .vehicle_inner:hover {
-//     opacity: 0.6;
-// }
-
-// .vehicle_inner {
-//     position: relative;
-//     overflow: hidden;
-//   }
-  
-//   .image-container {
-//     position: relative;
-//     width: 293px;
-//     height: 250px;
-//     overflow: hidden;
-//   }
-  
-//   .overlay {
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(0, 0, 0, 0.5); /* Transparent overlay color */
-//     opacity: 0;
-//     transition: opacity 0.3s;
-//   }
-  
-//   .image-container:hover .overlay {
-//     opacity: 1; 
-    
-//   }
-  
-  /* Adjust the brightness of the icons on hover */
-//   .image-container:hover .overlay img {
-//     filter: brightness(1.5); /* Increase brightness */
-//   }
-  
-  /* You can fine-tune the brightness value to your preference */
-
   .pagination-outer {
     align-items: center;
     justify-content: end;
@@ -628,8 +592,59 @@ li.unactive_btn button {
     margin-top: 0;
     margin-bottom: 0;
 }
+// .booked-trips-outer img {
+//     width: auto !important;
+// }
+
+h1.heading-for-every-page a img {
+    margin-right: 10px;
+}
+h1.heading-for-every-page a {
+    color: #666666;
+    font-size: 25px;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif !important;
+}
 @media screen and (max-width: 768px) {
 img.card-img-top {
     width: auto !important;
 }
 }
+
+.vehicle_inner {
+    position: relative;
+    width: 293px; /* Adjust the width as needed */
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .icons-outer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: start;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the overlay background color and opacity */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .vehicle_inner:hover .icons-outer {
+    opacity: 1;
+  }
+  
+  .overlay {
+    text-align: right;
+    color: white;
+    margin-top: 10px;
+  }
+  
+  .edit_vehicle,
+  .delete_vehilce {
+    margin: 0 10px;
+  }

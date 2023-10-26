@@ -490,7 +490,7 @@ const EditVehicle = () => {
                               </fieldset>
                             </CCol>
 
-                            <CCol md={12} className="upload-file-input">
+                            <CCol md={6} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Vehicle Image</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
                               {image?.length > 0 ?

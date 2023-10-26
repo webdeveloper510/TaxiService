@@ -280,7 +280,7 @@ const inputHandler = (e) => {
                               
                             </CCol>
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputhousenum">House Number</CFormLabel>
+                              <CFormLabel htmlFor="inputhousenum">Building Number</CFormLabel>
                               <CFormInput aria-label="housenumber"
                              {...formik.getFieldProps("house_number")}
                              maxLength="50"
@@ -374,7 +374,7 @@ const inputHandler = (e) => {
                             ) : null} 
                               
                             </CCol>
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputnumcars">Number of Cars</CFormLabel>
                               <CFormInput id="num_cars"
                              {...formik.getFieldProps("number_of_cars")}
@@ -396,8 +396,8 @@ const inputHandler = (e) => {
                              <div className="text-danger">{formik.errors.number_of_cars}</div>
                            ) : null} 
                             </CCol>
-                            
-
+                             */}
+{/* 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcomnum">Chamber of Commerce Number </CFormLabel>
                               <CFormInput id="com_numbers"
@@ -419,8 +419,8 @@ const inputHandler = (e) => {
                            {formik.errors.chamber_of_comerce_number && formik.touched.chamber_of_comerce_number ? (
                              <div className="text-danger">{formik.errors.chamber_of_comerce_number}</div>
                            ) : null} 
-                            </CCol>
-                            <CCol md={6}>
+                            </CCol> */}
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputcomnum">VAT Number </CFormLabel>
                               <CFormInput id="vat_numbers"
                               {...formik.getFieldProps("vat")}
@@ -441,7 +441,7 @@ const inputHandler = (e) => {
                             {formik.errors.vat && formik.touched.vat ? (
                               <div className="text-danger">{formik.errors.vat}</div>
                             ) : null} 
-                            </CCol>
+                            </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputwebsite">Website</CFormLabel>
                               <CFormInput id="webt_site"
@@ -486,7 +486,7 @@ const inputHandler = (e) => {
                              <div className="text-danger">{formik.errors.tx_quality}</div>
                            ) : null} 
                             </CCol>
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputwebsite">Contact</CFormLabel>
                               <CFormInput id="cont_act"
                               {...formik.getFieldProps("contact")}
@@ -507,7 +507,7 @@ const inputHandler = (e) => {
                             {formik.errors.contact && formik.touched.contact ? (
                               <div className="text-danger">{formik.errors.contact}</div>
                             ) : null} 
-                            </CCol>
+                            </CCol> */}
                            
                             <CCol md={6} className="row add_company_row">
                             <CCol md={6}>
@@ -557,7 +557,7 @@ const inputHandler = (e) => {
                                 </CCol>
                                 
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputcon_num">Tel Contact Number</CFormLabel>
+                              <CFormLabel htmlFor="inputcon_num">Telephone Number</CFormLabel>
                               <CFormInput id="tel_Con_nu"
                               onKeyDown={(e) => { handleMobile(e, 17) }}
                              {...formik.getFieldProps("tel_contact_number")}
