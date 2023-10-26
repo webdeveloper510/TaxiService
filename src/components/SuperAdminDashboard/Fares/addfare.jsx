@@ -81,7 +81,7 @@ const AddFare = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/faremanagement")
+          navigate("/superadmindashboard/fare/listoffares")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',

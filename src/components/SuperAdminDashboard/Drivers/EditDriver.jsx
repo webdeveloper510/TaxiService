@@ -25,6 +25,7 @@ import { addDriver, editDriver, getDriverById } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import AppLoader from "../../AppLoader";
 //import background from '../assets/images/heroimg.png';
 
 function EditDriver() {
@@ -59,12 +60,14 @@ function EditDriver() {
       Gender: result.gender,
       file: result.profile_image,
     })
+    setLoading(false)
         } else {
           setError(true);
+          setLoading(false)
         }
 
-      }).catch(err => { setError(true) });
-      setLoading(false)
+      }).catch(err => { setError(true);setLoading(false) });
+      
     }
   }
   useEffect(() => {
@@ -185,7 +188,7 @@ function EditDriver() {
                   <h1 class="heading-for-every-page">Edit Driver</h1>
                   <div class="active-trip-outer">
                     {/* <h2>Add New Driver</h2> */}
-                    <CRow>
+                    {loading?<AppLoader/>:<CRow>
   
                       <CCol xs={12}>
                         <CCard className="mb-4">
@@ -490,7 +493,7 @@ function EditDriver() {
                           </CCardBody>
                         </CCard>
                       </CCol>
-                    </CRow>
+                    </CRow>}
   
   
   

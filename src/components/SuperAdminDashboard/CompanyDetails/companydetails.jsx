@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import { deleteCompany, getCompany } from "../../../utils/api";
+import AppLoader from "../../AppLoader";
 const tableExample = [
   {
   SrNo : '1',
@@ -102,16 +103,19 @@ const CompanyDetails=()=> {
   }
 
     useEffect(() => {
+      setLoading(true);
       getCompany().then(res => {
         console.log(res?.result, 'company')
         if (res?.code === 200) {
           setCompany(res?.result)
+          setLoading(false)
         }else{
           setError(true);
+          setLoading(false)
         }
         
-      }).catch(err => {setError(true)});
-      setLoading(false)
+      }).catch(err => {setError(true);setLoading(false)});
+      
     }, [])
     const deleteCompanyHandler = async (id) => {
       try {
@@ -161,7 +165,7 @@ const CompanyDetails=()=> {
             </div>
             </div>
           </div>
-          <CTable align="middle" className="mb-0" hover responsive>
+          {loading?<AppLoader/>:<CTable align="middle" className="mb-0" hover responsive>
           
                 <CTableHead>
                 
@@ -211,7 +215,7 @@ const CompanyDetails=()=> {
                     </CTableRow>
                   ))}
                 </CTableBody>
-              </CTable>
+              </CTable>}
           
           </div>
           <div style={{

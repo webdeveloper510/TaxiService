@@ -38,6 +38,7 @@ import { allocateDriver, getDriver, getTrip, getVehicle } from "../../../utils/a
 import { toast } from "react-toastify";
 import moment from "moment";
 import { PulseLoader } from "react-spinners";
+import AppLoader from "../../AppLoader";
 
 const tableExample = [
   {
@@ -209,16 +210,7 @@ const SuperPendingTrip = () => {
                       </div>
                     </div>
                   </div>
-                  {loader ? <div className=" d-flex justify-content-center align-items-center"
-                    style={{ height: 400 }}>
-                    <PulseLoader
-                      color="#FFD04E"
-                      loading={true}
-                      margin={4}
-                      size={60}
-                      speedMultiplier={0.5}
-                    />
-                  </div> : <CTable align="middle" className="mb-0" hover responsive>
+                  {loader ? <AppLoader/> : <CTable align="middle" className="mb-0" hover responsive>
 
                     <CTableHead>
 

@@ -30,6 +30,7 @@ import { editVehicle, getVehicleById, getVehicleType } from "../../../utils/api"
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
+import AppLoader from "../../AppLoader";
 
 const EditVehicle = () => {
   const initialValues = {
@@ -82,12 +83,14 @@ const EditVehicle = () => {
             vehicleinsuranceDate: new Date(result.insurance_renewal_date),
           })
           setInsuranceDate(new Date(result.insurance_renewal_date))
+          setLoading(false)
         } else {
           setError(true);
+          setLoading(false)
         }
 
-      }).catch(err => { setError(true) });
-      setLoading(false)
+      }).catch(err => { setError(true); setLoading(false) });
+     
     }
   }
   useEffect(() => {
@@ -213,7 +216,7 @@ const EditVehicle = () => {
 
 
                 <div class="active-trip-outer add_new_bookings">
-                  <CRow className="passenger-details">
+                  {loading?<AppLoader/>:<CRow className="passenger-details">
                     <CCol xs={12}>
                       <CCard className="mb-4">
                         <CCardHeader>
@@ -516,7 +519,7 @@ const EditVehicle = () => {
                         </CCardBody>
                       </CCard>
                     </CCol>
-                  </CRow>
+                  </CRow>}
 
 
                   {/* <CCol xs={12}>
