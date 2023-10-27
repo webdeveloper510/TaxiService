@@ -130,12 +130,12 @@ import { useNavigate } from "react-router-dom";
 //     if(!data.trip_to.lat || !data.trip_to.log || data.trip_to.address.length < 1){
 //       valid = false;
 //       newErrors.trip_to = "Please enter valid trip to address";
-      
+
 //     }
 //     if(data.vehicle.length < 1){
 //       valid = false;
 //       newErrors.vehicle = "Please select valid vehicle";
-      
+
 //     }
 //     if(inputData.pick_up_date.length < 1){
 //       valid = false;
@@ -306,7 +306,7 @@ import { useNavigate } from "react-router-dom";
 //                                   updateTripFrom(place)
 //                                 }}
 //                               /> */}
-                              
+
 //                                 <PlacesAutocomplete
 //                                   value={tripFrom}
 //                                   onChange={(data)=>{
@@ -438,7 +438,7 @@ import { useNavigate } from "react-router-dom";
 //                                 }
 //                                 console.log(error)
 //                               }
-            
+
 //                               } />
 //                               {error.name && <span style={{color:"red"}}>Name is required</span>}
 //                               </CCol>
@@ -504,7 +504,26 @@ import { useNavigate } from "react-router-dom";
 
 const RequestNewTrip = () => {
   const navigate = useNavigate();
-
+  function customSetHours(date, hour) {
+    if (date instanceof Date) {
+      const newDate = new Date(date);
+      newDate.setHours(hour);
+      return newDate;
+    } else {
+      throw new Error('Invalid Date object');
+    }
+  }
+  
+  // Function to set the minute component of a Date object
+  function customSetMinutes(date, minute) {
+    if (date instanceof Date) {
+      const newDate = new Date(date);
+      newDate.setMinutes(minute);
+      return newDate;
+    } else {
+      throw new Error('Invalid Date object');
+    }
+  }
   const [pickupDate, setpickupDate] = useState(new Date());
   const [passengers, setPassengers] = useState([
     { name: "", email: "", phone: "", address: "" },
@@ -839,9 +858,14 @@ const RequestNewTrip = () => {
                               <br />
                               <DatePicker
                                 selected={pickupDate}
-                                dateFormat="MM/dd/yyyy"
                                 className="form-control"
-                                minDate={moment().toDate()}
+                                showTimeSelect
+                                timeIntervals={5}
+                                minTime={customSetHours(customSetMinutes(new Date(), 0), 17)}
+      maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
+                                dateFormat="MM/dd/yyyy hh:mm a"
+                                minDate={new Date()}
+                                // minTime={new Date()}
                                 onChange={(data) => {
                                   console.log(data);
                                   setInputData({
@@ -987,7 +1011,7 @@ const RequestNewTrip = () => {
                                     />
                                     <div className="suugestion-div">
                                       <div className="suggestion-inner">
-                                        {loading && <div>Loading...</div>}
+                                        {loading && <AppHeader />}
                                         {suggestions
                                           .slice(0, 3)
                                           .map((suggestion) => (

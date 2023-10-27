@@ -180,16 +180,16 @@ const RequestAcceptTrip = () => {
                                       <div>{item.driver_name}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_from.address}</div>
+                                      <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_to.address}</div>
+                                      <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
 
                                     <CTableDataCell>
                                       <div>
                                         {moment(item.pickup_date_time).format(
-                                          "MMMM Do YYYY, h:mm:ss a"
+                                          "MMMM Do YYYY, h:mm a"
                                         )}
                                       </div>
                                     </CTableDataCell>

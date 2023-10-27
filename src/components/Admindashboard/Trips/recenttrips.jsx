@@ -76,7 +76,7 @@ const RecentTrips=()=> {
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
             <div className="left-trip-content">
-          <h2>Pending Trips</h2>
+          <h2>Recent Trips</h2>
           </div>
           <div className="right-trip-content">
           {/* <CButton className="fare_list">See All</CButton> */}
@@ -98,12 +98,20 @@ const RecentTrips=()=> {
                     <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell>
+                    {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
                     <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {pendinTrip?.slice(0,4).map((item, index) => {                                    
+                  {pendinTrip?.slice(0,4).map((item, index) => {     
+                         const status = item.trip_status;
+                         let color = "#D83F31"
+                         if (status === 'Active') color = '#219C90';
+                         else if (status === 'Accepted') color = '#3D30A2';
+                         else if (status === 'Booked') color = '#186F65';
+                         else if (status === 'Completed') color = '#F875AA';
+                         else if (status === 'Canceled') color = '#C70039';
+
                     return(                    
                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                       <CTableDataCell >
@@ -127,11 +135,20 @@ const RecentTrips=()=> {
                       <CTableDataCell>
                         <div>{moment(item.pickup_date_time).format("h:mm:ss a")}</div>
                       </CTableDataCell>   
-                      <CTableDataCell>
+                      {/* <CTableDataCell>
                         <div>{item.vehicle_type}</div>
-                      </CTableDataCell>                   
+                      </CTableDataCell>                    */}
                       <CTableDataCell className="text-center location-icons">
-                       <div>{item.trip_status}</div> 
+                      <span style={{
+                          backgroundColor: color,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "8px",
+                          borderRadius : "8px",
+                          fontWeight: "bold",
+                          color: "white",
+                         }}>{status}</span>  
                       </CTableDataCell>           
                     </CTableRow>
                     

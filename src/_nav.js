@@ -127,7 +127,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Fare Management',
+    name: 'Fare List',
     to: '/faremanagement',
     icon: <div className='radius-svg'>
         <svg

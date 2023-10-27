@@ -234,7 +234,7 @@ const SuperRequestTrip = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          navigate("/trips/pendingtrips");
+          navigate("http://localhost:3000/superadmindashboard/trips/pendingtrips");
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -374,7 +374,7 @@ const SuperRequestTrip = () => {
                                 showTimeSelect
                                 dateFormat="MM/dd/yyyy HH:mm"
                                 className="form-control"
-                                minDate={moment().toDate()}
+                                minDate={new Date()}
                                 onChange={(data) => {
                                   console.log(data);
                                   setInputData({

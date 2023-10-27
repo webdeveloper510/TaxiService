@@ -103,16 +103,16 @@ const ActiveTrip = () => {
                 <h1 className="heading-for-every-page">Active Trip</h1>
                 <div className="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
+                    {/* <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>List of Active Trip</h2> */}
+                        <h2>List of Active Trip</h2>
                       </div>
                       <div className="right-trip-content">
                         <img src={refreshImg} />
                         <img src={downarrowImg} />
                         <img src={crossImg} />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   {loader ? (
                     <>
@@ -179,16 +179,16 @@ const ActiveTrip = () => {
                                       <div>{item.driver_name}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_from.address}</div>
+                                      <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_to.address}</div>
+                                      <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
 
                                     <CTableDataCell>
                                       <div>
                                         {moment(item.pickup_date_time).format(
-                                          "MMMM Do YYYY, h:mm:ss a"
+                                          "MMMM Do YYYY, h:mm a"
                                         )}
                                       </div>
                                     </CTableDataCell>

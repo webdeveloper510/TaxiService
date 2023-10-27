@@ -41,11 +41,11 @@ const AppHeader = () => {
           {/* <CIcon icon={logo} height={48} alt="Logo" /> */}
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink to="/dashboard" component={NavLink}>
             <img src={expandicon}/>
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
           {/* <CNavItem>
             <CNavLink href="#">Users</CNavLink>
           </CNavItem>
@@ -59,7 +59,7 @@ const AppHeader = () => {
               <CIcon icon={cilBell} size="lg" />
             </CNavLink>
           </CNavItem>
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilList} size="lg" />
             </CNavLink>
@@ -68,7 +68,7 @@ const AppHeader = () => {
             <CNavLink href="#">
               <CIcon icon={cilEnvelopeOpen} size="lg" />
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
           {/* <button className='btn btn-warning text-white  '  onClick={logout} >Logout</button> */}
         </CHeaderNav>
         <CHeaderNav className="ms-3">

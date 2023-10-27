@@ -117,7 +117,7 @@ const FareManagement = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Fare Management</h1>
+                <h1 class="heading-for-every-page">Fare List</h1>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">

@@ -33,7 +33,7 @@ const UsersStats=()=> {
           <MDBCol sm='8'>
             <MDBCardText>
               <div>
-                <h5>Compinies</h5>
+                <h5>Companies</h5>
             <span>{count.companies}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>

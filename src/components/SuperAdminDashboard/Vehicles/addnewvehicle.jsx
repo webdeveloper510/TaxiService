@@ -50,7 +50,7 @@ const AddSuperVehicle = () => {
   const validationSchema = Yup.object().shape({
     vehicleNo: Yup.string().required("Vehicle No is required"),
     vehicleType: Yup.string().required("Vehicle Type is required"),
-    vehicleModal: Yup.string().required("Vehicle Modal is required"),
+    vehicleModal: Yup.string().required("Vehicle Model is required"),
     seatingCapacity: Yup.string().required("Seating Capacity is required"),
     // pricePerKm: Yup.string().required("Price per km is required"),
     // minimumFare: Yup.string().required("Minimum Fare is required"),

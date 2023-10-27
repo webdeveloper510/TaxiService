@@ -71,14 +71,17 @@ const RiderStatusTable=()=> {
                 <CTableBody>
                   {driver?.length > 0 ?
                   driver?.map((item, index) => {
-                    let status = "Ofline";
+                    let status = "Online";
                     if(item.status){
                       status = "Online"
                       if(item.is_available){
-                        status = "In a rider"
+                        status = "In a ride"
                       }
                     }
                     console.log(item._id," ", status)
+                    let color = "#1F1717"
+                    if(status == "Online") color = "#219C90"
+                    else if(status == "In a ride") color = "#E9B824"
                     return(
                     
                     <CTableRow v-for="item in tableItems" key={index}>
@@ -92,7 +95,16 @@ const RiderStatusTable=()=> {
                       </CTableDataCell>
                       <CTableDataCell>
                         
-                     <div>{status}</div>
+                     <span style={{
+                      backgroundColor: color,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "8px",
+                      borderRadius : "8px",
+                      fontWeight: "bold",
+                      color: "white",
+                     }}>{status}</span>
                       </CTableDataCell>
                     </CTableRow>
                   )})
