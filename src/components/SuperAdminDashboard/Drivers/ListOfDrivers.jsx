@@ -183,7 +183,7 @@ const ListOfDrivers = () => {
                         <CTableBody>
                           {data?.length > 0
                             ? driver.map((item, index) => {
-                              let status = "Online";
+                              let status = "Offline";
                               if (item.status) {
                                 status = "Online"
                                 if (item.is_available) {
@@ -191,9 +191,9 @@ const ListOfDrivers = () => {
                                 }
                               }
                               console.log(item._id, " ", status)
-                              let color = "#1F1717"
-                              if (status == "Online") color = "#219C90"
-                              else if (status == "In a ride") color = "#E9B824"
+                              let background = "linear-gradient(90deg, #FF5370 0%, #FF869A 100%)"
+                              if (status == "Online") background = "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
+                              else if (status == "In a ride") background = "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)"
                               return (
                                 <CTableRow className="text-center" key={index}>
                                   <CTableDataCell className="text-center profle-pic">
@@ -227,11 +227,11 @@ const ListOfDrivers = () => {
                                   <CTableDataCell>
                                     <div 
                                       style={{
-                                        backgroundColor: color,
+                                        background,
                                         padding: "8px",
                                         borderRadius: "10px",
                                         fontWeight: "normal",
-                                        color: 'white'
+                                        color: '#fff',
                                       }}                                    
                                     >{status}</div>
                                   </CTableDataCell>

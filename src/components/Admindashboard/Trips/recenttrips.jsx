@@ -71,7 +71,7 @@ const RecentTrips=()=> {
         <div className="col-md-12">
        
         <div>
-        <div className="body flex-grow-1 px-0">    
+        <div className="body flex-grow-1 px-1">    
           <div class="active-trip-outer" id="recent-trip-outer"> 
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
@@ -109,7 +109,7 @@ const RecentTrips=()=> {
                          if (status === 'Active') color = '#219C90';
                          else if (status === 'Accepted') color = '#3D30A2';
                          else if (status === 'Booked') color = '#186F65';
-                         else if (status === 'Completed') color = '#F875AA';
+                         else if (status === 'Completed') color = '#008000';
                          else if (status === 'Canceled') color = '#C70039';
 
                     return(                    
