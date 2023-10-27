@@ -1,9 +1,9 @@
-import deletepopup from '../../../assets/images/deletepopup.png'
+import deletepopup from "../../../assets/images/deletepopup.png";
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
 import AppHeader from "../../TopBar/AppHeader";
-import { Link, useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from "react-router-dom";
+import Switch from "react-switch";
 import {
   CTable,
   CTableBody,
@@ -22,44 +22,48 @@ import {
   CFormLabel,
   CModalHeader,
   CModalTitle,
-} from '@coreui/react'
-import { toast } from 'react-toastify';
-import editiconimg from '../../../assets/images/editicon.png'
-import deleteiconimg from '../../../assets/images/deleteicon.png'
-import { deleteCompany, getCompany } from "../../../utils/api";
+} from "@coreui/react";
+import { toast } from "react-toastify";
+import editiconimg from "../../../assets/images/editicon.png";
+import deleteiconimg from "../../../assets/images/deleteicon.png";
+import {
+  deleteCompany,
+  editCompanyDetail,
+  getCompany,
+  getCompanydetailId,
+} from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 // import toggel from "react-toggle/style.css"
 const tableExample = [
   {
-    SrNo: '1',
-    companyId: 'ID123',
-    companyname: 'Mahindra',
-    postcode: '45622',
-    vehiclenumber: '12',
-    address: '34,Alex Street',
-    //  action: { checkicon: checkiconimg },
+    SrNo: "1",
+    companyId: "ID123",
+    companyname: "Mahindra",
+    postcode: "45622",
+    vehiclenumber: "12",
+    address: "34,Alex Street",
+    // action: { checkicon: checkiconimg },
   },
 
   {
-    SrNo: '1',
-    companyId: 'ID456',
-    companyname: 'TATA',
-    postcode: '45236',
-    vehiclenumber: '10',
-    address: '34,Alex Street',
-    //  action: { checkicon: checkiconimg },
+    SrNo: "1",
+    companyId: "ID456",
+    companyname: "TATA",
+    postcode: "45236",
+    vehiclenumber: "10",
+    address: "34,Alex Street",
+    // action: { checkicon: checkiconimg },
   },
-
-]
+];
 const CompanyDetails = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   // State variables for popups
   const [deleteVisible, setDeleteVisible] = useState(false);
   useEffect(() => {
     if (!deleteVisible) {
-      setSelectedCompany(null)
+      setSelectedCompany(null);
     }
-  }, [deleteVisible])
+  }, [deleteVisible]);
   const [editVisible, setEditVisible] = useState(false);
   const navigate = useNavigate();
   const [company, setCompany] = useState([]);
@@ -83,9 +87,7 @@ const CompanyDetails = () => {
         <>
           <li
             key={i}
-            className={
-              currentPage == num ? `active_btn ` : `unactive_btn`
-            }
+            className={currentPage == num ? `active_btn ` : `unactive_btn`}
           >
             <button onClick={() => changePage(num)}>{num}</button>
           </li>
@@ -126,40 +128,126 @@ const CompanyDetails = () => {
   }
 
   useEffect(() => {
+    getCompanyDetail();
+  }, []);
+
+  const getCompanyDetail = () => {
     setLoading(true);
-    getCompany().then(res => {
-      console.log(res?.result, 'company')
-      if (res?.code === 200) {
-        setCompany(res?.result)
-        setLoading(false)
-      } else {
+    getCompany()
+      .then((res) => {
+        console.log(res?.result, "company");
+        if (res?.code === 200) {
+          setCompany(res?.result);
+          setLoading(false);
+        } else {
+          setError(true);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
         setError(true);
-        setLoading(false)
-      }
-
-    }).catch(err => { setError(true); setLoading(false) });
-
-  }, [])
+        setLoading(false);
+      });
+  };
   const deleteCompanyHandler = async (id) => {
     try {
       const deleteCompanyData = await deleteCompany(id);
       if (deleteCompanyData.code === 200) {
         toast.success(`${deleteCompanyData.message}`, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 1000,
         });
-        const newCompanyData = company.filter(company => company._id != id);
-        setCompany(newCompanyData)
+        const newCompanyData = company.filter((company) => company._id != id);
+        setCompany(newCompanyData);
       } else {
         toast.success(`${deleteCompanyData.message}`, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 1000,
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
     setDeleteVisible(false);
+  };
+
+  const [inputData, setInputData] = useState({
+    _id: "",
+    company_name: "",
+    land: "",
+    post_code: "",
+    house_number: "",
+    description: "",
+    affiliated_with: "",
+    phone: "",
+    website: "",
+    tx_quality_mark: "",
+    first_name: "",
+    last_name: "",
+    tel_contact_number: "",
+    email: "",
+  });
+
+  const handleInput = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+
+  const handleEdit = (id) => {
+    getCompanydetailId(id)
+      .then((res) => {
+        console.log("company detail by id--------------", res);
+        if (res.code == 200) {
+          setInputData(res.result);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSubimtDetail = (e) => {
+    e.preventDefault();
+    console.log("input dataaaaaa", inputData);
+    const id = inputData._id;
+    editCompanyDetail(id, {
+      company_name: inputData.company_name,
+      land: inputData.land,
+      post_code: inputData.post_code,
+      house_number: inputData.house_number,
+      description: inputData.description,
+      affiliated_with: inputData.affiliated_with,
+      phone: inputData.phone,
+      website: inputData.website,
+      tx_quality_mark: inputData.tx_quality_mark,
+      first_name: inputData.first_name,
+      last_name: inputData.last_name,
+      tel_contact_number: inputData.p_number,
+      email: inputData.email,
+    })
+      .then((res) => {
+        console.log("ressssssssssss", res);
+        if (res.data.code == 200) {
+          getCompanyDetail();
+          setEditVisible(!editVisible);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  function handleStatusChange(item) {
+    editCompanyDetail(item._id, {
+      status: !item.status,
+    })
+      .then((res) => {
+        console.log("status changed", res);
+        if (res.data.code === 200) {
+          getCompanyDetail();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <>
@@ -179,335 +267,444 @@ const CompanyDetails = () => {
                       </div>
 
                       {/* <img src={refreshImg}/>
-            <img src={downarrowImg}/>
-            <img src={crossImg}/> */}
+ <img src={downarrowImg}/>
+ <img src={crossImg}/> */}
                       <div className="right-trip-content">
                         <Link to="/superadmindashboard/add-company">
-                          <CButton className="add_company_btn">Add Company</CButton>
+                          <CButton className="add_company_btn">
+                            Add Company
+                          </CButton>
                         </Link>
-
                       </div>
                     </div>
                   </div>
-                  {loading ? <AppLoader /> : <CTable align="middle" className="mb-0" hover responsive>
-
-                    <CTableHead>
-
-                      <CTableRow>
-                        {/* <CTableHeaderCell className="text-center">
-                      <CIcon icon={cilPeople} />
-                    </CTableHeaderCell> */}
-                        <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Company ID</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Name</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Email</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Phone</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Address</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                      {data?.map((item, index) => (
-                        <CTableRow className="text-center" v-for="item in tableItems" key={company._id}>
-                          <CTableDataCell >
-                            <div>{firstIndex + index + 1}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item._id}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.first_name + " " + item.last_name}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.email}</div>
-                          </CTableDataCell>
-                          <CTableDataCell>
-                            <div>{item.phone}</div>
-                          </CTableDataCell>
-
-                          <CTableDataCell>
-                            <div>{item.first_name}</div>
-                          </CTableDataCell>
-                          <CTableDataCell className="text-center d-flex company-list-icons">
-                            <CButton id="edit_company_btn" onClick={() => setEditVisible(!editVisible)}>
-                              {/* <div  style={{cursor:"pointer"}} 
-                       onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
-                       ></div> */}
-                              <img src={editiconimg} /> </CButton>
-
-                            {/* <div style={{cursor:"pointer"}} onClick={()=>{
-                        deleteCompanyHandler(item._id);
-                       }}>   </div> */}
-                            <CButton id="delete_company_btn" onClick={() => {
-                              setDeleteVisible(!deleteVisible);
-                              setSelectedCompany(item)
-                            }
-                            }><img src={deleteiconimg} /></CButton>
-                          </CTableDataCell>
+                  {loading ? (
+                    <AppLoader />
+                  ) : (
+                    <CTable align="middle" className="mb-0" hover responsive>
+                      <CTableHead>
+                        <CTableRow>
+                          {/* <CTableHeaderCell className="text-center">
+ <CIcon icon={cilPeople} />
+ </CTableHeaderCell> */}
+                          <CTableHeaderCell className="text-center">
+                            Sr.No
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Company ID
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Name
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Email
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Phone
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Status
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Action
+                          </CTableHeaderCell>
                         </CTableRow>
-                      ))}
-                    </CTableBody>
-                  </CTable>}
+                      </CTableHead>
+                      <CTableBody>
+                        {data?.map((item, index) => (
+                          <CTableRow
+                            className="text-center"
+                            v-for="item in tableItems"
+                            key={item._id}
+                          >
+                            <CTableDataCell>
+                              <div>{firstIndex + index + 1}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item?.company_id}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>
+                                {item.first_name + " " + item.last_name}
+                              </div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item.email}</div>
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              <div>{item.phone}</div>
+                            </CTableDataCell>
 
+                            <CTableDataCell>
+                              <Switch
+                                checkedIcon={false}
+                                uncheckedIcon={false}
+                                height={18}
+                                width={35}
+                                onChange={() => {
+                                  handleStatusChange(item);
+                                }}
+                                checked={item.status}
+                              />
+                            </CTableDataCell>
+                            <CTableDataCell className="text-center d-flex company-list-icons">
+                              <CButton
+                                id="edit_company_btn"
+                                onClick={() => setEditVisible(!editVisible)}
+                              >
+                                {/* <div style={{cursor:"pointer"}} 
+ onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
+ ></div> */}
+                                <img
+                                  src={editiconimg}
+                                  alt="edit"
+                                  onClick={() => handleEdit(item._id)}
+                                />{" "}
+                              </CButton>
 
-                  {
-                    data?.length > 0 ?
+                              {/* <div style={{cursor:"pointer"}} onClick={()=>{
+ deleteCompanyHandler(item._id);
+ }}> </div> */}
+                              <CButton
+                                id="delete_company_btn"
+                                onClick={() => {
+                                  setDeleteVisible(!deleteVisible);
+                                  setSelectedCompany(item);
+                                }}
+                              >
+                                <img src={deleteiconimg} alt="delet" />
+                              </CButton>
+                            </CTableDataCell>
+                          </CTableRow>
+                        ))}
+                      </CTableBody>
+                    </CTable>
+                  )}
+
+                  {data?.length > 0 ? (
+                    <div
+                      className="pagination-outer"
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
                       <div
-                        className="pagination-outer"
+                        className="prev_btn"
                         style={{
                           display: "flex",
                           flexDirection: "row",
                         }}
                       >
-                        <div
-                          className="prev_btn"
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                          }}
-                        >
-                          <button onClick={() => handlePrePage()}>
-                            Previous
-                          </button>
-                        </div>
-                        <div className="previous-page">
-                          <ul>
-                            {pageNumber}
-                            <button className="dots_btn">
-                              {pageIncreament}
-                            </button>
-                          </ul>
-                        </div>
-                        <div className="next_btn">
-                          <button onClick={() => handleNextPage()}>Next</button>
-                        </div>
+                        <button onClick={() => handlePrePage()}>
+                          Previous
+                        </button>
                       </div>
-                      : ""
-                  }
-
+                      <div className="previous-page">
+                        <ul>
+                          {pageNumber}
+                          <button className="dots_btn">{pageIncreament}</button>
+                        </ul>
+                      </div>
+                      <div className="next_btn">
+                        <button onClick={() => handleNextPage()}>Next</button>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
                   {/* deletecompanypopup */}
 
-
-                  <CModal alignment="center" visible={deleteVisible} onClose={() => setDeleteVisible(false)}>
+                  <CModal
+                    alignment="center"
+                    visible={deleteVisible}
+                    onClose={() => setDeleteVisible(false)}
+                  >
                     {/* <CModalHeader>
-                      <CModalTitle>Edit Fare</CModalTitle>
-                    </CModalHeader> */}
+ <CModalTitle>Edit Fare</CModalTitle>
+ </CModalHeader> */}
                     <CModalBody>
                       <CRow>
-
                         <CCol xs={12}>
                           <CCard className="mb-4 delete_vehicle_popup">
                             <CCardBody>
                               <img src={deletepopup} alt="danger" />
                               <h2>Are you Sure</h2>
                               <p>You want to delete this Vehicle ?</p>
-
                             </CCardBody>
                             <div className="delete_vehicle_popup_outer">
-
-
-                              <CButton className="delete_popup"
+                              <CButton
+                                className="delete_popup"
                                 onClick={() => {
-                                  deleteCompanyHandler(selectedCompany._id)
+                                  deleteCompanyHandler(selectedCompany._id);
                                   setDeleteVisible(false);
                                 }}
-                              >Delete</CButton>
-                              <CButton className="cancel_popup"
+                              >
+                                Delete
+                              </CButton>
+                              <CButton
+                                className="cancel_popup"
                                 onClick={() => {
                                   setDeleteVisible(false);
                                 }}
                               >
-                                Cancel</CButton>
+                                Cancel
+                              </CButton>
                             </div>
                           </CCard>
                         </CCol>
                       </CRow>
                     </CModalBody>
-
-
-
                   </CModal>
-
-
 
                   {/* enddeletecompanypopup */}
 
-
-
-
                   {/* EditCompanyPopup */}
-                  <CModal alignment="center" visible={editVisible} onClose={() => setEditVisible(false)}>
+                  <CModal
+                    alignment="center"
+                    visible={editVisible}
+                    onClose={() => setEditVisible(false)}
+                  >
                     <CModalHeader>
                       <CModalTitle>Edit Company</CModalTitle>
                     </CModalHeader>
                     <CModalBody>
                       <CRow>
-
                         <CCol xs={12}>
                           <CCard className="mb-4 edit_company_popup">
                             <CCardBody>
                               <form noValidate className="row g-3">
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputcname">Company Name</CFormLabel>
-                                  <CFormInput aria-label="vehicle fare"
-
+                                  <CFormLabel htmlFor="inputcname">
+                                    Company Name
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="vehicle fare"
+                                    value={inputData.company_name}
+                                    onChange={(e) => handleInput(e)}
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    className="form-control bg-transparent"
                                     name="company_name"
-                                    autoComplete="off" />
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputland">Land</CFormLabel>
-                                  <CFormInput aria-label="land"
+                                  <CFormLabel htmlFor="inputland">
+                                    Land
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="land"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    value={inputData.land}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
                                     name="land"
-                                    autoComplete="off" />
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputpcode">Post Code</CFormLabel>
-                                  <CFormInput aria-label="postcode"
+                                  <CFormLabel htmlFor="inputpcode">
+                                    Post Code
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="postcode"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    value={inputData.post_code}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
                                     name="post_code"
-                                    autoComplete="off" />
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputhousenum">Building Number</CFormLabel>
-                                  <CFormInput aria-label="housenumber"
-
+                                  <CFormLabel htmlFor="inputhousenum">
+                                    Building Number
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="housenumber"
+                                    value={inputData.house_number}
+                                    onChange={(e) => handleInput(e)}
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    className="form-control bg-transparent"
                                     name="house_number"
-                                    autoComplete="off" />
-
+                                    autoComplete="off"
+                                  />
                                 </CCol>
 
                                 <CCol md={12}>
-                                  <CFormLabel htmlFor="inputtxinum">Describe Your Taxi Company</CFormLabel>
-                                  <CFormInput aria-label="taxi company"
+                                  <CFormLabel htmlFor="inputtxinum">
+                                    Describe Your Taxi Company
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="taxi company"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
-                                    name="describe_your_taxi_company"
-                                    autoComplete="off" />
+                                    value={inputData.description}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
+                                    name="description"
+                                    autoComplete="off"
+                                  />
                                 </CCol>
 
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputaffi">Affiliated with</CFormLabel>
-                                  <CFormInput aria-label="Affiliated"
+                                  <CFormLabel htmlFor="inputaffi">
+                                    Affiliated with
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="Affiliated"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    value={inputData.affiliated_with}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
                                     name="affiliated_with"
-                                    autoComplete="off" />
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputphnnum">Phone Number</CFormLabel>
-                                  <CFormInput aria-label="phone number"
+                                  <CFormLabel htmlFor="inputphnnum">
+                                    Phone Number
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="phone number"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    value={inputData.phone}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
                                     name="phone"
-                                    autoComplete="off" />
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputwebsite">Website</CFormLabel>
-                                  <CFormInput id="webt_site"
+                                  <CFormLabel htmlFor="inputwebsite">
+                                    Website
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="webt_site"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    value={inputData.website}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
                                     name="website"
-                                    autoComplete="off" />
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputquality">TX Quality Mark</CFormLabel>
-                                  <CFormInput id="iput_quality"
+                                  <CFormLabel htmlFor="inputquality">
+                                    TX Quality Mark
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="iput_quality"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
-                                    name="tx_quality"
-                                    autoComplete="off" />
+                                    value={inputData.tx_quality_mark}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
+                                    name="tx_quality_mark"
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={12} className="row add_company_row">
                                   <CCol md={6}>
-                                    <CFormLabel htmlFor="inputfname">First Name</CFormLabel>
-                                    <CFormInput id="f_name"
+                                    <CFormLabel htmlFor="inputfname">
+                                      First Name
+                                    </CFormLabel>
+                                    <CFormInput
+                                      id="f_name"
                                       maxLength="50"
-                                      className=
-                                      "form-control bg-transparent"
+                                      value={inputData.first_name}
+                                      onChange={(e) => handleInput(e)}
+                                      className="form-control bg-transparent"
                                       name="first_name"
-                                      autoComplete="off" />
-
+                                      autoComplete="off"
+                                    />
                                   </CCol>
                                   <CCol md={6}>
-                                    <CFormLabel htmlFor="inputlname">Last Name</CFormLabel>
-                                    <CFormInput id="l_name"
+                                    <CFormLabel htmlFor="inputlname">
+                                      Last Name
+                                    </CFormLabel>
+                                    <CFormInput
+                                      id="l_name"
                                       maxLength="50"
-                                      className=
-                                      "form-control bg-transparent"
+                                      value={inputData.last_name}
+                                      onChange={(e) => handleInput(e)}
+                                      className="form-control bg-transparent"
                                       name="last_name"
-                                      autoComplete="off" />
-
+                                      autoComplete="off"
+                                    />
                                   </CCol>
                                 </CCol>
 
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputcon_num">Telephone Number</CFormLabel>
-                                  <CFormInput id="tel_Con_nu"
+                                  <CFormLabel htmlFor="inputcon_num">
+                                    Telephone Number
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="tel_Con_nu"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
-                                    name="tel_contact_number"
-                                    autoComplete="off" />
-
+                                    value={inputData.p_number}
+                                    onChange={(e) => handleInput(e)}
+                                    className="form-control bg-transparent"
+                                    name="p_number"
+                                    autoComplete="off"
+                                  />
                                 </CCol>
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputmailaddress">Email Address</CFormLabel>
-                                  <CFormInput id="email_address"
+                                  <CFormLabel htmlFor="inputmailaddress">
+                                    Email Address
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="email_address"
                                     maxLength="50"
-                                    className=
-                                    "form-control bg-transparent"
+                                    className="form-control bg-transparent"
                                     name="email"
-                                    autoComplete="off" />
-
+                                    value={inputData.email}
+                                    onChange={(e) => handleInput(e)}
+                                    autoComplete="off"
+                                  />
                                 </CCol>
 
                                 <CCol md={12}>
-                                  <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                    <CButton type="submit" className="submit-btn">Submit</CButton>
-                                    <CButton type="button" className="cancel-btn">Cancel</CButton>
+                                  <div
+                                    className="d-flex justify-content-center"
+                                    style={{ marginTop: "40px" }}
+                                  >
+                                    <CButton
+                                      type="button"
+                                      onClick={(e) => handleSubimtDetail(e)}
+                                      className="submit-btn"
+                                    >
+                                      Submit
+                                    </CButton>
+                                    <CButton
+                                      type="button"
+                                      onClick={() =>
+                                        setEditVisible(!editVisible)
+                                      }
+                                      className="cancel-btn"
+                                    >
+                                      Cancel
+                                    </CButton>
                                   </div>
                                 </CCol>
                               </form>
-
                             </CCardBody>
                             {/* <div className="delete_vehicle_popup_outer">
-                        
+ 
 
-                            <CButton className="delete_popup"
-                           
-                            >Delete</CButton>
-                                <CButton className="cancel_popup" onClick={() => setVisible(false)}>
-                             Cancel</CButton>
-                            </div> */}
+ <CButton className="delete_popup"
+ 
+ >Delete</CButton>
+ <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+ Cancel</CButton>
+ </div> */}
                           </CCard>
                         </CCol>
                       </CRow>
                     </CModalBody>
-
-
-
                   </CModal>
 
                   {/* EndEditcompanypopup */}
                 </div>
-
               </div>
             </div>
           </div>
@@ -517,4 +714,4 @@ const CompanyDetails = () => {
   );
 };
 
-export default CompanyDetails; 
+export default CompanyDetails;

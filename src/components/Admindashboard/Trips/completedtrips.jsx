@@ -19,6 +19,7 @@ import * as geolib from "geolib";
 import { getTrip, getTripSubAdmin } from "../../../utils/api";
 //import PulseLoader from "react-spinners/PulseLoader";
 import { PulseLoader } from "react-spinners";
+import EmptyData from "../../EmptyData";
 
 const CompletedTrip = () => {
   const [completeTrip, setCompleteTrip] = useState([]);
@@ -132,7 +133,7 @@ const CompletedTrip = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                      {data?.length==0?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -232,7 +233,7 @@ const CompletedTrip = () => {
                               ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>}
                       {data?.length > 0 ? (
                         <div
                           className="pagination-outer"

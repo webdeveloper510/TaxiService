@@ -17,6 +17,7 @@ import { getTrip } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import moment from "moment";
+import EmptyData from "../../EmptyData";
 
 const SuperActiveTrip = () => {
   const [activeTrip, setActiveTrip] = useState([]);
@@ -132,7 +133,10 @@ const SuperActiveTrip = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                      {
+                        data?.length == 0 ?
+                        <EmptyData/>:
+                        <CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -203,7 +207,7 @@ const SuperActiveTrip = () => {
                               ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>}
                      {
                       data?.length > 0 ?
                       <div
