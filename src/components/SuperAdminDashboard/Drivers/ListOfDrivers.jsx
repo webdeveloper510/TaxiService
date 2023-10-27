@@ -230,7 +230,7 @@ const ListOfDrivers = () => {
                                         backgroundColor: color,
                                         padding: "8px",
                                         borderRadius: "10px",
-                                        fontWeight: "bold",
+                                        fontWeight: "normal",
                                         color: 'white'
                                       }}                                    
                                     >{status}</div>

@@ -35,24 +35,26 @@ const SuperAdminDashboard=()=> {
           {/* <div className="home-dashobard-chart">
             <DashboardGraph/>
           </div> */}
-          <div className="stats-outer">
-          
-         <AllDashboardStats/>
-          </div>
+         
 
+          <div className=" row col-md-12">
+          <div className="col-md-6 stats-outer">
+          
+          <AllDashboardStats/>
+           </div>
+<div className="col-md-6 booked-trips-outer">
+<RiderStatusTable/>
+
+  </div>
+
+</div>
           <div className="row driver-recent-trips">
      
-      <div className="col-md-8 dashboard-grph-img">
+      <div className="col-md-12 dashboard-grph-img">
       <RecentTrips/>
         
         </div>
-       <div className="col-md-4">
-
-        <div className="booked-trips-outer">
-        <RiderStatusTable/>
-
-          </div>
-        </div>
+      
        
       
       </div>

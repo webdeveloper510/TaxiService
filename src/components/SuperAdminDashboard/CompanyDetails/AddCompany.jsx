@@ -221,9 +221,9 @@ const AddCompany = () => {
                 </h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
+                    {/* <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>{companyId?"Edit Company": "Add Company"}</h2> */}
+                        <h2>{companyId?"Edit Company": "Add Company"}</h2>
                       </div>
                       <div className="right-trip-content">
                         <Link to="/superadmindashboard/companydetails">
@@ -232,7 +232,7 @@ const AddCompany = () => {
                           </CButton>
                         </Link>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   <CRow>
                     <CCol xs={12}>

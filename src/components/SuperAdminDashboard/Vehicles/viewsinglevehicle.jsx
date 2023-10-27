@@ -68,12 +68,12 @@ const ViewSingleVehicle = () => {
                         <CCardBody>
                         
                           <form noValidate className="row g-3">
-                          
+                          <CRow>
                           <CCol md={4}>
                             
                         <img src={car1} alt="danger"/>
                            </CCol>
-                           
+                           </CRow>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
                               <CFormInput aria-label="vehicle no."
@@ -184,7 +184,7 @@ const ViewSingleVehicle = () => {
                               </fieldset>
                             </CCol>
 
-                            <CCol md={6} className="upload-file-input">
+                            {/* <CCol md={6} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Vehicle Image</CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel> 
                               <CFormInput type="file" id="formFile"
@@ -201,7 +201,7 @@ const ViewSingleVehicle = () => {
                                   <span>Drop Image Here ...</span>
                                 </div>
                               </label>
-                            </CCol>
+                            </CCol> */}
 
                           </form>
                         </CCardBody>

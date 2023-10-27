@@ -32,7 +32,7 @@ const AddNewDriver = () => {
 
 
   const [image, setImage] = useState('');
-
+  const [doc, setDoc] = useState('');
   const initialValues = {
     FirstName: "",
     LastName: "",
@@ -45,6 +45,7 @@ const AddNewDriver = () => {
     MobileNo: "",
     Gender: "",
     file: "",
+    doc
   };
 
 
@@ -60,12 +61,18 @@ const AddNewDriver = () => {
     MobileNo: Yup.string().required("MobileNo is required"),
     Gender: Yup.string().required("Gender is required"),
     file: Yup.mixed().required("Driver Documents are required"),
+    doc: Yup.mixed().required("Driver Documents are required"),
   });
 
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
     setImage(URL.createObjectURL(selectedFile))
+  }
+  const uploadDoc = (e) => {
+    const selectedFile = e.target.files[0];
+    formik.setFieldValue('doc', selectedFile)
+    setDoc(URL.createObjectURL(selectedFile))
   }
 
   const [selectedGender, setSelectedGender] = useState('');
@@ -106,6 +113,7 @@ const AddNewDriver = () => {
       formData.append('phone', values.MobileNo);
       formData.append('gender', values.Gender);
       formData.append('driver_image', values.file);
+      formData.append('document', values.doc);
       formData.append('password', '12587574545');
 
       addDriver(formData).then((res) => {
@@ -199,7 +207,7 @@ const AddNewDriver = () => {
                                 <div className="text-danger">{formik.errors.LastName}</div>
                               ) : null}
                             </CCol>
-                            <CCol xs={6}>
+                            <CCol md={6}>
                               <CFormLabel htmlFor="inputAddress">Street Address 1</CFormLabel>
                               <CFormInput id="inputAddress" {...formik.getFieldProps("Address1")}
                                 maxLength="50"
@@ -220,7 +228,7 @@ const AddNewDriver = () => {
                                 <div className="text-danger">{formik.errors.Address1}</div>
                               ) : null}
                             </CCol>
-                            <CCol xs={6}>
+                            <CCol md={6}>
                               <CFormLabel htmlFor="inputAddress2">Street Address 2</CFormLabel>
                               <CFormInput id="inputAddress2"  {...formik.getFieldProps("Address2")}
                                 maxLength="50"
@@ -314,7 +322,7 @@ const AddNewDriver = () => {
                                 <div className="text-danger">{formik.errors.Zip}</div>
                               ) : null}
                             </CCol>
-                            <CCol md={6}>
+                            <CCol md={4}>
                               <CFormLabel htmlFor="inputEmail4">Email</CFormLabel>
                               <CFormInput type="email" id="inputEmail4" {...formik.getFieldProps("Email")}
                                 maxLength="50"
@@ -335,7 +343,7 @@ const AddNewDriver = () => {
                                 <div className="text-danger">{formik.errors.Email}</div>
                               ) : null}
                             </CCol>
-                            <CCol md={6}>
+                            <CCol md={4}>
                               <CFormLabel htmlFor="inputmobile">Mobile No.</CFormLabel>
                               <CFormInput type="number" id="inputmobile" {...formik.getFieldProps("MobileNo")}
                                 maxLength="50"
@@ -356,10 +364,12 @@ const AddNewDriver = () => {
                                 <div className="text-danger">{formik.errors.MobileNo}</div>
                               ) : null}
                             </CCol>
-                            <CCol md={6}>
+                        
+
+                            <CCol md={3} className="gender-outer">
                               <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
                               <fieldset className="row mb-12">
-                                <CCol sm={12}>
+                                <CCol sm={12} className="radio_inner">
                                   <CFormCheck inline
                                     type="radio"
                                     name="gridRadios"
@@ -381,8 +391,6 @@ const AddNewDriver = () => {
                                 </CCol>
                               </fieldset>
                             </CCol>
-
-
 
 
                             {/* 
@@ -448,6 +456,49 @@ const AddNewDriver = () => {
                                 <div className="files-outer">
                                   <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
                                   <span>Drop Image Here ...</span>
+                                </div>
+                              </label>
+                            </CCol>
+                            {doc ? (
+  <object data={doc} type="application/pdf" width="100%" height={300}>
+    Your browser does not support PDF previews.
+  </object>
+) : (
+  ""
+)}
+                            <CCol md={6} className="upload-file-input">
+                              <CFormLabel htmlFor="inputmobile">Upload Driver Doc</CFormLabel>
+
+                              {/* {doc?.length > 0 ?
+                                (
+                                  <embed src={doc} height={300} width={100} />
+                                ) :
+                                ""} */}
+
+                              <CFormInput type="file"
+                              accept="application/pdf,application/vnd.ms-excel"
+                               id="formFile" onChange={(e) => { uploadDoc(e) }}
+
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.doc && formik.errors.doc,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.doc && !formik.errors.doc,
+                                  }
+                                )}
+                                name="doc"
+                                autoComplete="off" />
+                              {formik.errors.doc && formik.touched.doc ? (
+                                <div className="text-danger">{formik.errors.doc}</div>
+                              ) : null}
+                              <label htmlFor="formFile" className="custom-file-upload">
+                                <div className="files-outer">
+                                  <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
+                                  <span>Drop Document Here ...</span>
                                 </div>
                               </label>
                             </CCol>

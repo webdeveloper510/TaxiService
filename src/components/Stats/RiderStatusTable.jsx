@@ -102,7 +102,7 @@ const RiderStatusTable=()=> {
                       justifyContent: "center",
                       padding: "8px",
                       borderRadius : "8px",
-                      fontWeight: "bold",
+                      fontWeight: "normal",
                       color: "white",
                      }}>{status}</span>
                       </CTableDataCell>

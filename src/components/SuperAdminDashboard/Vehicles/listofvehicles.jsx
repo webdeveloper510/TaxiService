@@ -136,7 +136,7 @@ const LisOfVehicles = () => {
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
           <AppHeader />
           <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
-            <h1 className="heading-for-every-page">Vehicle List</h1>
+            <h1 className="heading-for-every-page">Vehicles List</h1>
             <div className="active-trip-outer">
               {/* <h2>View All Vehicles</h2> */}
               

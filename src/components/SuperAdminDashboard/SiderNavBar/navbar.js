@@ -73,6 +73,11 @@ const _Supernav = [
     items: [
       {
         component: CNavItem,
+        name: 'Request Trips',
+        to: '/superadmindashboard/trips/requesttrips',
+      },
+      {
+        component: CNavItem,
         name: 'Pending Trips',
         to: '/superadmindashboard/trips/pendingtrips',
       },
@@ -95,11 +100,7 @@ const _Supernav = [
         to: '/superadmindashboard/trips/activetrips',
       },
 
-      {
-        component: CNavItem,
-        name: 'Request Trips',
-        to: '/superadmindashboard/trips/requesttrips',
-      },
+     
       {
         component: CNavItem,
         name: 'Complete Trips',

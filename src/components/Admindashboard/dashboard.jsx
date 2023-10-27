@@ -36,17 +36,17 @@ const Dashboard=()=> {
 
           <div className="row driver-recent-trips">
      
-      <div className="col-md-8 dashboard-grph-img">
+      <div className="col-md-12 dashboard-grph-img">
       <RecentTrips/>
         
         </div>
-       <div className="col-md-4">
+       {/* <div className="col-md-6">
 
         <div className="booked-trips-outer">
         <RiderStatusTable/>
 
           </div>
-        </div>
+        </div> */}
        
       
       </div>
