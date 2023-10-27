@@ -28,7 +28,6 @@ import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import { deleteCompany, getCompany } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
-import toggel from "react-toggle/style.css"
 const tableExample = [
   {
     SrNo: '1',
