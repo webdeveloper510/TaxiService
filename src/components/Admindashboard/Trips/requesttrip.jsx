@@ -95,7 +95,7 @@ import { useNavigate } from "react-router-dom";
 
 
 //   const inputHandler = (e) => {
-//       if(e.target.value.length < 1){
+//       if(e.target.value?.length < 1){
 //         setErrors({...errors, [e.target.name]: true })
 //       }else{
 //         setErrors({...errors, [e.target.name]: false })
@@ -122,22 +122,22 @@ import { useNavigate } from "react-router-dom";
 //     let valid = true
 //     let newErrors = {...errors}
 //     console.log("data beafore vehicle", vehicle)
-//     if(!data.trip_from.lat || !data.trip_from.log || data.trip_from.address.length < 1){
+//     if(!data.trip_from.lat || !data.trip_from.log || data.trip_from.address?.length < 1){
 //       console.log("enter valid trip from")
 //       valid = false;
 //       newErrors.trip_from = "Please enter valid trip from address";
 //     }
-//     if(!data.trip_to.lat || !data.trip_to.log || data.trip_to.address.length < 1){
+//     if(!data.trip_to.lat || !data.trip_to.log || data.trip_to.address?.length < 1){
 //       valid = false;
 //       newErrors.trip_to = "Please enter valid trip to address";
 
 //     }
-//     if(data.vehicle.length < 1){
+//     if(data.vehicle?.length < 1){
 //       valid = false;
 //       newErrors.vehicle = "Please select valid vehicle";
 
 //     }
-//     if(inputData.pick_up_date.length < 1){
+//     if(inputData.pick_up_date?.length < 1){
 //       valid = false;
 //       newErrors.pick_up_date=  "Please select valid pick-up date";
 //     }
@@ -147,7 +147,7 @@ import { useNavigate } from "react-router-dom";
 //     }
 //     data.passenger_detail = passengers
 //     console.log("data beafore api", data)
-//     if (data.passenger_detail.length > 0) {
+//     if (data.passenger_detail?.length > 0) {
 //       data.vehicle_type = data.vehicle
 //       delete data.vehicle
 //       addTrip(data).then((res) => {
@@ -525,6 +525,20 @@ const RequestNewTrip = () => {
     }
   }
   const [pickupDate, setpickupDate] = useState(new Date());
+  useEffect(()=>{
+    const today = new Date();
+    if(pickupDate.toDateString() == today.toDateString()){
+      SetCurrentTime({
+        hour: today.getHours(),
+        minute: today.getMinutes() + 1,
+      })
+    }else{
+      SetCurrentTime({
+        hour:0,
+        minute:0
+      })
+    }
+  },[pickupDate])
   const [passengers, setPassengers] = useState([
     { name: "", email: "", phone: "", address: "" },
   ]);
@@ -536,18 +550,26 @@ const RequestNewTrip = () => {
     pick_up_date: new Date(),
     passenger_detail: [],
   });
-
+  const [currentTime, SetCurrentTime] = useState({
+    hour:{
+      hour: (new Date()).getHours(),
+      minute: (new Date()).getMinutes() + 1,
+    },
+    minute:0,
+  })
+  
   const formValidation = (passengers) => {
     const data = [...passengers];
     var re = /\S+@\S+\.\S+/;
+    const phoneRegex = /^[0-9]{10}$/;
     let valid = true;
-    for (let index = 0; index < data.length; index++) {
+    for (let index = 0; index < data?.length; index++) {
       // const element = data[index];
       if (data[index].name == "") {
         data[index].nameCheck = "Name required";
         data[index].nameLengthCheck = "";
         valid = false;
-      } else if (data[index].name.length < 3) {
+      } else if (data[index].name?.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -574,9 +596,13 @@ const RequestNewTrip = () => {
         data[index].phoneCheck = "Phone required";
         data[index].phoneLengthCheck = "";
         valid = false;
+      }else if (!phoneRegex.test(data[index].phone)) {
+        data[index].phoneCheck = "Enter only digit";
+        data[index].phoneLengthCheck = "";
+        valid = false;
       } else if (
-        data[index].phone.length < 7 &&
-        data[index].phone.length > 16
+        data[index].phone?.length < 7 &&
+        data[index].phone?.length > 16
       ) {
         data[index].phoneLengthCheck = "Please enter valid phone number";
         data[index].phoneCheck = "";
@@ -591,8 +617,8 @@ const RequestNewTrip = () => {
         data[index].addressLengthCheck = "";
         valid = false;
       } else if (
-        data[index].address.length < 7 &&
-        data[index].address.length > 16
+        data[index].address?.length < 7 &&
+        data[index].address?.length > 16
       ) {
         data[index].addressLengthCheck = "Please enter valid address";
         data[index].addressCheck = "";
@@ -655,7 +681,7 @@ const RequestNewTrip = () => {
   //   })
 
   const inputHandler = (e) => {
-    if (e.target.value.length < 1) {
+    if (e?.target?.value?.length < 1) {
       setErrors({ ...errors, [e.target.name]: true });
     } else {
       setErrors({ ...errors, [e.target.name]: false });
@@ -685,7 +711,7 @@ const RequestNewTrip = () => {
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
-      data.trip_from.address.length < 1
+      data.trip_from.address?.length < 1
     ) {
       console.log("enter valid trip from");
       valid = false;
@@ -694,16 +720,16 @@ const RequestNewTrip = () => {
     if (
       !data.trip_to.lat ||
       !data.trip_to.log ||
-      data.trip_to.address.length < 1
+      data.trip_to.address?.length < 1
     ) {
       valid = false;
       newErrors.trip_to = "Please enter valid trip to address";
     }
-    if (data.vehicle.length < 1) {
+    if (data.vehicle?.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
     }
-    if (inputData.pick_up_date.length < 1) {
+    if (inputData.pick_up_date?.length < 1) {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
@@ -714,6 +740,10 @@ const RequestNewTrip = () => {
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
     if (errorRes) {
+      data.vehicle_type = data.vehicle;
+      delete data.vehicle
+      data.pickup_date_time = data.pick_up_date;
+      delete data.pickup_date
       addTrip(data).then((res) => {
         console.log("response---->>>>", res);
         if (res.data.code === 200) {
@@ -861,13 +891,14 @@ const RequestNewTrip = () => {
                                 className="form-control"
                                 showTimeSelect
                                 timeIntervals={5}
-                                minTime={customSetHours(customSetMinutes(new Date(), 0), 17)}
+                                minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
       maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 // minTime={new Date()}
                                 onChange={(data) => {
                                   console.log(data);
+                                  setpickupDate(data)
                                   setInputData({
                                     ...inputData,
                                     pick_up_date: data,

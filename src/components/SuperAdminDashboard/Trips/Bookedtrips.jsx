@@ -18,6 +18,7 @@ import deleteiconimg from "../../../assets/images/deleteicon.png";
 import moment from "moment";
 import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import EmptyData from "../../EmptyData";
 
 const SuperBookedTrips = () => {
   const [bookingTrip, setBookingTrip] = useState([]);
@@ -135,6 +136,9 @@ const SuperBookedTrips = () => {
                     </>
                   ) : (
                     <>
+                     
+                     {
+                      data.length == 0 ? <EmptyData/>:
                       <CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
@@ -214,7 +218,7 @@ const SuperBookedTrips = () => {
                             ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>}
                       {
                         data?.length > 0 ?
                           <div

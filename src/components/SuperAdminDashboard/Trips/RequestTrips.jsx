@@ -27,9 +27,50 @@ import { useNavigate } from "react-router-dom";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
 const SuperRequestTrip = () => {
+  function customSetHours(date, hour) {
+    if (date instanceof Date) {
+      const newDate = new Date(date);
+      newDate.setHours(hour);
+      return newDate;
+    } else {
+      throw new Error('Invalid Date object');
+    }
+  }
+  
+  // Function to set the minute component of a Date object
+  function customSetMinutes(date, minute) {
+    if (date instanceof Date) {
+      const newDate = new Date(date);
+      newDate.setMinutes(minute);
+      return newDate;
+    } else {
+      throw new Error('Invalid Date object');
+    }
+  }
   const navigate = useNavigate();
 
   const [pickupDate, setpickupDate] = useState(new Date());
+  useEffect(()=>{
+    const today = new Date();
+    if(pickupDate.toDateString() == today.toDateString()){
+      SetCurrentTime({
+        hour: today.getHours(),
+        minute: today.getMinutes() + 1,
+      })
+    }else{
+      SetCurrentTime({
+        hour:0,
+        minute:0
+      })
+    }
+  },[pickupDate])
+  const [currentTime, SetCurrentTime] = useState({
+    hour:{
+      hour: (new Date()).getHours(),
+      minute: (new Date()).getMinutes() + 1,
+    },
+    minute:0,
+  })
   const [passengers, setPassengers] = useState([
     { name: "", email: "", phone: "", address: "" },
   ]);
@@ -45,6 +86,7 @@ const SuperRequestTrip = () => {
   const formValidation = (passengers) => {
     const data = [...passengers];
     var re = /\S+@\S+\.\S+/;
+    const phoneRegex = /^[0-9]{10}$/;
     let valid = true;
     for (let index = 0; index < data.length; index++) {
       // const element = data[index];
@@ -77,6 +119,10 @@ const SuperRequestTrip = () => {
       }
       if (data[index].phone == "") {
         data[index].phoneCheck = "Phone required";
+        data[index].phoneLengthCheck = "";
+        valid = false;
+      }else if (!phoneRegex.test(data[index].phone)) {
+        data[index].phoneCheck = "Enter only digit";
         data[index].phoneLengthCheck = "";
         valid = false;
       } else if (
@@ -179,12 +225,13 @@ const SuperRequestTrip = () => {
     obj[e.target.name] = e.target.value;
     arr[index] = obj;
     setPassengers([...arr]);
-    const errorRes = formValidation(passengers);
-    if(errorRes){
-      console.log("success")
-    }else{
-      console.log("error")
-    }
+    // const isValid = formValidation(passengers);
+    // const errorRes = formValidation(passengers);
+    // if(errorRes){
+    //   console.log("success")
+    // }else{
+    //   console.log("error")
+    // }
   };
 
   const adddata = () => {
@@ -227,6 +274,8 @@ const SuperRequestTrip = () => {
     if (errorRes) {
       data.vehicle_type = data.vehicle
       delete data.vehicle
+      data.pickup_date_time = data.pick_up_date;
+      delete data.pick_up_date;
       addTrip(data).then((res) => {
         console.log("response---->>>>", res);
         if (res.data.code === 200) {
@@ -234,7 +283,7 @@ const SuperRequestTrip = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          navigate("http://localhost:3000/superadmindashboard/trips/pendingtrips");
+          navigate("/superadmindashboard/trips/pendingtrips");
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -371,12 +420,16 @@ const SuperRequestTrip = () => {
                               <br />
                               <DatePicker
                                 selected={pickupDate}
-                                showTimeSelect
-                                dateFormat="MM/dd/yyyy HH:mm"
                                 className="form-control"
+                                showTimeSelect
+                                timeIntervals={5}
+                                minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
+      maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
+                                dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 onChange={(data) => {
                                   console.log(data);
+                                  setpickupDate(data)
                                   setInputData({
                                     ...inputData,
                                     pick_up_date: data,

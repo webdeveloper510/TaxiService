@@ -17,6 +17,7 @@ import downarrowImg from "../../../assets/images/down-arrow.png";
 import { getTrip, getTripSubAdmin } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 import moment from "moment";
+import EmptyData from "../../EmptyData";
 
 const ActiveTrip = () => {
   const [activeTrip, setActiveTrip] = useState([]);
@@ -131,7 +132,7 @@ const ActiveTrip = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                      {activeTrip.length == 0?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -240,7 +241,7 @@ const ActiveTrip = () => {
                               ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>}
                     </>
                   )}
                 </div>

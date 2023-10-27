@@ -417,3 +417,32 @@ export const getCountDashboard = async() => {
     console.log("GET_TRIP", error);
   });
 };
+export const getCompanydetailId = async(id) => {
+  return await Axios.get(`/admin/get_sub_admin_detail/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("error", error);
+  });
+};
+
+
+export const editCompanyDetail = async (id, data) => {
+  return await Axios.put(`admin/edit_sub_admin/${id}`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "edit driver");
+      return res;
+    })
+    .catch((error) => {
+      console.log("EDIT_DRIVER", error);
+    });
+};

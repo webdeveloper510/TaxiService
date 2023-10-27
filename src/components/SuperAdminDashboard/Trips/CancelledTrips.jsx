@@ -13,6 +13,8 @@ import {
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { getTrip } from "../../../utils/api";
 import moment from "moment";
+import EmptyData from "../../EmptyData";
+import AppLoader from "../../AppLoader";
 
 const tableExample = [
   {
@@ -130,88 +132,92 @@ const SuperCancelledTrip = () => {
                   
                   </div> */}
 
+                 { loader? <AppLoader/>: <>
+                  {data.length == 0 ? <EmptyData/>:
                   <CTable align="middle" className="mb-0" hover responsive>
 
-                    <CTableHead>
+                  <CTableHead>
 
-                      <CTableRow>
+                    <CTableRow>
 
-                        <CTableHeaderCell className="text-center">
-                          Sr.No
-                        </CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">
+                        Sr.No
+                      </CTableHeaderCell>
 
-                        <CTableHeaderCell className="text-center">
-                          Trip ID
-                        </CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">
+                        Trip ID
+                      </CTableHeaderCell>
 
-                        <CTableHeaderCell className="text-center">
-                          Driver Name
-                        </CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">
+                        Driver Name
+                      </CTableHeaderCell>
 
-                        <CTableHeaderCell className="text-center">
-                          Trip From
-                        </CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">
+                        Trip From
+                      </CTableHeaderCell>
 
-                        <CTableHeaderCell className="text-center">
-                          Trip To
-                        </CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">
+                        Trip To
+                      </CTableHeaderCell>
 
-                        <CTableHeaderCell className="text-center">
-                          Time
-                        </CTableHeaderCell>
+                      <CTableHeaderCell className="text-center">
+                        Time
+                      </CTableHeaderCell>
 
+
+
+                    </CTableRow>
+
+                  </CTableHead>
+
+                  <CTableBody>
+
+                    {data?.map((item, index) => (
+                      <CTableRow
+                        className="text-center"
+                        v-for="item in tableItems"
+                        key={item._id}
+                      >
+
+                        <CTableDataCell>
+
+                          <div>{index + 1}</div>
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+
+                          <div>{item.trip_id}</div>
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+
+                          <div>{item.driver_name?item.driver_name:"Not assigned"}</div>
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+
+                          <div>{item?.trip_from?.address.slice(0,20) + `${item?.trip_from?.address?.length<21?"":"..."}`}</div>
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+
+                          <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                        </CTableDataCell>
+
+                        <CTableDataCell>
+                          <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm a")}</div>
+
+                        </CTableDataCell>
 
 
                       </CTableRow>
+                    ))}
 
-                    </CTableHead>
+                  </CTableBody>
 
-                    <CTableBody>
-
-                      {data?.map((item, index) => (
-                        <CTableRow
-                          className="text-center"
-                          v-for="item in tableItems"
-                          key={item._id}
-                        >
-
-                          <CTableDataCell>
-
-                            <div>{index + 1}</div>
-                          </CTableDataCell>
-
-                          <CTableDataCell>
-
-                            <div>{item._id}</div>
-                          </CTableDataCell>
-
-                          <CTableDataCell>
-
-                            <div>{item.driver_name}</div>
-                          </CTableDataCell>
-
-                          <CTableDataCell>
-
-                            <div>{item?.trip_from?.address.slice(0,20) + `${item?.trip_from?.address?.length<21?"":"..."}`}</div>
-                          </CTableDataCell>
-
-                          <CTableDataCell>
-
-                            <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
-                          </CTableDataCell>
-
-                          <CTableDataCell>
-                            <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm a")}</div>
-
-                          </CTableDataCell>
-
-
-                        </CTableRow>
-                      ))}
-
-                    </CTableBody>
-
-                  </CTable>
+                </CTable>
+                  }
+                  </>}
                   {
                     data?.length > 0 ?
                       <div

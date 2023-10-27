@@ -18,6 +18,8 @@ import editiconimg from "../../../assets/images/editicon.png";
 import deleteiconimg from "../../../assets/images/deleteicon.png";
 import moment from "moment";
 import PulseLoader from "react-spinners/PulseLoader";
+import { date } from "yup";
+import EmptyData from "../../EmptyData";
 
 const BookingRequestTable = () => {
   const [bookingTrip, setBookingTrip] = useState([]);
@@ -134,7 +136,7 @@ const BookingRequestTable = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                      {date?.length==0?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -212,7 +214,7 @@ const BookingRequestTable = () => {
                               ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>}
                      {
                       data?.length > 0 ?
                       <div

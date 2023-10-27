@@ -169,9 +169,9 @@ const ListOfDrivers = () => {
                             <CTableHeaderCell className="text-center">
                               Address
                             </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            {/* <CTableHeaderCell className="text-center">
                               Trips
-                            </CTableHeaderCell>
+                            </CTableHeaderCell> */}
                             <CTableHeaderCell className="text-center">
                               Status
                             </CTableHeaderCell>
@@ -182,52 +182,72 @@ const ListOfDrivers = () => {
                         </CTableHead>
                         <CTableBody>
                           {data?.length > 0
-                            ? driver.map((item, index) => (
-                              <CTableRow className="text-center" key={index}>
-                                <CTableDataCell className="text-center profle-pic">
-                                  <CAvatar
-                                    size="md"
-                                    alt="img"
-                                    src={item.profile_image}
-                                    style={{ width: 42, height: 42 }}
-                                  />
-                                </CTableDataCell>
+                            ? driver.map((item, index) => {
+                              let status = "Online";
+                              if (item.status) {
+                                status = "Online"
+                                if (item.is_available) {
+                                  status = "In a ride"
+                                }
+                              }
+                              console.log(item._id, " ", status)
+                              let color = "#1F1717"
+                              if (status == "Online") color = "#219C90"
+                              else if (status == "In a ride") color = "#E9B824"
+                              return (
+                                <CTableRow className="text-center" key={index}>
+                                  <CTableDataCell className="text-center profle-pic">
+                                    <CAvatar
+                                      size="md"
+                                      alt="img"
+                                      src={item.profile_image}
+                                      style={{ width: 42, height: 42 }}
+                                    />
+                                  </CTableDataCell>
 
-                                <CTableDataCell>
-                                  <div>{item.first_name}</div>
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                  <div>{item.phone}</div>
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                  <div>{item.email}</div>
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                  <div>{item.address_1}</div>
-                                </CTableDataCell>
-                                {/* <CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item.first_name}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item.phone}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item.email}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item.address_1}</div>
+                                  </CTableDataCell>
+                                  {/* <CTableDataCell>
                             <div>{item.joiningdate}</div>
                           </CTableDataCell> */}
 
-                                <CTableDataCell>
+                                  {/* <CTableDataCell>
                                   <div>Delhi to Chd</div>
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                  <div class="status">Available</div>
-                                </CTableDataCell>
-                                <CTableDataCell className="d-flex action-icons driver-icons">
-                                  <div style={{
-                                    cursor: "pointer"
-                                  }
-
-                                  }
-                                    onClick={() => {
-                                      navigate(`/superadmindashboard/driver/editdriver/${item._id}`);
+                                </CTableDataCell> */}
+                                  <CTableDataCell>
+                                    <div 
+                                      style={{
+                                        backgroundColor: color,
+                                        padding: "8px",
+                                        borderRadius: "10px",
+                                        fontWeight: "bold",
+                                        color: 'white'
+                                      }}                                    
+                                    >{status}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell className="d-flex action-icons driver-icons">
+                                    <div style={{
+                                      cursor: "pointer"
                                     }
-                                    }
-                                  ><img src={editiconimg} /></div>
 
-                                  {/* <div
+                                    }
+                                      onClick={() => {
+                                        navigate(`/superadmindashboard/driver/editdriver/${item._id}`);
+                                      }
+                                      }
+                                    ><img src={editiconimg} /></div>
+
+                                    {/* <div
                             style={{
                               cursor:"pointer"
                             }
@@ -237,12 +257,13 @@ const ListOfDrivers = () => {
                             deleteDriverHandler(item._id)
                           }}
                             ><img src={deleteiconimg} /></div> */}
-                                  <CButton id="delete_driver_btn" onClick={() => setDeleteVisible(!deleteVisible)}><img src={deleteiconimg} /></CButton>
-                                </CTableDataCell>
-                              </CTableRow>
-                            )) : ""}
+                                    <CButton id="delete_driver_btn" onClick={() => setDeleteVisible(!deleteVisible)}><img src={deleteiconimg} /></CButton>
+                                  </CTableDataCell>
+                                </CTableRow>
+                              )
+                            }) : ""}
                         </CTableBody>
-                       
+
                       </CTable>
                       {
                         data?.length > 0 ?
@@ -278,7 +299,7 @@ const ListOfDrivers = () => {
                           </div>
                           : ""
                       }
-                    
+
                     </>)
                   }
 

@@ -71,7 +71,7 @@ const SuperPendingTrip = () => {
   const lastIndex = currentPage * recordPage;
   const firstIndex = lastIndex - recordPage;
   const data = pendinTrip.slice(firstIndex, lastIndex);
-  const nPage = Math.ceil(pendinTrip.length / recordPage);
+  const nPage = Math.ceil(pendinTrip?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
 
   const pageNumber = number.map((num, i) => {
@@ -115,7 +115,7 @@ const SuperPendingTrip = () => {
     setCurrentPage(id);
   };
   let pageIncreament = null;
-  if (data.length > maxPage) {
+  if (data?.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
 
@@ -167,11 +167,11 @@ const SuperPendingTrip = () => {
 
     const newErrors = { ...errors };
     let valid = true;
-    if (!selectDriver || setSelectDriver.length < 1) {
+    if (!selectDriver || setSelectDriver?.length < 1) {
       newErrors.driver_name = true;
       valid = false;
     }
-    if (!selectVehicle || selectVehicle.length < 1) {
+    if (!selectVehicle || selectVehicle?.length < 1) {
       newErrors.vehicle = true;
       valid = false;
     }
@@ -324,17 +324,17 @@ const SuperPendingTrip = () => {
                                 <div>{index + 1}</div>
                               </CTableDataCell>
                               <CTableDataCell>
-                                <div>{item._id}</div>
+                                <div>{item.trip_id}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>{item.vehicle_type}</div>
                               </CTableDataCell>
 
                               <CTableDataCell>
-                                <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
+                                <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address?.length<21?"":"..."}`}</div>
                               </CTableDataCell>
                               <CTableDataCell>
-                                <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address?.length<21?"":"..."}`}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>
@@ -436,7 +436,7 @@ const SuperPendingTrip = () => {
                                       setSelectVehicle(e.target.value);
                                       if (
                                         !e?.target?.value ||
-                                        e.target.value.length < 1
+                                        e.target.value?.length < 1
                                       ) {
                                         setErrors({ ...errors, vehicle: true });
                                       } else {
@@ -477,7 +477,7 @@ const SuperPendingTrip = () => {
                                       setSelectDriver(e.target.value);
                                       if (
                                         !e?.target?.value ||
-                                        e.target.value.length < 1
+                                        e.target.value?.length < 1
                                       ) {
                                         setErrors({
                                           ...errors,

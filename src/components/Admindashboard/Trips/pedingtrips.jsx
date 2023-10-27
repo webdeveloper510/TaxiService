@@ -29,6 +29,8 @@ import moment from "moment";
 import { PulseLoader } from "react-spinners";
 import { Link } from 'react-router-dom';
 import deletepopup from '../../../assets/images/deletepopup.png'
+import EmptyData from "../../EmptyData";
+
 const tableExample = [
   {
     Srnum: "1",
@@ -150,7 +152,8 @@ const PendingTrip = () => {
                       />
                     </div>
                   ) : (
-                    <CTable align="middle" className="mb-0" hover responsive>
+                    <>
+                    {data?.length == 0 ?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
                       <CTableHead>
                         <CTableRow>
                           <CTableHeaderCell className="text-center">
@@ -189,7 +192,7 @@ const PendingTrip = () => {
                               <div>{index + 1}</div>
                             </CTableDataCell>
                             <CTableDataCell>
-                              <div>{item._id}</div>
+                              <div>{item.trip_id}</div>
                             </CTableDataCell>
                             <CTableDataCell>
                               <div>{item.vehicle_type}</div>
@@ -226,7 +229,8 @@ const PendingTrip = () => {
                         :""
                        }
                       </CTableBody>
-                    </CTable>
+                    </CTable>}
+                    </>
                   )}
                   <div
                     className="pagination-outer"
