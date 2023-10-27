@@ -133,12 +133,12 @@ const AddFare = () => {
                 <h1 class="heading-for-every-page">Add Fare</h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
+                    {/* <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>Add Fare</h2> */}
+                        <h2>Add Fare</h2>
                       </div>
                     
-                    </div>
+                    </div> */}
                   </div>
                   <CRow>
 

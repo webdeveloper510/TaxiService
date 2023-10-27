@@ -38,7 +38,7 @@ import deleteiconimg from "../../../assets/images/deleteicon.png";
 import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
-
+import deletepopup from '../../../assets/images/deletepopup.png'
 const ListOfFares = () => {
   const initialValues = {
     vehicle_type: "",
@@ -48,6 +48,7 @@ const ListOfFares = () => {
     waiting_fare: "",
   };
   const [visible, setVisible] = useState(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
   const [fare, setFare] = useState([]);
   const [loader, setLoader] = useState(false);
   const [selectedFare, setSelectedFare] = useState(initialValues);
@@ -233,17 +234,17 @@ const ListOfFares = () => {
                 <h1 class="heading-for-every-page">Fare Management</h1>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
+                    {/* <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>Fare List </h2> */}
+                        <h2>Fare List </h2>
                       </div>
-                      {/* <div className="right-trip-content">
+                      <div className="right-trip-content">
                         <Link to="/superadmindashboard/add-fare">
                           <CButton className="add_fare_btn">Add Fare</CButton>
                         </Link>
                      
-            </div> */}
-                    </div>
+            </div>
+                    </div> */}
                   </div>
                   {loader ? (
                     <>
@@ -329,7 +330,7 @@ const ListOfFares = () => {
                                       <img src={editiconimg} alt="img" />
                                     </CButton>
                                   </div>
-                                  <div
+                                  {/* <div
                                     style={{
                                       cursor: "pointer",
                                     }}
@@ -338,7 +339,10 @@ const ListOfFares = () => {
                                     }
                                   >
                                     <img src={deleteiconimg} alt="img" />
-                                  </div>
+                                  </div> */}
+                                  <CButton id="btn_delete_fare" className="delete_vehilce" onClick={() => {setDeleteVisible(!visible);}}>
+                                  <img src={deleteiconimg} alt="img" />
+                                  </CButton>
                                 </CTableDataCell>
                               </CTableRow>
                             ))
@@ -618,6 +622,48 @@ const ListOfFares = () => {
                   </CModal>
 
                   {/* endfarelistpopup */}
+
+
+
+                   {/* StartDeletepopup */}
+
+
+ <CModal alignment="center" visible={deleteVisible} onClose={() => setDeleteVisible(false)}>
+                    {/* <CModalHeader>
+                      <CModalTitle>Edit Fare</CModalTitle>
+                    </CModalHeader> */}
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                                <img src={deletepopup} alt="danger"/>
+                                 <h2>Are you Sure</h2>
+                                <p>You want to delete this Vehicle ?</p>
+
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                            
+
+                            <CButton className="delete_popup"
+                            >Delete</CButton>
+                            <CButton className="cancel_popup" onClick={() => setDeleteVisible(false)}>
+                             Cancel</CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                   
+       
+       
+                  </CModal>
+
+
+
+
+                  {/* enddeletepopup */}
                 </div>
               </div>
             </div>

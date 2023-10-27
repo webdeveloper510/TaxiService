@@ -9,18 +9,26 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
+  CModal,
+  CModalBody,
+  CCardBody,
+  CCol,
+  CRow,
+  CCard,
 } from "@coreui/react";
+
 import refreshImg from "../../../assets/images/refresh.png";
 import crossImg from "../../../assets/images/cross-arrow.png";
 import downarrowImg from "../../../assets/images/down-arrow.png";
 //import background from '../assets/images/heroimg.png';
 //import accepticonimg from '../../../assets/images/accept.png'
-import rejecticonimg from "../../../assets/images/rejecticon.png";
+import deleteiconimg from "../../../assets/images/deleteicon.png";
 import editicon from "../../../assets/images/editicon.png";
 import { getTrip, getTripSubAdmin } from "../../../utils/api";
 import moment from "moment";
 import { PulseLoader } from "react-spinners";
-
+import { Link } from 'react-router-dom';
+import deletepopup from '../../../assets/images/deletepopup.png'
 const tableExample = [
   {
     Srnum: "1",
@@ -32,6 +40,7 @@ const tableExample = [
   },
 ];
 const PendingTrip = () => {
+
   const [pendinTrip, setPendingTrip] = useState([]);
   const [visible, setVisible] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -199,14 +208,17 @@ const PendingTrip = () => {
                                 )}
                               </div>
                             </CTableDataCell>
-                            <CTableDataCell className="d-flex pending-trips-icons">
+                            <CTableDataCell className="pending-trips-icons">
                               <div>
+                              <Link to="/trips/editpendingtrips">
+                      
                                 <CButton className="allocate_accept_driver">
                                   <img src={editicon} alt="img"/>
-                                </CButton>
+                                </CButton></Link>
                               </div>
                               <div className="reject_icon">
-                                <img src={rejecticonimg} alt="img"/>
+                               <CButton id="btn_delete_pending_trip" className="delete_vehilce" onClick={() => {setVisible(!visible)}}>
+                                 <img src={deleteiconimg} alt="img"/></CButton>
                               </div>
                             </CTableDataCell>
                           </CTableRow>
@@ -245,6 +257,47 @@ const PendingTrip = () => {
                 </div>
               </div>
             </div>
+
+
+
+             {/* StartDeletepopup */}
+
+
+ <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+                    {/* <CModalHeader>
+                      <CModalTitle>Edit Fare</CModalTitle>
+                    </CModalHeader> */}
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                                <img src={deletepopup} alt="danger"/>
+                                 <h2>Are you Sure</h2>
+                                <p>You want to delete this Vehicle ?</p>
+
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                            
+
+                            <CButton className="delete_popup">Delete</CButton>
+                            <CButton className="cancel_popup" onClick={() => setVisible(false)}>
+                             Cancel</CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                   
+       
+       
+                  </CModal>
+
+
+
+
+                  {/* enddeletepopup */}
           </div>
         </div>
       </div>

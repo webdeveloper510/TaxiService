@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import 'bootstrap/dist/js/bootstrap.bundle.min';
 //import 'mdb-react-ui-kit';
@@ -19,7 +19,9 @@ import clsx from "clsx";
 import { userLogin } from "../../utils/api";
 import { toast } from 'react-toastify';
 import userContext from "../../utils/context";
-
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
 function Login() {
   const {user,setUser} = useContext(userContext)
   const navigate = useNavigate();
@@ -118,6 +120,20 @@ function Login() {
     }
   }, [])
 
+
+
+//   const [password, setPassword] = useState("");
+// const [type, setType] = useState('password');
+      const [icon, setIcon] = useState(eyeOff);
+// const handleToggle = () => {
+//   if (type==='password'){
+//      setIcon(eye);
+//      setType('text')
+//   } else {
+//      setIcon(eyeOff)
+//      setType('password')
+//   }
+// }
   return (
     <div
       className="container-login"
@@ -229,18 +245,18 @@ function Login() {
                   ) : null}
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4" id="pwd_field">
                   <label htmlFor="password" className="form-label">
                     Password
                   </label>
                   <MDBInput
                     id="password"
-                    type="password"
+                    type="password"             
                     size="lg"
                     {...formik.getFieldProps("password")}
                     maxLength="50"
                     className={clsx(
-                      "form-control bg-transparent",
+                      "form-control bg-transparent input_pwd",
                       {
                         "is-invalid":
                           formik.touched.password && formik.errors.password,
@@ -256,8 +272,23 @@ function Login() {
                   {formik.errors.password && formik.touched.password ? (
                     <div className="text-danger text-start">{formik.errors.password}</div>
                   ) : null}
+
+<span class="flex justify-around items-center eye_pwd_icon">
+                  <Icon class="absolute mr-10" icon={icon} size={25}/>
+              </span>
                 </div>
 
+
+
+                {/* <input
+                  type={type}
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+             /> */}
+            
                 <div className="d-flex justify-content-between mb-4">
                   <MDBCheckbox
                     name="flexCheck"

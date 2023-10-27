@@ -158,7 +158,9 @@ const LisOfVehicles = () => {
                     {data?.length > 0 ? data.map((data, i) => {
                       return (
                         <Col md={4}>
+                          
                           <Card className="cards-for-icons">
+                         
                             <div className="vehicle_inner">
                             <div className="image-container">
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} /> 
@@ -172,11 +174,13 @@ const LisOfVehicles = () => {
 
                        
                           <CButton id="btn_delete_vehicle" className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
+                    
                        </div>
+                       
                           </div>
                           </div>
                           </div>
-                           
+                          <Link className="vehicle_linked" to="/superadmindashboard/vehicle/vehicle-details">
                             <Card.Body>
                               <Card.Title>{data.vehicle_model}</Card.Title>
                               <Card.Text>
@@ -206,8 +210,9 @@ const LisOfVehicles = () => {
                               </Card.Text>
 
                             </Card.Body>
+                            </Link>
                           </Card>
-                          
+                       
                         </Col>
                         
                       )

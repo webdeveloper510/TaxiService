@@ -41,7 +41,7 @@ const SuperSideBar = () => {
         <CSidebarNav>
           <SimpleBar>
             {/* <AppSidebarNav items={navigation} /> */}
-            <SuperNavBar items={navigation}/>
+            <SuperNavBar className="sidebar_outer" items={navigation}/>
           </SimpleBar>
         </CSidebarNav>
         {/* <CSidebarToggler

@@ -29,6 +29,8 @@ import AddNewBookings from '../components/SuperAdminDashboard/Trips/AddNewBookin
 import EditVehicle from '../components/SuperAdminDashboard/Vehicles/EditVehicle';
 import EditDriver from '../components/SuperAdminDashboard/Drivers/EditDriver';
 import SuperCancelledTrip from '../components/SuperAdminDashboard/Trips/CancelledTrips';
+import EditpendingTrip from '../components/Admindashboard/Trips/EditpendingTrips';
+import ViewSingleVehicle from '../components/SuperAdminDashboard/Vehicles/viewsinglevehicle';
 
 
 const PrivateRoute = () => {
@@ -45,6 +47,7 @@ const PrivateRoute = () => {
             <Route path="/trips/activetrips" element={<ActiveTrip />} />
             <Route path="/trips/requestnewtrip" element={<RequestNewTrip />} />
             <Route path="/trips/pendingtrips" element={<PendingTrip />} />
+            <Route path="/trips/editpendingtrips" element={<EditpendingTrip />} />
             <Route path="/trips/completetrips" element={<CompletedTrip />} />
             <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
             <Route path="/driver/listofdrivers" element={<DriverList />} />
@@ -66,6 +69,7 @@ const PrivateRoute = () => {
             <Route path="/superadmindashboard/driver/editdriver/:driverId" element={<EditDriver />} />
             <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
             <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
+            <Route path="/superadmindashboard/vehicle/vehicle-details" element={<ViewSingleVehicle />} />
             <Route path="/superadmindashboard/vehicle/editvehicle/:vehicleId" element={<EditVehicle />} />
             <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
             <Route path="/superadmindashboard/fare/listoffares" element={<ListOfFares/>} />
