@@ -93,7 +93,7 @@ const RecentTrips=()=> {
                     </CTableHeaderCell> */}
                      <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell>
+                    {/* <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell> */}
                     <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
@@ -120,9 +120,9 @@ const RecentTrips=()=> {
                       <CTableDataCell>
                         <div>{item.trip_id}</div>
                       </CTableDataCell>
-                      <CTableDataCell>
+                      {/* <CTableDataCell>
                         <div>{item.driver_name}</div>
-                      </CTableDataCell>
+                      </CTableDataCell> */}
                       <CTableDataCell>
                         <div>{item.trip_from.address}</div>
                       </CTableDataCell>
@@ -133,7 +133,7 @@ const RecentTrips=()=> {
                         <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
                       </CTableDataCell> 
                       <CTableDataCell>
-                        <div>{moment(item.pickup_date_time).format("h:mm:ss a")}</div>
+                        <div>{moment(item.pickup_date_time).format("h:mm a")}</div>
                       </CTableDataCell>   
                       {/* <CTableDataCell>
                         <div>{item.vehicle_type}</div>

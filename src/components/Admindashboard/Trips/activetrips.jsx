@@ -199,7 +199,15 @@ const ActiveTrip = () => {
                                       </div>
                                     </CTableDataCell>
                                   </CTableRow>
-                                  {data?.length > 0 ? (
+                                 
+                                </>
+                              ))
+                            : ""}
+                            
+                        </CTableBody>
+                        
+                      </CTable>}
+                      {data?.length > 0 ? (
                                     <div
                                       className="pagination-outer"
                                       style={{
@@ -237,11 +245,6 @@ const ActiveTrip = () => {
                                   ) : (
                                     ""
                                   )}
-                                </>
-                              ))
-                            : ""}
-                        </CTableBody>
-                      </CTable>}
                     </>
                   )}
                 </div>

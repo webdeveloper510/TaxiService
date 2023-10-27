@@ -131,13 +131,27 @@ const DriverList = () => {
                         <CTableHeaderCell className="text-center">Mobile No.</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Email</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Address</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Trips</CTableHeaderCell>
+                        {/* <CTableHeaderCell className="text-center">Trips</CTableHeaderCell> */}
                         <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
                         {/* <CTableHeaderCell className="text-center">Action</CTableHeaderCell> */}
                       </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                      {data?.length ?  data.map((item, index) => (
+                      {data?.length ?  data.map((item, index) => 
+                      {
+                        let status = "Offline";
+                        if (item.status) {
+                          status = "Online"
+                          if (!item.is_available) {
+                            status = "In a ride"
+                          }
+                        }
+                        console.log(item._id, " ", status)
+                        let background = "linear-gradient(90deg, #FF5370 0%, #FF869A 100%)"
+                        if (status == "Online") background = "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
+                        else if (status == "In a ride") background = "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)"
+                      return (
+
                         <CTableRow className="text-center"  key={index}>
 
                           <CTableDataCell className="text-center profle-pic">
@@ -160,18 +174,26 @@ const DriverList = () => {
                             <div>{item.joiningdate}</div>
                           </CTableDataCell> */}
 
-                          <CTableDataCell>
+                          {/* <CTableDataCell>
                             <div>Delhi to Chd</div>
-                          </CTableDataCell>
+                          </CTableDataCell> */}
                           <CTableDataCell>
-                            <div class="status">Available</div>
+                          <div 
+                                      style={{
+                                        background,
+                                        padding: "8px",
+                                        borderRadius: "10px",
+                                        fontWeight: "normal",
+                                        color: '#fff',
+                                      }}                                    
+                                    >{status}</div>
                           </CTableDataCell>
                           {/* <CTableDataCell className="d-flex action-icons driver-icons">
                             <div><img src={editiconimg} /></div>
                             <div><img src={deleteiconimg} /></div>
                           </CTableDataCell> */}
                         </CTableRow>
-                      )) :  ""}
+                      )}) :  ""}
                     </CTableBody>
                   </CTable>
                   {data?.length > 0 ? (

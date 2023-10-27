@@ -186,7 +186,7 @@ const ListOfDrivers = () => {
                               let status = "Offline";
                               if (item.status) {
                                 status = "Online"
-                                if (item.is_available) {
+                                if (!item.is_available) {
                                   status = "In a ride"
                                 }
                               }

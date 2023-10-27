@@ -28,6 +28,7 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import car1 from '../../../assets/images/car1.jpg'
 import { getVehicleById } from "../../../utils/api";
+import AppLoader from "../../AppLoader";
 const ViewSingleVehicle = () => {
 
   const {vehicleId} = useParams();
@@ -77,7 +78,7 @@ const ViewSingleVehicle = () => {
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
-                  <CRow>
+                 { loading ?<AppLoader></AppLoader> : <CRow>
 
                     <CCol xs={12}>
                       <CCard className="mb-4">
@@ -239,7 +240,7 @@ const ViewSingleVehicle = () => {
                         </CCardBody>
                       </CCard>
                     </CCol>
-                  </CRow>
+                  </CRow>}
                 </div>
 
               </div>
