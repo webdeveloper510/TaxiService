@@ -71,7 +71,7 @@ const RecentTrips=()=> {
         <div className="col-md-12">
        
         <div>
-        <div className="body flex-grow-1 px-0">    
+        <div className="body flex-grow-1 px-1">    
           <div class="active-trip-outer" id="recent-trip-outer"> 
           <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
@@ -105,12 +105,12 @@ const RecentTrips=()=> {
                 <CTableBody>
                   {pendinTrip?.slice(0,4).map((item, index) => {     
                          const status = item.trip_status;
-                         let color = "#D83F31"
-                         if (status === 'Active') color = '#219C90';
-                         else if (status === 'Accepted') color = '#3D30A2';
-                         else if (status === 'Booked') color = '#186F65';
-                         else if (status === 'Completed') color = '#F875AA';
-                         else if (status === 'Canceled') color = '#C70039';
+                         let background = "linear-gradient(90deg, #FF5370 0%, #FF869A 100%)"
+                         if (status === 'Active') background = "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%) "
+                         else if (status === 'Accepted') background = 'linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)'
+                         else if (status === 'Booked') background = 'linear-gradient(90deg, #FF5370 0%, #FF869A 100%)'
+                         else if (status === 'Completed') background= "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
+                         else if (status === 'Canceled') background= 'linear-gradient(90deg, #e91e63 0%, #e91e638f 100%)'
 
                     return(                    
                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
@@ -140,14 +140,14 @@ const RecentTrips=()=> {
                       </CTableDataCell>                    */}
                       <CTableDataCell className="text-center location-icons">
                       <span style={{
-                          backgroundColor: color,
+                          background,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           padding: "8px",
                           borderRadius : "8px",
                           fontWeight: "normal",
-                          color: "white",
+                          color: "#fff",
                          }}>{status}</span>  
                       </CTableDataCell>           
                     </CTableRow>

@@ -80,14 +80,14 @@ const RiderStatusTable=()=> {
                     }
                     console.log(item._id," ", status)
                     let color = "#1F1717"
-                    if(status == "Online") color = "#219C90"
-                    else if(status == "In a ride") color = "#E9B824"
+                    if(status == "Online") color = "#70BA8D"
+                    else if(status == "In a ride") color = "#D18015"
                     return(
                     
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">
                         {/* status={item.avatar.status}  */}
-                        <CAvatar size="md" src={item.profile_image} />
+                        <CAvatar className="rider-img" size="md" src={item.profile_image} />
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="user-name">{`${item.first_name} ${item.last_name}`}</div>
@@ -96,14 +96,15 @@ const RiderStatusTable=()=> {
                       <CTableDataCell>
                         
                      <span style={{
-                      backgroundColor: color,
+                      //backgroundColor: color,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       padding: "8px",
                       borderRadius : "8px",
                       fontWeight: "normal",
-                      color: "white",
+                      color: color,
+                      fontsize: "15px",
                      }}>{status}</span>
                       </CTableDataCell>
                     </CTableRow>

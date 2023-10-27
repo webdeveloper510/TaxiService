@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
+import { Link } from 'react-router-dom';
 import {
   Container,
   Row,
@@ -8,10 +9,13 @@ import {
   Card,
   Button,
 } from 'react-bootstrap';
+import {
+  CButton,
+} from '@coreui/react'
 // import vehicle1 from '../../../assets/images/vehicle1.png';
 import { getVehicle } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
-
+import editvehicleicon from "../../../assets/images/editvehi.png";
 const ViewAllVehicle = () => {
 
   const [vehicle, setVehicle] = useState([]);
@@ -114,7 +118,26 @@ const ViewAllVehicle = () => {
                       return (
                         <Col md={4}>
                           <Card>
+                          <div className="vehicle_inner">
+                            <div className="image-container">
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} />
+                          <div class="icons-outer" >
+                          <div class="overlay">
+                          <Link to={`/superadmindashboard/vehicle/editvehicle/${data._id}`}>
+                          <CButton id="btn_edit_vehicle" className="edit_vehicle"
+                       
+                          ><img src={editvehicleicon} alt="edit-icon"/></CButton>
+                        </Link>
+
+                       
+                          {/* <CButton id="btn_delete_vehicle" className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton> */}
+                    
+                       </div>
+                       
+                          </div>
+                          </div>
+                          </div>
+                           
                             <Card.Body>
                               <Card.Title>{data.vehicle_model}</Card.Title>
                               <Card.Text>
