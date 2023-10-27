@@ -201,7 +201,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol> */}
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare Per Miles</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare (in €) Per Miles</CFormLabel>
                               <CFormInput onKeyDown={(e) => { handleFare(e,5) }} aria-label="vehicle fare"
                                {...formik.getFieldProps("vehicle_fare_per_km")}
                                 maxLength="50"
@@ -223,7 +223,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehicleminfare">Minimum Fare</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicleminfare">Minimum Fare  (in €)</CFormLabel>
                               <CFormInput onKeyDown={(e) => { handleFare(e,5) }} id="inputvehicleminfare"    {...formik.getFieldProps("minimum_fare")}
                                 maxLength="50"
                                 className={clsx(
@@ -244,7 +244,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputmindistance">Minimum Distance</CFormLabel>
+                              <CFormLabel htmlFor="inputmindistance">Minimum Distance (in Miles)</CFormLabel>
                               <CFormInput onKeyDown={(e) => { handleFare(e,5) }} id="inputmindistance"   {...formik.getFieldProps("minimum_distance")}
                                 maxLength="50"
                                 className={clsx(
@@ -265,7 +265,8 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputwaiting_fare">Waiting Fare</CFormLabel>
+                              <CFormLabel htmlFor="inputwaiting_fare">Waiting Fare  (in €)
+                              </CFormLabel>
                               <CFormInput onKeyDown={(e) => { handleFare(e,5) }} id="inputwaiting_fare" {...formik.getFieldProps("waiting_fare")}
                                 maxLength="50"
                                 className={clsx(

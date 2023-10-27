@@ -131,7 +131,7 @@ const AddSuperVehicle = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/vehicle/viewallvehicle")
+          back()
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',

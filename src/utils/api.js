@@ -446,3 +446,17 @@ export const editCompanyDetail = async (id, data) => {
       console.log("EDIT_DRIVER", error);
     });
 };
+
+export const getTripCompleted = async() => {
+  return await Axios.get(`subadmin/get_counts_dashboard` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};

@@ -180,7 +180,7 @@ const LisOfVehicles = () => {
                           </div>
                           </div>
                           </div>
-                          <Link className="vehicle_linked" to="/superadmindashboard/vehicle/vehicle-details">
+                          <Link className="vehicle_linked" to={`/superadmindashboard/vehicle/vehicle-details/${data._id}`}>
                             <Card.Body>
                               <Card.Title>{data.vehicle_model}</Card.Title>
                               <Card.Text>

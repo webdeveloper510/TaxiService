@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -8,9 +8,22 @@ import {
   
   } from 'mdb-react-ui-kit';
 import newuserimg from "../../assets/images/newuser.png"
+import { getTripCompleted } from "../../utils/api";
 
 const NewUsers=()=> {
    
+  const [ data , setData] = useState([])
+  useEffect(()=>{
+    getTripCompleted().then((res)=>{
+      console.log("response get book trip", res)
+      if(res.code == 200){
+        setData(res.result)
+      }
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
+
       return (
        <>
        <br/>
@@ -22,8 +35,8 @@ const NewUsers=()=> {
           <MDBCol sm='8'>
             <MDBCardText>
               <div>
-                <h5>New Users</h5>
-            <span>450</span>
+                <h5>Completed Trips</h5>
+            <span>{data.completeTrips}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

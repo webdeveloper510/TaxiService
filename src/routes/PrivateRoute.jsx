@@ -31,6 +31,7 @@ import EditDriver from '../components/SuperAdminDashboard/Drivers/EditDriver';
 import SuperCancelledTrip from '../components/SuperAdminDashboard/Trips/CancelledTrips';
 import EditpendingTrip from '../components/Admindashboard/Trips/EditpendingTrips';
 import ViewSingleVehicle from '../components/SuperAdminDashboard/Vehicles/viewsinglevehicle';
+import SecureSuperRoleRoute from '../utils/SecureSuperRoleRoute';
 
 
 const PrivateRoute = () => {
@@ -69,10 +70,10 @@ const PrivateRoute = () => {
             <Route path="/superadmindashboard/driver/editdriver/:driverId" element={<EditDriver />} />
             <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
             <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
-            <Route path="/superadmindashboard/vehicle/vehicle-details" element={<ViewSingleVehicle />} />
+            <Route path="/superadmindashboard/vehicle/vehicle-details/:vehicleId" element={<ViewSingleVehicle />} />
             <Route path="/superadmindashboard/vehicle/editvehicle/:vehicleId" element={<EditVehicle />} />
             <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
-            <Route path="/superadmindashboard/fare/listoffares" element={<ListOfFares/>} />
+            <Route path="/superadmindashboard/fare/listoffares" element={<SecureSuperRoleRoute><ListOfFares/></SecureSuperRoleRoute>} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />
         </Routes>
     );

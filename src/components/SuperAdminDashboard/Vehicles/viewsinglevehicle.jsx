@@ -21,24 +21,43 @@ import {
 } from '@coreui/react'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import backtovehicle from '../../../assets/images/left-arrow.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import car1 from '../../../assets/images/car1.jpg'
+import { getVehicleById } from "../../../utils/api";
 const ViewSingleVehicle = () => {
 
-
+  const {vehicleId} = useParams();
   const navigate = useNavigate();
+  const [vehicle, setVehicle] = useState(null)
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  function onLoadComponent() {
+    setLoading(true);
+    if (vehicleId) {
+      console.log("vehdicle id from param", vehicleId)
+      getVehicleById(vehicleId).then(res => {
+        console.log(res?.result, 'vehicleData')
+        if (res?.code === 200) {
+          const { result } = res;
+          setVehicle(res?.result)
+          setLoading(false)
+        } else {
+          setError(true);
+          setLoading(false)
+        }
 
-  const [pickupDate, setpickupDate] = useState(new Date());
+      }).catch(err => { setError(true); setLoading(false) });
+     
+    }
+  }
+  useEffect(() => {
 
-
-  const handlepickupDateChange = (date) => {
-    setpickupDate(date);
-  };
-
+    onLoadComponent()
+  }, [])
 
  
   return (
@@ -77,7 +96,9 @@ const ViewSingleVehicle = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
                               <CFormInput aria-label="vehicle no."
+                              readOnly
                                 maxLength="50"
+                                value={vehicle?.vehicle_number}
                                 className=
                                   "form-control bg-transparent"
                                  
@@ -86,22 +107,23 @@ const ViewSingleVehicle = () => {
                             </CCol>
 
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
-                              <CFormSelect
+                              <CFormLabel htmlFor="inputvehiclenum">Vehicle Type</CFormLabel>
+                              <CFormInput aria-label="vehicleType"
+                              readOnly
                                 maxLength="50"
+                                value={vehicle?.vehicle_type}
                                 className=
                                   "form-control bg-transparent"
-                                name="vehicle_type"
-                                autoComplete="off" >
-
-                                <option default>Select Vehicle</option>
-                               
-                              </CFormSelect>
+                                 
+                                name="vehicleType"
+                                autoComplete="off" />  
                             </CCol>
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
                               <CFormInput
+                              readOnly
+                              value={vehicle?.vehicle_model}
                                 maxLength="50"
                                 className=
                                   "form-control bg-transparent" 
@@ -112,6 +134,8 @@ const ViewSingleVehicle = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
                               <CFormInput
+                              readOnly
+                              value={vehicle?.seating_capacity}
                                 maxLength="50"
                                 className=
                                   "form-control bg-transparent"
@@ -122,6 +146,8 @@ const ViewSingleVehicle = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
                               <CFormInput id="inputpassengertimelimit"
+                              readOnly
+                              value={vehicle?.cancelation_time_limit}
                                 maxLength="50"
                                 className=
                                   "form-control bg-transparent"
@@ -131,51 +157,57 @@ const ViewSingleVehicle = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
                               <CFormInput id="inputpassengercharges"
+                              readOnly
                                 maxLength="50"
+                                value={vehicle?.cancelation_charges}
                                 className=
                                   "form-control bg-transparent"    
                                 name="passengerCharges"
                                 autoComplete="off" /> 
                             </CCol>
-
-                            <CCol md={6} className="date_pic">
-                              <CFormLabel htmlFor="inputinsurancedate">Insurance Renewal Date</CFormLabel><br />
-                              {/* <DatePicker
-                                selected={vehicleinsuranceDate}
-                                onChange={handlevehicleInsuranceDateChange}
-                                dateFormat="MM/dd/yyyy"
+                            <CCol xs={6} className="date_pic">
+                              <CFormLabel htmlFor="inputpassengercharges">Insurance Renewal Date (in € ) </CFormLabel>
+                              <CFormInput id="inputpassengercharges"
+                              readOnly
                                 maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent" 
-                                name="vehicleinsuranceDate"
-                                autoComplete="off" /> */}
+                                value={moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY, h:mm a')}
+                                className="form-control"
+                                name="inputinsurancedate"
+                                autoComplete="off" /> 
+                            </CCol>
+                            {/* <CCol md={6} className="date_pic">
+                              <CFormLabel htmlFor="inputinsurancedate">Insurance Renewal Date</CFormLabel><br />
+                        
                                 <DatePicker
-                                    selected={pickupDate}
-                                    onChange={handlepickupDateChange} // Add this line to handle date changes
+                                    selected={new Date(vehicle?.insurance_renewal_date)}
+                                 
+                            
                                     dateFormat="MM/dd/yyyy"
                                     className="form-control"
-                                    minDate={moment().toDate()}
+                
                                     />
-                            </CCol>
+                            </CCol> */}
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputgender" ></CFormLabel>
                               <fieldset className="row mb-12">
                                 <CCol sm={12} className="mt-3">
                                   <CFormCheck inline
+                                  readOnly
                                     type="radio"
                                     name="gridRadios"
                                     id="gridRadios1"
-                                    value="true"
+                                    checked= {vehicle?.AC}
                                     label="AC"
                                   // Add the onChange event handler
                                   // Set the checked state if Male is selected
                                   />
                                   <CFormCheck inline
+                                  readOnly
                                     type="radio"
                                     name="gridRadios"
                                     id="gridRadios2"
-                                    value="false"
+                                    checked= {!vehicle?.AC}
                                     label="NON-AC"
                                   // Add the onChange event handler
                                    // Set the checked state if Female is selected
