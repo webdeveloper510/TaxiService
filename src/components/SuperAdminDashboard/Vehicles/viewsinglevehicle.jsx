@@ -68,12 +68,12 @@ const ViewSingleVehicle = () => {
                         <CCardBody>
                         
                           <form noValidate className="row g-3">
-                          <CRow>
+                          
                           <CCol md={4}>
                             
                         <img src={car1} alt="danger"/>
                            </CCol>
-                           </CROW>
+                           
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
                               <CFormInput aria-label="vehicle no."
