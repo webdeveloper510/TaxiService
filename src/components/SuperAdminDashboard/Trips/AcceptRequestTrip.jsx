@@ -172,7 +172,7 @@ const RequestAcceptTrip = () => {
                                     key={item._id}
                                   >
                                     <CTableDataCell>
-                                      <div>{index + 1}</div>
+                                      <div>{firstIndex + index + 1}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
                                       <div>{item.trip_id}</div>

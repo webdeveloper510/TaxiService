@@ -177,7 +177,7 @@ const BookingRequestTable = () => {
                                   key={index}
                                 >
                                   <CTableDataCell>
-                                    <div>{index + 1}</div>
+                                    <div>{firstIndex + index + 1}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>{item.trip_id}</div>

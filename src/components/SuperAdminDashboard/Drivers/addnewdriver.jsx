@@ -66,15 +66,21 @@ const AddNewDriver = () => {
 
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
-    formik.setFieldValue('file', selectedFile)
-    setImage(URL.createObjectURL(selectedFile))
+    if(selectedFile){
+      formik.setFieldValue('file', selectedFile)
+      setImage(URL.createObjectURL(selectedFile))
+    }
   }
   const uploadDoc = (e) => {
     const selectedFile = e.target.files[0];
-    formik.setFieldValue('doc', selectedFile)
-    setDoc(URL.createObjectURL(selectedFile))
-  }
+    if(selectedFile){
 
+      setSelectedDoc(selectedFile)
+      formik.setFieldValue('doc', selectedFile)
+      setDoc(URL.createObjectURL(selectedFile))
+    }
+  }
+  const [selectedDoc, setSelectedDoc] = useState(null);
   const [selectedGender, setSelectedGender] = useState('');
 
   const handleGenderChange = (event) => {
@@ -113,7 +119,7 @@ const AddNewDriver = () => {
       formData.append('phone', values.MobileNo);
       formData.append('gender', values.Gender);
       formData.append('driver_image', values.file);
-      formData.append('document', values.doc);
+      formData.append('driver_documents', values.doc);
       formData.append('password', '12587574545');
 
       addDriver(formData).then((res) => {
@@ -137,7 +143,18 @@ const AddNewDriver = () => {
     },
   });
 
-
+  const downloadFile = () => {
+    if (selectedDoc) {
+      const url = URL.createObjectURL(selectedDoc);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = selectedDoc.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  };
   return (
     <>
       <div className="container-fluidd">
@@ -459,14 +476,16 @@ const AddNewDriver = () => {
                                 </div>
                               </label>
                             </CCol>
-                            {doc ? (
-  <object data={doc} type="application/pdf" width="100%" height={300}>
-    Your browser does not support PDF previews.
-  </object>
-) : (
-  ""
-)}
+                            {selectedDoc && (
+        <div>
+          <p>Selected file: {selectedDoc.name}</p>
+          <button
+         className="submit-btn"
+          onClick={downloadFile}>Download</button>
+        </div>
+      )}
                             <CCol md={6} className="upload-file-input">
+                            
                               <CFormLabel htmlFor="inputmobile">Upload Driver Doc</CFormLabel>
 
                               {/* {doc?.length > 0 ?
@@ -501,6 +520,7 @@ const AddNewDriver = () => {
                                   <span>Drop Document Here ...</span>
                                 </div>
                               </label>
+                              
                             </CCol>
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>

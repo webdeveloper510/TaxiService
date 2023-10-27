@@ -115,7 +115,7 @@ const RecentTrips=()=> {
                     return(                    
                        <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                       <CTableDataCell >
-                        <div>{index+1}</div>
+                        <div>{ index+1}</div>
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item.trip_id}</div>
