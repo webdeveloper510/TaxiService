@@ -741,3 +741,12 @@ div#recent-trip-outer {
     width: 100%;
     max-width: 60%;
 }
+.card-body a {
+    text-decoration: none;
+    text-transform: capitalize;
+}
+img.vehicle_img {
+    width: -webkit-fill-available;
+    margin-top: 20px;
+    border-radius: 8px;
+}

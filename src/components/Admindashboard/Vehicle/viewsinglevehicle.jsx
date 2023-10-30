@@ -24,12 +24,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import backtovehicle from '../../../assets/images/left-arrow.png'
-import SuperSideBar from "../SiderNavBar/Sidebar";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import car1 from '../../../assets/images/car1.jpg'
 import { getVehicleById } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
-const ViewSingleVehicle = () => {
+import SideBar2 from "../SideBar2";
+const ViewSingleSubVehicle = () => {
 
   const {vehicleId} = useParams();
   const navigate = useNavigate();
@@ -67,14 +67,14 @@ const ViewSingleVehicle = () => {
 
         <div className="col-md-12">
           <div>
-            <SuperSideBar/>
+           <SideBar2/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
               <h1 class="heading-for-every-page">
-                    <Link to="/superadmindashboard/vehicle/listofvehicles">
-                    <img src={backtovehicle} alt="edit" /> View Vehicle Details</Link></h1>
+                    <Link to="/vehicle/viewallvehicle">
+                    <img src={backtovehicle} alt="edit" /> View sub Vehicle  Details</Link></h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
@@ -91,7 +91,7 @@ const ViewSingleVehicle = () => {
                           <CRow>
                           <CCol md={4}>
                             
-                          <img className="vehicle_img" src={vehicle?.vehicle_photo || car1} alt="Car photo"/>
+                        <img className="vehicle_img" src={vehicle?.vehicle_photo || car1} alt="danger"/>
                            </CCol>
                            </CRow>
                             <CCol md={6}>
@@ -262,4 +262,4 @@ const ViewSingleVehicle = () => {
   );
 };
 
-export default ViewSingleVehicle; 
+export default ViewSingleSubVehicle; 

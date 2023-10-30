@@ -8,6 +8,7 @@ import RecentTrips from "./Trips/recenttrips";
 //import background from '../assets/images/heroimg.png';
 import RiderStatusTable from '../Stats/RiderStatusTable'
 import userContext from "../../utils/context";
+import { capitalLine } from "../../utils/helpingFunction";
 
 const Dashboard=()=> {
     const {user} = useContext(userContext);
@@ -23,7 +24,7 @@ const Dashboard=()=> {
         <AppHeader />
     
         <div className="body flex-grow-1 px-3">
-          <h1 className="heading-for-every-page">{`Welcome ${user && user?.company_detail?.company_name}`}</h1>
+          <h1 className="heading-for-every-page">{`Welcome ${user && capitalLine(user?.company_detail?.company_name)}`}</h1>
           <div class="map-outer"> 
           <h2>Taxi Live Location</h2>
           <Map /></div>

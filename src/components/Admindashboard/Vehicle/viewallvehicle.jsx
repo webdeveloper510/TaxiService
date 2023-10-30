@@ -121,7 +121,7 @@ const ViewAllVehicle = () => {
                           <div className="vehicle_inner">
                             <div className="image-container">
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} />
-                          <div class="icons-outer" >
+                          {/* <div class="icons-outer" >
                           <div class="overlay">
                           <Link to={`/superadmindashboard/vehicle/editvehicle/${data._id}`}>
                           <CButton id="btn_edit_vehicle" className="edit_vehicle"
@@ -130,22 +130,23 @@ const ViewAllVehicle = () => {
                         </Link>
 
                        
-                          {/* <CButton id="btn_delete_vehicle" className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton> */}
+                          <CButton id="btn_delete_vehicle" className="delete_vehilce" onClick={() => {setVisible(!visible); setSelectedId(data._id)}}><img src={deletevehicleicon} alt="edit-icon"/></CButton>
                     
                        </div>
                        
+                          </div> */}
                           </div>
                           </div>
-                          </div>
-                           
+                       
                             <Card.Body>
-                              <Card.Title>{data.vehicle_model}</Card.Title>
+                            <Link to={`/vehicle/viewSiglevehicle/${data._id}`}>
+                              <Card.Title>{data.vehicle_model}</Card.Title>    </Link>
                               <Card.Text>
                                 <div className="vehiclemodalinfo d-flex">
                                   <div className="vehicle-title">
                                     {/* <p>Make</p> */}
                                     <p>Type</p>
-                                    <p>Vehicle Number</p>
+                                    <p>Vehicle Numberrrrr</p>
                                     {/* <p>Driver Name</p> */}
                                     <p>Seating Capacity</p>
                                   </div>

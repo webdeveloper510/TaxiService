@@ -32,6 +32,7 @@ import SuperCancelledTrip from '../components/SuperAdminDashboard/Trips/Cancelle
 import EditpendingTrip from '../components/Admindashboard/Trips/EditpendingTrips';
 import ViewSingleVehicle from '../components/SuperAdminDashboard/Vehicles/viewsinglevehicle';
 import SecureSuperRoleRoute from '../utils/SecureSuperRoleRoute';
+import ViewSingleSubVehicle from '../components/Admindashboard/Vehicle/viewsinglevehicle';
 
 
 const PrivateRoute = () => {
@@ -54,6 +55,7 @@ const PrivateRoute = () => {
             <Route path="/driver/listofdrivers" element={<DriverList />} />
             <Route path="/faremanagement" element={<FareManagement />} />
             <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
+            <Route path="/vehicle/viewSiglevehicle/:vehicleId" element={<ViewSingleSubVehicle />} />
             <Route path="/superadmindashboard/dashboard" element={<SuperAdminDashboard />} />
             <Route path="/superadmindashboard/companydetails" element={<CompanyDetails />} />
             <Route path="/superadmindashboard/add-company" element={<AddCompany />} />
