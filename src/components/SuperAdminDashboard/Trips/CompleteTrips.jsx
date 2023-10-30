@@ -19,6 +19,7 @@ import { getTrip } from "../../../utils/api";
 //import PulseLoader from "react-spinners/PulseLoader";
 import { PulseLoader } from "react-spinners";
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import EmptyData from "../../EmptyData";
 
 const SuperCompleteTrip = () => {
   const [completeTrip, setCompleteTrip] = useState([]);
@@ -133,7 +134,7 @@ const SuperCompleteTrip = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                      {data?.length > 0 ?<CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -195,7 +196,7 @@ const SuperCompleteTrip = () => {
                                 <CTableDataCell>
                                   <div>
                                     {moment(item.pickup_date_time).format(
-                                      "MMMM Do YYYY, h:mm a"
+                                      "MMM Do YYYY, h:mm a"
                                     )}
                                   </div>
                                 </CTableDataCell>
@@ -203,7 +204,7 @@ const SuperCompleteTrip = () => {
                                 <CTableDataCell>
                                   <div>
                                     {moment(item.pickup_date_time).format(
-                                      "MMMM Do YYYY, h:mm:ss a"
+                                      "MMM Do YYYY, h:mm:ss a"
                                     )}
                                   </div>
                                 </CTableDataCell>
@@ -233,7 +234,7 @@ const SuperCompleteTrip = () => {
                             ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>: <EmptyData/>}
                       {
                         data?.length > 0 ?
                           <div

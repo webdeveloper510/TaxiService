@@ -725,7 +725,11 @@ const SuperRequestTrip = () => {
                       >
                         Submit
                       </CButton>
-                      <CButton type="button" className="cancel-btn">
+                      <CButton type="button" 
+                      onClick={()=>{
+                        navigate("/superadmindashboard/trips/pendingtrips");
+                      }}
+                      className="cancel-btn">
                         Cancel
                       </CButton>
                     </div>

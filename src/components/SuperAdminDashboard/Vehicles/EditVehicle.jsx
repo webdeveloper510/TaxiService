@@ -220,7 +220,7 @@ const EditVehicle = () => {
                     <CCol xs={12}>
                       <CCard className="mb-4">
                         <CCardHeader>
-                          <strong>Vehicle Infromation</strong>
+                          <strong>Vehicle Information</strong>
                         </CCardHeader>
                         <CCardBody>
 

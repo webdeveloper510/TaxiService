@@ -24,12 +24,13 @@ import downarrowImg from "../../../assets/images/down-arrow.png";
 //import accepticonimg from '../../../assets/images/accept.png'
 import deleteiconimg from "../../../assets/images/deleteicon.png";
 import editicon from "../../../assets/images/editicon.png";
-import { getTrip, getTripSubAdmin } from "../../../utils/api";
+import { deleteTrips, getTrip, getTripSubAdmin } from "../../../utils/api";
 import moment from "moment";
 import { PulseLoader } from "react-spinners";
-import { Link } from 'react-router-dom';
-import deletepopup from '../../../assets/images/deletepopup.png'
+import { Link } from "react-router-dom";
+import deletepopup from "../../../assets/images/deletepopup.png";
 import EmptyData from "../../EmptyData";
+import { toast } from "react-toastify";
 
 const tableExample = [
   {
@@ -42,9 +43,9 @@ const tableExample = [
   },
 ];
 const PendingTrip = () => {
-
   const [pendinTrip, setPendingTrip] = useState([]);
   const [visible, setVisible] = useState(false);
+
   const [loader, setLoader] = useState(false);
 
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -105,6 +106,10 @@ const PendingTrip = () => {
   }
 
   useEffect(() => {
+    getpendingtrip();
+  }, []);
+
+  const getpendingtrip = () => {
     setLoader(true);
     getTripSubAdmin("Pending").then((res) => {
       console.log(res.result, "pending trip vehicle");
@@ -113,7 +118,39 @@ const PendingTrip = () => {
       }
       setLoader(false);
     });
-  }, []);
+  };
+
+  const handleDelet = (id) => {
+    setVisible(id);
+  };
+
+  const handleDeletItem = (id) => {
+    deleteTrips(id)
+      .then((res) => {
+        console.log("delete success", res);
+        if (res.code == 200) {
+          toast.success(res.message, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+          setVisible(false);
+          const newTrips = pendinTrip?.filter((item) => {
+            return item._id != id;
+          });
+          setPendingTrip(newTrips);
+          // getpendingtrip()
+        } else {
+          toast.error(res.message, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <div className="container-fluidd">
@@ -153,83 +190,112 @@ const PendingTrip = () => {
                     </div>
                   ) : (
                     <>
-                    {data?.length == 0 ?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
-                      <CTableHead>
-                        <CTableRow>
-                          <CTableHeaderCell className="text-center">
-                            Sr.No
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Trip ID
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Vehicle Type
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Trip From
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Trip To
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Time
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Action
-                          </CTableHeaderCell>
-                        </CTableRow>
-                      </CTableHead>
+                      {data?.length == 0 ? (
+                        <EmptyData />
+                      ) : (
+                        <CTable
+                          align="middle"
+                          className="mb-0"
+                          hover
+                          responsive
+                        >
+                          <CTableHead>
+                            <CTableRow>
+                              <CTableHeaderCell className="text-center">
+                                Sr.No
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Trip ID
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Vehicle Type
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Trip From
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Trip To
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Time
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Action
+                              </CTableHeaderCell>
+                            </CTableRow>
+                          </CTableHead>
 
-                      <CTableBody>
-                        {data?.length > 0 ?
-                         data?.map((item, index) => (
-                          <CTableRow
-                            className="text-center"
-                            v-for="item in tableItems"
-                            key={index}
-                          >
-                            <CTableDataCell>
-                              <div>{firstIndex + index + 1}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.trip_id}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.vehicle_type}</div>
-                            </CTableDataCell>
+                          <CTableBody>
+                            {data?.length > 0
+                              ? data?.map((item, index) => (
+                                <CTableRow
+                                  className="text-center"
+                                  v-for="item in tableItems"
+                                  key={index}
+                                >
+                                  <CTableDataCell>
+                                    <div>{index + 1}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item.trip_id}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item.vehicle_type}</div>
+                                  </CTableDataCell>
 
-                            <CTableDataCell>
-                              <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>
-                                {moment(item.pickup_date_time).format(
-                                  "MMMM Do YYYY, h:mm a"
-                                )}
-                              </div>
-                            </CTableDataCell>
-                            <CTableDataCell className="pending-trips-icons">
-                              <div>
-                              <Link to="/trips/editpendingtrips">
-                      
-                                <CButton className="allocate_accept_driver">
-                                  <img src={editicon} alt="img"/>
-                                </CButton></Link>
-                              </div>
-                              <div className="reject_icon">
-                               <CButton id="btn_delete_pending_trip" className="delete_vehilce" onClick={() => {setVisible(!visible)}}>
-                                 <img src={deleteiconimg} alt="img"/></CButton>
-                              </div>
-                            </CTableDataCell>
-                          </CTableRow>
-                        ))
-                        :""
-                       }
-                      </CTableBody>
-                    </CTable>}
+                                  <CTableDataCell>
+                                    <div>
+                                      {item.trip_from.address.slice(0, 20) +
+                                        `${item.trip_from.address.length < 21
+                                          ? ""
+                                          : "..."
+                                        }`}
+                                    </div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>
+                                      {item.trip_to.address.slice(0, 20) +
+                                        `${item.trip_to.address.length < 21
+                                          ? ""
+                                          : "..."
+                                        }`}
+                                    </div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>
+                                      {moment(item.pickup_date_time).format(
+                                        "MMM Do YYYY, h:mm a"
+                                      )}
+                                    </div>
+                                  </CTableDataCell>
+                                  <CTableDataCell className="pending-trips-icons">
+                                    <div>
+                                      <Link
+                                        to={`/trips/editpendingtrips/${item._id}`}
+                                      >
+                                        <CButton className="allocate_accept_driver">
+                                          <img src={editicon} alt="img" />
+                                        </CButton>
+                                      </Link>
+                                    </div>
+                                    <div className="reject_icon">
+                                      <CButton
+                                        id="btn_delete_pending_trip"
+                                        className="delete_vehilce"
+                                        onClick={() => {
+                                          handleDelet(item._id);
+                                        }}
+                                      >
+                                        <img src={deleteiconimg} alt="img" />
+                                      </CButton>
+                                    </div>
+                                  </CTableDataCell>
+                                </CTableRow>
+                              ))
+                              : ""}
+                          </CTableBody>
+                        </CTable>
+                      )}
                     </>
                   )}
                   <div
@@ -262,46 +328,46 @@ const PendingTrip = () => {
               </div>
             </div>
 
+            {/* StartDeletepopup */}
 
-
-             {/* StartDeletepopup */}
-
-
- <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
-                    {/* <CModalHeader>
+            <CModal
+              alignment="center"
+              visible={visible}
+              onClose={() => setVisible(false)}
+            >
+              {/* <CModalHeader>
                       <CModalTitle>Edit Fare</CModalTitle>
                     </CModalHeader> */}
-                    <CModalBody>
-                      <CRow>
+              <CModalBody>
+                <CRow>
+                  <CCol xs={12}>
+                    <CCard className="mb-4 delete_vehicle_popup">
+                      <CCardBody>
+                        <img src={deletepopup} alt="danger" />
+                        <h2>Are you Sure</h2>
+                        <p>You want to delete this Trip ?</p>
+                      </CCardBody>
+                      <div className="delete_vehicle_popup_outer">
+                        <CButton
+                          className="delete_popup"
+                          onClick={() => handleDeletItem(visible)}
+                        >
+                          Delete
+                        </CButton>
+                        <CButton
+                          className="cancel_popup"
+                          onClick={() => setVisible(false)}
+                        >
+                          Cancel
+                        </CButton>
+                      </div>
+                    </CCard>
+                  </CCol>
+                </CRow>
+              </CModalBody>
+            </CModal>
 
-                        <CCol xs={12}>
-                          <CCard className="mb-4 delete_vehicle_popup">
-                            <CCardBody>
-                                <img src={deletepopup} alt="danger"/>
-                                 <h2>Are you Sure</h2>
-                                <p>You want to delete this Vehicle ?</p>
-
-                            </CCardBody>
-                            <div className="delete_vehicle_popup_outer">
-                            
-
-                            <CButton className="delete_popup">Delete</CButton>
-                            <CButton className="cancel_popup" onClick={() => setVisible(false)}>
-                             Cancel</CButton>
-                            </div>
-                          </CCard>
-                        </CCol>
-                      </CRow>
-                    </CModalBody>
-                   
-       
-       
-                  </CModal>
-
-
-
-
-                  {/* enddeletepopup */}
+            {/* enddeletepopup */}
           </div>
         </div>
       </div>

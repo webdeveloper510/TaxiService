@@ -193,7 +193,7 @@ const SuperActiveTrip = () => {
                                     <CTableDataCell>
                                       <div>
                                         {moment(item.pickup_date_time).format(
-                                          "MMMM Do YYYY, h:mm a"
+                                          "MMM Do YYYY, h:mm a"
                                         )}
                                       </div>
                                     </CTableDataCell>

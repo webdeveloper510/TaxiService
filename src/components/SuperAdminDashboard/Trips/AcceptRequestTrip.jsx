@@ -164,7 +164,7 @@ const RequestAcceptTrip = () => {
                         </CTableHead>
                         <CTableBody>
                           {data?.length > 0
-                            ? activeTrip.map((item, index) => (
+                            ? data.map((item, index) => (
                                 <>
                                   <CTableRow
                                     className="text-center"
@@ -190,7 +190,7 @@ const RequestAcceptTrip = () => {
                                     <CTableDataCell>
                                       <div>
                                         {moment(item.pickup_date_time).format(
-                                          "MMMM Do YYYY, h:mm a"
+                                          "MMM Do YYYY, h:mm a"
                                         )}
                                       </div>
                                     </CTableDataCell>

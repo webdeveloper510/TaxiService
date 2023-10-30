@@ -242,11 +242,26 @@ const CompanyDetails = () => {
       .then((res) => {
         console.log("status changed", res);
         if (res.data.code === 200) {
-          getCompanyDetail();
+          const newCompanyData = company.map((i)=>{
+            if(i._id == item._id) {
+              i.status = !item.status;
+              return i;
+            }
+            return i
+          })
+          setCompany(newCompanyData)
         }
+        toast.success(`${res.data.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
       })
       .catch((error) => {
         console.log(error);
+        toast.warning(`${error.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
       });
   }
   return (
@@ -261,14 +276,14 @@ const CompanyDetails = () => {
                 <h1 class="heading-for-every-page">Companies Details</h1>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
+                    {/* <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">
-                        {/* <h2>Listing all Companies</h2> */}
+                        <h2>Listing all Companies</h2>
                       </div>
 
-                      {/* <img src={refreshImg}/>
- <img src={downarrowImg}/>
- <img src={crossImg}/> */}
+                      <img src={refreshImg}/>
+                      <img src={downarrowImg}/>
+                      <img src={crossImg}/>
                       <div className="right-trip-content">
                         <Link to="/superadmindashboard/add-company">
                           <CButton className="add_company_btn">
@@ -276,7 +291,7 @@ const CompanyDetails = () => {
                           </CButton>
                         </Link>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   {loading ? (
                     <AppLoader />
@@ -431,7 +446,7 @@ const CompanyDetails = () => {
                             <CCardBody>
                               <img src={deletepopup} alt="danger" />
                               <h2>Are you Sure</h2>
-                              <p>You want to delete this Vehicle ?</p>
+                              <p>You want to delete this Company ?</p>
                             </CCardBody>
                             <div className="delete_vehicle_popup_outer">
                               <CButton
@@ -461,7 +476,7 @@ const CompanyDetails = () => {
                   {/* enddeletecompanypopup */}
 
                   {/* EditCompanyPopup */}
-                  <CModal
+                  <CModal className="edit_company_popup"
                     alignment="center"
                     visible={editVisible}
                     onClose={() => setEditVisible(false)}

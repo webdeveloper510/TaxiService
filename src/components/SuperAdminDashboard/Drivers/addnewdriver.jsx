@@ -47,7 +47,34 @@ const AddNewDriver = () => {
     file: "",
     doc
   };
-
+  const handleMobile = (event, max) => {
+    const pattern = /^[0-9]+$/;
+    if (
+      event.key === "Backspace" ||
+      event.key === "Enter" ||
+      event.key === "Tab" ||
+      event.key === "Shift" ||
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ) {
+      formik.setFieldValue(event.target.name, event.target.value);
+      formik.setFieldTouched(event.target.name, true);
+    } else {
+      let value = event.target.value.toString();
+      if (value.length > max) {
+        event.stopPropagation();
+        event.preventDefault();
+      } else {
+        if (!pattern.test(event.key)) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          formik.setFieldValue(event.target.name, event.target.value);
+          formik.setFieldTouched(event.target.name, true);
+        }
+      }
+    }
+  };
 
   const validationSchema = Yup.object().shape({
     FirstName: Yup.string().required("First Name No is required"),
@@ -57,8 +84,8 @@ const AddNewDriver = () => {
     Country: Yup.string().required("Country is required"),
     City: Yup.string().required("City  is required"),
     Zip: Yup.string().required("Zip is required"),
-    Email: Yup.string().required("Email  is required"),
-    MobileNo: Yup.string().required("MobileNo is required"),
+    Email: Yup.string().email().required("Email  is required"),
+    MobileNo: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("MobileNo is required"),
     Gender: Yup.string().required("Gender is required"),
     file: Yup.mixed().required("Driver Documents are required"),
     doc: Yup.mixed().required("Driver Documents are required"),
@@ -112,8 +139,8 @@ const AddNewDriver = () => {
       formData.append('last_name', values.LastName);
       formData.append('address_1', values.Address1);
       formData.append('address_2', values.Address2);
-      formData.append('city', values.Country);
-      formData.append('country', values.City);
+      formData.append('city', values.City);
+      formData.append('country', values.Country);
       formData.append('zip_code', values.Zip);
       formData.append('email', values.Email);
       formData.append('phone', values.MobileNo);
@@ -362,7 +389,11 @@ const AddNewDriver = () => {
                             </CCol>
                             <CCol md={4}>
                               <CFormLabel htmlFor="inputmobile">Mobile No.</CFormLabel>
-                              <CFormInput type="number" id="inputmobile" {...formik.getFieldProps("MobileNo")}
+                              <CFormInput type="text" id="inputmobile"
+                              onKeyDown={(e) => {
+                                handleMobile(e, 17);
+                              }}
+                              {...formik.getFieldProps("MobileNo")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",

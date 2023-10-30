@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import { useFormik } from "formik";
+import deleteiconimg from "../../../assets/images/deleteicon.png";
+import deletepopup from "../../../assets/images/deletepopup.png";
 import * as Yup from "yup";
 import clsx from "clsx";
 import {
@@ -44,6 +46,7 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { PulseLoader } from "react-spinners";
 import AppLoader from "../../AppLoader";
+import EmptyData from "../../EmptyData";
 
 const tableExample = [
   {
@@ -62,7 +65,7 @@ const SuperPendingTrip = () => {
   const [driver, setDriver] = useState([]);
   const [vehicle, setVehicle] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-
+  const [delvisible, setDelvisible] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageLimit, setPageLimit] = React.useState(3);
   const [maxPage, setMaxPage] = React.useState(3);
@@ -209,11 +212,11 @@ const SuperPendingTrip = () => {
     setLoader(false);
     setVisible(false);
   }
-  function canceleTrip(id) {
+  function handleDeletItem(id) {
     const data = {
       status: "Canceled",
     };
-    allocateDriver(data, id).then((res) => {
+    allocateDriver(id, data).then((res) => {
       console.log(res.result, "cancele done");
       if (res?.data?.code === 200) {
         toast.success(`${res.data.message}`, {
@@ -224,6 +227,7 @@ const SuperPendingTrip = () => {
           return item._id != id;
         });
         setPendingTrip(newTrips);
+        setDelvisible(false)
       } else {
         toast.warning(`${res.data.message}`, {
           position: "top-right",
@@ -231,6 +235,10 @@ const SuperPendingTrip = () => {
         });
       }
     });
+  }
+
+  const handleDelet = (id) => {
+    setDelvisible(id)
   }
 
   useEffect(() => {
@@ -257,20 +265,20 @@ const SuperPendingTrip = () => {
                 <h1 className="heading-for-every-page">Pending Trips</h1>
                 <div className="active-trip-outer">
                   {/* <div className="trips-head d-flex justify-content-between">
-                    <div className="box-shd d-flex justify-content-between">
-                      <div className="left-trip-content">
-                        <h2>List of Pending Trips</h2>
-                      </div>
-                      <div className="right-trip-content">
-                        <img src={refreshImg} />
-                        <img src={downarrowImg} />
-                        <img src={crossImg} />
-                        <Link to="/superadmindashboard/trips/addnewbooking">
-                          <CButton className="add_company_btn">Add New Booking</CButton>
-                        </Link>
-                      </div>
-                    </div>
-                  </div> */}
+ <div className="box-shd d-flex justify-content-between">
+ <div className="left-trip-content">
+ <h2>List of Pending Trips</h2>
+ </div>
+ <div className="right-trip-content">
+ <img src={refreshImg} />
+ <img src={downarrowImg} />
+ <img src={crossImg} />
+ <Link to="/superadmindashboard/trips/addnewbooking">
+ <CButton className="add_company_btn">Add New Booking</CButton>
+ </Link>
+ </div>
+ </div>
+ </div> */}
                   {loader ? (
                     <div
                       className=" d-flex justify-content-center align-items-center"
@@ -285,7 +293,9 @@ const SuperPendingTrip = () => {
                       />
                     </div>
                   ) : (
-                    <CTable align="middle" className="mb-0" hover responsive>
+                    <>
+
+                  { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
                       <CTableHead>
                         <CTableRow>
                           <CTableHeaderCell className="text-center">
@@ -321,7 +331,7 @@ const SuperPendingTrip = () => {
                               key={item._id}
                             >
                               <CTableDataCell>
-                                <div>{firstIndex + index + 1}</div>
+                                <div>{index + 1}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>{item.trip_id}</div>
@@ -331,10 +341,10 @@ const SuperPendingTrip = () => {
                               </CTableDataCell>
 
                               <CTableDataCell>
-                                <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address?.length<21?"":"..."}`}</div>
+                                <div>{item.trip_from.address.slice(0, 20) + `${item.trip_from.address?.length < 21 ? "" : "..."}`}</div>
                               </CTableDataCell>
                               <CTableDataCell>
-                                <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address?.length<21?"":"..."}`}</div>
+                                <div>{item.trip_to.address.slice(0, 20) + `${item.trip_to.address?.length < 21 ? "" : "..."}`}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>
@@ -356,22 +366,21 @@ const SuperPendingTrip = () => {
                                   </CButton>
                                 </div>
                                 <div
-                                  onClick={() => {
-                                    canceleTrip(item._id);
-                                  }}
+                                  onClick={() => { handleDelet(item._id) }}
                                   style={{
                                     cursor: "pointer",
                                   }}
                                   className="reject_icon"
                                 >
-                                  <img src={rejecticonimg} alt="images" />
+                                  <img src={deleteiconimg} alt="images" />
                                 </div>
                               </CTableDataCell>
                             </CTableRow>
                           ))
                           : ""}
                       </CTableBody>
-                    </CTable>
+                    </CTable>: <EmptyData/>}
+                    </>
                   )}
 
                   {
@@ -537,15 +546,42 @@ const SuperPendingTrip = () => {
                         </CCol>
                       </CRow>
                     </CModalBody>
-                    {/* <CModalFooter>
-          <CButton color="secondary" onClick={() => setVisible(false)}>
-            Close
-          </CButton>
-          <CButton color="primary">Save changes</CButton>
-        </CModalFooter> */}
+
                   </CModal>
 
-                  {/* endallocatedriverpopup */}
+                  <CModal
+                    alignment="center"
+                    visible={delvisible}
+                    onClose={() => setDelvisible(false)}
+                  >
+                    <CModalBody>
+                      <CRow>
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                              <img src={deletepopup} alt="danger" />
+                              <h2>Are you Sure</h2>
+                              <p>You want to delete this Vehicle ?</p>
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                              <CButton
+                                className="delete_popup"
+                                onClick={() => handleDeletItem(delvisible)}
+                              >
+                                Delete
+                              </CButton>
+                              <CButton
+                                className="cancel_popup"
+                                onClick={() => setDelvisible(false)}
+                              >
+                                Cancel
+                              </CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                  </CModal>
                 </div>
               </div>
             </div>

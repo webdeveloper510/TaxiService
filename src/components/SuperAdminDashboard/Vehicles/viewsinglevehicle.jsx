@@ -97,6 +97,7 @@ const ViewSingleVehicle = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
                               <CFormInput aria-label="vehicle no."
+                              style={{cursor: "default"}}
                               readOnly
                                 maxLength="50"
                                 value={vehicle?.vehicle_number}
@@ -110,6 +111,7 @@ const ViewSingleVehicle = () => {
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehiclenum">Vehicle Type</CFormLabel>
                               <CFormInput aria-label="vehicleType"
+                              style={{cursor: "default"}}
                               readOnly
                                 maxLength="50"
                                 value={vehicle?.vehicle_type}
@@ -124,6 +126,7 @@ const ViewSingleVehicle = () => {
                               <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
                               <CFormInput
                               readOnly
+                              style={{cursor: "default"}}
                               value={vehicle?.vehicle_model}
                                 maxLength="50"
                                 className=
@@ -136,6 +139,7 @@ const ViewSingleVehicle = () => {
                               <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
                               <CFormInput
                               readOnly
+                              style={{cursor: "default"}}
                               value={vehicle?.seating_capacity}
                                 maxLength="50"
                                 className=
@@ -148,6 +152,7 @@ const ViewSingleVehicle = () => {
                               <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
                               <CFormInput id="inputpassengertimelimit"
                               readOnly
+                              style={{cursor: "default"}}
                               value={vehicle?.cancelation_time_limit}
                                 maxLength="50"
                                 className=
@@ -159,6 +164,7 @@ const ViewSingleVehicle = () => {
                               <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
                               <CFormInput id="inputpassengercharges"
                               readOnly
+                              style={{cursor: "default"}}
                                 maxLength="50"
                                 value={vehicle?.cancelation_charges}
                                 className=
@@ -170,6 +176,7 @@ const ViewSingleVehicle = () => {
                               <CFormLabel htmlFor="inputpassengercharges">Insurance Renewal Date (in € ) </CFormLabel>
                               <CFormInput id="inputpassengercharges"
                               readOnly
+                              style={{cursor: "default"}}
                                 maxLength="50"
                                 value={moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY, h:mm a')}
                                 className="form-control"

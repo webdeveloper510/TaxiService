@@ -137,6 +137,8 @@ const ListOfFares = () => {
         });
         const newData = fare.filter((d) => d._id != id);
         setFare(newData);
+        setDeleteVisible(false)
+        setSelectedFare(null)
       } else {
         toast.warning(`${deleteData.message}`, {
           position: "top-right",
@@ -340,7 +342,7 @@ const ListOfFares = () => {
                                   >
                                     <img src={deleteiconimg} alt="img" />
                                   </div> */}
-                                  <CButton id="btn_delete_fare" className="delete_vehilce" onClick={() => {setDeleteVisible(!visible);}}>
+                                  <CButton id="btn_delete_fare" className="delete_vehilce" onClick={() => {setDeleteVisible(!visible);setSelectedFare(item)}}>
                                   <img src={deleteiconimg} alt="img" />
                                   </CButton>
                                 </CTableDataCell>
@@ -647,6 +649,9 @@ const ListOfFares = () => {
                             
 
                             <CButton className="delete_popup"
+                            onClick={() =>
+                              deleteFareHandler(selectedFare._id)
+                            }
                             >Delete</CButton>
                             <CButton className="cancel_popup" onClick={() => setDeleteVisible(false)}>
                              Cancel</CButton>

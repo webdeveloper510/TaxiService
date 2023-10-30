@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AppHeader from "../TopBar/AppHeader";
 import Map from "../TaxiMap/Map";
 import Sidebar2 from "../Admindashboard/SideBar2";
@@ -7,9 +7,10 @@ import RecentTrips from "./Trips/recenttrips";
 //import BookingRequestTable from "./BookingRequestTable";
 //import background from '../assets/images/heroimg.png';
 import RiderStatusTable from '../Stats/RiderStatusTable'
+import userContext from "../../utils/context";
 
 const Dashboard=()=> {
-   
+    const {user} = useContext(userContext);
       return (
        <>
        <div className="container-fluidd">
@@ -22,7 +23,7 @@ const Dashboard=()=> {
         <AppHeader />
     
         <div className="body flex-grow-1 px-3">
-          <h1 className="heading-for-every-page">Dashboard</h1>
+          <h1 className="heading-for-every-page">{`Welcome ${user && user?.company_detail?.company_name}`}</h1>
           <div class="map-outer"> 
           <h2>Taxi Live Location</h2>
           <Map /></div>

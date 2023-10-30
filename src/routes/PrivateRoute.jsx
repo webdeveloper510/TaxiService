@@ -48,7 +48,7 @@ const PrivateRoute = () => {
             <Route path="/trips/activetrips" element={<ActiveTrip />} />
             <Route path="/trips/requestnewtrip" element={<RequestNewTrip />} />
             <Route path="/trips/pendingtrips" element={<PendingTrip />} />
-            <Route path="/trips/editpendingtrips" element={<EditpendingTrip />} />
+            <Route path="/trips/editpendingtrips/:id" element={<EditpendingTrip />} />
             <Route path="/trips/completetrips" element={<CompletedTrip />} />
             <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
             <Route path="/driver/listofdrivers" element={<DriverList />} />

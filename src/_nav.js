@@ -120,7 +120,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'List Of All Drivers',
+        name: 'All Drivers',
         to: '/driver/listofdrivers',
       }, 
     ],
@@ -166,7 +166,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'View All Vehicles',
+        name: 'All Vehicles',
         to: '/vehicle/viewallvehicle',
         
       },

@@ -1194,7 +1194,14 @@ const RequestNewTrip = () => {
                       >
                         Submit
                       </CButton>
-                      <CButton type="button" className="cancel-btn">
+                      <CButton type="button" 
+                      onClick={
+                        () =>{
+                          navigate("/trips/pendingtrips");
+
+                        }
+                      }
+                      className="cancel-btn">
                         Cancel
                       </CButton>
                     </div>

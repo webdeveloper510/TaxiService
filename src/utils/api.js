@@ -460,3 +460,47 @@ export const getTripCompleted = async() => {
     console.log("GET_TRIP", error);
   });
 };
+export const deleteTrips = async(id) => {
+  return await Axios.delete(`subadmin/delete_trip/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "delete company");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("DELETE_COMPANY", error);
+  });
+};
+
+export const getTripById = async(id) => {
+  return await Axios.get(`admin/get_trip_detail/${id}`,{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "delete company");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("DELETE_COMPANY", error);
+  });
+};
+
+export const tripsUpdate = async (id,data) => {
+  return await Axios.put(`subadmin/edit_trip/${id}`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "edit vehicle");
+      return res;
+    })
+    .catch((error) => {
+      console.log("EDIT_VEHICLE", error);
+    });
+};

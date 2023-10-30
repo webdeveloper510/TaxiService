@@ -31,7 +31,7 @@ const AddSuperVehicle = () => {
 
   const navigate = useNavigate();
   const [vehicleinsuranceDate, setInsuranceDate] = useState(new Date()); // Initialize with the current date for insurance renewal date
-  
+
   const initialValues = {
     vehicleNo: "",
     vehicleType: "",
@@ -51,17 +51,44 @@ const AddSuperVehicle = () => {
     vehicleNo: Yup.string().required("Vehicle No is required"),
     vehicleType: Yup.string().required("Vehicle Type is required"),
     vehicleModal: Yup.string().required("Vehicle Model is required"),
-    seatingCapacity: Yup.string().required("Seating Capacity is required"),
+    seatingCapacity: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Seating Capacity is required"),
     // pricePerKm: Yup.string().required("Price per km is required"),
     // minimumFare: Yup.string().required("Minimum Fare is required"),
     // commission: Yup.string().required("Commission is required"),
-    passengerTimeLimit: Yup.string().required("Passenger Time Limit is required"),
-    passengerCharges: Yup.string().required("Passenger Cancellation Charges is required"),
+    passengerTimeLimit: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Passenger Time Limit is required"),
+    passengerCharges: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Passenger Cancellation Charges is required"),
     vehicleinsuranceDate: Yup.date().required("Insurance Renewal Date is required"),
     file: Yup.mixed().required("Vehicle Documents are required"),
     AC: Yup.string().required("Gender is required"),
   });
-
+  const handleMobile = (event, max) => {
+    const pattern = /^[0-9]+$/;
+    if (
+      event.key === "Backspace" ||
+      event.key === "Enter" ||
+      event.key === "Tab" ||
+      event.key === "Shift" ||
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ) {
+      formik.setFieldValue(event.target.name, event.target.value);
+      formik.setFieldTouched(event.target.name, true);
+    } else {
+      let value = event.target.value.toString();
+      if (value.length > max) {
+        event.stopPropagation();
+        event.preventDefault();
+      } else {
+        if (!pattern.test(event.key)) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          formik.setFieldValue(event.target.name, event.target.value);
+          formik.setFieldTouched(event.target.name, true);
+        }
+      }
+    }
+  };
   const [vehicleType, setVehicleType] = useState()
 
   const [selectedAC, setSelectedAC] = useState('');
@@ -99,8 +126,8 @@ const AddSuperVehicle = () => {
     const selectedFile = e.target.files[0];
     formik.setFieldValue('file', selectedFile)
     setImage(URL.createObjectURL(selectedFile))
-  
-   
+
+
   }
 
   const formik = useFormik({
@@ -151,7 +178,7 @@ const AddSuperVehicle = () => {
         <div className="col-md-12">
 
           <div>
-          <SuperSideBar/>
+            <SuperSideBar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -165,10 +192,10 @@ const AddSuperVehicle = () => {
                     <CCol xs={12}>
                       <CCard className="mb-4">
                         <CCardHeader>
-                          <strong>Vehicle Infromation</strong>
+                          <strong>Vehicle Information</strong>
                         </CCardHeader>
                         <CCardBody>
-                          
+
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
 
                             <CCol md={6}>
@@ -249,7 +276,9 @@ const AddSuperVehicle = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
-                              <CFormInput  {...formik.getFieldProps("seatingCapacity")}
+                              <CFormInput onKeyDown={(e) => {
+                                handleMobile(e, 17);
+                              }}  {...formik.getFieldProps("seatingCapacity")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -337,7 +366,9 @@ const AddSuperVehicle = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
-                              <CFormInput id="inputpassengertimelimit"  {...formik.getFieldProps("passengerTimeLimit")}
+                              <CFormInput id="inputpassengertimelimit" onKeyDown={(e) => {
+                                handleMobile(e, 17);
+                              }}  {...formik.getFieldProps("passengerTimeLimit")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -358,7 +389,11 @@ const AddSuperVehicle = () => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
-                              <CFormInput id="inputpassengercharges"  {...formik.getFieldProps("passengerCharges")}
+                              <CFormInput id="inputpassengercharges"
+                                onKeyDown={(e) => {
+                                  handleMobile(e, 17);
+                                }}
+                                {...formik.getFieldProps("passengerCharges")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -384,6 +419,7 @@ const AddSuperVehicle = () => {
                                 selected={vehicleinsuranceDate}
                                 onChange={handlevehicleInsuranceDateChange}
                                 dateFormat="MM/dd/yyyy"
+                                minDate={new Date()}
 
                                 // {...formik.getFieldProps("vehicleinsuranceDate")}
                                 maxLength="50"

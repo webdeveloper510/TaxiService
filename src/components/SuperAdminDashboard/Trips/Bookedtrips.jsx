@@ -166,9 +166,9 @@ const SuperBookedTrips = () => {
                             <CTableHeaderCell className="text-center">
                               Start Time
                             </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            {/* <CTableHeaderCell className="text-center">
                               Action
-                            </CTableHeaderCell>
+                            </CTableHeaderCell> */}
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -189,30 +189,30 @@ const SuperBookedTrips = () => {
                                   <div>{item.passenger_detail.length}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.trip_from.address}</div>
+                                <div>{item?.trip_from.address?.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
+                                <div>{item?.trip_to.address?.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                  <div>{item.trip_to?.driver_name?.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                 </CTableDataCell>
 
                                 <CTableDataCell>
                                   <div>
                                     {moment(item.pickup_date_time).format(
-                                      "MMMM Do YYYY, h:mm a"
+                                      "MMM Do YYYY, h:mm a"
                                     )}
                                   </div>
                                 </CTableDataCell>
-                                <CTableDataCell className="d-flex action-icons booking-icons">
+                                {/* <CTableDataCell className="d-flex action-icons booking-icons">
                                   <div>
                                     <img src={editiconimg} alt="images" />
                                   </div>
                                   <div>
                                     <img src={deleteiconimg} alt="img" />
                                   </div>
-                                </CTableDataCell>
+                                </CTableDataCell> */}
 
                               </CTableRow>
                             ))

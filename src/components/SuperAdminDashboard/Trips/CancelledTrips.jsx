@@ -148,9 +148,9 @@ const SuperCancelledTrip = () => {
                         Trip ID
                       </CTableHeaderCell>
 
-                      <CTableHeaderCell className="text-center">
+                      {/* <CTableHeaderCell className="text-center">
                         Driver Name
-                      </CTableHeaderCell>
+                      </CTableHeaderCell> */}
 
                       <CTableHeaderCell className="text-center">
                         Trip From
@@ -188,11 +188,11 @@ const SuperCancelledTrip = () => {
 
                           <div>{item.trip_id}</div>
                         </CTableDataCell>
-
+{/* 
                         <CTableDataCell>
 
                           <div>{item.driver_name?item.driver_name:"Not assigned"}</div>
-                        </CTableDataCell>
+                        </CTableDataCell> */}
 
                         <CTableDataCell>
 

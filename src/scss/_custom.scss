@@ -632,7 +632,7 @@ img.card-img-top {
 
 .vehicle_inner {
     position: relative;
-    width: 293px; /* Adjust the width as needed */
+    width: 100%; /* Adjust the width as needed */
   }
   
   .image-container {
@@ -736,4 +736,8 @@ div#recent-trip-outer {
     border-radius: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
+}
+.edit_company_popup .modal-dialog {
+    width: 100%;
+    max-width: 60%;
 }

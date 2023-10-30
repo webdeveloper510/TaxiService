@@ -136,7 +136,7 @@ const BookingRequestTable = () => {
                     </>
                   ) : (
                     <>
-                      {date?.length==0?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
+                      {data.length == 0?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -163,9 +163,9 @@ const BookingRequestTable = () => {
                             <CTableHeaderCell className="text-center">
                               Start Time
                             </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            {/* <CTableHeaderCell className="text-center">
                               Action
-                            </CTableHeaderCell>
+                            </CTableHeaderCell> */}
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -202,14 +202,14 @@ const BookingRequestTable = () => {
                                       )}
                                     </div>
                                   </CTableDataCell>
-                                  <CTableDataCell className="d-flex action-icons booking-icons">
+                                  {/* <CTableDataCell className="d-flex action-icons booking-icons">
                                     <div>
                                       <img src={editiconimg} alt="edit"/>
                                     </div>
                                     <div>
                                       <img src={deleteiconimg} alt="delet"/>
                                     </div>
-                                  </CTableDataCell>
+                                  </CTableDataCell> */}
                                 </CTableRow>
                               ))
                             : ""}
