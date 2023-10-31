@@ -24,7 +24,23 @@ const Dashboard=()=> {
         <AppHeader />
     
         <div className="body flex-grow-1 px-3">
-          <h1 className="heading-for-every-page">{`Welcome ${user && capitalLine(user?.company_detail?.company_name)}`}</h1>
+          <h1 className="heading-for-every-page"
+          style={{
+            fontWeight: "bold",
+           
+          }}
+          >
+            <span>
+              Welcome
+            </span>
+            <span
+            style={{
+              
+              color: "#FFD04E",
+            }}
+            >{` ${user ? capitalLine(user?.company_detail?.company_name):""} `}</span>
+          
+          </h1>
           <div class="map-outer"> 
           <h2>Taxi Live Location</h2>
           <Map /></div>

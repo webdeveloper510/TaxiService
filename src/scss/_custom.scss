@@ -307,6 +307,7 @@ div#recent-trip-outer {
 }
 .upload-file-input img {
     width: 100%;
+    border-radius: 10px;
 }
 img.upload-icon {
     width: auto;
@@ -749,4 +750,68 @@ img.vehicle_img {
     width: -webkit-fill-available;
     margin-top: 20px;
     border-radius: 8px;
+}
+.col-md-6.vehicle_info_right {
+    margin-top: 33px;
+    line-height: 40px;
+    padding-left: 4rem;
+}
+.vehicle_info_right .form-label {
+    font-weight: 600 !important;
+    font-size: 20px;
+    padding-right: 10px;
+}
+span.vehicle_info {
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: 500;
+    padding-left: 10px;
+}
+.pdf_doc {
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.pdf_doc p {
+    margin-bottom: 0;
+    font-weight: 600;
+    background: #cccccc4f;
+    padding: 13px;
+    border-radius: 9px;
+}
+button.remove-btn {
+    background: #FFF2CF;
+    color: #000;
+    border: #FFF2CF;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px 10px 10px 10px;
+    width: 50px;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2509803922);
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif !important;
+}
+.driver_img_outer {
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    position: relative;
+}
+button.remove-btn img {
+    border-radius: 23px;
+}
+.driver_img_outer button.remove-btn {
+    position: ABSOLUTE;
+    RIGHT: 4px;
+    TOP: 8px;
+    WIDTH: 30PX;
+    border-radius: 100px;
+    height: 30px;
+    text-align: center;
+    padding: 0;
+    font-size: 18px;
 }

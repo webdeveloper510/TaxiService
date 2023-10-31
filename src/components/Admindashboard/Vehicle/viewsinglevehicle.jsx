@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-// import SuperSideBar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -24,12 +23,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import backtovehicle from '../../../assets/images/left-arrow.png'
+// import SuperSideBar from "../SiderNavBar/Sidebar";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import car1 from '../../../assets/images/car1.jpg'
 import { getVehicleById } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import SideBar2 from "../SideBar2";
-const ViewSingleSubVehicle = () => {
+const ViewSingleVehicle = () => {
 
   const {vehicleId} = useParams();
   const navigate = useNavigate();
@@ -67,14 +67,14 @@ const ViewSingleSubVehicle = () => {
 
         <div className="col-md-12">
           <div>
-           <SideBar2/>
+            <SideBar2/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
               <h1 class="heading-for-every-page">
                     <Link to="/vehicle/viewallvehicle">
-                    <img src={backtovehicle} alt="edit" /> View sub Vehicle  Details</Link></h1>
+                    <img src={backtovehicle} alt="edit" /> View All Vehicles</Link></h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
@@ -83,20 +83,23 @@ const ViewSingleSubVehicle = () => {
                     <CCol xs={12}>
                       <CCard className="mb-4">
                         <CCardHeader>
-                          <strong>Vehicle Infromation</strong>
+                          <strong>Vehicle Information</strong>
                         </CCardHeader>
                         <CCardBody>
                         
                           <form noValidate className="row g-3">
-                          <CRow>
-                          <CCol md={4}>
+                         
+                          <CCol md={6}>
                             
-                        <img className="vehicle_img" src={vehicle?.vehicle_photo || car1} alt="danger"/>
+                          <img className="vehicle_img" src={vehicle?.vehicle_photo} alt="Car photo"/>
                            </CCol>
-                           </CRow>
-                            <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
-                              <CFormInput aria-label="vehicle no."
+                           
+                            <CCol className="vehicle_info_right" md={6}>
+                              <CFormLabel htmlFor="inputvehiclenum">Vehicle No. : </CFormLabel>
+                              <span className="vehicle_info">{vehicle?.vehicle_number}</span> &nbsp;<br/>
+                              <CFormLabel htmlFor="inputvehiclenum">Vehicle Type : </CFormLabel>
+                              <span className="vehicle_info"> {vehicle?.vehicle_type}</span><br/>
+                              {/* <CFormInput aria-label="vehicle no."
                               style={{cursor: "default"}}
                               readOnly
                                 maxLength="50"
@@ -105,97 +108,25 @@ const ViewSingleSubVehicle = () => {
                                   "form-control bg-transparent"
                                  
                                 name="vehicleNo"
-                                autoComplete="off" />  
+                                autoComplete="off" />   */}
+                                  <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model :</CFormLabel>
+                             
+                                 <span className="vehicle_info"> {vehicle?.vehicle_model}</span>&nbsp;<br/>
+                                 <CFormLabel htmlFor="inputseating">Seating Capacity :</CFormLabel>
+                                 <span className="vehicle_info"> {vehicle?.seating_capacity}</span><br/>
+                                 <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes):</CFormLabel>
+                                 <span className="vehicle_info">{vehicle?.cancelation_time_limit}</span>&nbsp;
+                                 <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) : </CFormLabel>
+                                 <span className="vehicle_info">{vehicle?.cancelation_charges}</span><br/>
+                                 <CFormLabel htmlFor="inputpassengercharges">Insurance Renewal Date: </CFormLabel>
+                                 <span className="vehicle_info">{moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY, h:mm a')}</span> &nbsp;<br/>
+                                 <CFormLabel htmlFor="inputgender" >Is air conditioner :</CFormLabel>
+                                 <span className="vehicle_info">{vehicle?.AC ? "Yes" : "No"}</span>
                             </CCol>
 
-                            <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehiclenum">Vehicle Type</CFormLabel>
-                              <CFormInput aria-label="vehicleType"
-                              style={{cursor: "default"}}
-                              readOnly
-                                maxLength="50"
-                                value={vehicle?.vehicle_type}
-                                className=
-                                  "form-control bg-transparent"
-                                 
-                                name="vehicleType"
-                                autoComplete="off" />  
-                            </CCol>
-
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
-                              <CFormInput
-                              readOnly
-                              style={{cursor: "default"}}
-                              value={vehicle?.vehicle_model}
-                                maxLength="50"
-                                className=
-                                  "form-control bg-transparent" 
-                                name="vehicleModal"
-                                autoComplete="off" />
-                            </CCol>
-
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
-                              <CFormInput
-                              readOnly
-                              style={{cursor: "default"}}
-                              value={vehicle?.seating_capacity}
-                                maxLength="50"
-                                className=
-                                  "form-control bg-transparent"
-                                name="seatingCapacity"
-                                autoComplete="off" />
-                            
-                            </CCol>
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
-                              <CFormInput id="inputpassengertimelimit"
-                              readOnly
-                              style={{cursor: "default"}}
-                              value={vehicle?.cancelation_time_limit}
-                                maxLength="50"
-                                className=
-                                  "form-control bg-transparent"
-                                name="passengerTimeLimit"
-                                autoComplete="off" />
-                            </CCol>
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
-                              <CFormInput id="inputpassengercharges"
-                              readOnly
-                              style={{cursor: "default"}}
-                                maxLength="50"
-                                value={vehicle?.cancelation_charges}
-                                className=
-                                  "form-control bg-transparent"    
-                                name="passengerCharges"
-                                autoComplete="off" /> 
-                            </CCol>
-                            <CCol xs={6} className="date_pic">
-                              <CFormLabel htmlFor="inputpassengercharges">Insurance Renewal Date (in € ) </CFormLabel>
-                              <CFormInput id="inputpassengercharges"
-                              readOnly
-                              style={{cursor: "default"}}
-                                maxLength="50"
-                                value={moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY, h:mm a')}
-                                className="form-control"
-                                name="inputinsurancedate"
-                                autoComplete="off" /> 
-                            </CCol>
-                            {/* <CCol md={6} className="date_pic">
-                              <CFormLabel htmlFor="inputinsurancedate">Insurance Renewal Date</CFormLabel><br />
-                        
-                                <DatePicker
-                                    selected={new Date(vehicle?.insurance_renewal_date)}
-                                 
-                            
-                                    dateFormat="MM/dd/yyyy"
-                                    className="form-control"
-                
-                                    />
-                            </CCol> */}
-
+                      
+       
+{/* 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputgender" ></CFormLabel>
                               <fieldset className="row mb-12">
@@ -222,7 +153,7 @@ const ViewSingleSubVehicle = () => {
                                   />
                                 </CCol>
                               </fieldset>
-                            </CCol>
+                            </CCol> */}
 
                             {/* <CCol md={6} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Vehicle Image</CFormLabel>
@@ -262,4 +193,4 @@ const ViewSingleSubVehicle = () => {
   );
 };
 
-export default ViewSingleSubVehicle; 
+export default ViewSingleVehicle; 

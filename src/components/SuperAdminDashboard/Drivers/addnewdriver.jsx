@@ -87,25 +87,34 @@ const AddNewDriver = () => {
     Email: Yup.string().email().required("Email  is required"),
     MobileNo: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("MobileNo is required"),
     Gender: Yup.string().required("Gender is required"),
-    file: Yup.mixed().required("Driver Documents are required"),
-    doc: Yup.mixed().required("Driver Documents are required"),
+    file: Yup.mixed().required("Driver's Photo is required"),
+    doc: Yup.mixed().required("Driver's Documents is required"),
   });
 
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
-    if(selectedFile){
+    if (selectedFile) {
       formik.setFieldValue('file', selectedFile)
       setImage(URL.createObjectURL(selectedFile))
     }
   }
+  const removefile = (e) => {
+    formik.setFieldValue('file', "")
+    setImage(null)
+  }
   const uploadDoc = (e) => {
     const selectedFile = e.target.files[0];
-    if(selectedFile){
-
+    if (selectedFile) {
       setSelectedDoc(selectedFile)
       formik.setFieldValue('doc', selectedFile)
       setDoc(URL.createObjectURL(selectedFile))
     }
+  }
+  const removeDoc = (e) => {
+    setSelectedDoc(null)
+    formik.setFieldValue('doc', "")
+    setDoc(null)
+
   }
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [selectedGender, setSelectedGender] = useState('');
@@ -189,7 +198,7 @@ const AddNewDriver = () => {
         <div className="col-md-12">
 
           <div>
-            <SuperSideBar/>
+            <SuperSideBar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -390,10 +399,10 @@ const AddNewDriver = () => {
                             <CCol md={4}>
                               <CFormLabel htmlFor="inputmobile">Mobile No.</CFormLabel>
                               <CFormInput type="text" id="inputmobile"
-                              onKeyDown={(e) => {
-                                handleMobile(e, 17);
-                              }}
-                              {...formik.getFieldProps("MobileNo")}
+                                onKeyDown={(e) => {
+                                  handleMobile(e, 17);
+                                }}
+                                {...formik.getFieldProps("MobileNo")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -412,7 +421,7 @@ const AddNewDriver = () => {
                                 <div className="text-danger">{formik.errors.MobileNo}</div>
                               ) : null}
                             </CCol>
-                        
+
 
                             <CCol md={3} className="gender-outer">
                               <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
@@ -475,12 +484,21 @@ const AddNewDriver = () => {
                             <CCol md={6} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
 
-                              {image?.length > 0 ?
-                                (
-                                  <img src={image} alt='img' height={300} width={100} />
-                                ) :
-                                ""}
+                              <div class="driver_img_outer">
+                                {image?.length > 0 ?
+                                  (
+                                    <>
+                                      <img src={image} alt='img' height={300} width={100} />
 
+                                      <button
+                                        className="remove-btn"
+                                        onClick={() => {
+                                         removefile()
+                                        }}
+                                      >X</button></>
+                                  ) :
+                                  ""}</div>
+                                  {!image?.length > 0 && <>
                               <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"
@@ -497,26 +515,22 @@ const AddNewDriver = () => {
                                 )}
                                 name="file"
                                 autoComplete="off" />
-                              {formik.errors.file && formik.touched.file ? (
-                                <div className="text-danger">{formik.errors.file}</div>
-                              ) : null}
-                              <label htmlFor="formFile" className="custom-file-upload">
-                                <div className="files-outer">
-                                  <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
-                                  <span>Drop Image Here ...</span>
-                                </div>
-                              </label>
+                              
+                              
+                                {formik.errors.file && formik.touched.file ? (
+                                  <div className="text-danger">{formik.errors.file}</div>
+                                ) : null}
+                                <label htmlFor="formFile" className="custom-file-upload">
+                                  <div className="files-outer">
+                                    <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
+                                    <span>Drop Image Here ...</span>
+                                  </div>
+                                </label>
+                              </>}
                             </CCol>
-                            {selectedDoc && (
-        <div>
-          <p>Selected file: {selectedDoc.name}</p>
-          <button
-         className="submit-btn"
-          onClick={downloadFile}>Download</button>
-        </div>
-      )}
+
                             <CCol md={6} className="upload-file-input">
-                            
+
                               <CFormLabel htmlFor="inputmobile">Upload Driver Doc</CFormLabel>
 
                               {/* {doc?.length > 0 ?
@@ -524,34 +538,49 @@ const AddNewDriver = () => {
                                   <embed src={doc} height={300} width={100} />
                                 ) :
                                 ""} */}
-
-                              <CFormInput type="file"
-                              accept="application/pdf,application/vnd.ms-excel"
-                               id="formFile" onChange={(e) => { uploadDoc(e) }}
-
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.doc && formik.errors.doc,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.doc && !formik.errors.doc,
-                                  }
-                                )}
-                                name="doc"
-                                autoComplete="off" />
-                              {formik.errors.doc && formik.touched.doc ? (
-                                <div className="text-danger">{formik.errors.doc}</div>
-                              ) : null}
-                              <label htmlFor="formFile" className="custom-file-upload">
-                                <div className="files-outer">
-                                  <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
-                                  <span>Drop Document Here ...</span>
+                              {selectedDoc && (
+                                <div class="pdf_doc">
+                                  <p>Selected file: {selectedDoc.name}</p>
+                                  <button
+                                    className="submit-btn"
+                                    onClick={downloadFile}>Download</button>
+                                  <button
+                                    className="remove-btn"
+                                    onClick={() => {
+                                      removeDoc()
+                                    }}
+                                  >X</button>
                                 </div>
-                              </label>
-                              
+                              )}
+                              {!selectedDoc && <>
+                                <CFormInput type="file"
+                                  accept="application/pdf,application/vnd.ms-excel"
+                                  id="formFile" onChange={(e) => { uploadDoc(e) }}
+
+                                  className={clsx(
+                                    "form-control bg-transparent",
+                                    {
+                                      "is-invalid":
+                                        formik.touched.doc && formik.errors.doc,
+                                    },
+                                    {
+                                      "is-valid":
+                                        formik.touched.doc && !formik.errors.doc,
+                                    }
+                                  )}
+                                  name="doc"
+                                  autoComplete="off" />
+                                {formik.errors.doc && formik.touched.doc ? (
+                                  <div className="text-danger">{formik.errors.doc}</div>
+                                ) : null}
+                                <label htmlFor="formFile" className="custom-file-upload">
+                                  <div className="files-outer">
+                                    <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
+                                    <span>Drop Document Here ...</span>
+                                  </div>
+                                </label>
+
+                              </>}
                             </CCol>
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
