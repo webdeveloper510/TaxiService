@@ -1,6 +1,6 @@
 import deletepopup from "../../../assets/images/deletepopup.png";
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
+import Sidebar from "../../Taxi/SiderNavBar/Sidebar";
 import AppHeader from "../../TopBar/AppHeader";
 import { Link, useNavigate } from "react-router-dom";
 import Switch from "react-switch";

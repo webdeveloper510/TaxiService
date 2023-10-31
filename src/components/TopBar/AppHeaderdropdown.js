@@ -13,7 +13,7 @@ import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
 
 import threedots from '../../assets/images/threedots.png'
-import UsersStats from '../SuperAdminDashboard/DashboardStats/UsersStats'
+import UsersStats from '../Taxi/DashboardStats/UsersStats'
 import userContext from '../../utils/context'
 const AppHeaderDropdown = () => {
   const {user, setUser} = useContext(userContext);

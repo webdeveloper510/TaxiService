@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2";
-// import SuperSideBar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
+// import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,

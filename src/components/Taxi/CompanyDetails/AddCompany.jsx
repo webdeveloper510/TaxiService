@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-import Sidebar from "../../SuperAdminDashboard/SiderNavBar/Sidebar";
+import Sidebar from "../../Taxi/SiderNavBar/Sidebar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   CButton,
