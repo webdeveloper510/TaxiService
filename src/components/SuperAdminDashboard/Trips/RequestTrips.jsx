@@ -283,7 +283,7 @@ const SuperRequestTrip = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          navigate("/superadmindashboard/trips/pendingtrips");
+          navigate("/taxi/trips/pendingtrips");
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -727,7 +727,7 @@ const SuperRequestTrip = () => {
                       </CButton>
                       <CButton type="button" 
                       onClick={()=>{
-                        navigate("/superadmindashboard/trips/pendingtrips");
+                        navigate("/taxi/trips/pendingtrips");
                       }}
                       className="cancel-btn">
                         Cancel

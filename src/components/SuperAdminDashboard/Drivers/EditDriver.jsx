@@ -123,7 +123,7 @@ function EditDriver() {
   
   
     const back = () => {
-      navigate("/superadmindashboard/driver/listofdrivers")
+      navigate("/taxi/driver/listofdrivers")
     }
   
     // const handleRadioChange = (event) => {
@@ -188,7 +188,7 @@ function EditDriver() {
                 <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                 
                   <h1 class="heading-for-every-page">
-                    <Link to="/superadmindashboard/driver/listofdrivers">
+                    <Link to="/taxi/driver/listofdrivers">
                     <img src={backtovehicle} alt="edit" />  Edit Driver</Link></h1>
                  
                   

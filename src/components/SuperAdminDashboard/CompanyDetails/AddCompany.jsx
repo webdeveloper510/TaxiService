@@ -120,7 +120,7 @@ const AddCompany = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          navigate("/superadmindashboard/companydetails")
+          navigate("/taxi/companydetails")
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -226,7 +226,7 @@ const AddCompany = () => {
                         <h2>{companyId?"Edit Company": "Add Company"}</h2>
                       </div>
                       <div className="right-trip-content">
-                        <Link to="/superadmindashboard/companydetails">
+                        <Link to="/taxi/companydetails">
                           <CButton className="company_list">
                             Company List
                           </CButton>
@@ -757,7 +757,7 @@ const AddCompany = () => {
                                 <CButton
                                   onClick={() =>
                                     navigate(
-                                      "/superadmindashboard/companydetails"
+                                      "/taxi/companydetails"
                                     )
                                   }
                                   type="button"

@@ -73,7 +73,7 @@ const ViewSingleVehicle = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
               <h1 class="heading-for-every-page">
-                    <Link to="/superadmindashboard/vehicle/listofvehicles">
+                    <Link to="/taxi/vehicle/listofvehicles">
                     <img src={backtovehicle} alt="edit" /> View All Vehicles</Link></h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}

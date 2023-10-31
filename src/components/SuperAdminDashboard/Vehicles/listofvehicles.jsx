@@ -166,7 +166,7 @@ const LisOfVehicles = () => {
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} /> 
                           <div class="icons-outer" >
                           <div class="overlay">
-                          <Link to={`/superadmindashboard/vehicle/editvehicle/${data._id}`}>
+                          <Link to={`/taxi/vehicle/editvehicle/${data._id}`}>
                           <CButton id="btn_edit_vehicle" className="edit_vehicle"
                        
                           ><img src={editvehicleicon} alt="edit-icon"/></CButton>
@@ -180,7 +180,7 @@ const LisOfVehicles = () => {
                           </div>
                           </div>
                           </div>
-                          <Link className="vehicle_linked" to={`/superadmindashboard/vehicle/vehicle-details/${data._id}`}>
+                          <Link className="vehicle_linked" to={`/taxi/vehicle/vehicle-details/${data._id}`}>
                             <Card.Body>
                               <Card.Title>{data.vehicle_model}</Card.Title>
                               <Card.Text>

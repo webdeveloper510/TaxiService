@@ -123,7 +123,7 @@ const ViewAllVehicle = () => {
                             <Card.Img variant="top" src={data.vehicle_photo} style={{ height: 250, width: 293 }} />
                           {/* <div class="icons-outer" >
                           <div class="overlay">
-                          <Link to={`/superadmindashboard/vehicle/editvehicle/${data._id}`}>
+                          <Link to={`/taxi/vehicle/editvehicle/${data._id}`}>
                           <CButton id="btn_edit_vehicle" className="edit_vehicle"
                        
                           ><img src={editvehicleicon} alt="edit-icon"/></CButton>

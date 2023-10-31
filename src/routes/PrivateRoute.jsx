@@ -56,26 +56,26 @@ const PrivateRoute = () => {
             <Route path="/faremanagement" element={<FareManagement />} />
             <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
             <Route path="/vehicle/viewSiglevehicle/:vehicleId" element={<ViewSingleSubVehicle />} />
-            <Route path="/superadmindashboard/dashboard" element={<SuperAdminDashboard />} />
-            <Route path="/superadmindashboard/companydetails" element={<CompanyDetails />} />
-            <Route path="/superadmindashboard/add-company" element={<AddCompany />} />
-            <Route path="/superadmindashboard/trips/bookedtrips" element={<SuperBookedTrips/>} />
-            <Route path="/superadmindashboard/trips/activetrips" element={<SuperActiveTrip/>} />
-            <Route path="/superadmindashboard/trips/pendingtrips" element={<SuperPendingTrip/>} />
-            <Route path="/superadmindashboard/trips/cancelledtrips" element={<SuperCancelledTrip/>} />
-            <Route path="/superadmindashboard/trips/completetrips" element={<SuperCompleteTrip/>} />
-            <Route path="/superadmindashboard/trips/requesttrips" element={<SuperRequestTrip/>} />
-            <Route path="/superadmindashboard/trips/acceptedtrips" element={<RequestAcceptTrip/>} />
-            <Route path="/superadmindashboard/trips/addnewbooking" element={<AddNewBookings/>} />
-            <Route path="/superadmindashboard/driver/addnewdriver" element={<AddNewDriver />} />
-            <Route path="/superadmindashboard/driver/listofdrivers" element={<ListOfDrivers />} />
-            <Route path="/superadmindashboard/driver/editdriver/:driverId" element={<EditDriver />} />
-            <Route path="/superadmindashboard/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
-            <Route path="/superadmindashboard/vehicle/listofvehicles" element={<LisOfVehicles />} />
-            <Route path="/superadmindashboard/vehicle/vehicle-details/:vehicleId" element={<ViewSingleVehicle />} />
-            <Route path="/superadmindashboard/vehicle/editvehicle/:vehicleId" element={<EditVehicle />} />
-            <Route path="/superadmindashboard/fare/addfare" element={<AddFare />} />
-            <Route path="/superadmindashboard/fare/listoffares" element={<SecureSuperRoleRoute><ListOfFares/></SecureSuperRoleRoute>} />
+            <Route path="/taxi/dashboard" element={<SuperAdminDashboard />} />
+            <Route path="/taxi/companydetails" element={<CompanyDetails />} />
+            <Route path="/taxi/add-company" element={<AddCompany />} />
+            <Route path="/taxi/trips/bookedtrips" element={<SuperBookedTrips/>} />
+            <Route path="/taxi/trips/activetrips" element={<SuperActiveTrip/>} />
+            <Route path="/taxi/trips/pendingtrips" element={<SuperPendingTrip/>} />
+            <Route path="/taxi/trips/cancelledtrips" element={<SuperCancelledTrip/>} />
+            <Route path="/taxi/trips/completetrips" element={<SuperCompleteTrip/>} />
+            <Route path="/taxi/trips/requesttrips" element={<SuperRequestTrip/>} />
+            <Route path="/taxi/trips/acceptedtrips" element={<RequestAcceptTrip/>} />
+            <Route path="/taxi/trips/addnewbooking" element={<AddNewBookings/>} />
+            <Route path="/taxi/driver/addnewdriver" element={<AddNewDriver />} />
+            <Route path="/taxi/driver/listofdrivers" element={<ListOfDrivers />} />
+            <Route path="/taxi/driver/editdriver/:driverId" element={<EditDriver />} />
+            <Route path="/taxi/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
+            <Route path="/taxi/vehicle/listofvehicles" element={<LisOfVehicles />} />
+            <Route path="/taxi/vehicle/vehicle-details/:vehicleId" element={<ViewSingleVehicle />} />
+            <Route path="/taxi/vehicle/editvehicle/:vehicleId" element={<EditVehicle />} />
+            <Route path="/taxi/fare/addfare" element={<AddFare />} />
+            <Route path="/taxi/fare/listoffares" element={<ListOfFares/>} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />
         </Routes>
     );

@@ -137,7 +137,7 @@ const EditVehicle = () => {
 
   const navigate = useNavigate()
   const back = () => {
-    navigate("/superadmindashboard/vehicle/listofvehicles")
+    navigate("/taxi/vehicle/listofvehicles")
   }
 
 
@@ -210,7 +210,7 @@ const EditVehicle = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                 <h1 class="heading-for-every-page edit_vehicles">
-                  <Link to="/superadmindashboard/vehicle/listofvehicles">
+                  <Link to="/taxi/vehicle/listofvehicles">
                     <img src={backtovehicle} alt="edit" /> Edit Vehicle Details</Link></h1>
 
 

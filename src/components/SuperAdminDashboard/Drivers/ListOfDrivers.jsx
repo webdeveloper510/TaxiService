@@ -242,7 +242,7 @@ const ListOfDrivers = () => {
 
                                     }
                                       onClick={() => {
-                                        navigate(`/superadmindashboard/driver/editdriver/${item._id}`);
+                                        navigate(`/taxi/driver/editdriver/${item._id}`);
                                       }
                                       }
                                     ><img src={editiconimg} /></div>

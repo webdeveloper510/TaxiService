@@ -273,7 +273,7 @@ const SuperPendingTrip = () => {
  <img src={refreshImg} />
  <img src={downarrowImg} />
  <img src={crossImg} />
- <Link to="/superadmindashboard/trips/addnewbooking">
+ <Link to="/taxi/trips/addnewbooking">
  <CButton className="add_company_btn">Add New Booking</CButton>
  </Link>
  </div>

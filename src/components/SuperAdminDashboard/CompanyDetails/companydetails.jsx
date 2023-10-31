@@ -285,7 +285,7 @@ const CompanyDetails = () => {
                       <img src={downarrowImg}/>
                       <img src={crossImg}/>
                       <div className="right-trip-content">
-                        <Link to="/superadmindashboard/add-company">
+                        <Link to="/taxi/add-company">
                           <CButton className="add_company_btn">
                             Add Company
                           </CButton>
@@ -368,7 +368,7 @@ const CompanyDetails = () => {
                                 onClick={() => setEditVisible(!editVisible)}
                               >
                                 {/* <div style={{cursor:"pointer"}} 
- onClick={()=>navigate(`/superadmindashboard/edit-company/${item._id}`)}
+ onClick={()=>navigate(`/taxi/edit-company/${item._id}`)}
  ></div> */}
                                 <img
                                   src={editiconimg}

@@ -10,7 +10,7 @@ const _Supernav = [
   {
     component: CNavItem,
     name: 'Dashboard',
-    to: '/superadmindashboard/dashboard',
+    to: '/taxi/dashboard',
     icon: <div className='radius-svg'> <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -73,12 +73,12 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'Add Company',
-        to: '/superadmindashboard/add-company',
+        to: '/taxi/add-company',
       }, 
       {
         component: CNavItem,
         name: 'All Companies',
-        to: '/superadmindashboard/companydetails',
+        to: '/taxi/companydetails',
       }, 
       
     ],
@@ -111,37 +111,37 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'Request Trip',
-        to: '/superadmindashboard/trips/requesttrips',
+        to: '/taxi/trips/requesttrips',
       },
       {
         component: CNavItem,
         name: 'Pending Trips',
-        to: '/superadmindashboard/trips/pendingtrips',
+        to: '/taxi/trips/pendingtrips',
       },
       {
         component: CNavItem,
         name: 'Accepted Trips',
-        to: '/superadmindashboard/trips/acceptedtrips',
+        to: '/taxi/trips/acceptedtrips',
       },
      
       
       {
         component: CNavItem,
         name: 'Booked Trips',
-        to: '/superadmindashboard/trips/bookedtrips',
+        to: '/taxi/trips/bookedtrips',
       },
 
       {
         component: CNavItem,
         name: 'Active Trips',
-        to: '/superadmindashboard/trips/activetrips',
+        to: '/taxi/trips/activetrips',
       },
 
      
       {
         component: CNavItem,
         name: 'Completed Trips',
-        to: '/superadmindashboard/trips/completetrips',
+        to: '/taxi/trips/completetrips',
       },
 
     
@@ -151,7 +151,7 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'Cancelled Trips',
-        to: '/superadmindashboard/trips/cancelledtrips',
+        to: '/taxi/trips/cancelledtrips',
       },
     ],
   },
@@ -175,12 +175,12 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'Add New Driver',
-        to: '/superadmindashboard/driver/addnewdriver',
+        to: '/taxi/driver/addnewdriver',
       }, 
       {
         component: CNavItem,
         name: 'All Drivers',
-        to: '/superadmindashboard/driver/listofdrivers',
+        to: '/taxi/driver/listofdrivers',
       }, 
       
     ],
@@ -208,13 +208,13 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'Add Fare',
-        to: '/superadmindashboard/fare/addfare',
+        to: '/taxi/fare/addfare',
         
       },
       {
         component: CNavItem,
         name: 'All Fares',
-        to: '/superadmindashboard/fare/listoffares',
+        to: '/taxi/fare/listoffares',
         
       },
       
@@ -239,13 +239,13 @@ const _Supernav = [
       {
         component: CNavItem,
         name: 'Add New Vehicle',
-        to: '/superadmindashboard/vehicle/addnewvehicle',
+        to: '/taxi/vehicle/addnewvehicle',
         
       },
       {
         component: CNavItem,
         name: 'All Vehicles',
-        to: '/superadmindashboard/vehicle/listofvehicles',
+        to: '/taxi/vehicle/listofvehicles',
         
       },
       

@@ -67,7 +67,7 @@ function Login() {
           localStorage.setItem("token", response.data.jwtToken)
           if(response.data.result.role === "SUPER_ADMIN") {
             setTimeout(()=>{
-              navigate("/superadmindashboard/dashboard")
+              navigate("/taxi/dashboard")
             } , 1000)
             
           }else{

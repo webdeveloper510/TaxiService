@@ -113,7 +113,7 @@ const AddSuperVehicle = () => {
   }, []);
 
   const back = () => {
-    navigate("/superadmindashboard/vehicle/listofvehicles")
+    navigate("/taxi/vehicle/listofvehicles")
   }
 
 

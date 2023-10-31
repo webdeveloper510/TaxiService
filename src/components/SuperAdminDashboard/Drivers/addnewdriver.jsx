@@ -127,7 +127,7 @@ const AddNewDriver = () => {
 
 
   const back = () => {
-    ("/superadmindashboard/drivernavigate/listofdrivers")
+    navigate("/taxi/driver/listofdrivers")
   }
 
   // const handleRadioChange = (event) => {
@@ -165,8 +165,8 @@ const AddNewDriver = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          // navigate("/superadmindashboard/drivernavigate/listofdrivers")
-          navigate("/superadmindashboard/driver/listofdrivers")
+          // navigate("/taxi/drivernavigate/listofdrivers")
+          navigate("/taxi/driver/listofdrivers")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',

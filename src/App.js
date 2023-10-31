@@ -20,7 +20,7 @@ function App() {
             if (res?.code === 200) {
               setUser(res.result)
               if(res?.result?.role === "SUPER_ADMIN") {
-                return <Navigate to="/superadmindashboard/dashboard" />;
+                return <Navigate to="/taxi/dashboard" />;
                 
               }else{
                 return <Navigate to="/dashboard" />;

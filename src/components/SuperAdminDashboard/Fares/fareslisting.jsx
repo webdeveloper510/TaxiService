@@ -241,7 +241,7 @@ const ListOfFares = () => {
                         <h2>Fare List </h2>
                       </div>
                       <div className="right-trip-content">
-                        <Link to="/superadmindashboard/add-fare">
+                        <Link to="/taxi/add-fare">
                           <CButton className="add_fare_btn">Add Fare</CButton>
                         </Link>
                      

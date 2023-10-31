@@ -62,7 +62,7 @@ const AddFare = () => {
   }, []);
 
   const back = () => {
-    navigate("/superadmindashboard/fare/listoffares")
+    navigate("/taxi/fare/listoffares")
   }
 
 
@@ -81,7 +81,7 @@ const AddFare = () => {
             position: 'top-right',
             autoClose: 1000,
           });
-          navigate("/superadmindashboard/fare/listoffares")
+          navigate("/taxi/fare/listoffares")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
