@@ -9,7 +9,7 @@ import BookedStats from "./BookedStats";
 import CancelledStats from "./CancelledStats";
 import UsersStats from "./UsersStats";
 import EarningStats from "./EaringStats";
-//import DashboardGraph from "../Admindashboard/DashboardChart/dashboardgraph";
+//import DashboardGraph from "../Hotel/DashboardChart/dashboardgraph";
 
 const AllDashboardStats=()=> {
 

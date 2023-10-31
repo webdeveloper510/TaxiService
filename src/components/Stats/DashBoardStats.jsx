@@ -9,7 +9,7 @@ import {
 import CancelledTrips from "./CancelledTrips";
 import NewUsers from "./NewUsers";
 import TotalEarnings from "./TotalEarnings";
-import DashboardGraph from "../Admindashboard/DashboardChart/dashboardgraph";
+import DashboardGraph from "../Hotel/DashboardChart/dashboardgraph";
 
 const DashboardStats=()=> {
    

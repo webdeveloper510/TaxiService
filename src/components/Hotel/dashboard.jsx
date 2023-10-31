@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import AppHeader from "../TopBar/AppHeader";
 import Map from "../TaxiMap/Map";
-import Sidebar2 from "../Admindashboard/SideBar2";
+import Sidebar2 from "../Hotel/SideBar2";
 import DashboardStats from "../Stats/DashBoardStats";
 import RecentTrips from "./Trips/recenttrips";
 //import BookingRequestTable from "./BookingRequestTable";

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Navigate, Routes } from 'react-router-dom';
-import Dashboard from '../components/Admindashboard/dashboard';
-import ActiveTrip from '../components/Admindashboard/Trips/activetrips';
-import FareManagement from '../components/Admindashboard/FareManagement/faremanagement';
-import ViewAllVehicle from '../components/Admindashboard/Vehicle/viewallvehicle';
-import CompletedTrip from '../components/Admindashboard/Trips/completedtrips';
-import BookingRequestTable from '../components/Admindashboard/Trips/BookingRequestTable';
-import DriverList from '../components/Admindashboard/Driver/driverlist';
-import RecentTrips from '../components/Admindashboard/Trips/recenttrips';
-import RequestNewTrip from '../components/Admindashboard/Trips/requesttrip';
-import PendingTrip from '../components/Admindashboard/Trips/pedingtrips';
+import Dashboard from '../components/Hotel/dashboard';
+import ActiveTrip from '../components/Hotel/Trips/activetrips';
+import FareManagement from '../components/Hotel/FareManagement/faremanagement';
+import ViewAllVehicle from '../components/Hotel/Vehicle/viewallvehicle';
+import CompletedTrip from '../components/Hotel/Trips/completedtrips';
+import BookingRequestTable from '../components/Hotel/Trips/BookingRequestTable';
+import DriverList from '../components/Hotel/Driver/driverlist';
+import RecentTrips from '../components/Hotel/Trips/recenttrips';
+import RequestNewTrip from '../components/Hotel/Trips/requesttrip';
+import PendingTrip from '../components/Hotel/Trips/pedingtrips';
 import SuperAdminDashboard from '../components/Taxi/Dashboard/Dashboard';
 import CompanyDetails from '../components/Taxi/CompanyDetails/companydetails';
 import AddCompany from '../components/Taxi/CompanyDetails/AddCompany';
@@ -29,10 +29,10 @@ import AddNewBookings from '../components/Taxi/Trips/AddNewBookings';
 import EditVehicle from '../components/Taxi/Vehicles/EditVehicle';
 import EditDriver from '../components/Taxi/Drivers/EditDriver';
 import SuperCancelledTrip from '../components/Taxi/Trips/CancelledTrips';
-import EditpendingTrip from '../components/Admindashboard/Trips/EditpendingTrips';
+import EditpendingTrip from '../components/Hotel/Trips/EditpendingTrips';
 import ViewSingleVehicle from '../components/Taxi/Vehicles/viewsinglevehicle';
 import SecureSuperRoleRoute from '../utils/SecureSuperRoleRoute';
-import ViewSingleSubVehicle from '../components/Admindashboard/Vehicle/viewsinglevehicle';
+import ViewSingleSubVehicle from '../components/Hotel/Vehicle/viewsinglevehicle';
 
 
 const PrivateRoute = () => {
