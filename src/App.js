@@ -19,7 +19,7 @@ function App() {
             console.log(res, 'profile data')
             if (res?.code === 200) {
               setUser(res.result)
-              if(res?.result?.role === "SUPER_ADMIN") {
+              if(res?.result?.role === "SUB_ADMIN") {
                 return <Navigate to="/taxi/dashboard" />;
                 
               }else{
