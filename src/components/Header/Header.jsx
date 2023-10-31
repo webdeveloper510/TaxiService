@@ -50,12 +50,14 @@ const  Header=()=> {
       </div>
     </nav>
         </div>
-
+        <Link to="/login"> 
         <div class="header-buttons">
-        <button class="login-btn"><Link to="/login">Login</Link></button>
+       <button class="login-btn">Login</button>
         {/* <button class="sign-up-btn"><Link to="/signup">Sign Up</Link></button> */}
         </div>
+        </Link>
         </div>
+       
       </header>
     );
   };

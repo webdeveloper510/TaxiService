@@ -30,6 +30,8 @@ import { getFare } from "../../../utils/api";
 import editiconimg from '../../../assets/images/editicon.png'
 import deleteiconimg from '../../../assets/images/deleteicon.png'
 import PulseLoader from "react-spinners/PulseLoader";
+import AppLoader from "../../AppLoader";
+import EmptyData from "../../EmptyData";
 
 
 
@@ -127,18 +129,10 @@ const FareManagement = () => {
                     </div> */}
                   </div>
                   {
-                    loader ? (<>
-                     <div className=" d-flex justify-content-center align-items-center"
-                    style={{ height: 400 }}>
-                    <PulseLoader
-                      color="#FFD04E"
-                      loading={true}
-                      margin={4}
-                      size={60}
-                      speedMultiplier={0.5}
-                    />
-                  </div>
-                    </>) : (<>
+                    loader ? <AppLoader/>: (
+                   
+                     <>
+                     {data.length != 0 ?
                       <CTable align="middle" className="mb-0" hover responsive>
 
                     <CTableHead>
@@ -187,7 +181,7 @@ const FareManagement = () => {
                       )) : ""}
                     </CTableBody>
                     
-                  </CTable>
+                  </CTable>:<EmptyData/>}
                   {data?.length > 0 ? (
                         <div
                           className="pagination-outer"
@@ -224,7 +218,9 @@ const FareManagement = () => {
                       ) : (
                         ""
                       )}
-                  </>)
+                  </>
+                
+                  )
                   }
                 
 

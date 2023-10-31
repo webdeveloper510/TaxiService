@@ -27,6 +27,8 @@ import { useNavigate } from "react-router-dom";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
 const SuperRequestTrip = () => {
+
+  
   function customSetHours(date, hour) {
     if (date instanceof Date) {
       const newDate = new Date(date);
@@ -82,11 +84,16 @@ const SuperRequestTrip = () => {
     pick_up_date: new Date(),
     passenger_detail: [],
   });
-
+  const [passengerError, setPassengerError] = useState([{
+    name: false,
+    phone: false,
+    email : false,
+    address: false,
+  }])
   const formValidation = (passengers) => {
     const data = [...passengers];
     var re = /\S+@\S+\.\S+/;
-    const phoneRegex = /^[0-9]{10}$/;
+    const phoneRegex = /^[0-9]*$/
     let valid = true;
     for (let index = 0; index < data.length; index++) {
       // const element = data[index];
@@ -181,11 +188,25 @@ const SuperRequestTrip = () => {
       ...passengers,
       { name: "", email: "", phone: "", address: "" },
     ]);
+    setPassengerError([...passengerError,{
+      name: false,
+      phone: false,
+      email : false,
+      address: false,
+    }])
   };
-
+  const handleBlur = (index,key) => {
+    const newPassengersError = [...passengerError]
+    newPassengersError[index][key] = true;
+    setPassengerError(newPassengersError);
+    console.log(passengerError)
+  };
   const removePassenger = (index) => {
     const updatedPassengers = passengers.filter((_, i) => i !== index);
     setPassengers(updatedPassengers);
+    const newPassengersError = [...passengerError]
+    newPassengersError.splice(index, 1);
+    setPassengerError(newPassengersError)
   };
 
   useEffect(() => {
@@ -225,7 +246,7 @@ const SuperRequestTrip = () => {
     obj[e.target.name] = e.target.value;
     arr[index] = obj;
     setPassengers([...arr]);
-    // const isValid = formValidation(passengers);
+    const isValid = formValidation(passengers);
     // const errorRes = formValidation(passengers);
     // if(errorRes){
     //   console.log("success")
@@ -625,7 +646,9 @@ const SuperRequestTrip = () => {
                           <CCardBody>
                             <CForm className="row g-3">
                               <CCol md={6}>
-                                <CFormLabel htmlFor="inputname">
+                                <CFormLabel htmlFor="inputname"
+                               
+                                >
                                   Name
                                 </CFormLabel>
                                 <CFormInput
@@ -635,15 +658,20 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
+                                  onBlur={()=>{
+                                    handleBlur(index,"name")
+                                  }}
                                 />
-                                <div style={{ color: "red" }}>
+                               {passengerError[index].name && <div style={{ color: "red" }}>
                                   {passenger.nameCheck}
                                   <br />
                                   {passenger.nameLengthCheck}
-                                </div>
+                                </div>}
                               </CCol>
                               <CCol xs={6}>
-                                <CFormLabel htmlFor="inputphnno">
+                                <CFormLabel htmlFor="inputphnno"
+                                
+                                >
                                   Phone
                                 </CFormLabel>
                                 <CFormInput
@@ -652,15 +680,20 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
+                                  onBlur={()=>{
+                                    handleBlur(index,"phone")
+                                  }}
                                 />
-                                <div style={{ color: "red" }}>
+                               {passengerError[index].phone && <div style={{ color: "red" }}>
                                   {passenger.phoneCheck}
                                   <br />
                                   {passenger.phoneLengthCheck}
-                                </div>
+                                </div>}
                               </CCol>
                               <CCol xs={6}>
-                                <CFormLabel htmlFor="inputtemailadd">
+                                <CFormLabel htmlFor="inputtemailadd"
+                               
+                                >
                                   Email Address
                                 </CFormLabel>
                                 <CFormInput
@@ -669,15 +702,20 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
+                                  onBlur={()=>{
+                                    handleBlur(index,"email")
+                                  }}
                                 />
-                                <div style={{ color: "red" }}>
+                               {passengerError[index].email && <div style={{ color: "red" }}>
                                   {passenger.emailCheck}
                                   <br />
                                   {passenger.emailFormat}
-                                </div>
+                                </div>}
                               </CCol>
                               <CCol xs={6}>
-                                <CFormLabel htmlFor="inputaddress">
+                                <CFormLabel htmlFor="inputaddress"
+                                
+                                >
                                   Address
                                 </CFormLabel>
                                 <CFormInput
@@ -686,12 +724,15 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
+                                  onBlur={()=>{
+                                    handleBlur(index,"address")
+                                  }}
                                 />
-                                <div style={{ color: "red" }}>
+                                {passengerError[index].address && <div style={{ color: "red" }}>
                                   {passenger.addressCheck}
                                   <br />
                                   {passenger.addressLengthCheck}
-                                </div>
+                                </div>}
                               </CCol>
                             </CForm>
                           </CCardBody>

@@ -65,15 +65,22 @@ function Login() {
             autoClose: 1000,
           });
           localStorage.setItem("token", response.data.jwtToken)
-          if(response.data.result.role === "SUB_ADMIN") {
+          if(response.data.result.role === "COMPANY") {
             setTimeout(()=>{
               navigate("/taxi/dashboard")
-            } , 1000)
+            } , 200)
             
-          }else{
+          }
+          if(response.data.result.role === "SUPER_ADMIN") {
+            setTimeout(()=>{
+              navigate("/super-admin/dashboard")
+            } , 200)
+            
+          }
+          else{
             setTimeout(()=>{
               navigate("/dashboard")
-            } , 1000)
+            } , 200)
           }
          
           

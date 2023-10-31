@@ -7,21 +7,21 @@ import PrivateRoute from './PrivateRoute';
 
 const Routerpage = () => {
 
-  const auth = () => {
-    if(localStorage.getItem("token")){
+  // const auth = () => {
+  //   if(localStorage.getItem("token")){
       
-      return <Navigate to={"/dashboard"}/>
-    } else {
-      return <MainPage/>
-    }
-  }
+  //     return <Navigate to={"/dashboard"}/>
+  //   } else {
+  //     return <MainPage/>
+  //   }
+  // }
   
   return (
     <>
      
       <Routes>
-        <Route path="/" element={auth()} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/" element={auth()} />
+        <Route path="/login" element={<Login />} /> */}
         <Route path="/*" element={<PrivateRoute />} />
         <Route path='*' element={<Navigate to={"/login"}/> }/>
 

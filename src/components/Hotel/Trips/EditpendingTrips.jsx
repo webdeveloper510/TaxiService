@@ -346,6 +346,7 @@ const EditpendingTrip = () => {
     obj[e.target.name] = e.target.value;
     arr[index] = obj;
     setInputs([...arr]);
+    formValidation(inputs)
   };
 
   return (
@@ -663,6 +664,11 @@ const EditpendingTrip = () => {
                                       addOnChangeHandler(e, index);
                                     }}
                                   />
+                                  <div style={{ color: "red" }}>
+                                  {passenger.nameCheck}
+                                  <br />
+                                  {passenger.nameLengthCheck}
+                                </div>
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputphnno">
@@ -676,6 +682,11 @@ const EditpendingTrip = () => {
                                       addOnChangeHandler(e, index);
                                     }}
                                   />
+                                   <div style={{ color: "red" }}>
+                                  {passenger.phoneCheck}
+                                  <br />
+                                  {passenger.phoneLengthCheck}
+                                </div>
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputtemailadd">
@@ -689,6 +700,12 @@ const EditpendingTrip = () => {
                                       addOnChangeHandler(e, index);
                                     }}
                                   />
+                                  <div style={{ color: "red" }}>
+                                  {passenger.emailCheck}
+                                  <br />
+                                  {passenger.emailFormat}
+                                </div>
+                                  
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputaddress">
@@ -702,6 +719,11 @@ const EditpendingTrip = () => {
                                     name="address"
                                     value={passenger.address}
                                   />
+                                   <div style={{ color: "red" }}>
+                                  {passenger.addressCheck}
+                                  <br />
+                                  {passenger.addressLengthCheck}
+                                </div>
                                 </CCol>
                               </CForm>
                             </CCardBody>

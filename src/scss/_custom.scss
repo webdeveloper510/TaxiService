@@ -815,3 +815,10 @@ button.remove-btn img {
     padding: 0;
     font-size: 18px;
 }
+
+ul.header-nav.top-bar-right li::after {
+    display: none;
+}
+ul.header-nav.bell-icon li a {
+    margin-top: 8px;
+}

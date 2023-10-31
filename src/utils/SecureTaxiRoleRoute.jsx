@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { getProfile } from './api';
 import userContext from './context';
 
-function SecureSuperRoleRoute({ children }) {
+function SecureTaxiRoleRoute({ children }) {
   const { user, setUser } = useContext(userContext);
   const [isValid, setValid] = useState(true);
   function onLoadApp() {
@@ -15,7 +15,7 @@ function SecureSuperRoleRoute({ children }) {
     }
 
     
-      if (user?.role != "SUPER_ADMIN") {
+      if (user?.role != "COMPANY") {
         setValid(false);
       }
   }
@@ -26,8 +26,8 @@ function SecureSuperRoleRoute({ children }) {
    if(!user){
     return <Navigate to="/" />;
    }
-   if(user.role == "COMPANY"){
-    return <Navigate to="/super-admin/dashboard" />;
+   if(user.role == "SUPER_ADMIN"){
+    return <Navigate to="/taxi/dashboard" />;
    }else{
     return <Navigate to="/dashboard" />;
 
@@ -39,4 +39,4 @@ function SecureSuperRoleRoute({ children }) {
 
 }
 
-export default SecureSuperRoleRoute
+export default SecureTaxiRoleRoute

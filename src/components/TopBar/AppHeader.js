@@ -53,7 +53,7 @@ const AppHeader = () => {
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}
         </CHeaderNav>
-        <CHeaderNav>
+        <CHeaderNav className='bell-icon'>
           <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilBell} size="lg" />
@@ -71,7 +71,7 @@ const AppHeader = () => {
           </CNavItem> */}
           {/* <button className='btn btn-warning text-white  '  onClick={logout} >Logout</button> */}
         </CHeaderNav>
-        <CHeaderNav className="ms-3">
+        <CHeaderNav className="top-bar-right">
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>

@@ -29,7 +29,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item" className='header-drop-down'>
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar className="three-dots" src={threedots} size="md" />
+        <img className="three-dots" src={threedots} size="md" />
 
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">

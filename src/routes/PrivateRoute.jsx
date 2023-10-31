@@ -33,49 +33,68 @@ import EditpendingTrip from '../components/Hotel/Trips/EditpendingTrips';
 import ViewSingleVehicle from '../components/Taxi/Vehicles/viewsinglevehicle';
 import SecureSuperRoleRoute from '../utils/SecureSuperRoleRoute';
 import ViewSingleSubVehicle from '../components/Hotel/Vehicle/viewsinglevehicle';
+import SuperDashboard from '../components/SuperAdmin/Dashboard/Dashboard';
+import AddSuperCompany from '../components/SuperAdmin/Companies/AddCompany';
+import AllCompanyDetails from '../components/SuperAdmin/Companies/AllCompanies';
+import SuperRecentTrips from '../components/SuperAdmin/Trips/RecentTrips';
+import EditCompanyDetails from '../components/SuperAdmin/Companies/EditCompany';
+import Home from '../components/HomePage/Home';
+import GuestRoute from '../utils/GuestRoute';
+import Login from '../components/Login/Login';
+import SecureHotelRoleRoute from '../utils/SecureHotelRoleRoute';
+import SecureTaxiRoleRoute from '../utils/SecureTaxiRoleRoute';
 
 
 const PrivateRoute = () => {
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
 
-    if (!token) {
-        return <Navigate to="/login" />;
-    }
+    // if (!token) {
+    //     return <Navigate to="/login" />;
+    // }
 
     return (
         <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/trips/recenttrips" element={<RecentTrips />} />
-            <Route path="/trips/activetrips" element={<ActiveTrip />} />
-            <Route path="/trips/requestnewtrip" element={<RequestNewTrip />} />
-            <Route path="/trips/pendingtrips" element={<PendingTrip />} />
-            <Route path="/trips/editpendingtrips/:id" element={<EditpendingTrip />} />
-            <Route path="/trips/completetrips" element={<CompletedTrip />} />
-            <Route path="/trips/requestbookings" element={<BookingRequestTable />} />
-            <Route path="/driver/listofdrivers" element={<DriverList />} />
-            <Route path="/faremanagement" element={<FareManagement />} />
-            <Route path="/vehicle/viewallvehicle" element={<ViewAllVehicle />} />
-            <Route path="/vehicle/viewSiglevehicle/:vehicleId" element={<ViewSingleSubVehicle />} />
-            <Route path="/taxi/dashboard" element={<SuperAdminDashboard />} />
-            <Route path="/taxi/companydetails" element={<CompanyDetails />} />
-            <Route path="/taxi/add-company" element={<AddCompany />} />
-            <Route path="/taxi/trips/bookedtrips" element={<SuperBookedTrips/>} />
-            <Route path="/taxi/trips/activetrips" element={<SuperActiveTrip/>} />
-            <Route path="/taxi/trips/pendingtrips" element={<SuperPendingTrip/>} />
-            <Route path="/taxi/trips/cancelledtrips" element={<SuperCancelledTrip/>} />
-            <Route path="/taxi/trips/completetrips" element={<SuperCompleteTrip/>} />
-            <Route path="/taxi/trips/requesttrips" element={<SuperRequestTrip/>} />
-            <Route path="/taxi/trips/acceptedtrips" element={<RequestAcceptTrip/>} />
-            <Route path="/taxi/trips/addnewbooking" element={<AddNewBookings/>} />
-            <Route path="/taxi/driver/addnewdriver" element={<AddNewDriver />} />
-            <Route path="/taxi/driver/listofdrivers" element={<ListOfDrivers />} />
-            <Route path="/taxi/driver/editdriver/:driverId" element={<EditDriver />} />
-            <Route path="/taxi/vehicle/addnewvehicle" element={<AddSuperVehicle />} />
-            <Route path="/taxi/vehicle/listofvehicles" element={<LisOfVehicles />} />
-            <Route path="/taxi/vehicle/vehicle-details/:vehicleId" element={<ViewSingleVehicle />} />
-            <Route path="/taxi/vehicle/editvehicle/:vehicleId" element={<EditVehicle />} />
-            <Route path="/taxi/fare/addfare" element={<AddFare />} />
-            <Route path="/taxi/fare/listoffares" element={<ListOfFares/>} />
+            <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
+            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+            <Route path="/dashboard" element={<SecureHotelRoleRoute><Dashboard /></SecureHotelRoleRoute>} />
+            <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} />
+            <Route path="/trips/activetrips" element={<SecureHotelRoleRoute><ActiveTrip /></SecureHotelRoleRoute>} />
+            <Route path="/trips/requestnewtrip" element={<SecureHotelRoleRoute><RequestNewTrip /></SecureHotelRoleRoute>} />
+            <Route path="/trips/pendingtrips" element={<SecureHotelRoleRoute><PendingTrip /></SecureHotelRoleRoute>} />
+            <Route path="/trips/editpendingtrips/:id" element={<SecureHotelRoleRoute><EditpendingTrip /></SecureHotelRoleRoute>} />
+            <Route path="/trips/completetrips" element={<SecureHotelRoleRoute><CompletedTrip /></SecureHotelRoleRoute>} />
+            <Route path="/trips/requestbookings" element={<SecureHotelRoleRoute><BookingRequestTable /></SecureHotelRoleRoute>} />
+            <Route path="/driver/listofdrivers" element={<SecureHotelRoleRoute><DriverList /></SecureHotelRoleRoute>} />
+            <Route path="/faremanagement" element={<SecureHotelRoleRoute><FareManagement /></SecureHotelRoleRoute>} />
+            <Route path="/vehicle/viewallvehicle" element={<SecureHotelRoleRoute><ViewAllVehicle /></SecureHotelRoleRoute>} />
+            <Route path="/vehicle/viewSiglevehicle/:vehicleId" element={<SecureHotelRoleRoute><ViewSingleSubVehicle /></SecureHotelRoleRoute>} />
+            <Route path="/taxi/dashboard" element={<SecureTaxiRoleRoute>
+                <SuperAdminDashboard />
+            </SecureTaxiRoleRoute>} />
+            <Route path="/taxi/companydetails" element={<SecureTaxiRoleRoute><CompanyDetails /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/add-company" element={<SecureTaxiRoleRoute><AddCompany /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/bookedtrips" element={<SecureTaxiRoleRoute><SuperBookedTrips/></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/activetrips" element={<SecureTaxiRoleRoute><SuperActiveTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/pendingtrips" element={<SecureTaxiRoleRoute><SuperPendingTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/cancelledtrips" element={<SecureTaxiRoleRoute><SuperCancelledTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/completetrips" element={<SecureTaxiRoleRoute><SuperCompleteTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/requesttrips" element={<SecureTaxiRoleRoute><SuperRequestTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/acceptedtrips" element={<SecureTaxiRoleRoute><RequestAcceptTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/addnewbooking" element={<SecureTaxiRoleRoute><AddNewBookings /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/driver/addnewdriver" element={<SecureTaxiRoleRoute><AddNewDriver /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/driver/listofdrivers" element={<SecureTaxiRoleRoute><ListOfDrivers /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/driver/editdriver/:driverId" element={<SecureTaxiRoleRoute><EditDriver /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/vehicle/addnewvehicle" element={<SecureTaxiRoleRoute><AddSuperVehicle /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/vehicle/listofvehicles" element={<SecureTaxiRoleRoute><LisOfVehicles /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/vehicle/vehicle-details/:vehicleId" element={<SecureTaxiRoleRoute><ViewSingleVehicle /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/vehicle/editvehicle/:vehicleId" element={<SecureTaxiRoleRoute><EditVehicle /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/fare/addfare" element={<SecureTaxiRoleRoute><AddFare /></SecureTaxiRoleRoute>} />
+            <Route path="/super-admin/dashboard" element={<SecureSuperRoleRoute><SuperDashboard /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/add-company" element={<SecureSuperRoleRoute><AddSuperCompany /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/all-companies" element={<SecureSuperRoleRoute><AllCompanyDetails /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/edit-company-details" element={<SecureSuperRoleRoute><EditCompanyDetails /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/trips/recent-trips" element={<SecureSuperRoleRoute><SuperRecentTrips /></SecureSuperRoleRoute>} />
+            <Route path="/taxi/fare/listoffares" element={<SecureTaxiRoleRoute><ListOfFares /></SecureTaxiRoleRoute>} />
             <Route path='*' element={<Navigate to={"/dashboard"} />} />
         </Routes>
     );

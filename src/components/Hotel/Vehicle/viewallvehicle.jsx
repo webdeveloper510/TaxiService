@@ -16,6 +16,7 @@ import {
 import { getVehicle } from "../../../utils/api";
 import PulseLoader from "react-spinners/PulseLoader";
 import editvehicleicon from "../../../assets/images/editvehi.png";
+import EmptyData from "../../EmptyData";
 const ViewAllVehicle = () => {
 
   const [vehicle, setVehicle] = useState([]);
@@ -171,7 +172,7 @@ const ViewAllVehicle = () => {
                           </Card>
                         </Col>
                       )
-                    }) : 'no results found'}
+                    }) :<EmptyData/>}
 
                   </Row>
                   {data?.length > 0 ? (
