@@ -866,9 +866,22 @@ const AddSuperCompany = () => {
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Tel Contact Number is required"),
     email: Yup.string().email().required("Email Address is required"),
-    commision : Yup.string().required("Commision is required"),
+    commision : Yup.number()
+    .typeError('Must be a number')
+    .required('Number is required')
+    .max(100, 'Value must be lower than equal to 100')
   });
-
+  const handleValueCommission = (e)=>{
+    // console.log("handleValueCommission", e)
+    const value = parseFloat(e.target.value);
+    if(value > 100){
+      console.log("value must be lower than 100")
+      formik.setFieldError("commision","value must be lower than 100")
+    }else{
+      formik.setFieldValue(e.target.name, e.target.value);
+      formik.setFieldTouched(e.target.name, true);
+    }
+  }
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
@@ -889,6 +902,7 @@ const AddSuperCompany = () => {
         p_number: values.tel_contact_number,
         email: values.email,
         commision : values.commision,
+        role : "COMPANY"
       }).then((res) => {
         console.log("response---->>>>", res);
         if (res?.data?.code === 200) {
@@ -1051,7 +1065,7 @@ const AddSuperCompany = () => {
                               ) : null}
                             </CCol>
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputland">Land</CFormLabel>
+                              <CFormLabel htmlFor="inputland">Address</CFormLabel>
                               <CFormInput
                                 aria-label="land"
                                 {...formik.getFieldProps("land")}
@@ -1396,13 +1410,14 @@ const AddSuperCompany = () => {
                             {/* <CCol md={6} className="row add_company_row"> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcommision">
-                                Commision
+                              Commission in (%)
                               </CFormLabel>
                               <CFormInput
+                              type="number"
+                              step="0.01"
                                 aria-label="commision"
-                                onKeyDown={(e) => {
-                                  handleMobile(e, 17);
-                                }}
+                                
+                                
                                 {...formik.getFieldProps("commision")}
                                 maxLength="50"
                                 className={clsx(

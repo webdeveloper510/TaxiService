@@ -1,5 +1,9 @@
 // Here you can add other styles
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
+input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        display: none;
+      }
 .sidebar-nav .nav-group {
     position: unset;
     float: left;

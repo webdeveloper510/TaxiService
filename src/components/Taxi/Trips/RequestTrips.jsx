@@ -411,30 +411,30 @@ const SuperRequestTrip = () => {
                               <CFormLabel htmlFor="inputvehicletype">
                                 Vehicle Type
                               </CFormLabel>
-                              <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-      {/* <CFormLabel htmlFor="inputvehicletype">
-                                Vehicle Type
-                              </CFormLabel> */}
-        <InputLabel id="demo-simple-select-label"></InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
+                            {/* <Box sx={{ minWidth: 120 }}>
+    <FormControl fullWidth>
+    <CFormLabel htmlFor="inputvehicletype">
+                              Vehicle Type
+                            </CFormLabel>
+      <InputLabel id="demo-simple-select-label"></InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={age}
+        label="Age"
+        onChange={handleChange}
+      >
 
-<MenuItem value="Select Vehicle Type">Select Vehicle Type</MenuItem> {/* Default text */}
-          <MenuItem value="Twenty">Twenty</MenuItem>
-          <MenuItem value="Thirty">Thirty</MenuItem>
-          <MenuItem value="Forty">Forty</MenuItem>
-          
-        </Select>
-      </FormControl>
-    </Box>
+<MenuItem value="Select Vehicle Type">Select Vehicle Type</MenuItem> Default text
+        <MenuItem value="Twenty">Twenty</MenuItem>
+        <MenuItem value="Thirty">Thirty</MenuItem>
+        <MenuItem value="Forty">Forty</MenuItem>
+        
+      </Select>
+    </FormControl>
+  </Box> */}
 
-                              {/* <CFormSelect
+                              <CFormSelect
                                 name="vehicle"
                                 onChange={(data) => {
                                   console.log(data.target.value);
@@ -452,7 +452,7 @@ const SuperRequestTrip = () => {
                                   }
                                 }}
                               >
-                                <option default>Select Vehicle</option>
+                                <option default>Select Vehicle Type</option>
                                 {vehicle?.map((e, i) => {
                                   return (
                                     <>
@@ -468,7 +468,7 @@ const SuperRequestTrip = () => {
                                 >
                                   {errors.vehicle}
                                 </span>
-                              )} */}
+                              )}
                             </CCol>
 
                             <CCol md={6}>
