@@ -25,6 +25,7 @@ import editvehicleicon from "../../../assets/images/editvehi.png";
 import deletevehicleicon from "../../../assets/images/deletevehi.png"
 import deletepopup from '../../../assets/images/deletepopup.png'
 import { toast } from "react-toastify";
+import EmptyData from "../../EmptyData";
 
 
 const LisOfVehicles = () => {
@@ -216,7 +217,7 @@ const LisOfVehicles = () => {
                         </Col>
                         
                       )
-                    }) : 'no results found'}
+                    }) : <EmptyData/>}
 
                   </Row>
                   {
