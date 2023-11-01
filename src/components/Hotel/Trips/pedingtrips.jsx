@@ -298,7 +298,7 @@ const PendingTrip = () => {
                       )}
                     </>
                   )}
-                  <div
+                 {data?.length > 0 && <div
                     className="pagination-outer"
                     style={{
                       display: "flex",
@@ -323,7 +323,7 @@ const PendingTrip = () => {
                     <div className="next_btn">
                       <button onClick={() => handleNextPage()}>Next</button>
                     </div>
-                  </div>
+                  </div>}
                 </div>
               </div>
             </div>

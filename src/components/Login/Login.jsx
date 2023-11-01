@@ -19,11 +19,13 @@ import clsx from "clsx";
 import { userLogin } from "../../utils/api";
 import { toast } from 'react-toastify';
 import userContext from "../../utils/context";
-import {Icon} from 'react-icons-kit';
-import {eyeOff} from 'react-icons-kit/feather/eyeOff';
-import {eye} from 'react-icons-kit/feather/eye'
+import { Icon } from 'react-icons-kit';
+import { eyeOff } from 'react-icons-kit/feather/eyeOff';
+import { eye } from 'react-icons-kit/feather/eye'
+import { ClipLoader } from "react-spinners";
 function Login() {
-  const {user,setUser} = useContext(userContext)
+  const { user, setUser } = useContext(userContext)
+  const [ loading, setLoading ] = useState(false);
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     phoneNo: Yup.string()
@@ -49,6 +51,7 @@ function Login() {
     initialValues,
     validationSchema: loginSchema,
     onSubmit: async (values) => {
+      setLoading(true);
       console.log("values", values);
       userLogin({
         email: values.phoneNo,
@@ -58,32 +61,32 @@ function Login() {
         // navige to dashboard if user role is super admin
         if (response.data.code === 200
           // && response.data.result.role === "SUB_ADMIN"
-           ) {
-            setUser(response.data.result)
+        ) {
+          setUser(response.data.result)
           toast.success(`${response.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
           localStorage.setItem("token", response.data.jwtToken)
-          if(response.data.result.role === "COMPANY") {
-            setTimeout(()=>{
-              navigate("/taxi/dashboard")
-            } , 200)
-            
+          if (response.data.result.role === "COMPANY") {
+
+            navigate("/taxi/dashboard")
+
+
           }
-          if(response.data.result.role === "SUPER_ADMIN") {
-            setTimeout(()=>{
-              navigate("/super-admin/dashboard")
-            } , 200)
-            
+          if (response.data.result.role === "SUPER_ADMIN") {
+
+            navigate("/super-admin/dashboard")
+
+
           }
-          else{
-            setTimeout(()=>{
-              navigate("/dashboard")
-            } , 200)
+          else {
+
+            navigate("/dashboard")
+
           }
-         
-          
+
+
 
         } else {
           toast.warning("Invalid Credentials", {
@@ -93,7 +96,7 @@ function Login() {
         }
       }).catch((error) => {
         console.log(error)
-      })
+      }).finally(() => { setLoading(false) })
     },
   });
 
@@ -130,18 +133,18 @@ function Login() {
 
 
 
-//   const [password, setPassword] = useState("");
-// const [type, setType] = useState('password');
-      const [icon, setIcon] = useState(eyeOff);
-const handleToggle = () => {
-  if (!passVissible){
-     setIcon(eye);
-    
-  } else {
-     setIcon(eyeOff)
-    
+  //   const [password, setPassword] = useState("");
+  // const [type, setType] = useState('password');
+  const [icon, setIcon] = useState(eyeOff);
+  const handleToggle = () => {
+    if (!passVissible) {
+      setIcon(eye);
+
+    } else {
+      setIcon(eyeOff)
+
+    }
   }
-}
   return (
     <div
       className="container-login"
@@ -159,7 +162,7 @@ const handleToggle = () => {
         <MDBRow>
           <MDBCol col="4" md="8">
             <div className="svg-outer">
-              
+
             </div>
             <form onSubmit={formik.handleSubmit} noValidate>
               <div className="login-left-content">
@@ -205,7 +208,7 @@ const handleToggle = () => {
                   </label>
                   <MDBInput
                     id="password"
-                    type= {passVissible?"text":"password"}             
+                    type={passVissible ? "text" : "password"}
                     size="lg"
                     {...formik.getFieldProps("password")}
                     maxLength="50"
@@ -227,12 +230,12 @@ const handleToggle = () => {
                     <div className="text-danger text-start">{formik.errors.password}</div>
                   ) : null}
 
-<span class="flex justify-around items-center eye_pwd_icon">
-                  <Icon onClick={()=>{
-                    setPassVissible(!passVissible)
-                    handleToggle()
-                  }} class="absolute mr-10" icon={icon} size={25}/>
-              </span>
+                  <span class="flex justify-around items-center eye_pwd_icon">
+                    <Icon onClick={() => {
+                      setPassVissible(!passVissible)
+                      handleToggle()
+                    }} class="absolute mr-10" icon={icon} size={25} />
+                  </span>
                 </div>
 
 
@@ -245,7 +248,7 @@ const handleToggle = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
              /> */}
-            
+
                 <div className="d-flex justify-content-between mb-4">
                   <MDBCheckbox
                     name="flexCheck"
@@ -263,7 +266,8 @@ const handleToggle = () => {
                 Login
               </MDBBtn> */}
                   <button className="custom-login btn btn-primary" type="submit">
-                    Login
+                    {loading ?
+                      <ClipLoader color="#000000" /> : "Login"}
                   </button>
                 </div>
               </div>

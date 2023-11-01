@@ -38,7 +38,7 @@ const Dashboard=()=> {
               
               color: "#FFD04E",
             }}
-            >{` ${user ? capitalLine(user?.company_detail?.company_name):""} `}</span>
+            >{` ${user ? capitalLine(user?.first_name + " " + user?.last_name):""} `}</span>
           
           </h1>
           <div class="map-outer"> 
