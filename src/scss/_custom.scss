@@ -822,3 +822,26 @@ ul.header-nav.top-bar-right li::after {
 ul.header-nav.bell-icon li a {
     margin-top: 8px;
 }
+div#menu- {
+    top: 0px;
+    height: 300px;
+}
+#demo-simple-select:focus {
+    outline: none;
+    box-shadow: none;
+}
+#demo-simple-select {
+    padding: 13px;
+    border-radius: 31px !important;
+}
+.MuiInputBase-root.MuiOutlinedInput-root:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+.MuiInputBase-root.MuiOutlinedInput-root {
+    border-radius: 10px;
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+    margin-top: 6px;
+    height: 45px;
+}

@@ -26,9 +26,20 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 const SuperRequestTrip = () => {
 
-  
+  const [age, setAge] = useState('Select Vehicle Type');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   function customSetHours(date, hour) {
     if (date instanceof Date) {
       const newDate = new Date(date);
@@ -393,11 +404,37 @@ const SuperRequestTrip = () => {
 
                               </CFormSelect>
                             </CCol> */}
+
+                                 
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
                                 Vehicle Type
                               </CFormLabel>
-                              <CFormSelect
+                              <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+      {/* <CFormLabel htmlFor="inputvehicletype">
+                                Vehicle Type
+                              </CFormLabel> */}
+        <InputLabel id="demo-simple-select-label"></InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+
+<MenuItem value="Select Vehicle Type">Select Vehicle Type</MenuItem> {/* Default text */}
+          <MenuItem value="Twenty">Twenty</MenuItem>
+          <MenuItem value="Thirty">Thirty</MenuItem>
+          <MenuItem value="Forty">Forty</MenuItem>
+          
+        </Select>
+      </FormControl>
+    </Box>
+
+                              {/* <CFormSelect
                                 name="vehicle"
                                 onChange={(data) => {
                                   console.log(data.target.value);
@@ -431,7 +468,7 @@ const SuperRequestTrip = () => {
                                 >
                                   {errors.vehicle}
                                 </span>
-                              )}
+                              )} */}
                             </CCol>
 
                             <CCol md={6}>
