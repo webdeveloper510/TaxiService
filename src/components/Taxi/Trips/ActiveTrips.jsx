@@ -143,7 +143,7 @@ const SuperActiveTrip = () => {
   <CIcon icon={cilPeople} />
 </CTableHeaderCell> */}
                             <CTableHeaderCell className="text-center">
-                              Sr.No
+                              S. No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                               Trip ID

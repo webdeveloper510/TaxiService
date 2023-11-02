@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import Sidebar from "../../Taxi/SiderNavBar/Sidebar";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
 import {
   CButton,
   CCard,
@@ -19,8 +23,12 @@ import * as Yup from "yup";
 import clsx from "clsx";
 import { addCompany, getCompanyById } from "../../../utils/api";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const AddCompany = () => {
+  const [address, setAddress] = useState("");
+  const [touched, setTouched] = useState(false)
+  const [addressError, setAddressError] = useState(true);
   const { companyId } = useParams();
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,7 +47,15 @@ const AddCompany = () => {
     // setLoading(false)
     // }
   }, []);
-
+  const handleSelectAddress = async (selectedAddress) => {
+    try {
+      formik.setFieldValue("land", selectedAddress )
+      setAddress(selectedAddress)
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   const navigate = useNavigate();
   const initialValues = {
     company_name: "",
@@ -62,16 +78,15 @@ const AddCompany = () => {
   };
   const validationSchema = Yup.object().shape({
     company_name: Yup.string()
-      .min(2)
-      .max(20)
-      .required("Hotel Name is required"),
+      .max(20,"Length should be small than 20 character")
+      .required("Customer Name is required"),
     land: Yup.string().min(4).max(20).required("Address is required"),
     post_code: Yup.string().max(10).required("Postcode is required"),
     // house_number: Yup.string().max(20).required("Building number is required"),
-    describe_your_taxi_company: Yup.string()
-      .min(4)
-      .max(100)
-      .required("Describe your Hotel is required"),
+    // describe_your_taxi_company: Yup.string()
+    //   .min(4)
+    //   .max(100)
+    //   .required("Describe your Hotel is required"),
     // affiliated_with: Yup.string().required("Affiliated with is required"),
     phone: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
@@ -79,45 +94,46 @@ const AddCompany = () => {
     // number_of_cars: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Number of cars is required"),
     // chamber_of_comerce_number: Yup.string().required("Chamber of Commerce Number is required"),
     // vat:Yup.string().min(4).max(18).required("VAT Number is required"),
-    website: Yup.string()
-      .url("Invalid URL format. Please enter a valid URL.")
-      .required("Website is required"),
+    // website: Yup.string()
+    //   .url("Invalid URL format. Please enter a valid URL.")
+    //   .required("Website is required"),
     // tx_quality: Yup.string().required("TX Quality is required"),
     // contact: Yup.string().required("Contact is required"),
-    first_name: Yup.string().required("First Name is required"),
-    last_name: Yup.string().required("Last Name is required"),
-    tel_contact_number: Yup.string()
-      .min(6, "minimum length must be 6")
-      .max(18, "max length must be 6")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Tel Contact Number is required"),
+    // first_name: Yup.string().required("First Name is required"),
+    // last_name: Yup.string().required("Last Name is required"),
+    // tel_contact_number: Yup.string()
+    //   .min(6, "minimum length must be 6")
+    //   .max(18, "max length must be 6")
+    //   .matches(/^[0-9]+$/, "Must be only digits")
+    //   .required("Tel Contact Number is required"),
     email: Yup.string().email().required("Email Address is required"),
   });
-
+  const [formLoader , setFormLoader] = useState(false)
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setFormLoader(true)
       console.log("values", values);
       addCompany({
         company_name: values.company_name,
         land: values.land,
         post_code: values.post_code,
-        house_number: values.house_number,
-        description: values.describe_your_taxi_company,
-        affiliated_with: values.affiliated_with,
+        // house_number: values.house_number,
+        // description: values.describe_your_taxi_company,
+        // affiliated_with: values.affiliated_with,
         phone: values.phone,
-        website: values.website,
-        tx_quality_mark: values.tx_quality,
-        first_name: values.first_name,
-        last_name: values.last_name,
+        // website: values.website,
+        // tx_quality_mark: values.tx_quality,
+        // first_name: values.first_name,
+        // last_name: values.last_name,
         p_number: values.tel_contact_number,
         email: values.email,
-        role : "HOTEL"
+        role: "HOTEL"
       }).then((res) => {
         console.log("response---->>>>", res);
         if (res?.data?.code === 200) {
-          toast.success(`${res.data.message}`, {
+          toast.success(`Customer added successfully`, {
             position: "top-right",
             autoClose: 1000,
           });
@@ -128,6 +144,8 @@ const AddCompany = () => {
             autoClose: 1000,
           });
         }
+      }).finally(()=>{
+        setFormLoader(false)
       });
     },
   });
@@ -204,6 +222,17 @@ const AddCompany = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleAddressError = ()=>{
+    console.log("handle Address error: ", address)
+    if(!address){
+      console.log("handle Address error: true")
+      formik.setFieldError("land","Address is required")
+      setAddressError(true);
+    }
+    else{
+      setAddressError(false)
+    }
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -218,7 +247,7 @@ const AddCompany = () => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">
-                  {companyId ? "Edit Hotel" : "Add Hotel"}
+                  {companyId ? "Edit Customer" : "Add Customer"}
                 </h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
@@ -246,7 +275,7 @@ const AddCompany = () => {
                           >
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcname">
-                                Hotel Name
+                                Customer Name
                               </CFormLabel>
                               <CFormInput
                                 aria-label="vehicle fare"
@@ -275,32 +304,101 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            <CCol md={6}>
-                              <CFormLabel htmlFor="inputland">Address</CFormLabel>
-                              <CFormInput
-                                aria-label="land"
-                                {...formik.getFieldProps("land")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.land && formik.errors.land,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.land &&
-                                      !formik.errors.land,
+                            <CCol xs={6}
+                            onBlur={()=>{
+                              setTouched(true)
+                            }}
+                            >
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Address
+                              </CFormLabel>
+                              <PlacesAutocomplete
+                                value={address}
+                                
+                                onChange={(data) => {
+                                  
+                                 console.log(data, " from place holder")
+                                  setAddress(data);
+                                  if (data.length < 1) {
+                                    setAddressError(true)
+                                  } else {
+                                   setAddressError(false)
                                   }
-                                )}
-                                name="land"
-                                autoComplete="off"
-                              />
-                              {formik.errors.land && formik.touched.land ? (
+                                }}
+                                onSelect={handleSelectAddress}
+                                
+                              
+                              >
+                                {({
+                                  getInputProps,
+                                  suggestions,
+                                  getSuggestionItemProps,
+                                  loading,
+                                }) => (
+                                  <div>
+                                    <CFormInput
+                                      onBlur={()=>{
+                                        console.log("Blur run")
+                                      }}
+                                      id="inputtripfrom"
+                                      {...getInputProps({
+                                        // placeholder: "Enter a location",
+                                      })}
+                                      className={clsx(
+                                        "form-control bg-transparent",
+                                        {
+                                          "is-invalid":
+                                          touched &&
+                                            addressError
+                                        },
+                                        {
+                                          "is-valid":
+                                            touched &&
+                                            !addressError
+                                        }
+                                      )}
+                                  
+                                    />
+                                    {addressError && touched && 
                                 <div className="text-danger">
-                                  {formik.errors.land}
+                                  Address is Required
                                 </div>
-                              ) : null}
+                              }
+                                    <div className="suugestion-div">
+                                      <div className="suggestion-inner">
+                                        {loading && <div>Loading...</div>}
+                                        {suggestions
+                                          .slice(0, 3)
+                                          .map((suggestion) => (
+                                            <div
+                                              key={suggestion.id}
+                                              {...getSuggestionItemProps(
+                                                suggestion
+                                              )}
+                                            >
+                                              {suggestion.description}
+                                            </div>
+                                          ))}
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </PlacesAutocomplete>
+                              {/* {tripFromCoordinates && (
+                                  <div>
+                                    <p>Latitude: {tripFromCoordinates.lat}</p>
+                                    <p>Longitude: {tripFromCoordinates.lng}</p>
+                                    <p>Address: {tripFrom}</p>
+                                  </div>
+                                )} */}
+                              {errors.trip_from && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.trip_from}
+                                </span>
+                              )}
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpcode">
@@ -365,7 +463,7 @@ const AddCompany = () => {
                               ) : null}
                             </CCol> */}
 
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputtxinum">
                                 Describe Your Hotel
                               </CFormLabel>
@@ -399,7 +497,7 @@ const AddCompany = () => {
                                   {formik.errors.describe_your_taxi_company}
                                 </div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
 
                             {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputaffi">
@@ -533,7 +631,7 @@ const AddCompany = () => {
  <div className="text-danger">{formik.errors.vat}</div>
  ) : null} 
  </CCol> */}
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputwebsite">
                                 Website
                               </CFormLabel>
@@ -563,7 +661,7 @@ const AddCompany = () => {
                                   {formik.errors.website}
                                 </div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
                             {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputquality">
                                 TX Quality Mark
@@ -619,71 +717,71 @@ const AddCompany = () => {
  </CCol> */}
 
                             {/* <CCol md={6} className="row add_company_row"> */}
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputfname">
-                                  First Name
-                                </CFormLabel>
-                                <CFormInput
-                                  id="f_name"
-                                  {...formik.getFieldProps("first_name")}
-                                  maxLength="50"
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.first_name &&
-                                        formik.errors.first_name,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.first_name &&
-                                        !formik.errors.first_name,
-                                    }
-                                  )}
-                                  name="first_name"
-                                  autoComplete="off"
-                                />
-                                {formik.errors.first_name &&
-                                  formik.touched.first_name ? (
-                                  <div className="text-danger">
-                                    {formik.errors.first_name}
-                                  </div>
-                                ) : null}
-                              </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputlname">
-                                  Last Name
-                                </CFormLabel>
-                                <CFormInput
-                                  id="l_name"
-                                  {...formik.getFieldProps("last_name")}
-                                  maxLength="50"
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.last_name &&
-                                        formik.errors.last_name,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.last_name &&
-                                        !formik.errors.last_name,
-                                    }
-                                  )}
-                                  name="last_name"
-                                  autoComplete="off"
-                                />
-                                {formik.errors.last_name &&
-                                  formik.touched.last_name ? (
-                                  <div className="text-danger">
-                                    {formik.errors.last_name}
-                                  </div>
-                                ) : null}
-                              </CCol>
+                            {/* <CCol md={6}>
+                              <CFormLabel htmlFor="inputfname">
+                                First Name
+                              </CFormLabel>
+                              <CFormInput
+                                id="f_name"
+                                {...formik.getFieldProps("first_name")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.first_name &&
+                                      formik.errors.first_name,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.first_name &&
+                                      !formik.errors.first_name,
+                                  }
+                                )}
+                                name="first_name"
+                                autoComplete="off"
+                              />
+                              {formik.errors.first_name &&
+                                formik.touched.first_name ? (
+                                <div className="text-danger">
+                                  {formik.errors.first_name}
+                                </div>
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputlname">
+                                Last Name
+                              </CFormLabel>
+                              <CFormInput
+                                id="l_name"
+                                {...formik.getFieldProps("last_name")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.last_name &&
+                                      formik.errors.last_name,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.last_name &&
+                                      !formik.errors.last_name,
+                                  }
+                                )}
+                                name="last_name"
+                                autoComplete="off"
+                              />
+                              {formik.errors.last_name &&
+                                formik.touched.last_name ? (
+                                <div className="text-danger">
+                                  {formik.errors.last_name}
+                                </div>
+                              ) : null}
+                            </CCol> */}
                             {/* </CCol> */}
 
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputcon_num">
                                 Telephone Number
                               </CFormLabel>
@@ -716,7 +814,7 @@ const AddCompany = () => {
                                   {formik.errors.tel_contact_number}
                                 </div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputmailaddress">
                                 Email Address
@@ -753,7 +851,7 @@ const AddCompany = () => {
                                 style={{ marginTop: "40px" }}
                               >
                                 <CButton type="submit" className="submit-btn">
-                                  Submit
+                                  {formLoader?<ClipLoader color="#000000" />:"Submit"}
                                 </CButton>
                                 <CButton
                                   onClick={() =>

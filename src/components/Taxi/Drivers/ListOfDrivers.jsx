@@ -24,6 +24,7 @@ import { deleteCompany, deleteDriver, getDriver } from "../../../utils/api";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import EmptyData from "../../EmptyData";
 
 const ListOfDrivers = () => {
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -151,7 +152,7 @@ const ListOfDrivers = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                     { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             <CTableHeaderCell className="text-center">
@@ -264,7 +265,7 @@ const ListOfDrivers = () => {
                             }) : ""}
                         </CTableBody>
 
-                      </CTable>
+                      </CTable>: <EmptyData/>}
                       {
                         data?.length > 0 ?
                           <div

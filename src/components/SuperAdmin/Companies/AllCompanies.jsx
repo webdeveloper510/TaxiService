@@ -1,5 +1,8 @@
 
-
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
 import deletepopup from "../../../assets/images/deletepopup.png";
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../Taxi/SiderNavBar/Sidebar";
@@ -61,7 +64,31 @@ const tableExample = [
     // action: { checkicon: checkiconimg },
   },
 ];
+
 const AllCompanyDetails = () => {
+  const [address, setAddress] = useState("");
+  const [touched, setTouched] = useState(false)
+  const [addressError, setAddressError] = useState(true);
+  const handleSelectAddress = async (selectedAddress) => {
+    try {
+      formik.setFieldValue("land", selectedAddress )
+      setAddress(selectedAddress)
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const handleAddressError = ()=>{
+    console.log("handle Address error: ", address)
+    if(!address){
+      console.log("handle Address error: true")
+      formik.setFieldError("land","Address is required")
+      setAddressError(true);
+    }
+    else{
+      setAddressError(false)
+    }
+  }
   const [selectedCompany, setSelectedCompany] = useState(null);
   // State variables for popups
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -304,6 +331,7 @@ const AllCompanyDetails = () => {
         console.log("company detail by id--------------", res);
         if (res.code == 200) {
           let values = res.result
+          setAddress(values.land)
           setInputData(res.result);
           formik.setValues({ ...values })
         }
@@ -412,7 +440,7 @@ const AllCompanyDetails = () => {
  <CIcon icon={cilPeople} />
  </CTableHeaderCell> */}
                           <CTableHeaderCell className="text-center">
-                            Sr.No
+                            S. No.
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
                             Company ID
@@ -632,36 +660,89 @@ const AllCompanyDetails = () => {
                                 </div>
                               ) : null}
                                 </CCol>
-                                <CCol md={6}>
-                                  <CFormLabel htmlFor="inputland">
-                                    Address
-                                  </CFormLabel>
-                                  <CFormInput
-                                    aria-label="land"
-                                    value={inputData.land}
-                                    {...formik.getFieldProps("land")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.land && formik.errors.land,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.land &&
-                                      !formik.errors.land,
+                                 <CCol xs={6}
+                            onBlur={()=>{
+                              setTouched(true)
+                            }}
+                            >
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Address
+                              </CFormLabel>
+                              <PlacesAutocomplete
+                                value={address}
+                                
+                                onChange={(data) => {
+                                  
+                                 console.log(data, " from place holder")
+                                  setAddress(data);
+                                  if (data.length < 1) {
+                                    setAddressError(true)
+                                  } else {
+                                   setAddressError(false)
                                   }
-                                )}
-                                name="land"
-                                autoComplete="off"
-                                  />
-                                  {formik.errors.land && formik.touched.land ? (
+                                }}
+                                onSelect={handleSelectAddress}
+                                
+                              
+                              >
+                                {({
+                                  getInputProps,
+                                  suggestions,
+                                  getSuggestionItemProps,
+                                  loading,
+                                }) => (
+                                  <div>
+                                    <CFormInput
+                                      onBlur={()=>{
+                                        console.log("Blur run")
+                                      }}
+                                      id="inputtripfrom"
+                                      {...getInputProps({
+                                        // placeholder: "Enter a location",
+                                      })}
+                                      className={clsx(
+                                        "form-control bg-transparent",
+                                        {
+                                          "is-invalid":
+                                          touched &&
+                                            addressError
+                                        },
+                                        {
+                                          "is-valid":
+                                            touched &&
+                                            !addressError
+                                        }
+                                      )}
+                                  
+                                    />
+                                    {addressError && touched && 
                                 <div className="text-danger">
-                                  {formik.errors.land}
+                                  Address is Required
                                 </div>
-                              ) : null}
-                                </CCol>
+                              }
+                                    <div className="suugestion-div">
+                                      <div className="suggestion-inner">
+                                        {loading && <div>Loading...</div>}
+                                        {suggestions
+                                          .slice(0, 3)
+                                          .map((suggestion) => (
+                                            <div
+                                              key={suggestion.id}
+                                              {...getSuggestionItemProps(
+                                                suggestion
+                                              )}
+                                            >
+                                              {suggestion.description}
+                                            </div>
+                                          ))}
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </PlacesAutocomplete>
+                             
+                              
+                              </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputpcode">
                                     Post Code

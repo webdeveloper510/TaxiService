@@ -10,6 +10,8 @@ import {
 
   import avatar1 from '../../assets/images/avtar1.jpg'
 import { getDriver } from "../../utils/api";
+import EmptyData from "../EmptyData";
+import AppLoader from "../AppLoader";
 const tableExample = [
     {
       avatar: { src: avatar1},
@@ -50,14 +52,15 @@ const tableExample = [
 const RiderStatusTable=()=> {
    
   const [driver, setDriver] = useState([])
-
+  const [loading, setLoading] = useState(false)
   useEffect(()=>{
+    setLoading(true)
     getDriver().then(res => {
       // console.log(res.result, 'vehicle')
       if (res.code === 200) {
-        setDriver(res.result)
+        if(res.result) setDriver(res.result)
       }
-    })
+    }).finally(()=>{setLoading(false)})
   },[])
 
   console.log("driver status data=======", driver)
@@ -66,9 +69,9 @@ const RiderStatusTable=()=> {
        <>
       <div className="booking-request-table">
         <h2 className="head-rider">Driver's Status</h2>
-          <CTable align="middle" className="mb-0" hover responsive>
+          {loading? <AppLoader/>:<CTable align="middle" className="mb-0" hover responsive>
                
-                <CTableBody>
+                {driver.length > 0 ?<CTableBody>
                   {driver?.length > 0 ?
                   driver?.map((item, index) => {
                     let status = "Ofline";
@@ -110,8 +113,8 @@ const RiderStatusTable=()=> {
                     </CTableRow>
                   )})
                 :""}
-                </CTableBody>
-              </CTable>
+                </CTableBody>: <EmptyData/>}
+              </CTable>}
           
       </div>
        

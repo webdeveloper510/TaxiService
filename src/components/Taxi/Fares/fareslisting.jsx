@@ -119,7 +119,6 @@ const ListOfFares = () => {
   useEffect(() => {
     setLoader(true);
     getFare().then((res) => {
-      console.log(res.result, "vehicle");
       if (res.code === 200) {
         setFare(res.result);
       }

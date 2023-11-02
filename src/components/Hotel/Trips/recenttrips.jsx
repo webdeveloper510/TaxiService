@@ -13,6 +13,7 @@ import {
 import locationimg from '../../../assets/images/location.png';
 import { getRecentTrip, getTrip } from "../../../utils/api";
 import moment from "moment";
+import EmptyData from "../../EmptyData";
 //import background from '../assets/images/heroimg.png';
 const tableExample = [
   {
@@ -55,18 +56,19 @@ drivername: 'Avraamu',
 const RecentTrips=()=> {
    
   const [pendinTrip, setPendingTrip] = useState([])
-
+  const [loading, setLoading] = useState(false);
   useEffect(()=>{
+    setLoading(true);
     getRecentTrip().then(res => {
       if (res.code == 200) {
         setPendingTrip(res.result)
       }
-    })
+    }).finally(()=>setLoading(false))
   },[])
 
       return (
        <>
-       <div className="container-fluidd">
+      {pendinTrip.length > 1 ? <div className="container-fluidd">
        
         <div className="col-md-12">
        
@@ -91,7 +93,7 @@ const RecentTrips=()=> {
                     {/* <CTableHeaderCell className="text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell> */}
-                     <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
+                     <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
                     {/* <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell> */}
                     <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
@@ -163,7 +165,7 @@ const RecentTrips=()=> {
     </div>
       
        </div>
-       </div>
+       </div> : <EmptyData/>}
        <br/>
        
        </>

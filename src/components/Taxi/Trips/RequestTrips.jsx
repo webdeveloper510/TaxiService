@@ -31,6 +31,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { ClipLoader } from "react-spinners";
 
 const SuperRequestTrip = () => {
 
@@ -265,8 +266,10 @@ const SuperRequestTrip = () => {
     //   console.log("error")
     // }
   };
+  const [formLoader , setFormLoader] = useState(false);
 
   const adddata = () => {
+    setFormLoader(true)
     let data = inputData;
     let valid = true;
     let newErrors = { ...errors };
@@ -322,13 +325,14 @@ const SuperRequestTrip = () => {
             autoClose: 1000,
           });
         }
-      });
+      }).finally(()=>setFormLoader(false));
     } else {
       toast.warning("Please Enter Passenger Detail", {
         position: "top-right",
         autoClose: 1000,
       });
     }
+    setFormLoader(false)
   };
   const [tripFrom, setTripFrom] = useState("");
   const [tripFromCoordinates, setTripFromCoordinates] = useState(null);
@@ -796,13 +800,9 @@ const SuperRequestTrip = () => {
                       className="d-flex justify-content-center"
                       style={{ marginTop: "40px" }}
                     >
-                      <CButton
-                        type="submit"
-                        className="submit-btn"
-                        onClick={adddata}
-                      >
-                        Submit
-                      </CButton>
+                      <CButton type="submit" className="submit-btn">
+                                  {formLoader?<ClipLoader color="#000000" />:"Submit"}
+                                </CButton>
                       <CButton type="button" 
                       onClick={()=>{
                         navigate("/taxi/trips/pendingtrips");

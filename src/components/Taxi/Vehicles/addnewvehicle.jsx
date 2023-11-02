@@ -37,6 +37,7 @@ const AddSuperVehicle = () => {
     vehicleType: "",
     vehicleModal: "",
     seatingCapacity: "",
+    vehicleMake: "",
     // pricePerKm: "",
     // minimumFare: "",
     // commission: "",
@@ -51,6 +52,7 @@ const AddSuperVehicle = () => {
     vehicleNo: Yup.string().required("Vehicle No is required"),
     vehicleType: Yup.string().required("Vehicle Type is required"),
     vehicleModal: Yup.string().required("Vehicle Model is required"),
+    vehicleMake: Yup.string().required("Vehicle Make is required"),
     seatingCapacity: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Seating Capacity is required"),
     // pricePerKm: Yup.string().required("Price per km is required"),
     // minimumFare: Yup.string().required("Minimum Fare is required"),
@@ -89,7 +91,7 @@ const AddSuperVehicle = () => {
       }
     }
   };
-  const [vehicleType, setVehicleType] = useState()
+  const [vehicleType, setVehicleType] = useState([])
 
   const [selectedAC, setSelectedAC] = useState('');
 
@@ -140,7 +142,7 @@ const AddSuperVehicle = () => {
 
       formData.append('vehicle_number', values.vehicleNo);
       formData.append('vehicle_type', values.vehicleType);
-      formData.append('vehicle_model', values.vehicleModal);
+      formData.append('vehicle_model', values.vehicleModal);formData.append('vehicle_make', values.vehicleMake);
       formData.append('seating_capacity', values.seatingCapacity);
       // formData.append('price_per_km', values.pricePerKm);
       // formData.append('minimum_fare', values.minimumFare);
@@ -253,6 +255,27 @@ const AddSuperVehicle = () => {
                             </CCol>
 
                             <CCol xs={6}>
+                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Make</CFormLabel>
+                              <CFormInput   {...formik.getFieldProps("vehicleMake")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.vehicleMake && formik.errors.vehicleMake,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.vehicleMake && !formik.errors.vehicleMake,
+                                  }
+                                )}
+                                name="vehicleMake"
+                                autoComplete="off" />
+                              {formik.errors.vehicleMake && formik.touched.vehicleMake ? (
+                                <div className="text-danger">{formik.errors.vehicleMake}</div>
+                              ) : null}
+                            </CCol>
+<CCol xs={6}>
                               <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
                               <CFormInput   {...formik.getFieldProps("vehicleModal")}
                                 maxLength="50"

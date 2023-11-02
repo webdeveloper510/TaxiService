@@ -17,8 +17,8 @@ const BookedStats=()=> {
 
   useEffect(()=>{
     getCountDashboard().then((res)=>{
-      console.log("dashborad count response=============", res)
-      setCount(res.result)
+      
+      if(res?.result ) setCount(res?.result);
     }).catch((error)=>{
       console.log(error)
     })

@@ -151,7 +151,7 @@ const SuperRecentTrips=()=> {
               {/* <CTableHeaderCell className="text-center">
                 <CIcon icon={cilPeople} />
               </CTableHeaderCell> */}
-               <CTableHeaderCell className="text-center">Sr.No</CTableHeaderCell>
+               <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
               {/* <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell> */}
               <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>

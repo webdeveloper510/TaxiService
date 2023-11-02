@@ -24,6 +24,7 @@ import { addDriver } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import { countryList } from "../../../utils/saticData";
 //import background from '../assets/images/heroimg.png';
 
 const AddNewDriver = () => {
@@ -319,13 +320,11 @@ const AddNewDriver = () => {
                                 )}
                                 name="Country"
                                 autoComplete="off" >
-                                <option default>Select Country</option>
-                                <option>India</option>
-                                <option>Netherland</option>
-                                <option>USA</option>
-                                <option>UK</option>
-                                <option>USA</option>
-                                <option>AUS</option>
+                                <option default>Netherlands</option>
+                                {countryList.map((c)=>{
+                                   return (<option>{c}</option>)
+                                })}
+
                               </CFormSelect>
 
                               {formik.errors.Country && formik.touched.Country ? (

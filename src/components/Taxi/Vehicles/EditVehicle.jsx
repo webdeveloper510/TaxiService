@@ -37,6 +37,7 @@ const EditVehicle = () => {
     vehicleNo: "",
     vehicleType: "",
     vehicleModal: "",
+    vehicleMake: "",
     seatingCapacity: "",
     // pricePerKm: "",
     // minimumFare: "",
@@ -74,6 +75,7 @@ const EditVehicle = () => {
             vehicleNo: result.vehicle_number,
             vehicleType: result.vehicle_type,
             vehicleModal: result.vehicle_model,
+            vehicleMake: result.vehicle_make,
             seatingCapacity: result.seating_capacity,
             // pricePerKm: "",
             // minimumFare: "",
@@ -101,6 +103,7 @@ const EditVehicle = () => {
     vehicleNo: Yup.string().required("Vehicle No is required"),
     vehicleType: Yup.string().required("Vehicle Type is required"),
     vehicleModal: Yup.string().required("Vehicle Modal is required"),
+    vehicleMake: Yup.string().required("Vehicle Make is required"),
     seatingCapacity: Yup.string().required("Seating Capacity is required"),
     // pricePerKm: Yup.string().required("Price per km is required"),
     // minimumFare: Yup.string().required("Minimum Fare is required"),
@@ -165,6 +168,7 @@ const EditVehicle = () => {
       formData.append('vehicle_number', values.vehicleNo);
       formData.append('vehicle_type', values.vehicleType);
       formData.append('vehicle_model', values.vehicleModal);
+      formData.append('vehicle_make', values.vehicleMake);
       formData.append('seating_capacity', values.seatingCapacity);
       // formData.append('price_per_km', values.pricePerKm);
       // formData.append('minimum_fare', values.minimumFare);
@@ -219,9 +223,9 @@ const EditVehicle = () => {
                   {loading?<AppLoader/>:<CRow className="passenger-details">
                     <CCol xs={12}>
                       <CCard className="mb-4">
-                        <CCardHeader>
+                        {/* <CCardHeader>
                           <strong>Vehicle Information</strong>
-                        </CCardHeader>
+                        </CCardHeader> */}
                         <CCardBody>
 
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
@@ -299,6 +303,27 @@ const EditVehicle = () => {
                                 autoComplete="off" />
                               {formik.errors.vehicleModal && formik.touched.vehicleModal ? (
                                 <div className="text-danger">{formik.errors.vehicleModal}</div>
+                              ) : null}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Make</CFormLabel>
+                              <CFormInput   {...formik.getFieldProps("vehicleMake")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.vehicleMake && formik.errors.vehicleMake,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.vehicleMake && !formik.errors.vehicleMake,
+                                  }
+                                )}
+                                name="vehicleMake"
+                                autoComplete="off" />
+                              {formik.errors.vehicleMake && formik.touched.vehicleMake ? (
+                                <div className="text-danger">{formik.errors.vehicleMake}</div>
                               ) : null}
                             </CCol>
 
