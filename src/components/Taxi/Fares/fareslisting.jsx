@@ -39,6 +39,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
 import deletepopup from '../../../assets/images/deletepopup.png'
+import EmptyData from "../../EmptyData";
 const ListOfFares = () => {
   const initialValues = {
     vehicle_type: "",
@@ -265,7 +266,7 @@ const ListOfFares = () => {
                     </>
                   ) : (
                     <>
-                      <CTable align="middle" className="mb-0" hover responsive>
+                     { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -350,7 +351,7 @@ const ListOfFares = () => {
                             ))
                             : ""}
                         </CTableBody>
-                      </CTable>
+                      </CTable>:<EmptyData/>}
                       {
                         data?.length > 0 ?
                           <div

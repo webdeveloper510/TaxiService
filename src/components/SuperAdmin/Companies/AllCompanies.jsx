@@ -836,11 +836,29 @@ const AllCompanyDetails = () => {
                                     aria-label="phone number"
                                     maxLength="50"
                                     value={inputData.phone}
-                                    onChange={(e) => handleInput(e)}
-                                    className="form-control bg-transparent"
+                                    {...formik.getFieldProps("phone")}
+                                    className={clsx(
+                                      "form-control bg-transparent",
+                                      {
+                                        "is-invalid":
+                                          formik.touched.phone &&
+                                          formik.errors.phone,
+                                      },
+                                      {
+                                        "is-valid":
+                                          formik.touched.phone &&
+                                          !formik.errors.phone,
+                                      }
+                                    )}
                                     name="phone"
                                     autoComplete="off"
                                   />
+                                  {formik.errors.phone &&
+                                    formik.touched.phone ? (
+                                    <div className="text-danger">
+                                      {formik.errors.phone}
+                                    </div>
+                                  ) : null}
                                 </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputwebsite">
@@ -1016,7 +1034,6 @@ const AllCompanyDetails = () => {
                                     id="email_address"
                                     maxLength="50"
                                     {...formik.getFieldProps("email")}
-                                    maxLength="50"
                                     className={clsx(
                                       "form-control bg-transparent",
                                       {

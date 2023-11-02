@@ -210,8 +210,8 @@ export const addCompany = async(data) => {
     console.log("ADD_COMPANY", error);
   });
 };
-export const getCompany = async() => {
-  return await Axios.get(`admin/get_sub_admins`,{
+export const getCompany = async(data) => {
+  return await Axios.get(`admin/get_sub_admins${data?"?role="+data:""}`,{
     headers: {
       "x-access-token": token,
     },

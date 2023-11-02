@@ -45,15 +45,15 @@ const AddCompany = () => {
     company_name: "",
     land: "",
     post_code: "",
-    house_number: "",
+    // house_number: "",
     describe_your_taxi_company: "",
-    affiliated_with: "",
+    // affiliated_with: "",
     phone: "",
     // number_of_cars: "",
     // chamber_of_comerce_number: "",
     // vat:"",
     website: "",
-    tx_quality: "",
+    // tx_quality: "",
     // contact: "",
     first_name: "",
     last_name: "",
@@ -64,15 +64,15 @@ const AddCompany = () => {
     company_name: Yup.string()
       .min(2)
       .max(20)
-      .required("Company Name is required"),
-    land: Yup.string().min(4).max(20).required("Land is required"),
+      .required("Hotel Name is required"),
+    land: Yup.string().min(4).max(20).required("Address is required"),
     post_code: Yup.string().max(10).required("Postcode is required"),
-    house_number: Yup.string().max(20).required("Building number is required"),
+    // house_number: Yup.string().max(20).required("Building number is required"),
     describe_your_taxi_company: Yup.string()
       .min(4)
       .max(100)
-      .required("Describe your taxi number is required"),
-    affiliated_with: Yup.string().required("Affiliated with is required"),
+      .required("Describe your Hotel is required"),
+    // affiliated_with: Yup.string().required("Affiliated with is required"),
     phone: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
@@ -82,7 +82,7 @@ const AddCompany = () => {
     website: Yup.string()
       .url("Invalid URL format. Please enter a valid URL.")
       .required("Website is required"),
-    tx_quality: Yup.string().required("TX Quality is required"),
+    // tx_quality: Yup.string().required("TX Quality is required"),
     // contact: Yup.string().required("Contact is required"),
     first_name: Yup.string().required("First Name is required"),
     last_name: Yup.string().required("Last Name is required"),
@@ -113,6 +113,7 @@ const AddCompany = () => {
         last_name: values.last_name,
         p_number: values.tel_contact_number,
         email: values.email,
+        role : "HOTEL"
       }).then((res) => {
         console.log("response---->>>>", res);
         if (res?.data?.code === 200) {
@@ -217,7 +218,7 @@ const AddCompany = () => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">
-                  {companyId ? "Edit Company" : "Add Company"}
+                  {companyId ? "Edit Hotel" : "Add Hotel"}
                 </h1>
                 <div class="active-trip-outer" id="fare_management_page">
                   <div className="trips-head d-flex justify-content-between">
@@ -245,7 +246,7 @@ const AddCompany = () => {
                           >
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcname">
-                                Company Name
+                                Hotel Name
                               </CFormLabel>
                               <CFormInput
                                 aria-label="vehicle fare"
@@ -275,7 +276,7 @@ const AddCompany = () => {
                               ) : null}
                             </CCol>
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputland">Land</CFormLabel>
+                              <CFormLabel htmlFor="inputland">Address</CFormLabel>
                               <CFormInput
                                 aria-label="land"
                                 {...formik.getFieldProps("land")}
@@ -332,7 +333,7 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputhousenum">
                                 Building Number
                               </CFormLabel>
@@ -362,11 +363,11 @@ const AddCompany = () => {
                                   {formik.errors.house_number}
                                 </div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputtxinum">
-                                Describe Your Taxi Company
+                                Describe Your Hotel
                               </CFormLabel>
                               <CFormInput
                                 aria-label="taxi company"
@@ -400,7 +401,7 @@ const AddCompany = () => {
                               ) : null}
                             </CCol>
 
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputaffi">
                                 Affiliated with
                               </CFormLabel>
@@ -430,7 +431,7 @@ const AddCompany = () => {
                                   {formik.errors.affiliated_with}
                                 </div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputphnnum">
                                 Phone Number
@@ -563,7 +564,7 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            <CCol md={6}>
+                            {/* <CCol md={6}>
                               <CFormLabel htmlFor="inputquality">
                                 TX Quality Mark
                               </CFormLabel>
@@ -593,7 +594,7 @@ const AddCompany = () => {
                                   {formik.errors.tx_quality}
                                 </div>
                               ) : null}
-                            </CCol>
+                            </CCol> */}
                             {/* <CCol md={6}>
  <CFormLabel htmlFor="inputwebsite">Contact</CFormLabel>
  <CFormInput id="cont_act"
@@ -617,7 +618,7 @@ const AddCompany = () => {
  ) : null} 
  </CCol> */}
 
-                            <CCol md={6} className="row add_company_row">
+                            {/* <CCol md={6} className="row add_company_row"> */}
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputfname">
                                   First Name
@@ -680,7 +681,7 @@ const AddCompany = () => {
                                   </div>
                                 ) : null}
                               </CCol>
-                            </CCol>
+                            {/* </CCol> */}
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcon_num">

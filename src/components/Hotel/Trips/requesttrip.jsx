@@ -75,7 +75,7 @@ const RequestNewTrip = () => {
     minute:0,
   })
   const [passengers, setPassengers] = useState([
-    { name: "", email: "", phone: "", address: "" },
+    // { name: "", email: "", phone: "", address: "" },
   ]);
   const [vehicle, setVehicle] = useState();
   const [inputData, setInputData] = useState({
