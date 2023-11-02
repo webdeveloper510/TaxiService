@@ -40,6 +40,8 @@ function App() {
             }else{
                 return <Navigate to="/" />;
             }
+          }).catch((err)=>{
+            localStorage.clear()
           }).finally(()=>{
             setLoading(false)
           })

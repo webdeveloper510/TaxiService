@@ -10,28 +10,26 @@ function SecureTaxiRoleRoute({ children }) {
 
     const token = localStorage.getItem('token');
     console.log('token: from local storage' + token);
-    if (!token) {
+    if (!token || !user) {
       return <Navigate to="/" />;
     }
-
-    
-      if (user?.role != "COMPANY") {
-        setValid(false);
-      }
+    if (user?.role != "COMPANY") {
+      setValid(false);
+    }
   }
   useEffect(() => {
     onLoadApp()
   }, [])
   if (!isValid) {
-   if(!user){
-    return <Navigate to="/" />;
-   }
-   if(user.role == "SUPER_ADMIN"){
-    return <Navigate to="/taxi/dashboard" />;
-   }else{
-    return <Navigate to="/dashboard" />;
+    if (!user) {
+      return <Navigate to="/" />;
+    }
+    if (user.role == "SUPER_ADMIN") {
+      return <Navigate to="/taxi/dashboard" />;
+    } else {
+      return <Navigate to="/dashboard" />;
 
-   }
+    }
   } else {
     return children
 
