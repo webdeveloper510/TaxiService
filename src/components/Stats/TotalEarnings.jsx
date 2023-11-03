@@ -23,7 +23,7 @@ const TotalEarnings=()=> {
             <MDBCardText>
               <div>
                 <h5>Total Earnings</h5>
-            <span>450</span>
+            <span>0</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

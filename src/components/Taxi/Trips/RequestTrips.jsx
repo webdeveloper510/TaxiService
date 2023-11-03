@@ -330,7 +330,7 @@ const SuperRequestTrip = () => {
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;
       delete data.pick_up_date;
-      data.createdBy = data.customer;
+      data.created_by = data.customer;
       delete data.customer;
       addTrip(data).then((res) => {
         setFormLoader(true)

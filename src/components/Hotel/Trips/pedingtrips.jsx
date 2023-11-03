@@ -268,7 +268,7 @@ const PendingTrip = () => {
                                       )}
                                     </div>
                                   </CTableDataCell>
-                                  <CTableDataCell className="pending-trips-icons">
+                                  <CTableDataCell className="d-flex pending-trips-icons">
                                     <div>
                                       <Link
                                         to={`/trips/editpendingtrips/${item._id}`}

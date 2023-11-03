@@ -372,6 +372,7 @@ label.custom-file-upload {
 table.table.align-middle.table-hover.mb-0 tr td {
     font-size: 14px;
     align-items: baseline;
+    justify-content: center;
 }
 .dashboard-chart {
     background: #fff;
@@ -668,10 +669,10 @@ img.card-img-top {
     margin-top: 10px;
   }
   
-  .edit_vehicle,
-  .delete_vehilce {
-    margin: 0 10px;
-  }
+//   .edit_vehicle,
+//   .delete_vehilce {
+//     margin: 0 10px;
+//   }
   input#flexSwitchCheckDefault:focus {
     box-shadow: none;
     outline: none;
