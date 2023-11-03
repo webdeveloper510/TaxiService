@@ -146,6 +146,9 @@ const SuperActiveTrip = () => {
                               S. No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                              Customer Name
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Trip ID
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -176,6 +179,9 @@ const SuperActiveTrip = () => {
                                   >
                                     <CTableDataCell>
                                       <div>{firstIndex + index + 1}</div>
+                                    </CTableDataCell>
+                                    <CTableDataCell>
+                                      <div>{item?.customer_name}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
                                       <div>{item.trip_id}</div>

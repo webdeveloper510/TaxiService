@@ -29,7 +29,7 @@ import EmptyData from "../../EmptyData";
 const ListOfDrivers = () => {
   const [deleteVisible, setDeleteVisible] = useState(false);
   const navigate = useNavigate();
-
+const [selectedId, setSelectedId ] = useState(null);
   const [driver, setDriver] = useState([]);
   const [loader, setLoader] = useState(false);
   // const image = process.env.REACT_APP_IMAGE_URL1
@@ -118,9 +118,11 @@ const ListOfDrivers = () => {
           autoClose: 1000,
         });
       }
+      setDeleteVisible(false);
     } catch (error) {
       console.log(error);
-    }
+      setDeleteVisible(false);
+    } 
   };
 
   return (
@@ -258,7 +260,12 @@ const ListOfDrivers = () => {
                             deleteDriverHandler(item._id)
                           }}
                             ><img src={deleteiconimg} /></div> */}
-                                    <CButton id="delete_driver_btn" onClick={() => setDeleteVisible(!deleteVisible)}><img src={deleteiconimg} /></CButton>
+                                    <CButton id="delete_driver_btn" onClick={() => {
+                                      setDeleteVisible(!deleteVisible)
+                                    setSelectedId(item._id)
+                                  }
+                                    
+                                    }><img src={deleteiconimg} /></CButton>
                                   </CTableDataCell>
                                 </CTableRow>
                               )
@@ -319,14 +326,16 @@ const ListOfDrivers = () => {
                             <CCardBody>
                               <img src={deletepopup} alt="danger" />
                               <h2>Are you Sure</h2>
-                              <p>You want to delete this Vehicle ?</p>
+                              <p>You want to delete this driver ?</p>
 
                             </CCardBody>
                             <div className="delete_vehicle_popup_outer">
 
 
                               <CButton className="delete_popup"
-
+onClick={()=>{
+  deleteDriverHandler(selectedId)
+}}
                               >Delete</CButton>
                               <CButton className="cancel_popup">
                                 Cancel</CButton>

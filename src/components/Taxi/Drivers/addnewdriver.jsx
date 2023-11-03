@@ -40,7 +40,7 @@ const AddNewDriver = () => {
     LastName: "",
     Address1: "",
     Address2: "",
-    Country: "",
+    Country: "Netherlands",
     City: "",
     Zip: "",
     Email: "",
@@ -452,7 +452,7 @@ const AddNewDriver = () => {
                             </CCol>
 
 
-                            {/* 
+                            {/*
                             <CCol md={12} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel><br />
                               {uploadedImages.length > 0 ? (
@@ -517,8 +517,8 @@ const AddNewDriver = () => {
                                 )}
                                 name="file"
                                 autoComplete="off" />
-                              
-                              
+                             
+                             
                                 {formik.errors.file && formik.touched.file ? (
                                   <div className="text-danger">{formik.errors.file}</div>
                                 ) : null}
@@ -552,7 +552,7 @@ const AddNewDriver = () => {
                                   <button
                                     className="submit-btn"
                                     onClick={downloadFile}>Download</button>
-                              
+                             
                                 </div>
                               )}
                               {!selectedDoc && <>

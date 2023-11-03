@@ -132,91 +132,98 @@ const SuperCancelledTrip = () => {
                   
                   </div> */}
 
-                 { loader? <AppLoader/>: <>
-                  {data.length == 0 ? <EmptyData/>:
-                  <CTable align="middle" className="mb-0" hover responsive>
+                  {loader ? <AppLoader /> : <>
+                    {data.length == 0 ? <EmptyData /> :
+                      <CTable align="middle" className="mb-0" hover responsive>
 
-                  <CTableHead>
+                        <CTableHead>
 
-                    <CTableRow>
+                          <CTableRow>
 
-                      <CTableHeaderCell className="text-center">
-                        S. No.
-                      </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              S. No.
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Customer Name
+                            </CTableHeaderCell>
 
-                      <CTableHeaderCell className="text-center">
-                        Trip ID
-                      </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Trip ID
+                            </CTableHeaderCell>
 
-                      {/* <CTableHeaderCell className="text-center">
+                            {/* <CTableHeaderCell className="text-center">
                         Driver Name
                       </CTableHeaderCell> */}
 
-                      <CTableHeaderCell className="text-center">
-                        Trip From
-                      </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Trip From
+                            </CTableHeaderCell>
 
-                      <CTableHeaderCell className="text-center">
-                        Trip To
-                      </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Trip To
+                            </CTableHeaderCell>
 
-                      <CTableHeaderCell className="text-center">
-                        Time
-                      </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Time
+                            </CTableHeaderCell>
 
 
 
-                    </CTableRow>
+                          </CTableRow>
 
-                  </CTableHead>
+                        </CTableHead>
 
-                  <CTableBody>
+                        <CTableBody>
 
-                    {data?.map((item, index) => (
-                      <CTableRow
-                        className="text-center"
-                        v-for="item in tableItems"
-                        key={item._id}
-                      >
+                          {data?.map((item, index) => (
+                            <CTableRow
+                              className="text-center"
+                              v-for="item in tableItems"
+                              key={item._id}
+                            >
 
-                        <CTableDataCell>
+                              <CTableDataCell>
 
-                          <div>{firstIndex + index + 1}</div>
-                        </CTableDataCell>
+                                <div>{firstIndex + index + 1}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
 
-                        <CTableDataCell>
+                                <div>{item?.company_name}</div>
+                              </CTableDataCell>
 
-                          <div>{item.trip_id}</div>
-                        </CTableDataCell>
-{/* 
+                              <CTableDataCell>
+
+                                <div>{item.trip_id}</div>
+                              </CTableDataCell>
+                              {/* 
                         <CTableDataCell>
 
                           <div>{item.driver_name?item.driver_name:"Not assigned"}</div>
                         </CTableDataCell> */}
 
-                        <CTableDataCell>
+                              <CTableDataCell>
 
-                          <div>{item?.trip_from?.address.slice(0,20) + `${item?.trip_from?.address?.length<21?"":"..."}`}</div>
-                        </CTableDataCell>
+                                <div>{item?.trip_from?.address.slice(0, 20) + `${item?.trip_from?.address?.length < 21 ? "" : "..."}`}</div>
+                              </CTableDataCell>
 
-                        <CTableDataCell>
+                              <CTableDataCell>
 
-                          <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
-                        </CTableDataCell>
+                                <div>{item.trip_to.address.slice(0, 20) + `${item.trip_to.address.length < 21 ? "" : "..."}`}</div>
+                              </CTableDataCell>
 
-                        <CTableDataCell>
-                          <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm a")}</div>
+                              <CTableDataCell>
+                                <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm a")}</div>
 
-                        </CTableDataCell>
+                              </CTableDataCell>
 
 
-                      </CTableRow>
-                    ))}
+                            </CTableRow>
+                          ))}
 
-                  </CTableBody>
+                        </CTableBody>
 
-                </CTable>
-                  }
+                      </CTable>
+                    }
                   </>}
                   {
                     data?.length > 0 ?

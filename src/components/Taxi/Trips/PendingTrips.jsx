@@ -41,6 +41,7 @@ import {
   getDriver,
   getTrip,
   getVehicle,
+  tripsUpdate,
 } from "../../../utils/api";
 import { toast } from "react-toastify";
 import moment from "moment";
@@ -212,11 +213,11 @@ const SuperPendingTrip = () => {
     setLoader(false);
     setVisible(false);
   }
-  function handleDeletItem(id) {
+  function handleDeletItem() {
     const data = {
-      status: "Canceled",
+      trip_status: "Canceled",
     };
-    allocateDriver(id, data).then((res) => {
+    tripsUpdate(selectedId, data).then((res) => {
       console.log(res.result, "cancele done");
       if (res?.data?.code === 200) {
         toast.success(`${res.data.message}`, {
@@ -224,7 +225,7 @@ const SuperPendingTrip = () => {
           autoClose: 1000,
         });
         const newTrips = pendinTrip.filter((item) => {
-          return item._id != id;
+          return item._id != selectedId;
         });
         setPendingTrip(newTrips);
         setDelvisible(false)
@@ -302,6 +303,9 @@ const SuperPendingTrip = () => {
                             S. No.
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
+                            Customer Name
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
                             Trip ID
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
@@ -331,7 +335,10 @@ const SuperPendingTrip = () => {
                               key={item._id}
                             >
                               <CTableDataCell>
-                                <div>{index + 1}</div>
+                                <div>{firstIndex + index + 1}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.company_name}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>{item.trip_id}</div>
@@ -366,7 +373,7 @@ const SuperPendingTrip = () => {
                                   </CButton>
                                 </div>
                                 <div
-                                  onClick={() => { handleDelet(item._id) }}
+                                  onClick={() => {setSelectedId(item._id);setDelvisible(true)}}
                                   style={{
                                     cursor: "pointer",
                                   }}
@@ -561,7 +568,7 @@ const SuperPendingTrip = () => {
                             <CCardBody>
                               <img src={deletepopup} alt="danger" />
                               <h2>Are you Sure</h2>
-                              <p>You want to delete this Vehicle ?</p>
+                              <p>You want to delete this trip ?</p>
                             </CCardBody>
                             <div className="delete_vehicle_popup_outer">
                               <CButton

@@ -149,6 +149,9 @@ const SuperBookedTrips = () => {
                               Sr No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                              Customer Name
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Trip ID
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -181,6 +184,9 @@ const SuperBookedTrips = () => {
                               >
                                 <CTableDataCell>
                                   <div>{firstIndex + index + 1}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item?.company_name}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
                                   <div>{item.trip_id}</div>
