@@ -74,7 +74,7 @@ const ViewSingleVehicle = () => {
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
               <h1 class="heading-for-every-page">
                     <Link to="/taxi/vehicle/listofvehicles">
-                    <img src={backtovehicle} alt="edit" /> View All Vehicles</Link></h1>
+                    <img src={backtovehicle} alt="edit" /> Vehicle Information</Link></h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}
                   {/********** vehicle---information---form *****************/}
@@ -82,9 +82,9 @@ const ViewSingleVehicle = () => {
 
                     <CCol xs={12}>
                       <CCard className="mb-4">
-                        <CCardHeader>
+                        {/* <CCardHeader>
                           <strong>Vehicle Information</strong>
-                        </CCardHeader>
+                        </CCardHeader> */}
                         <CCardBody>
                         
                           <form noValidate className="row g-3">

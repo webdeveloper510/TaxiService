@@ -50,7 +50,7 @@ const _Supernav = [
 
   {
     component: CNavGroup,
-    name: 'Hotels',
+    name: 'Customer',
     to: '',
     icon: <div className='radius-svg'>
      <svg
@@ -72,12 +72,12 @@ const _Supernav = [
     items: [
       {
         component: CNavItem,
-        name: 'Add Hotel',
+        name: 'Add Customer',
         to: '/taxi/add-company',
       }, 
       {
         component: CNavItem,
-        name: 'All Hotels',
+        name: 'All Customers',
         to: '/taxi/companydetails',
       }, 
       
@@ -120,7 +120,7 @@ const _Supernav = [
       },
       {
         component: CNavItem,
-        name: 'Accepted Trips',
+        name: 'Approved Trips',
         to: '/taxi/trips/acceptedtrips',
       },
      

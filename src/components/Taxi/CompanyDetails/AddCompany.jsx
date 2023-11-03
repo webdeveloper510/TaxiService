@@ -127,7 +127,7 @@ const AddCompany = () => {
         // tx_quality_mark: values.tx_quality,
         // first_name: values.first_name,
         // last_name: values.last_name,
-        p_number: values.tel_contact_number,
+        // p_number: values.tel_contact_number,
         email: values.email,
         role: "HOTEL"
       }).then((res) => {
