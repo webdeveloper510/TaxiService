@@ -80,7 +80,7 @@ const AddCompany = () => {
     company_name: Yup.string()
       .max(20,"Length should be small than 20 character")
       .required("Customer Name is required"),
-    land: Yup.string().min(4).max(20).required("Address is required"),
+    // land: Yup.string().min(4).max(20).required("Address is required"),
     post_code: Yup.string().max(10).required("Postcode is required"),
     // house_number: Yup.string().max(20).required("Building number is required"),
     // describe_your_taxi_company: Yup.string()
@@ -114,6 +114,7 @@ const AddCompany = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       if(address.length<1){
+        console.log(" address must be at least one character")
         setAddressError(true);
         setTouched(true);
         return;
