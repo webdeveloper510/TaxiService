@@ -20,7 +20,7 @@ import {
 } from "@coreui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { getDriver, getVehicle, getVehicleType } from "../../../utils/api";
+import { getCompany, getDriver, getVehicle, getVehicleType } from "../../../utils/api";
 import { addTrip } from "../../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -50,7 +50,7 @@ const SuperRequestTrip = () => {
       throw new Error('Invalid Date object');
     }
   }
-  
+
   // Function to set the minute component of a Date object
   function customSetMinutes(date, minute) {
     if (date instanceof Date) {
@@ -64,26 +64,26 @@ const SuperRequestTrip = () => {
   const navigate = useNavigate();
 
   const [pickupDate, setpickupDate] = useState(new Date());
-  useEffect(()=>{
+  useEffect(() => {
     const today = new Date();
-    if(pickupDate.toDateString() == today.toDateString()){
+    if (pickupDate.toDateString() == today.toDateString()) {
       SetCurrentTime({
         hour: today.getHours(),
         minute: today.getMinutes() + 1,
       })
-    }else{
+    } else {
       SetCurrentTime({
-        hour:0,
-        minute:0
+        hour: 0,
+        minute: 0
       })
     }
-  },[pickupDate])
+  }, [pickupDate])
   const [currentTime, SetCurrentTime] = useState({
-    hour:{
+    hour: {
       hour: (new Date()).getHours(),
       minute: (new Date()).getMinutes() + 1,
     },
-    minute:0,
+    minute: 0,
   })
   const [passengers, setPassengers] = useState([
     // { name: "", email: "", phone: "", address: "" },
@@ -91,6 +91,7 @@ const SuperRequestTrip = () => {
   const [vehicle, setVehicle] = useState();
   const [inputData, setInputData] = useState({
     vehicle: "",
+    customer: "",
     trip_from: { address: "", lat: null, log: null },
     trip_to: { address: "", lat: null, log: null },
     pick_up_date: new Date(),
@@ -99,7 +100,7 @@ const SuperRequestTrip = () => {
   const [passengerError, setPassengerError] = useState([{
     name: false,
     phone: false,
-    email : false,
+    email: false,
     address: false,
   }])
   const formValidation = (passengers) => {
@@ -140,7 +141,7 @@ const SuperRequestTrip = () => {
         data[index].phoneCheck = "Phone required";
         data[index].phoneLengthCheck = "";
         valid = false;
-      }else if (!phoneRegex.test(data[index].phone)) {
+      } else if (!phoneRegex.test(data[index].phone)) {
         data[index].phoneCheck = "Enter only digit";
         data[index].phoneLengthCheck = "";
         valid = false;
@@ -183,6 +184,7 @@ const SuperRequestTrip = () => {
     trip_from: null,
     trip_to: null,
     pick_up_date: null,
+    customer: null,
     passenger_detail: [],
   });
 
@@ -200,14 +202,14 @@ const SuperRequestTrip = () => {
       ...passengers,
       { name: "", email: "", phone: "", address: "" },
     ]);
-    setPassengerError([...passengerError,{
+    setPassengerError([...passengerError, {
       name: false,
       phone: false,
-      email : false,
+      email: false,
       address: false,
     }])
   };
-  const handleBlur = (index,key) => {
+  const handleBlur = (index, key) => {
     const newPassengersError = [...passengerError]
     newPassengersError[index][key] = true;
     setPassengerError(newPassengersError);
@@ -220,7 +222,7 @@ const SuperRequestTrip = () => {
     newPassengersError.splice(index, 1);
     setPassengerError(newPassengersError)
   };
-
+  const [customer, setCustomer] = useState([])
   useEffect(() => {
     getVehicleType().then((res) => {
       console.log(res.result, "vehicleType");
@@ -228,6 +230,23 @@ const SuperRequestTrip = () => {
         setVehicle(res.result);
       }
     });
+    getCompany("HOTEL")
+    .then((res) => {
+      console.log(res?.result, "customer");
+
+      if (res?.code === 200) {
+        const values = res?.result
+        if(values) setCustomer(res?.result);
+        
+        
+      } else {
+      
+      }
+    })
+    .catch((err) => {
+    
+    });
+    
   }, []);
 
   // useEffect(() => {
@@ -266,7 +285,7 @@ const SuperRequestTrip = () => {
     //   console.log("error")
     // }
   };
-  const [formLoader , setFormLoader] = useState(false);
+  const [formLoader, setFormLoader] = useState(false);
 
   const adddata = () => {
     setFormLoader(true)
@@ -311,6 +330,8 @@ const SuperRequestTrip = () => {
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;
       delete data.pick_up_date;
+      data.createdBy = data.customer;
+      delete data.customer;
       addTrip(data).then((res) => {
         console.log("response---->>>>", res);
         if (res.data.code === 200) {
@@ -325,7 +346,7 @@ const SuperRequestTrip = () => {
             autoClose: 1000,
           });
         }
-      }).finally(()=>setFormLoader(false));
+      }).finally(() => setFormLoader(false));
     } else {
       toast.warning("Please Enter Passenger Detail", {
         position: "top-right",
@@ -388,55 +409,16 @@ const SuperRequestTrip = () => {
                   <CRow>
                     <CCol xs={12}>
                       <CCard className="mb-4">
-                        {/* <CCardHeader>
-                          <strong>Add Trip Details</strong>
-                        </CCardHeader> */}
+
                         <CCardBody>
                           <CForm className="row g-3">
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputtripdname">Driver Name</CFormLabel>
-                              <CFormSelect name="driver_name" onChange={inputHandler}>
-                                <option default>Select Driver</option>
-                                {driver?.map((e, i) => {
-                                  return (
-                                    <>
-                                      <option value={e._id}>{e.first_name}</option>
-                                    </>
-                                  )
-                                })}
 
 
-                              </CFormSelect>
-                            </CCol> */}
-
-                                 
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
                                 Vehicle Type
                               </CFormLabel>
-                            {/* <Box sx={{ minWidth: 120 }}>
-    <FormControl fullWidth>
-    <CFormLabel htmlFor="inputvehicletype">
-                              Vehicle Type
-                            </CFormLabel>
-      <InputLabel id="demo-simple-select-label"></InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={age}
-        label="Age"
-        onChange={handleChange}
-      >
-
-<MenuItem value="Select Vehicle Type">Select Vehicle Type</MenuItem> Default text
-        <MenuItem value="Twenty">Twenty</MenuItem>
-        <MenuItem value="Thirty">Thirty</MenuItem>
-        <MenuItem value="Forty">Forty</MenuItem>
-        
-      </Select>
-    </FormControl>
-  </Box> */}
 
                               <CFormSelect
                                 name="vehicle"
@@ -474,6 +456,47 @@ const SuperRequestTrip = () => {
                                 </span>
                               )}
                             </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputvehicletype">
+                                Customer
+                              </CFormLabel>
+
+                              <CFormSelect
+                                name="vehicle"
+                                onChange={(data) => {
+                                  console.log(data.target.value);
+                                  setInputData({
+                                    ...inputData,
+                                    customer: data.target.value,
+                                  });
+                                  if (data.target.value < 1) {
+                                    setErrors({
+                                      ...errors,
+                                      customer: "Please select vehicle",
+                                    });
+                                  } else {
+                                    setErrors({ ...errors, customer: null });
+                                  }
+                                }}
+                              >
+                                <option default>Select Customer</option>
+                                {customer?.map((e, i) => {
+                                  return (
+                                    <>
+                                      <option value={e._id}>{e.company_name}</option>
+                                    </>
+                                  );
+                                })}
+                              </CFormSelect>
+                              {errors.customer && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.customer}
+                                </span>
+                              )}
+                            </CCol>
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpickupdate">
@@ -486,7 +509,7 @@ const SuperRequestTrip = () => {
                                 showTimeSelect
                                 timeIntervals={5}
                                 minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
-      maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
+                                maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 onChange={(data) => {
@@ -688,7 +711,7 @@ const SuperRequestTrip = () => {
                             <CForm className="row g-3">
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputname"
-                               
+
                                 >
                                   Name
                                 </CFormLabel>
@@ -699,11 +722,11 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
-                                  onBlur={()=>{
-                                    handleBlur(index,"name")
+                                  onBlur={() => {
+                                    handleBlur(index, "name")
                                   }}
                                 />
-                               {passengerError[index].name && <div style={{ color: "red" }}>
+                                {passengerError[index].name && <div style={{ color: "red" }}>
                                   {passenger.nameCheck}
                                   <br />
                                   {passenger.nameLengthCheck}
@@ -711,7 +734,7 @@ const SuperRequestTrip = () => {
                               </CCol>
                               <CCol xs={6}>
                                 <CFormLabel htmlFor="inputphnno"
-                                
+
                                 >
                                   Phone
                                 </CFormLabel>
@@ -721,11 +744,11 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
-                                  onBlur={()=>{
-                                    handleBlur(index,"phone")
+                                  onBlur={() => {
+                                    handleBlur(index, "phone")
                                   }}
                                 />
-                               {passengerError[index].phone && <div style={{ color: "red" }}>
+                                {passengerError[index].phone && <div style={{ color: "red" }}>
                                   {passenger.phoneCheck}
                                   <br />
                                   {passenger.phoneLengthCheck}
@@ -733,7 +756,7 @@ const SuperRequestTrip = () => {
                               </CCol>
                               <CCol xs={6}>
                                 <CFormLabel htmlFor="inputtemailadd"
-                               
+
                                 >
                                   Email Address
                                 </CFormLabel>
@@ -743,11 +766,11 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
-                                  onBlur={()=>{
-                                    handleBlur(index,"email")
+                                  onBlur={() => {
+                                    handleBlur(index, "email")
                                   }}
                                 />
-                               {passengerError[index].email && <div style={{ color: "red" }}>
+                                {passengerError[index].email && <div style={{ color: "red" }}>
                                   {passenger.emailCheck}
                                   <br />
                                   {passenger.emailFormat}
@@ -755,7 +778,7 @@ const SuperRequestTrip = () => {
                               </CCol>
                               <CCol xs={6}>
                                 <CFormLabel htmlFor="inputaddress"
-                                
+
                                 >
                                   Address
                                 </CFormLabel>
@@ -765,8 +788,8 @@ const SuperRequestTrip = () => {
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
-                                  onBlur={()=>{
-                                    handleBlur(index,"address")
+                                  onBlur={() => {
+                                    handleBlur(index, "address")
                                   }}
                                 />
                                 {passengerError[index].address && <div style={{ color: "red" }}>
@@ -800,14 +823,19 @@ const SuperRequestTrip = () => {
                       className="d-flex justify-content-center"
                       style={{ marginTop: "40px" }}
                     >
-                      <CButton type="submit" className="submit-btn">
-                                  {formLoader?<ClipLoader color="#000000" />:"Submit"}
-                                </CButton>
-                      <CButton type="button" 
+                      <CButton type="submit" className="submit-btn"
                       onClick={()=>{
-                        navigate("/taxi/trips/pendingtrips");
+                        adddata()
                       }}
-                      className="cancel-btn">
+                      >
+                        
+                        {formLoader ? <ClipLoader color="#000000" /> : "Submit"}
+                      </CButton>
+                      <CButton type="button"
+                        onClick={() => {
+                          navigate("/taxi/trips/pendingtrips");
+                        }}
+                        className="cancel-btn">
                         Cancel
                       </CButton>
                     </div>

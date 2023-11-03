@@ -14,6 +14,7 @@ import locationimg from '../../../assets/images/location.png';
 import { getRecentTrip, getTrip } from "../../../utils/api";
 import moment from "moment";
 import EmptyData from "../../EmptyData";
+import AppLoader from "../../AppLoader";
 //import background from '../assets/images/heroimg.png';
 const tableExample = [
   {
@@ -53,13 +54,13 @@ drivername: 'Avraamu',
           //  action: { checkicon: cibCcMastercard },
             },
 ]
-const RecentTrips=()=> {
+const RecentTrips=({from})=> {
    
   const [pendinTrip, setPendingTrip] = useState([])
   const [loading, setLoading] = useState(false);
   useEffect(()=>{
     setLoading(true);
-    getRecentTrip().then(res => {
+    getRecentTrip(from == "super").then(res => {
       if (res.code == 200) {
         setPendingTrip(res.result)
       }
@@ -68,9 +69,10 @@ const RecentTrips=()=> {
 
       return (
        <>
-      {pendinTrip.length > 1 ? <div className="container-fluidd">
+       {loading? <AppLoader/> :
+   <div className="container-fluidd">
        
-        <div className="col-md-12">
+       {pendinTrip.length > 1 ?   <div className="col-md-12">
        
         <div>
         <div className="body flex-grow-1 px-1">    
@@ -164,10 +166,9 @@ const RecentTrips=()=> {
         </div>
     </div>
       
-       </div>
-       </div> : <EmptyData/>}
+       </div>: <EmptyData/>}
+       </div> }
        <br/>
-       
        </>
       );
     };

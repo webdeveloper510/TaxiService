@@ -388,8 +388,8 @@ export const allocateDriver = async (data,id) => {
 };
 
 
-export const getRecentTrip = async() => {
-  return await Axios.get(`admin/get_recent_trip` , {
+export const getRecentTrip = async(role) => {
+  return await Axios.get(`admin/${role? "get_recent_trip_super": "get_recent_trip"}` , {
     headers: {
       "x-access-token": token,
     },

@@ -97,7 +97,7 @@ const AddSuperCompany = () => {
       .min(2)
       .max(20)
       .required("Company Name is required"),
-    land: Yup.string().min(4).max(20).required("Land is required"),
+    // land: Yup.string().min(4).max(20).required("Land is required"),
     post_code: Yup.string().max(10).required("Postcode is required"),
     house_number: Yup.string().max(20).required("Building number is required"),
     describe_your_taxi_company: Yup.string()
@@ -142,12 +142,17 @@ const AddSuperCompany = () => {
   }
   const formik = useFormik({
     initialValues,
-    validationSchema: validationSchema,
+    // validationSchema: validationSchema,
     onSubmit: async (values) => {
+      if(address.length<1){
+        setAddressError(true);
+        setTouched(true);
+        return;
+      }
       console.log("values", values);
       addCompany({
         company_name: values.company_name,
-        land: values.land,
+        // land: values.land,
         post_code: values.post_code,
         house_number: values.house_number,
         description: values.describe_your_taxi_company,

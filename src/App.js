@@ -6,19 +6,20 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import userContext from './utils/context';
 import { getProfile } from './utils/api';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import AppLoader from './components/AppLoader';
 function App() {
   const [user, setUser] = useState(null);
   const [loading , setLoading] = useState(false);
+  const navigate = useNavigate();
   function onLoadApp(){
     setLoading(true);
     const token = localStorage.getItem('token');
     console.log('token: from local storage' + token);
     if(!token){
       setLoading(false)
-      return <Navigate to="/" />;
-
+      return navigate("/")
+       
     }
     console.log("path founder running on react app =====>>>>>,", user)
     getProfile(token).then(res => {
@@ -41,13 +42,14 @@ function App() {
                 return <Navigate to="/" />;
             }
           }).catch((err)=>{
-            localStorage.clear()
+            console.log("remove token from catch app")
+            localStorage.clear();
+            navigate("/")
           }).finally(()=>{
-            setLoading(false)
+            setLoading(false);
           })
   }
  
-  
   useEffect(()=>{
     onLoadApp();
   },[])
