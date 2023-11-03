@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import SideBar2 from "../../Hotel/SideBar2";
 import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 import SuperAdminSideBar from "../Sidebar/SideBar";
+import { ClipLoader } from "react-spinners";
 
 const AddSuperCompany = () => {
   const [address, setAddress] = useState("");
@@ -149,6 +150,7 @@ const AddSuperCompany = () => {
         setTouched(true);
         return;
       }
+      setSubmitLoader(true)
       console.log("values", values);
       addCompany({
         company_name: values.company_name,
@@ -180,9 +182,12 @@ const AddSuperCompany = () => {
             autoClose: 1000,
           });
         }
+      }).finally(()=>{
+        setSubmitLoader(false)
       });
     },
   });
+  const [submitLoader, setSubmitLoader] = useState(false);
   const [inputData, setInputData] = useState({
     company_name: "",
     land: "",
@@ -908,7 +913,8 @@ const AddSuperCompany = () => {
                                 style={{ marginTop: "40px" }}
                               >
                                 <CButton type="submit" className="submit-btn">
-                                  Submit
+                                {submitLoader ?
+                      <ClipLoader color="#000000" /> : "Submit"}
                                 </CButton>
                                 <CButton
                                   onClick={() =>

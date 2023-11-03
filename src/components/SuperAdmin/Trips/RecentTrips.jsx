@@ -18,6 +18,7 @@ import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
 import Dropdown from 'react-bootstrap/Dropdown';
 import filterImg from '../../../assets/images/filter-icon.png'
+import { tripEnum } from "../../../utils/saticData";
 //import background from '../assets/images/heroimg.png';
 const tableExample = [
   {
@@ -59,12 +60,13 @@ drivername: 'Avraamu',
 ]
 const SuperRecentTrips=()=> {
    
-  const [selectedValue, setSelectedValue] = useState(''); // Initial selected value
-
+  const [filterData, setFilterData] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('All'); // Initial selected value
+  
   const handleSelect = (eventKey) => {
     setSelectedValue(eventKey); // Update the selected value when an item is selected
   };
-
+  const [selectedType, setSelectedType] = useState(null);
   const [pendinTrip, setPendingTrip] = useState([])
   const [loader, setLoader] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -74,8 +76,8 @@ const SuperRecentTrips=()=> {
   const recordPage = 10;
   const lastIndex = currentPage * recordPage;
   const firstIndex = lastIndex - recordPage;
-  const data = pendinTrip?.slice(firstIndex, lastIndex);
-  const nPage = Math.ceil(pendinTrip?.length / recordPage);
+  const data = filterData?.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(filterData?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
 
   const pageNumber = number.map((num, i) => {
@@ -94,7 +96,13 @@ const SuperRecentTrips=()=> {
       return null;
     }
   });
-
+  useEffect(()=>{
+    if(!selectedType) setFilterData(pendinTrip);
+    else {
+      console.log("selectedType in else: ",selectedType)
+      setFilterData(pendinTrip.filter(i=>i.trip_status == selectedType))
+    }
+  },[selectedType])
   const handlePrePage = () => {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
@@ -126,8 +134,9 @@ const SuperRecentTrips=()=> {
   useEffect(()=>{
     setLoader(true)
     getRecentTrip(true).then(res => {
-      if (res.code == 200) {
-        setPendingTrip(res.result)
+      if (res.code == 200 && res?.result) {
+        setPendingTrip(res?.result)
+        setFilterData(res?.result)
       }
     }).finally(() => {setLoader(false)})
   },[])
@@ -145,23 +154,36 @@ const SuperRecentTrips=()=> {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">All Trips</h1>
-                {loader?<AppLoader/>:<div class="active-trip-outer">
-                  <div className="trips-head d-flex justify-content-between">
-                 
-                  </div>
-               <div class="filter-outer">
+                <div class="filter-outer">
                <Dropdown onSelect={handleSelect}>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
         <img src={filterImg}/>
         {selectedValue}
       </Dropdown.Toggle>
+     
       <Dropdown.Menu>
-        <Dropdown.Item eventKey="Action">Action</Dropdown.Item>
-        <Dropdown.Item eventKey="Another action">Another action</Dropdown.Item>
-        <Dropdown.Item eventKey="Something else">Something else</Dropdown.Item>
+      <Dropdown.Item  eventKey={"All"}
+        onClick={()=>{
+          setSelectedType(null)
+        }}
+        >All</Dropdown.Item>
+      {tripEnum.map((item,i)=>{
+        return <Dropdown.Item key={i} eventKey={item}
+        onClick={()=>{
+          setSelectedType(item)
+        }}
+        >{item}</Dropdown.Item>
+      })}
       </Dropdown.Menu>
     </Dropdown>
                </div>
+                {loader?<AppLoader/>:
+                
+                <div class="active-trip-outer">
+                  <div className="trips-head d-flex justify-content-between">
+                 
+                  </div>
+              
                
                   <CTable align="middle" className="mb-0" hover responsive>
                  

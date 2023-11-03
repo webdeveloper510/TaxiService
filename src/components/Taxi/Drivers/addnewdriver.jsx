@@ -25,6 +25,7 @@ import { toast } from 'react-toastify';
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { countryList } from "../../../utils/saticData";
+import { ClipLoader } from "react-spinners";
 //import background from '../assets/images/heroimg.png';
 
 const AddNewDriver = () => {
@@ -135,7 +136,7 @@ const AddNewDriver = () => {
 
 
   // };
-
+  const [submitLoader, setSubmitLoader] = useState(false);
 
   const formik = useFormik({
     initialValues,
@@ -158,7 +159,7 @@ const AddNewDriver = () => {
       formData.append('driver_image', values.file);
       formData.append('driver_documents', values.doc);
       formData.append('password', '12587574545');
-
+      setSubmitLoader(true);
       addDriver(formData).then((res) => {
         console.log("response---->>>>", res)
         if (res.data.code === 200) {
@@ -174,6 +175,8 @@ const AddNewDriver = () => {
             autoClose: 1000,
           });
         }
+      }).finally(()=>{
+        setSubmitLoader(false)
       })
 
 
@@ -480,7 +483,7 @@ const AddNewDriver = () => {
 
 
 
-                            <CCol md={6} className="upload-file-input">
+                            <CCol md={6} className="upload-file-input image-docs">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
 
                               <div class="driver_img_outer">
@@ -528,7 +531,7 @@ const AddNewDriver = () => {
                               </>}
                             </CCol>
 
-                            <CCol md={6} className="upload-file-input">
+                            <CCol md={6} className="upload-file-input driver-docs">
 
                               <CFormLabel htmlFor="inputmobile">Upload Driver Doc</CFormLabel>
 
@@ -541,14 +544,15 @@ const AddNewDriver = () => {
                                 <div class="pdf_doc">
                                   <p>Selected file: {selectedDoc.name}</p>
                                   <button
-                                    className="submit-btn"
-                                    onClick={downloadFile}>Download</button>
-                                  <button
                                     className="remove-btn"
                                     onClick={() => {
                                       removeDoc()
                                     }}
                                   >X</button>
+                                  <button
+                                    className="submit-btn"
+                                    onClick={downloadFile}>Download</button>
+                              
                                 </div>
                               )}
                               {!selectedDoc && <>
@@ -583,7 +587,8 @@ const AddNewDriver = () => {
                             </CCol>
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                <CButton type="submit" className="submit-btn">Submit</CButton>
+                                <CButton type="submit" className="submit-btn">{submitLoader?<ClipLoader color="#000000" />:"Submit"}</CButton>
+
                                 <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                               </div>
                             </CCol>

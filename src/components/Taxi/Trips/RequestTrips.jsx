@@ -288,7 +288,7 @@ const SuperRequestTrip = () => {
   const [formLoader, setFormLoader] = useState(false);
 
   const adddata = () => {
-    setFormLoader(true)
+    
     let data = inputData;
     let valid = true;
     let newErrors = { ...errors };
@@ -333,6 +333,7 @@ const SuperRequestTrip = () => {
       data.createdBy = data.customer;
       delete data.customer;
       addTrip(data).then((res) => {
+        setFormLoader(true)
         console.log("response---->>>>", res);
         if (res.data.code === 200) {
           toast.success(`${res.data.message}`, {
@@ -353,7 +354,7 @@ const SuperRequestTrip = () => {
         autoClose: 1000,
       });
     }
-    setFormLoader(false)
+    // setFormLoader(false)
   };
   const [tripFrom, setTripFrom] = useState("");
   const [tripFromCoordinates, setTripFromCoordinates] = useState(null);

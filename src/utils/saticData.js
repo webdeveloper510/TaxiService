@@ -250,3 +250,5 @@ export const countryList = [
 	"Zimbabwe",
 	"Åland Islands"
 ];
+
+export const tripEnum = ['Booked','Active','Completed','Pending','Accepted','Canceled']

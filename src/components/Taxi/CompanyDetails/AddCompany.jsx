@@ -113,11 +113,16 @@ const AddCompany = () => {
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      if(address.length<1){
+        setAddressError(true);
+        setTouched(true);
+        return;
+      }
       setFormLoader(true)
       console.log("values", values);
       addCompany({
         company_name: values.company_name,
-        land: values.land,
+        // land: values.land,
         post_code: values.post_code,
         // house_number: values.house_number,
         // description: values.describe_your_taxi_company,

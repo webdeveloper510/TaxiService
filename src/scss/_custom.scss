@@ -777,6 +777,7 @@ span.vehicle_info {
     display: flex;
     align-items: center;
     justify-content: left;
+    height: 100%;
 }
 .pdf_doc p {
     margin-bottom: 0;
@@ -868,6 +869,7 @@ button#dropdown-basic img {
     border-bottom: 1px solid #cccccc4d;
     padding-bottom: 10px;
     padding-top: 10px;
+    margin-right: 15px;
 
 }
 a.dropdown-item {
