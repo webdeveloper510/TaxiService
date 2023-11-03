@@ -29,6 +29,7 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 import AppLoader from "../../AppLoader";
 //import background from '../assets/images/heroimg.png';
 import backtovehicle from '../../../assets/images/left-arrow.png'
+import { ClipLoader } from "react-spinners";
 function EditDriver() {
     const navigate = useNavigate();
     const { driverId } = useParams();
@@ -131,7 +132,7 @@ function EditDriver() {
   
     // };
   
-  
+   const [submitLoader, setSubmitLoader] = useState(false)
     const formik = useFormik({
       initialValues,
       validationSchema: validationSchema,
@@ -152,7 +153,7 @@ function EditDriver() {
         formData.append('gender', values.Gender);
         formData.append('password', '12587574545');
         formData.append('driver_image', image1);
-  
+        setSubmitLoader(true)
         editDriver(formData,driverId).then((res) => {
           console.log("response---->>>>", res)
           if (res.data.code === 200) {
@@ -160,13 +161,15 @@ function EditDriver() {
               position: 'top-right',
               autoClose: 1000,
             });
-            // back()
+            back()
           } else {
             toast.warning(`${res.data.message}`, {
               position: 'top-right',
               autoClose: 1000,
             });
           }
+        }).finally(()=>{
+          setSubmitLoader(false)
         })
   
   
@@ -489,7 +492,7 @@ function EditDriver() {
                               </CCol>
                               <CCol xs={12}>
                                 <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                  <CButton type="submit" className="submit-btn">Submit</CButton>
+                                  <CButton type="submit" className="submit-btn">{submitLoader?<ClipLoader color="#000000" />:"Submit"}</CButton>
                                   <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                                 </div>
                               </CCol>

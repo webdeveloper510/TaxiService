@@ -22,6 +22,7 @@ import { addFare } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { getVehicleType } from "../../../utils/api";
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import { ClipLoader } from "react-spinners";
 //import background from '../assets/images/heroimg.png';
 
 const AddFare = () => {
@@ -65,6 +66,7 @@ const AddFare = () => {
     navigate("/taxi/fare/listoffares")
   }
 
+  const [submitLoader, setSubmitLoader] = useState(false)
 
   const formik = useFormik({
     initialValues,
@@ -72,7 +74,7 @@ const AddFare = () => {
     onSubmit: async (values) => {
       console.log("values", values);
 
-     
+      setSubmitLoader(true)
 
       addFare(values).then((res) => {
         console.log("response---->>>>", res)
@@ -88,6 +90,8 @@ const AddFare = () => {
             autoClose: 1000,
           });
         }
+      }).finally(()=>{
+        setSubmitLoader(true)
       })
 
 
@@ -290,7 +294,7 @@ const AddFare = () => {
 
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                <CButton type="submit" className="submit-btn">Submit</CButton>
+                                <CButton type="submit" className="submit-btn">{submitLoader?<ClipLoader color="#000000" />:"Submit"}</CButton>
                                 <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                               </div>
                             </CCol>
