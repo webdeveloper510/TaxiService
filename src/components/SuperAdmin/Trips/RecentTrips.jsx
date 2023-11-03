@@ -185,7 +185,7 @@ const SuperRecentTrips=()=> {
                   </div>
               
                
-                  <CTable align="middle" className="mb-0" hover responsive>
+                 { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
                  
           <CTableHead>
           
@@ -217,7 +217,7 @@ const SuperRecentTrips=()=> {
               return(                    
                  <CTableRow className="text-center" v-for="item in tableItems" key={index}>
                 <CTableDataCell >
-                  <div>{ index+1}</div>
+                  <div>{firstIndex+ index+1}</div>
                 </CTableDataCell>
                 <CTableDataCell>
                   <div>{item.trip_id}</div>
@@ -226,10 +226,10 @@ const SuperRecentTrips=()=> {
                   <div>{item.driver_name}</div>
                 </CTableDataCell> */}
                 <CTableDataCell>
-                  <div>{item.trip_from.address}</div>
+                  <div>{item.trip_from.address.length<20?item.trip_from.address:item.trip_from.address.slice(0,18)+"..."}</div>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <div>{item.trip_to.address}</div>
+                  <div>{item.trip_to.address.length<20?item.trip_to.address: item.trip_to.address.slice(0,18) + "..."}</div>
                 </CTableDataCell>
                 <CTableDataCell>
                   <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
@@ -257,7 +257,7 @@ const SuperRecentTrips=()=> {
               )
             })}
           </CTableBody>
-        </CTable>
+        </CTable>: <EmptyData/>}
         {
                       data?.length > 0 ?
                       <div

@@ -7,6 +7,7 @@ import RiderStatusTable from "../../Stats/RiderStatusTable";
 //import { useSearchParams } from "react-router-dom";
 import SuperAdminSideBar from "../Sidebar/SideBar";
 import SuperTaxiMap from "./SuperMap";
+import SuperStats from "./SuperStats";
 
 const SuperDashboard = () => {
 
@@ -35,9 +36,9 @@ const SuperDashboard = () => {
 
 
                 <div className=" row col-md-12">
-                  <div className="col-md-6 stats-outer">
+                  <div className="col-md-12 stats-outer">
 
-                    {/* <AllDashboardStats/> */}
+                   <SuperStats/>
                   </div>
 
 

@@ -855,11 +855,12 @@ div#menu- {
     text-align: right;
 }
 button#dropdown-basic {
-    background: transparent;
     border: none;
     padding: 0;
     font-family: "Poppins", sans-serif !important;
     font-size: 14px;
+    background: #cccccc54;
+    padding: 10px 10px 10px 10px;
 }
 button#dropdown-basic img {
     width: 20px;
@@ -880,4 +881,7 @@ a.dropdown-item {
 }
 a.dropdown-item:last-child {
     border-bottom: none;
+}
+.booked-trips-outer img.card-img-top {
+    width: auto !important;
 }
