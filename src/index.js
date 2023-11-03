@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './store';
 import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(

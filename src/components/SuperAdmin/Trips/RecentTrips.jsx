@@ -16,6 +16,8 @@ import moment from "moment";
 import SuperAdminSideBar from "../Sidebar/SideBar";
 import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
+import Dropdown from 'react-bootstrap/Dropdown';
+import filterImg from '../../../assets/images/filter-icon.png'
 //import background from '../assets/images/heroimg.png';
 const tableExample = [
   {
@@ -57,6 +59,12 @@ drivername: 'Avraamu',
 ]
 const SuperRecentTrips=()=> {
    
+  const [selectedValue, setSelectedValue] = useState(''); // Initial selected value
+
+  const handleSelect = (eventKey) => {
+    setSelectedValue(eventKey); // Update the selected value when an item is selected
+  };
+
   const [pendinTrip, setPendingTrip] = useState([])
   const [loader, setLoader] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -141,10 +149,22 @@ const SuperRecentTrips=()=> {
                   <div className="trips-head d-flex justify-content-between">
                  
                   </div>
-               
+               <div class="filter-outer">
+               <Dropdown onSelect={handleSelect}>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        <img src={filterImg}/>
+        {selectedValue}
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item eventKey="Action">Action</Dropdown.Item>
+        <Dropdown.Item eventKey="Another action">Another action</Dropdown.Item>
+        <Dropdown.Item eventKey="Something else">Something else</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+               </div>
                
                   <CTable align="middle" className="mb-0" hover responsive>
-          
+                 
           <CTableHead>
           
             <CTableRow>
