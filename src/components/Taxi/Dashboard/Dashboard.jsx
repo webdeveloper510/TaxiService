@@ -26,7 +26,7 @@ const SuperAdminDashboard=()=> {
         <AppHeader />
     
         <div className="body flex-grow-1 px-3">
-          <h1 className="heading-for-every-page">Dashboard</h1>
+          {/* <h1 className="heading-for-every-page">Dashboard</h1> */}
           <div class="map-outer"> 
           <h2>Taxi Live Location</h2>
           <SuperMap/>

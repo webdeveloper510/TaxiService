@@ -212,7 +212,7 @@ const SuperRecentTrips=()=> {
                    else if (status === 'Accepted') background = 'linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)'
                    else if (status === 'Booked') background = 'linear-gradient(90deg, #FF5370 0%, #FF869A 100%)'
                    else if (status === 'Completed') background= "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
-                   else if (status === 'Canceled') background= 'linear-gradient(90deg, #e91e63 0%, #e91e638f 100%)'
+                   else if (status === 'Canceled') background= 'red'
 
               return(                    
                  <CTableRow className="text-center" v-for="item in tableItems" key={index}>
