@@ -171,7 +171,7 @@ const AddSuperCompany = () => {
       }).then((res) => {
         console.log("response---->>>>", res);
         if (res?.data?.code === 200) {
-          toast.success(`${res.data.message}`, {
+          toast.success(`Company added successfully`, {
             position: "top-right",
             autoClose: 1000,
           });
