@@ -923,9 +923,7 @@ a.dropdown-item:last-child {
     margin-right: 16px;
 }
 .table-responsive td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: break-spaces;
     width: 200px;
     max-width: 200px;
 }
