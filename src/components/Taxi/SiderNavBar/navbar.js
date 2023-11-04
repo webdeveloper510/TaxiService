@@ -172,11 +172,11 @@ const _Supernav = [
     ></path>
   </svg></div>,
     items: [
-      {
-        component: CNavItem,
-        name: 'Add New Driver',
-        to: '/taxi/driver/addnewdriver',
-      }, 
+      // {
+      //   component: CNavItem,
+      //   name: 'Add New Driver',
+      //   to: '/taxi/driver/addnewdriver',
+      // }, 
       {
         component: CNavItem,
         name: 'All Drivers',

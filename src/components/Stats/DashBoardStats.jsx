@@ -28,7 +28,7 @@ const DashboardStats=()=> {
         <DashboardGraph/>
         
         </div>
-       <div className="col-md-6">
+       <div className="col-md-6 hotel-stats">
 
         <div className="booked-trips-outer">
         <MDBRow>

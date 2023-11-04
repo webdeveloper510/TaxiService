@@ -102,7 +102,7 @@ const CompletedTrip = () => {
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 className="heading-for-every-page">Completed Trip </h1>
+                <h1 className="heading-for-every-page">Completed Trips </h1>
                 <div className="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">
@@ -133,7 +133,10 @@ const CompletedTrip = () => {
                     </>
                   ) : (
                     <>
-                      {data?.length==0?<EmptyData/>:<CTable align="middle" className="mb-0" hover responsive>
+                    <div className="table-container">
+
+                      {data?.length==0?<EmptyData/>:
+                      <CTable align="middle" className="mb-0 test" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             {/* <CTableHeaderCell className="text-center">
@@ -233,7 +236,7 @@ const CompletedTrip = () => {
                               ))
                             : ""}
                         </CTableBody>
-                      </CTable>}
+                      </CTable>}</div>
                       {data?.length > 0 ? (
                         <div
                           className="pagination-outer"

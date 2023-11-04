@@ -108,6 +108,37 @@ const _NavBar = [
     ></path>
   </svg></div>
   },
+
+  {
+    component: CNavGroup,
+    name: 'Driver',
+    to: '',
+    icon: <div className='radius-svg'><svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="25"
+    height="25"
+    fill="none"
+    viewBox="0 0 25 25"
+  >
+    <path
+      fill="#FFD04E"
+      d="M12.5 0C5.597 0 0 5.597 0 12.5S5.597 25 12.5 25 25 19.403 25 12.5 19.403 0 12.5 0zm0 3.125c4.068 0 7.504 2.62 8.802 6.25H3.698c1.298-3.63 4.734-6.25 8.802-6.25zm0 10.938a1.562 1.562 0 110-3.125 1.562 1.562 0 010 3.124zM3.125 12.5c4.27 0 7.727 4.114 7.8 9.216-4.419-.757-7.8-4.586-7.8-9.216zm10.95 9.216c.073-5.102 3.53-9.216 7.8-9.216 0 4.63-3.381 8.46-7.8 9.216z"
+    ></path>
+  </svg></div>,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Add New Driver',
+        to: '/super-admin/driver/addnewdriver',
+      }, 
+      {
+        component: CNavItem,
+        name: 'All Drivers',
+        to: '/super-admin/driver/listofdrivers',
+      }, 
+      
+    ],
+  },
  
   
 

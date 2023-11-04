@@ -29,6 +29,7 @@ import car1 from '../../../assets/images/car1.jpg'
 import { getVehicleById } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import SideBar2 from "../SideBar2";
+import checkedImg from "../../../assets/images/checked.png"
 const ViewSingleVehicle = () => {
 
   const {vehicleId} = useParams();
@@ -95,9 +96,9 @@ const ViewSingleVehicle = () => {
                            </CCol>
                            
                             <CCol className="vehicle_info_right" md={6}>
-                              <CFormLabel htmlFor="inputvehiclenum">Vehicle No. : </CFormLabel>
+                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Vehicle No. : </CFormLabel>
                               <span className="vehicle_info">{vehicle?.vehicle_number}</span> &nbsp;<br/>
-                              <CFormLabel htmlFor="inputvehiclenum">Vehicle Type : </CFormLabel>
+                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Vehicle Type : </CFormLabel>
                               <span className="vehicle_info"> {vehicle?.vehicle_type}</span><br/>
                               {/* <CFormInput aria-label="vehicle no."
                               style={{cursor: "default"}}
@@ -109,18 +110,18 @@ const ViewSingleVehicle = () => {
                                  
                                 name="vehicleNo"
                                 autoComplete="off" />   */}
-                                  <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model :</CFormLabel>
+                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/> Vehicle Model :</CFormLabel>
                              
                                  <span className="vehicle_info"> {vehicle?.vehicle_model}</span>&nbsp;<br/>
-                                 <CFormLabel htmlFor="inputseating">Seating Capacity :</CFormLabel>
+                                 <CFormLabel htmlFor="inputseating"><img src={checkedImg}/>Seating Capacity :</CFormLabel>
                                  <span className="vehicle_info"> {vehicle?.seating_capacity}</span><br/>
-                                 <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes):</CFormLabel>
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Passenger Cancellation Time Limit (in Minutes):</CFormLabel>
                                  <span className="vehicle_info">{vehicle?.cancelation_time_limit}</span>&nbsp;
-                                 <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) : </CFormLabel>
+                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Passenger Cancellation Charges (in € ) : </CFormLabel>
                                  <span className="vehicle_info">{vehicle?.cancelation_charges}</span><br/>
-                                 <CFormLabel htmlFor="inputpassengercharges">Insurance Renewal Date: </CFormLabel>
+                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Insurance Renewal Date: </CFormLabel>
                                  <span className="vehicle_info">{moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY, h:mm a')}</span> &nbsp;<br/>
-                                 <CFormLabel htmlFor="inputgender" >Is air conditioner :</CFormLabel>
+                                 <CFormLabel htmlFor="inputgender" ><img src={checkedImg}/>Is air conditioner :</CFormLabel>
                                  <span className="vehicle_info">{vehicle?.AC ? "Yes" : "No"}</span>
                             </CCol>
 

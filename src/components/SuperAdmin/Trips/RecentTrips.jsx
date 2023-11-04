@@ -184,8 +184,8 @@ const SuperRecentTrips=()=> {
                  
                   </div>
               
-               
-                 { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
+                  
+                 { data?.length > 0 ? <CTable align="middle" className="mb-0 table-container" hover responsive>
                  
           <CTableHead>
           
@@ -258,6 +258,7 @@ const SuperRecentTrips=()=> {
             })}
           </CTableBody>
         </CTable>: <EmptyData/>}
+      
         {
                       data?.length > 0 ?
                       <div

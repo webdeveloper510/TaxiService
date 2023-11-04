@@ -67,9 +67,7 @@ h2.head-rider {
     padding: 10px;
     font-size: 22px;
 }
-.active-trip-outer .table-responsive {
-    white-space: nowrap;
-}
+
 .active-trip-outer h2 {
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
@@ -888,4 +886,38 @@ a.dropdown-item:last-child {
 }
 .booked-trips-outer img.card-img-top {
     width: auto !important;
+}
+
+// .active-trip-outer .table-responsive {
+//     white-space: nowrap;
+// }
+.hotel-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.table-responsive{
+    white-space: nowrap;
+    cursor: pointer;
+}
+/* Custom styles for the table scroll bar */
+.table-responsive {
+    /* For webkit-based browsers (Chrome) */
+    &::-webkit-scrollbar {
+      width: 2px; /* Set the width of the scrollbar */
+      height:4px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: #FFD04E; /* Set the color of the scrollbar thumb */
+      border-radius: 1px; /* Round the edges of the scrollbar thumb */
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: transparent; /* Set the color of the scrollbar track */
+    }
+}
+
+.vehicle_info_right img {
+    margin-right: 16px;
 }
