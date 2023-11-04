@@ -25,8 +25,9 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import EmptyData from "../../EmptyData";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 
-const ListOfDrivers = () => {
+const ListOfDrivers = ({role}) => {
   const [deleteVisible, setDeleteVisible] = useState(false);
   const navigate = useNavigate();
 const [selectedId, setSelectedId ] = useState(null);
@@ -43,7 +44,7 @@ const [selectedId, setSelectedId ] = useState(null);
   const data = driver?.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(driver?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
-
+  console.log("role is: ", role);
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -92,7 +93,7 @@ const [selectedId, setSelectedId ] = useState(null);
 
   useEffect(() => {
     setLoader(true);
-    getDriver().then((res) => {
+    getDriver(role).then((res) => {
       console.log(res.result, "vehicle");
       if (res.code === 200) {
         setDriver(res.result);
@@ -130,7 +131,10 @@ const [selectedId, setSelectedId ] = useState(null);
       <div className="container-fluidd">
         <div className="col-md-12">
           <div>
-            <SuperSideBar />
+           {
+            role == 'super'?<SuperAdminSideBar/> : <SuperSideBar />
+
+           } 
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -178,9 +182,9 @@ const [selectedId, setSelectedId ] = useState(null);
                             <CTableHeaderCell className="text-center">
                               Status
                             </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            {role=="super" && <CTableHeaderCell className="text-center">
                               Action
-                            </CTableHeaderCell>
+                            </CTableHeaderCell>}
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -238,35 +242,26 @@ const [selectedId, setSelectedId ] = useState(null);
                                       }}                                    
                                     >{status}</div>
                                   </CTableDataCell>
-                                  <CTableDataCell className="d-flex action-icons driver-icons">
+                                  {role == "super" && <CTableDataCell className="d-flex action-icons driver-icons">
                                     <div style={{
                                       cursor: "pointer"
                                     }
 
                                     }
                                       onClick={() => {
-                                        navigate(`/taxi/driver/editdriver/${item._id}`);
+                                        navigate(`/super-admin/driver/editdriver/${item._id}`);
                                       }
                                       }
                                     ><img src={editiconimg} /></div>
 
-                                    {/* <div
-                            style={{
-                              cursor:"pointer"
-                            }
-                            
-                          }
-                          onClick={()=>{
-                            deleteDriverHandler(item._id)
-                          }}
-                            ><img src={deleteiconimg} /></div> */}
+                
                                     <CButton id="delete_driver_btn" onClick={() => {
                                       setDeleteVisible(!deleteVisible)
                                     setSelectedId(item._id)
                                   }
                                     
                                     }><img src={deleteiconimg} /></CButton>
-                                  </CTableDataCell>
+                                  </CTableDataCell>}
                                 </CTableRow>
                               )
                             }) : ""}

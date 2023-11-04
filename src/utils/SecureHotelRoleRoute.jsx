@@ -1,41 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { getProfile } from './api';
 import userContext from './context';
 function SecureHotelRoleRoute({ children }) {
-    const { user, setUser } = useContext(userContext);
-    const [isValid, setValid] = useState(true);
-    function onLoadApp() {
-  
-      const token = localStorage.getItem('token');
-      console.log('token: from local storage' + token);
-      if (!token) {
-        return <Navigate to="/" />;
-      }
-  
-      
-        if (user?.role != "HOTEL") {
-          setValid(false);
+
+  const { user, setUser, appLoaded } = useContext(userContext);
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate()
+  useEffect(() => {
+    console.log('user role is from secure taxi routes: ', user?.role, window.location.href);
+    if(appLoaded && user){
+      console.log('user role is from secure accelerator routes: ', user , appLoaded)
+      if (!token || !user || !user.role) {
+        return navigate("/")
+      } 
+      else {
+        if (user?.role == "SUPER_ADMIN") {
+          return navigate("/super-admin/dashboard") ;
         }
+        else if(user?.role == "COMPANY") {
+          return navigate("/taxi/dashboard")
+  
+        }
+  
+      }
     }
-    useEffect(() => {
-      onLoadApp()
-    }, [])
-    if (!isValid) {
-     if(!user){
-      return <Navigate to="/" />;
-     }
-     if(user?.role == "COMPANY"){
-      return <Navigate to="/taxi/dashboard" />;
-     }else{
-      return <Navigate to="/super-admin/dashboard" />;
-  
-     }
-    } else {
-      return children
-  
-    }
-  
-  }
+  }, [appLoaded, user])
+
+ return children
+
+}
+
 
 export default SecureHotelRoleRoute

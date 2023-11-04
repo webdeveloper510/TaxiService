@@ -30,6 +30,7 @@ import AppLoader from "../../AppLoader";
 //import background from '../assets/images/heroimg.png';
 import backtovehicle from '../../../assets/images/left-arrow.png'
 import { ClipLoader } from "react-spinners";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 function EditDriver() {
     const navigate = useNavigate();
     const { driverId } = useParams();
@@ -124,7 +125,7 @@ function EditDriver() {
   
   
     const back = () => {
-      navigate("/taxi/driver/listofdrivers")
+      navigate("/super-admin/driver/listofdrivers")
     }
   
     // const handleRadioChange = (event) => {
@@ -184,7 +185,7 @@ function EditDriver() {
           <div className="col-md-12">
   
             <div>
-              <SuperSideBar/>
+            <SuperAdminSideBar/>
   
               <div className="wrapper d-flex flex-column min-vh-100 bg-light">
                 <AppHeader />

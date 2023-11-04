@@ -81,11 +81,11 @@ const PrivateRoute = () => {
             <Route path="/taxi/trips/requesttrips" element={<SecureTaxiRoleRoute><SuperRequestTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/acceptedtrips" element={<SecureTaxiRoleRoute><RequestAcceptTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/addnewbooking" element={<SecureTaxiRoleRoute><AddNewBookings /></SecureTaxiRoleRoute>} />
-            <Route path="/taxi/driver/addnewdriver" element={<SecureTaxiRoleRoute><AddNewDriver /></SecureTaxiRoleRoute>} />
-            <Route path="/taxi/driver/listofdrivers" element={<SecureTaxiRoleRoute><ListOfDrivers /></SecureTaxiRoleRoute>} />
+          
+            <Route path="/taxi/driver/listofdrivers" element={<SecureTaxiRoleRoute><ListOfDrivers role="taxi" /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/driver/editdriver/:driverId" element={<SecureTaxiRoleRoute><EditDriver /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/vehicle/addnewvehicle" element={<SecureTaxiRoleRoute><AddSuperVehicle /></SecureTaxiRoleRoute>} />
-            <Route path="/taxi/vehicle/listofvehicles" element={<SecureTaxiRoleRoute><LisOfVehicles /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/vehicle/listofvehicles" element={<SecureTaxiRoleRoute><LisOfVehicles  /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/vehicle/vehicle-details/:vehicleId" element={<SecureTaxiRoleRoute><ViewSingleVehicle /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/vehicle/editvehicle/:vehicleId" element={<SecureTaxiRoleRoute><EditVehicle /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/fare/addfare" element={<SecureTaxiRoleRoute><AddFare /></SecureTaxiRoleRoute>} />
@@ -95,7 +95,10 @@ const PrivateRoute = () => {
             <Route path="/super-admin/edit-company-details" element={<SecureSuperRoleRoute><EditCompanyDetails /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/trips/recent-trips" element={<SecureSuperRoleRoute><SuperRecentTrips /></SecureSuperRoleRoute>} />
             <Route path="/taxi/fare/listoffares" element={<SecureTaxiRoleRoute><ListOfFares /></SecureTaxiRoleRoute>} />
-            <Route path='*' element={<Navigate to={"/dashboard"} />} />
+            <Route path="/super-admin/driver/addnewdriver" element={<SecureSuperRoleRoute><AddNewDriver /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/driver/listofdrivers" element={<SecureSuperRoleRoute><ListOfDrivers role="super" /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/driver/editdriver/:driverId" element={<SecureSuperRoleRoute><EditDriver /></SecureSuperRoleRoute>} />
+            {/* <Route path='*' element={<Navigate to={"/dashboard"} />} /> */}
         </Routes>
     );
 };

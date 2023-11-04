@@ -26,6 +26,7 @@ import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { countryList } from "../../../utils/saticData";
 import { ClipLoader } from "react-spinners";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 //import background from '../assets/images/heroimg.png';
 
 const AddNewDriver = () => {
@@ -168,7 +169,7 @@ const AddNewDriver = () => {
             autoClose: 1000,
           });
           // navigate("/taxi/drivernavigate/listofdrivers")
-          navigate("/taxi/driver/listofdrivers")
+          navigate("/super-admin/driver/listofdrivers")
         } else {
           toast.warning(`${res.data.message}`, {
             position: 'top-right',
@@ -202,7 +203,7 @@ const AddNewDriver = () => {
         <div className="col-md-12">
 
           <div>
-            <SuperSideBar />
+          <SuperAdminSideBar/>
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />

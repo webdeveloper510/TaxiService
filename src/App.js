@@ -9,6 +9,7 @@ import { getProfile } from './utils/api';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AppLoader from './components/AppLoader';
 function App() {
+  const [appLoaded, setAppLoaded] = useState(false)
   const [user, setUser] = useState(null);
   const [loading , setLoading] = useState(false);
   const navigate = useNavigate();
@@ -25,21 +26,20 @@ function App() {
     getProfile(token).then(res => {
             console.log(res, 'profile data')
             if (res?.code === 200) {
-              
               setUser(res.result)
-              if(res?.result?.role === "COMPANY") {
-                return <Navigate to="/taxi/dashboard" />;
+            //   if(res?.result?.role === "COMPANY") {
+            //     return <Navigate to="/taxi/dashboard" />;
                 
-              }
-              else if(res?.result?.role === "SUPER_ADMIN") {
-                return <Navigate to="/super-admin/dashboard" />;
+            //   }
+            //   else if(res?.result?.role === "SUPER_ADMIN") {
+            //     return <Navigate to="/super-admin/dashboard" />;
                 
-              }
-              else{
-                return <Navigate to="/dashboard" />;
-              }
-            }else{
-                return <Navigate to="/" />;
+            //   }
+            //   else{
+            //     return <Navigate to="/dashboard" />;
+            //   }
+            // }else{
+            //     return <Navigate to="/" />;
             }
           }).catch((err)=>{
             console.log("remove token from catch app")
@@ -47,14 +47,14 @@ function App() {
             navigate("/")
           }).finally(()=>{
             setLoading(false);
+            setAppLoaded(true);
           })
   }
- 
   useEffect(()=>{
-    onLoadApp();
+    onLoadApp()
   },[])
   return (
-    <userContext.Provider value={{user,setUser}}>
+    <userContext.Provider value={{user,setUser,appLoaded}}>
     {loading?<AppLoader/>:<div className="App">
       <Routerpage/>
       <ToastContainer />

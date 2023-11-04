@@ -82,8 +82,8 @@ export const addDriver = async (data) => {
 };
 
 
-export const getDriver = async() => {
-  return await Axios.get(`admin/get_drivers`,{
+export const getDriver = async(role) => {
+  return await Axios.get(`admin/get_drivers${role=="super"?"_super":""}`,{
     headers: {
       "x-access-token": token,
     },

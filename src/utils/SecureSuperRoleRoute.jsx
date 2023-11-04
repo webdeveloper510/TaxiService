@@ -1,42 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { getProfile } from './api';
 import userContext from './context';
 
 function SecureSuperRoleRoute({ children }) {
-  const { user, setUser } = useContext(userContext);
-  const [isValid, setValid] = useState(true);
-  function onLoadApp() {
-
-    const token = localStorage.getItem('token');
-    console.log('token: from local storage' + token);
-    if (!token) {
-      return <Navigate to="/" />;
-    }
-
-    
-      if (user?.role != "SUPER_ADMIN") {
-        setValid(false);
-      }
-  }
+ 
+  const { user, setUser, appLoaded } = useContext(userContext);
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate()
   useEffect(() => {
-    onLoadApp()
-  }, [])
-  if (!isValid) {
-   if(!user){
-    return <Navigate to="/" />;
-   }
-   if(user.role == "COMPANY"){
-    return <Navigate to="/super-admin/dashboard" />;
-   }else{
-    return <Navigate to="/dashboard" />;
 
-   }
-  } else {
-    return children
+    if(appLoaded && user){
+   
+      if (!token || !user || !user.role) {
+        return navigate("/")
+      } 
+      else {
+        if (user?.role == "COMPANY") {
+          return navigate("/taxi/dashboard") ;
+        }
+        else if(user?.role == "HOTEL") {
+          return navigate("/dashboard")
+  
+        }
+  
+      }
+    }
+  }, [appLoaded, user])
 
-  }
+ return children
 
 }
+
 
 export default SecureSuperRoleRoute

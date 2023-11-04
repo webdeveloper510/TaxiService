@@ -195,7 +195,7 @@ const SuperRecentTrips=()=> {
               </CTableHeaderCell> */}
                <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-              {/* <CTableHeaderCell className="text-center">Driver Name</CTableHeaderCell> */}
+              <CTableHeaderCell className="text-center">Customer Name</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
@@ -222,9 +222,9 @@ const SuperRecentTrips=()=> {
                 <CTableDataCell>
                   <div>{item.trip_id}</div>
                 </CTableDataCell>
-                {/* <CTableDataCell>
-                  <div>{item.driver_name}</div>
-                </CTableDataCell> */}
+                <CTableDataCell>
+                  <div>{item.company_name}</div>
+                </CTableDataCell>
                 <CTableDataCell>
                   <div>{item.trip_from.address.length<20?item.trip_from.address:item.trip_from.address.slice(0,18)+"..."}</div>
                 </CTableDataCell>
