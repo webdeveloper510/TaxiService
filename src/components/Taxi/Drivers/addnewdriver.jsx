@@ -130,7 +130,7 @@ const AddNewDriver = () => {
 
 
   const back = () => {
-    navigate("/taxi/driver/listofdrivers")
+    navigate("/super-admin/driver/listofdrivers")
   }
 
   // const handleRadioChange = (event) => {
