@@ -149,10 +149,11 @@ ul.nav-group-items li a.nav-link {
     padding-top: 10px;
 }
 .box-shd {
-    box-shadow: 0px 1px 4px 0px #e2dddd;
-    padding: 13px;
+    box-shadow: 0px 2px 4px 0px #e2dddd;
+    padding: 4px 0px 0px 14px;
     width: 100%;
     float: left;
+    margin-bottom: 10px;
 }
 .heading-for-every-page {
     color: #666666;
@@ -920,4 +921,11 @@ a.dropdown-item:last-child {
 
 .vehicle_info_right img {
     margin-right: 16px;
+}
+.table-responsive td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    max-width: 200px;
 }
