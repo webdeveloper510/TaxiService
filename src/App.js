@@ -40,6 +40,10 @@ function App() {
             //   }
             // }else{
             //     return <Navigate to="/" />;
+            }else{
+              console.log("remove token from wrong app")
+              localStorage.clear();
+              navigate("/")
             }
           }).catch((err)=>{
             console.log("remove token from catch app")

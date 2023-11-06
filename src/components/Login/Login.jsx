@@ -29,15 +29,15 @@ function Login() {
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     phoneNo: Yup.string()
-      .min(7, "Phone number must be greater than 7")
-      .max(16, "Phone number not be greater than 17")
-      .required("Phone Number is required"),
+      // .min(7, "Phone number must be greater than 7")
+      // .max(16, "Phone number not be greater than 17")
+      .required("Email Address or Phone Number is required"),
     password: Yup.string()
       .min(6, "Password must be 6 characters long")
-      .matches(/[0-9]/, "Password requires a number")
-      .matches(/[a-z]/, "Password requires a lowercase letter")
-      .matches(/[A-Z]/, "Password requires an uppercase letter")
-      .matches(/[^\w]/, "Password requires a symbol")
+      // .matches(/[0-9]/, "Password requires a number")
+      // .matches(/[a-z]/, "Password requires a lowercase letter")
+      // .matches(/[A-Z]/, "Password requires an uppercase letter")
+      // .matches(/[^\w]/, "Password requires a symbol")
       .required("Password is required"),
   });
 
@@ -173,14 +173,13 @@ function Login() {
 
                 <div className="mb-4">
                   <label htmlFor="phoneNumber" className="form-label">
-                    Phone Number
+                    Email Address or Phone Number
                   </label>
                   <MDBInput
                     id="phoneNumber"
                     type="text"
                     size="lg"
                     value={formik.phoneNo}
-                    onKeyDown={(e) => { handleMobile(e, 17) }}
                     {...formik.getFieldProps("phoneNo")}
                     maxLength="50"
                     className={clsx(
