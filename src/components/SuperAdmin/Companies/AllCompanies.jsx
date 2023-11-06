@@ -499,7 +499,7 @@ const AllCompanyDetails = () => {
                                 checked={item.status}
                               />
                             </CTableDataCell>
-                            <CTableDataCell className="text-center d-flex company-list-icons">
+                            <CTableDataCell className="text-center company-list-icons">
                               <CButton
                                 id="edit_company_btn"
                                 onClick={() => setEditVisible(!editVisible)}

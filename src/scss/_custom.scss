@@ -927,3 +927,45 @@ a.dropdown-item:last-child {
     width: 200px;
     max-width: 200px;
 }
+button#delete_driver_btn {
+    padding-left: 3px;
+}
+div#forgot-outer {
+    margin-top: 10px;
+    margin-bottom: 45px;
+}
+a.back-to-login {
+    text-align: center;
+    width: 150px;
+    margin-top: 24px;
+    color: #000;
+    font-family: "Poppins", sans-serif !important;
+    text-decoration: none;
+    // text-decoration-color: #fdbd1b;
+    // text-decoration-style: solid;
+    // text-decoration-thickness: 3px;
+    // text-underline-offset: 10px;
+}
+.mb-4.bak-to-login-btn {
+    margin-top: 40px;
+}
+a.back-to-login img {
+    width: 8px;
+    margin-right: 9px;
+}
+img.lock-img {
+    width: 40px;
+    margin-right: 10px;
+}
+.opt-outer input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.opt-outer input {
+    width: 68% !important;
+    height: 80px;
+    max-width: 64% !important;
+    border: none;
+    border-radius: 14px;
+    margin-right: 25px;
+}

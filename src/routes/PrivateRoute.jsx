@@ -43,6 +43,9 @@ import GuestRoute from '../utils/GuestRoute';
 import Login from '../components/Login/Login';
 import SecureHotelRoleRoute from '../utils/SecureHotelRoleRoute';
 import SecureTaxiRoleRoute from '../utils/SecureTaxiRoleRoute';
+import ForgotPassword from '../components/Login/ForgotPassword';
+import NewPassword from '../components/Login/NewPassword';
+import EnterOtp from '../components/Login/EnterOtp';
 
 
 const PrivateRoute = () => {
@@ -56,6 +59,9 @@ const PrivateRoute = () => {
         <Routes>
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/new-password" element={<NewPassword />} />
+            <Route path="/enter-otp" element={<EnterOtp />} />
             <Route path="/dashboard" element={<SecureHotelRoleRoute><Dashboard /></SecureHotelRoleRoute>} />
             <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} />
             <Route path="/trips/activetrips" element={<SecureHotelRoleRoute><ActiveTrip /></SecureHotelRoleRoute>} />

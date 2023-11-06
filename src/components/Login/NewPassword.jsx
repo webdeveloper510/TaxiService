@@ -23,7 +23,8 @@ import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import { ClipLoader } from "react-spinners";
-function Login() {
+
+function NewPassword() {
   const { user, setUser } = useContext(userContext)
   const [ loading, setLoading ] = useState(false);
   const navigate = useNavigate();
@@ -171,39 +172,47 @@ function Login() {
                   {/* <p className="lead me-3">LOG IN</p> */}
                 </div>
 
-                <div className="mb-4">
-                  <label htmlFor="phoneNumber" className="form-label">
-                    Email Address or Phone Number
+              
+
+                <div className="mb-4" id="pwd_field">
+                  <label htmlFor="password" className="form-label">
+                   New  Password
                   </label>
                   <MDBInput
-                    id="phoneNumber"
-                    type="text"
+                    id="password"
+                    type={passVissible ? "text" : "password"}
                     size="lg"
-                    value={formik.phoneNo}
-                    {...formik.getFieldProps("phoneNo")}
+                    {...formik.getFieldProps("password")}
                     maxLength="50"
                     className={clsx(
-                      "form-control bg-transparent",
+                      "form-control bg-transparent input_pwd",
                       {
                         "is-invalid":
-                          formik.touched.phoneNo && formik.errors.phoneNo,
+                          formik.touched.password && formik.errors.password,
                       },
                       {
                         "is-valid":
-                          formik.touched.phoneNo && !formik.errors.phoneNo,
+                          formik.touched.password && !formik.errors.password,
                       }
                     )}
-                    name="phoneNo"
+                    name="password"
                     autoComplete="off"
                   />
-                  {formik.errors.phoneNo && formik.touched.phoneNo ? (
-                    <div className="text-danger text-start">{formik.errors.phoneNo}</div>
+                  {formik.errors.password && formik.touched.password ? (
+                    <div className="text-danger text-start">{formik.errors.password}</div>
                   ) : null}
+
+                  <span class="flex justify-around items-center eye_pwd_icon">
+                    <Icon onClick={() => {
+                      setPassVissible(!passVissible)
+                      handleToggle()
+                    }} class="absolute mr-10" icon={icon} size={25} />
+                  </span>
                 </div>
 
                 <div className="mb-4" id="pwd_field">
                   <label htmlFor="password" className="form-label">
-                    Password
+                  Confirm  Password
                   </label>
                   <MDBInput
                     id="password"
@@ -248,28 +257,14 @@ function Login() {
                   autoComplete="current-password"
              /> */}
 
-                <div className="d-flex justify-content-between mb-4 login-remember-forgot">
-                  <MDBCheckbox
-                    name="flexCheck"
-                    value=""
-                    id="flexCheckDefault"
-                    label="Remember me"
-                  />
-                  <Link to={"/forgot-password"} className="forgot-pwd" href="!#">
-                    Forgot password?
-                  </Link>
-                  <Link to={"/enter-otp"} className="forgot-pwd" href="!#">
-                    Enter otp
-                  </Link>
-                </div>
-               
+                
+
                 <div className="text-center text-md-start mt-4 pt-2">
                   {/* <MDBBtn className="custom-login mb-0 px-5">
                 Login
               </MDBBtn> */}
                   <button className="custom-login btn btn-primary" type="submit">
-                    {loading ?
-                      <ClipLoader color="#000000" /> : "Login"}
+                   Reset Password
                   </button>
                 </div>
               </div>
@@ -285,4 +280,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default NewPassword;
