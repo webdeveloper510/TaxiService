@@ -255,12 +255,12 @@ function Login() {
                     id="flexCheckDefault"
                     label="Remember me"
                   />
-                  <Link to={"/forgot-password"} className="forgot-pwd" href="!#">
+                  <Link to={"/#"} className="forgot-pwd" href="!#">
                     Forgot password?
                   </Link>
-                  <Link to={"/enter-otp"} className="forgot-pwd" href="!#">
+                  {/* <Link to={"/enter-otp"} className="forgot-pwd" href="!#">
                     Enter otp
-                  </Link>
+                  </Link> */}
                 </div>
                
                 <div className="text-center text-md-start mt-4 pt-2">
