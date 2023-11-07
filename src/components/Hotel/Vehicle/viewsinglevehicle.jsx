@@ -110,7 +110,7 @@ const ViewSingleVehicle = () => {
                                  
                                 name="vehicleNo"
                                 autoComplete="off" />   */}
-                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/> Vehicle Model :</CFormLabel>
+                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/>Vehicle Model :</CFormLabel>
                              
                                  <span className="vehicle_info"> {vehicle?.vehicle_model}</span>&nbsp;<br/>
                                  <CFormLabel htmlFor="inputseating"><img src={checkedImg}/>Seating Capacity :</CFormLabel>
