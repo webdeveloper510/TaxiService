@@ -922,7 +922,7 @@ a.dropdown-item:last-child {
 .vehicle_info_right img {
     margin-right: 16px;
 }
-.table-responsive td {
+div#recent-trip-outer .table-responsive td {
     white-space: break-spaces;
     width: 200px;
     max-width: 200px;
@@ -968,4 +968,24 @@ img.lock-img {
     border: none;
     border-radius: 14px;
     margin-right: 25px;
+}
+div#completed-trips .table-responsive td {
+    width: 200px;
+    max-width: 200px;
+    white-space: break-spaces;
+}
+div#pending-trips .table-responsive td {
+    max-width: 170px;
+    white-space: break-spaces;
+}
+button#allocate_driver:active {
+    background: transparent !important;
+}
+.reject_icon img {
+    margin-top: 4px;
+    margin-left: 3px;
+}
+button#btn_delete_fare img {
+    margin-left: 4px;
+    margin-top: 3px;
 }

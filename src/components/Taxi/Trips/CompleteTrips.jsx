@@ -104,7 +104,7 @@ const SuperCompleteTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Completed Trip </h1>
-                <div className="active-trip-outer">
+                <div className="active-trip-outer" id="completed-trips">
                   {/* <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
             <div className="left-trip-content">

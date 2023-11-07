@@ -264,7 +264,7 @@ const SuperPendingTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Pending Trips</h1>
-                <div className="active-trip-outer">
+                <div className="active-trip-outer" id="pending-trips">
                   {/* <div className="trips-head d-flex justify-content-between">
  <div className="box-shd d-flex justify-content-between">
  <div className="left-trip-content">
@@ -360,9 +360,9 @@ const SuperPendingTrip = () => {
                                   )}
                                 </div>
                               </CTableDataCell>
-                              <CTableDataCell className="d-flex pending-trips-icons">
+                              <CTableDataCell className="pending-trips-icons">
                                 <div>
-                                  <CButton
+                                  <CButton id="allocate_driver"
                                     className="allocate_accept_driver"
                                     onClick={() => {
                                       setVisible(!visible);
