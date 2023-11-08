@@ -255,7 +255,7 @@ function Login() {
                     id="flexCheckDefault"
                     label="Remember me"
                   />
-                  <Link to={"/#"} className="forgot-pwd" href="!#">
+                  <Link to={"/forgot-password"} className="forgot-pwd" href="!#">
                     Forgot password?
                   </Link>
                   {/* <Link to={"/enter-otp"} className="forgot-pwd" href="!#">

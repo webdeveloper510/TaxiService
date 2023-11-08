@@ -23,7 +23,7 @@ const Routerpage = () => {
         {/* <Route path="/" element={auth()} />
         <Route path="/login" element={<Login />} /> */}
         <Route path="/*" element={<PrivateRoute />} />
-        <Route path='*' element={<Navigate to={"/login"}/> }/>
+        {/* <Route path='*' element={<Navigate to={"/login"}/> }/> */}
 
       </Routes>
      
