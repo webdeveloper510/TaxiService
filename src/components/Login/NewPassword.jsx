@@ -126,11 +126,11 @@ function NewPassword() {
     }
   }
 
-  useEffect(() => {
-    if (localStorage.getItem("token") !== null || undefined) {
-      navigate("/dashboard")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (localStorage.getItem("token") !== null || undefined) {
+  //     navigate("/dashboard")
+  //   }
+  // }, [])
 
 
 

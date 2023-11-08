@@ -42,6 +42,7 @@ import {
 } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import SuperAdminSideBar from "../Sidebar/SideBar";
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 // import toggel from "react-toggle/style.css"
 const tableExample = [
   {
@@ -411,6 +412,13 @@ const AllCompanyDetails = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">Companies Details</h1>
+                <div className="serach-left" id="company-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+    <button className="search-btn">
+        <MDBIcon icon='search' />
+      </button>
+    </MDBInputGroup></div>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">
@@ -429,6 +437,7 @@ const AllCompanyDetails = () => {
                         </Link>
                       </div>
                     </div> */}
+                    
                   </div>
                   {loading ? (
                     <AppLoader />

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom';
 import {
   CContainer,
   CHeader,
@@ -77,13 +78,15 @@ const AppHeader = () => {
 
         <CHeaderNav className="profile-pic">
         <CNavItem>
-            <CNavLink href="#">
+        
+            <Link to="/edit-profile">
              <CAvatar src={profilepic} size="md" />
-            </CNavLink>
+             </Link>
+           
           </CNavItem>
           </CHeaderNav>
           
-          
+
         <CHeaderNav className="top-bar-right">
           <AppHeaderDropdown />
         </CHeaderNav>
