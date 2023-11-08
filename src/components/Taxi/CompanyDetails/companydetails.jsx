@@ -42,6 +42,7 @@ import {
 import AppLoader from "../../AppLoader";
 import { capitalLine } from "../../../utils/helpingFunction";
 import { ClipLoader } from "react-spinners";
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 // import toggel from "react-toggle/style.css"
 const tableExample = [
   {
@@ -399,6 +400,13 @@ const CompanyDetails = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">All Customers</h1>
+                <div className="serach-left" id="customers-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+    <button className="search-btn">
+        <MDBIcon icon='search' />
+      </button>
+    </MDBInputGroup></div>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">

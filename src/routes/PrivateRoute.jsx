@@ -46,6 +46,7 @@ import SecureTaxiRoleRoute from '../utils/SecureTaxiRoleRoute';
 import ForgotPassword from '../components/Login/ForgotPassword';
 import NewPassword from '../components/Login/NewPassword';
 import EnterOtp from '../components/Login/EnterOtp';
+import EditProfile from '../components/Login/EditProfile';
 
 
 const PrivateRoute = () => {
@@ -107,6 +108,8 @@ const PrivateRoute = () => {
             <Route path="/super-admin/vehicle/vehicle-details/:vehicleId" element={<SecureSuperRoleRoute><ViewSingleVehicle role="super" /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/vehicle/addnewvehicle" element={<SecureSuperRoleRoute><AddSuperVehicle /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/vehicle/editvehicle/:vehicleId" element={<SecureSuperRoleRoute><EditVehicle /></SecureSuperRoleRoute>} />
+            <Route path="/edit-profile" element={<SecureSuperRoleRoute><EditProfile /></SecureSuperRoleRoute>} />
+            <Route path="/new-password" element={<SecureSuperRoleRoute><NewPassword /></SecureSuperRoleRoute>} />
             <Route path='*' element={<Navigate to="/" />} />
 
         </Routes>
