@@ -30,7 +30,7 @@ import car1 from '../../../assets/images/car1.jpg'
 import { getVehicleById } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import checkedImg from "../../../assets/images/checked.png"
-const ViewSingleVehicle = () => {
+const ViewSingleVehicle = ({role}) => {
 
   const {vehicleId} = useParams();
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const ViewSingleVehicle = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
               <h1 class="heading-for-every-page">
-                    <Link to="/taxi/vehicle/listofvehicles">
+                    <Link to={`/${role=="super"?"super-admin":"taxi"}/vehicle/listofvehicles`}>
                     <img src={backtovehicle} alt="edit" /> Vehicle Information</Link></h1>
                 <div class="active-trip-outer">
                   {/* <h2>Add New Vehicle</h2> */}

@@ -60,7 +60,7 @@ function ForgotPassword() {
                     id="forgotphoneNumber"
                     type="text"
                     size="lg"
-                    value=""
+                   
                     maxLength="50"
                     className=
                       "form-control bg-transparent"
@@ -81,7 +81,7 @@ function ForgotPassword() {
                 </div>
 
                 <div className="mb-4 bak-to-login-btn">
-                <Link to={"/new-password"} className="back-to-login" href="!#">enter new password</Link>
+                <Link to={"/enter-otp"} className="back-to-login" href="!#">enter new otp</Link>
                   <Link to={"/login"} className="back-to-login" href="!#">
                   <img src={backtologin} alt="edit" />  Back to Login
                   </Link>

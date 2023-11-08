@@ -140,7 +140,7 @@ const EditVehicle = () => {
 
   const navigate = useNavigate()
   const back = () => {
-    navigate("/taxi/vehicle/listofvehicles")
+    navigate("/super-admin/vehicle/viewallvehicle")
   }
 
 
