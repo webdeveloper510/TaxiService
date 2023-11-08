@@ -16,78 +16,71 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { userLogin } from "../../utils/api";
+import { changeForgotPass, userLogin } from "../../utils/api";
 import { toast } from 'react-toastify';
 import userContext from "../../utils/context";
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import { ClipLoader } from "react-spinners";
+import jsCookie from "js-cookie";
 
 function NewPassword() {
   const { user, setUser } = useContext(userContext)
   const [ loading, setLoading ] = useState(false);
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
-    phoneNo: Yup.string()
-      // .min(7, "Phone number must be greater than 7")
-      // .max(16, "Phone number not be greater than 17")
-      .required("Email Address or Phone Number is required"),
     password: Yup.string()
+    .min(6, "Password must be 6 characters long")
+    // .matches(/[0-9]/, "Password requires a number")
+    // .matches(/[a-z]/, "Password requires a lowercase letter")
+    // .matches(/[A-Z]/, "Password requires an uppercase letter")
+    // .matches(/[^\w]/, "Password requires a symbol")
+    .required("Password is required"),
+    confirmPassword: Yup.string()
       .min(6, "Password must be 6 characters long")
       // .matches(/[0-9]/, "Password requires a number")
       // .matches(/[a-z]/, "Password requires a lowercase letter")
       // .matches(/[A-Z]/, "Password requires an uppercase letter")
       // .matches(/[^\w]/, "Password requires a symbol")
-      .required("Password is required"),
+      .required("Confirm Password is required"),
   });
 
   const initialValues = {
-    phoneNo: "",
     password: "",
+    confirmPassword: "",
   };
   const [passVissible, setPassVissible] = useState(false);
+  const [comPassVissible, setComPassVissible] = useState(false);
 
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
     onSubmit: async (values) => {
+      if(values.password !== values.confirmPassword){
+        toast.warning("Password and Confirm Password must be same", {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        return
+      }
       setLoading(true);
       console.log("values", values);
-      userLogin({
-        email: values.phoneNo,
+      const email = jsCookie.get("forgotEmail");
+      changeForgotPass({
+        email,
         password: values.password
       }).then((response) => {
         console.log("response---->>>>", response)
-        // navige to dashboard if user role is super admin
         if (response.data.code === 200
-          // && response.data.result.role === "SUB_ADMIN"
+        
         ) {
-          setUser(response.data.result)
+          navigate("/login")
           toast.success(`${response.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
-          localStorage.setItem("token", response.data.jwtToken)
-          if (response.data.result.role === "COMPANY") {
-
-            navigate("/taxi/dashboard")
-
-
-          }
-          if (response.data.result.role === "SUPER_ADMIN") {
-
-            navigate("/super-admin/dashboard")
-
-
-          }
-          else {
-
-            navigate("/dashboard")
-
-          }
-
-
+        
 
         } else {
           toast.warning("Invalid Credentials", {
@@ -102,47 +95,23 @@ function NewPassword() {
   });
 
 
-  const handleMobile = (event, max) => {
-    const pattern = /^[0-9]+$/;
-    if (event.key === 'Backspace' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'Shift' || event.key === 'ArrowLeft' || event.key === "ArrowRight") {
-
-      formik.setFieldValue(event.target.name, event.target.value)
-      formik.setFieldTouched(event.target.name, true)
-    } else {
-
-      let value = event.target.value.toString()
-      if (value.length > max) {
-        event.stopPropagation()
-        event.preventDefault()
-      } else {
-        if (!pattern.test(event.key)) {
-          event.preventDefault();
-          event.stopPropagation()
-        } else {
-          formik.setFieldValue(event.target.name, event.target.value)
-          formik.setFieldTouched(event.target.name, true)
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (localStorage.getItem("token") !== null || undefined) {
-      navigate("/dashboard")
-    }
-  }, [])
-
-
-
-  //   const [password, setPassword] = useState("");
-  // const [type, setType] = useState('password');
   const [icon, setIcon] = useState(eyeOff);
+  const [iconCom, setIconCom] = useState(eyeOff);
   const handleToggle = () => {
     if (!passVissible) {
       setIcon(eye);
 
     } else {
       setIcon(eyeOff)
+
+    }
+  }
+  const handleToggleCom = () => {
+    if (!passVissible) {
+      setIconCom(eye);
+
+    } else {
+      setIconCom(eyeOff)
 
     }
   }
@@ -218,31 +187,31 @@ function NewPassword() {
                     id="password"
                     type={passVissible ? "text" : "password"}
                     size="lg"
-                    {...formik.getFieldProps("password")}
+                    {...formik.getFieldProps("confirmPassword")}
                     maxLength="50"
                     className={clsx(
                       "form-control bg-transparent input_pwd",
                       {
                         "is-invalid":
-                          formik.touched.password && formik.errors.password,
+                          formik.touched.confirmPassword && formik.errors.confirmPassword,
                       },
                       {
                         "is-valid":
-                          formik.touched.password && !formik.errors.password,
+                          formik.touched.confirmPassword && !formik.errors.confirmPassword,
                       }
                     )}
-                    name="password"
+                    name="confirmPassword"
                     autoComplete="off"
                   />
-                  {formik.errors.password && formik.touched.password ? (
-                    <div className="text-danger text-start">{formik.errors.password}</div>
+                  {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                    <div className="text-danger text-start">{formik.errors.confirmPassword}</div>
                   ) : null}
 
                   <span class="flex justify-around items-center eye_pwd_icon">
                     <Icon onClick={() => {
-                      setPassVissible(!passVissible)
-                      handleToggle()
-                    }} class="absolute mr-10" icon={icon} size={25} />
+                      setComPassVissible(!comPassVissible)
+                      handleToggleCom()
+                    }} class="absolute mr-10" icon={iconCom} size={25} />
                   </span>
                 </div>
 

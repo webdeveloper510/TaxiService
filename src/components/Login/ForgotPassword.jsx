@@ -1,4 +1,3 @@
-import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import 'bootstrap/dist/js/bootstrap.bundle.min';
 //import 'mdb-react-ui-kit';
@@ -6,6 +5,8 @@ import loginImg from "../../assets/images/login-img.png";
 import loginLogo from "../../assets/images/login-logo.png";
 import loginbg from "../../assets/images/login-bg.png";
 import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import Cookies from "js-cookie"
 import {
   MDBContainer,
   MDBCol,
@@ -15,11 +16,49 @@ import {
 } from "mdb-react-ui-kit";
 import backtologin from '../../assets/images/left-arrow.png'
 import forgotPassowd from '../../assets/images/forgot-password.png'
+import { useFormik } from "formik";
+import clsx from "clsx";
+import { useState } from "react";
+import { sendForgotEmail } from "../../utils/api";
+import { toast } from "react-toastify";
 function ForgotPassword() {
   const initialValues = {
-    phoneNo: "",
-    password: "",
+    email: "",
   };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required("Email  is required"),
+
+  });
+
+  const navigate = useNavigate()
+  const [submitLoader, setSubmitLoader] = useState(false)
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      setSubmitLoader(true)
+      sendForgotEmail(values.email).then((res) => {
+        console.log("response---->>>>", res);
+        if (res?.data?.code === 200) {
+          toast.success(res.data.message, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+         
+          Cookies.set("forgotEmail", values.email)
+          navigate("/enter-otp")
+        } else {
+          toast.warning(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
+      }).finally(()=>{
+        setSubmitLoader(false)
+      });
+    },
+  });
 
 
 
@@ -43,7 +82,7 @@ function ForgotPassword() {
             <div className="svg-outer">
 
             </div>
-            <form noValidate>
+            <form  onSubmit={formik.handleSubmit} noValidate>
               <div className="login-left-content">
                 <img src={loginLogo} className="login-  " alt="Logo" />
                <br/><br/>
@@ -60,13 +99,30 @@ function ForgotPassword() {
                     id="forgotphoneNumber"
                     type="text"
                     size="lg"
-                   
-                    maxLength="50"
-                    className=
-                      "form-control bg-transparent"
-                       name="phoneNo"
-                    autoComplete="off"
-                  />
+                    {...formik.getFieldProps("email")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.email &&
+                                      formik.errors.email,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.email &&
+                                      !formik.errors.email,
+                                  }
+                                )}
+                                name="email"
+                                autoComplete="off"
+                              />
+                              {formik.errors.email &&
+                                formik.touched.email ? (
+                                <div className="text-danger">
+                                  {formik.errors.email}
+                                </div>
+                              ) : null}
                 
                 </div>
 

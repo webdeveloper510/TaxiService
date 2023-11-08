@@ -504,3 +504,45 @@ export const tripsUpdate = async (id,data) => {
       console.log("EDIT_VEHICLE", error);
     });
 };
+export const sendForgotEmail = async (email) => {
+  return await Axios.post(`admin/send_otp`, {email}, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "sendForgotEmail");
+      return res;
+    })
+    .catch((error) => {
+      console.log("sendForgotEmail error", error);
+    });
+};
+export const confirmOtp = async (data) => {
+  return await Axios.post(`admin/verify_otp`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "confirmOtp");
+      return res;
+    })
+    .catch((error) => {
+      console.log("confirmOtp error", error);
+    });
+};
+export const changeForgotPass = async (data) => {
+  return await Axios.post(`admin/forgot_password`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "changeForgotPass");
+      return res;
+    })
+    .catch((error) => {
+      console.log("changeForgotPass error", error);
+    });
+};

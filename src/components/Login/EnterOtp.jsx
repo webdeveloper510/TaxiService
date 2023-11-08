@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import 'bootstrap/dist/js/bootstrap.bundle.min';
 //import 'mdb-react-ui-kit';
@@ -14,10 +14,34 @@ import {
   MDBInput,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
-
+import Cookie from "js-cookie";
+import { confirmOtp } from "../../utils/api";
+import { toast } from "react-toastify";
 function EnterOtp() {
-
+  const navigate = useNavigate();
   const [otp, setOtp] = useState('');
+  const [submitLoader, setSubmitLoader] = useState(false)
+  useEffect(()=>{console.log("otp: ",otp)},[otp])
+  const handleSubmit = () => {
+    const email = Cookie.get("forgotEmail");
+    confirmOtp({email,OTP:otp}).then((res) => {
+      console.log("response---->>>>", res);
+      if (res?.data?.code === 200) {
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+        navigate("/new-password")
+      } else {
+        toast.warning(`${res.data.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+    }).finally(()=>{
+      setSubmitLoader(false)
+    });
+  };
   return (
     <div
       className="container-login"
@@ -37,7 +61,7 @@ function EnterOtp() {
             <div className="svg-outer">
 
             </div>
-            <form noValidate>
+            <div>
               <div className="login-left-content">
                 <img src={loginLogo} className="login-  " alt="Logo" /><br/><br/>
                 <div className="d-flex flex-row align-items-center justify-content-center">
@@ -47,7 +71,7 @@ function EnterOtp() {
 <div className="opt-outer">
                 <OtpInput
       value={otp}
-      onChange={setOtp}
+      onChange={(setOtp)}
       inputType="number"
       numInputs={4}
       renderInput={(props) => <input {...props} />}
@@ -61,12 +85,12 @@ function EnterOtp() {
                   {/* <MDBBtn className="custom-login mb-0 px-5">
                 Login
               </MDBBtn> */}
-                  <button className="custom-login btn btn-primary" type="submit">
+                  <button className="custom-login btn btn-primary" onClick={handleSubmit}>
                     Verify
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </MDBCol>
 
           <MDBCol col="10" md="4">

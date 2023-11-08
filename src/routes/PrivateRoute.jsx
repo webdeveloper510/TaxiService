@@ -60,8 +60,8 @@ const PrivateRoute = () => {
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
-            <Route path="/new-password" element={<NewPassword />} />
-            <Route path="/enter-otp" element={<EnterOtp />} />
+            <Route path="/new-password" element={<GuestRoute><NewPassword /></GuestRoute>} />
+            <Route path="/enter-otp" element={<GuestRoute><EnterOtp /></GuestRoute>} />
             <Route path="/dashboard" element={<SecureHotelRoleRoute><Dashboard /></SecureHotelRoleRoute>} />
             <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} />
             <Route path="/trips/activetrips" element={<SecureHotelRoleRoute><ActiveTrip /></SecureHotelRoleRoute>} />

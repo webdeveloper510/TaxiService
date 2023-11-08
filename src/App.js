@@ -13,9 +13,10 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading , setLoading] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
   function onLoadApp(){
     setLoading(true);
-    const token = localStorage.getItem('token');
+    setAppLoaded(false);
     console.log('token: from local storage' + token);
     if(!token){
       setLoading(false)
@@ -56,7 +57,7 @@ function App() {
   }
   useEffect(()=>{
     onLoadApp()
-  },[])
+  },[token])
   return (
     <userContext.Provider value={{user,setUser,appLoaded}}>
     {loading?<AppLoader/>:<div className="App">
