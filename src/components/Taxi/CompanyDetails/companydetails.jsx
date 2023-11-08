@@ -268,7 +268,7 @@ const CompanyDetails = () => {
 
   const getCompanyDetail = () => {
     setLoading(true);
-    getCompany("HOTEL")
+    getCompany({role:"HOTEL",name:""})
       .then((res) => {
         console.log(res?.result, "company");
 

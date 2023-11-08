@@ -211,7 +211,8 @@ export const addCompany = async(data) => {
   });
 };
 export const getCompany = async(data) => {
-  return await Axios.get(`admin/get_sub_admins${data?"?role="+data:""}`,{
+  console.log("getCompany is", data)
+  return await Axios.post(`admin/search_company?role=${data.role}`,{name:data.name},{
     headers: {
       "x-access-token": token,
     },
@@ -544,5 +545,19 @@ export const changeForgotPass = async (data) => {
     })
     .catch((error) => {
       console.log("changeForgotPass error", error);
+    });
+};
+export const changePass = async (data) => {
+  return await Axios.post(`/admin/reset_password`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "changePass");
+      return res;
+    })
+    .catch((error) => {
+      console.log("changePass error", error);
     });
 };

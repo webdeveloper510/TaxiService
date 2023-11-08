@@ -70,6 +70,7 @@ const AllCompanyDetails = () => {
   const [address, setAddress] = useState("");
   const [touched, setTouched] = useState(false)
   const [addressError, setAddressError] = useState(true);
+  const [search, setSearch] = useState("");
   const handleSelectAddress = async (selectedAddress) => {
     try {
       formik.setFieldValue("land", selectedAddress )
@@ -163,11 +164,11 @@ const AllCompanyDetails = () => {
 
   useEffect(() => {
     getCompanyDetail();
-  }, []);
+  }, [search]);
 
   const getCompanyDetail = () => {
     setLoading(true);
-    getCompany()
+    getCompany({role:"COMPANY",name: search})
       .then((res) => {
         console.log(res?.result, "company");
         if (res?.code === 200) {
@@ -414,7 +415,9 @@ const AllCompanyDetails = () => {
                 <h1 class="heading-for-every-page">Companies Details</h1>
                 <div className="serach-left" id="company-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+      <MDBInput value={search} onChange={(e)=>{
+        setSearch(e.target.value);
+      }} placeholder="Search"/>
     <button className="search-btn">
         <MDBIcon icon='search' />
       </button>
