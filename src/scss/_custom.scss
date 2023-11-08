@@ -766,11 +766,11 @@ img.vehicle_img {
 }
 .vehicle_info_right .form-label {
     font-weight: 600 !important;
-    font-size: 20px;
+    font-size: 18px;
     padding-right: 10px;
 }
 span.vehicle_info {
-    font-size: 20px;
+    font-size: 18px;
     text-transform: capitalize;
     font-weight: 500;
     padding-left: 10px;
@@ -986,6 +986,10 @@ button#allocate_driver:active {
     margin-left: 3px;
 }
 button#btn_delete_fare img {
+    margin-left: 4px;
+    margin-top: 3px;
+}
+button#delete_company_btn {
     margin-left: 4px;
     margin-top: 3px;
 }

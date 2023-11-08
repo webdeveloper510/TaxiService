@@ -239,6 +239,8 @@ const [selectedId, setSelectedId ] = useState(null);
                                         borderRadius: "10px",
                                         fontWeight: "normal",
                                         color: '#fff',
+                                        width: '100px',
+                                        margin: '0 auto',
                                       }}                                    
                                     >{status}</div>
                                   </CTableDataCell>

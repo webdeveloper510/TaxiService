@@ -250,6 +250,8 @@ const SuperRecentTrips=()=> {
                     borderRadius : "8px",
                     fontWeight: "normal",
                     color: "#fff",
+                    width: '100px',
+                    margin: '0 auto',
                    }}>{status}</span>  
                 </CTableDataCell>           
               </CTableRow>

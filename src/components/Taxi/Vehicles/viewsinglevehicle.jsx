@@ -90,12 +90,12 @@ const ViewSingleVehicle = () => {
                         
                           <form noValidate className="row g-3">
                          
-                          <CCol md={6}>
+                          <CCol md={5}>
                             
                           <img className="vehicle_img" src={vehicle?.vehicle_photo} alt="Car photo"/>
                            </CCol>
                            
-                            <CCol className="vehicle_info_right" md={6}>
+                            <CCol className="vehicle_info_right" md={7}>
                               <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Vehicle No. : </CFormLabel>
                               <span className="vehicle_info">{vehicle?.vehicle_number}</span> &nbsp;<br/>
                               <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Vehicle Type : </CFormLabel>
