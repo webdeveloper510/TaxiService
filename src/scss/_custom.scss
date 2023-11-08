@@ -862,8 +862,9 @@ button#dropdown-basic {
     padding: 0;
     font-family: "Poppins", sans-serif !important;
     font-size: 14px;
-    background: #cccccc54;
-    padding: 10px 10px 10px 10px;
+    background: rgba(204, 204, 204, 0.3294117647) !important;
+    padding: 8px 10px 8px 10px;
+    color: #000;
 }
 button#dropdown-basic img {
     width: 20px;
@@ -875,6 +876,9 @@ button#dropdown-basic img {
     padding-bottom: 10px;
     padding-top: 10px;
     margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 
 }
 a.dropdown-item {
@@ -992,4 +996,20 @@ button#btn_delete_fare img {
 button#delete_company_btn {
     margin-left: 4px;
     margin-top: 3px;
+}
+button.search-btn {
+    border: none;
+    background: #ffcc54;
+    border-radius: 0.25rem;
+}
+button.search-btn i {
+    color: #fff;
+}
+ul.header-nav.top-bar-right ul li a {
+    padding-left: 10px;
+    padding-right: 16px;
+}
+ul.header-nav.top-bar-right ul {
+    margin-top: 13px !important;
+    min-width: 100px;
 }

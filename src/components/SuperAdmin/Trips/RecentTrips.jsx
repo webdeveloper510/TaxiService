@@ -19,7 +19,8 @@ import AppLoader from "../../AppLoader";
 import Dropdown from 'react-bootstrap/Dropdown';
 import filterImg from '../../../assets/images/filter-icon.png'
 import { tripEnum } from "../../../utils/saticData";
-//import background from '../assets/images/heroimg.png';
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+
 const tableExample = [
   {
   SrNo : '1',
@@ -154,9 +155,22 @@ const SuperRecentTrips=()=> {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">All Trips</h1>
+             
+
+
+
                 <div class="filter-outer">
+                  <div className="serach-left">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+    <button className="search-btn">
+        <MDBIcon icon='search' />
+      </button>
+    </MDBInputGroup></div>
+    <div className="filter-right">
+
                <Dropdown onSelect={handleSelect}>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+      <Dropdown.Toggle id="dropdown-basic">
         <img src={filterImg}/>
         {selectedValue}
       </Dropdown.Toggle>
@@ -176,6 +190,7 @@ const SuperRecentTrips=()=> {
       })}
       </Dropdown.Menu>
     </Dropdown>
+    </div>
                </div>
                 {loader?<AppLoader/>:
                 
