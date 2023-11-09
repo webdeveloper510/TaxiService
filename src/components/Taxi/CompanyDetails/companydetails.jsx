@@ -631,6 +631,20 @@ const CompanyDetails = () => {
                           <CCard className="mb-4 edit_company_popup">
                             <CCardBody>
                               <form noValidate onSubmit={formik.handleSubmit} className="row g-3">
+                              <CCol md={6}>
+                              <CFormLabel htmlFor="inputcname">
+                                Hotel ID
+                              </CFormLabel>
+                              <CFormInput
+                                aria-label="Hotel ID"
+                                maxLength="50"
+                                className=
+                                  "form-control bg-transparent"  
+                                name="hotel_name"
+                                autoComplete="off"
+                              />
+                            
+                            </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputcname">
                                     Customer Name

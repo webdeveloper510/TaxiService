@@ -1222,6 +1222,10 @@ section.booking-section-form {
 .about-left img {
     width: 100%;
 }
+button#confirmation_btn a {
+    font-family: "Poppins", sans-serif !important;
+    color: #ffc859;
+}
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {
         width: 100%;
