@@ -62,6 +62,7 @@ const tableExample = [
     postcode: "45236",
     vehiclenumber: "10",
     address: "34,Alex Street",
+    requestTrip: "richa",
     // action: { checkicon: checkiconimg },
   },
 ];
@@ -89,6 +90,7 @@ const CompanyDetails = () => {
       setAddressError(false)
     }
   }
+  const [confirmationVisible, setconfirmationVisible] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
   // State variables for popups
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -143,6 +145,7 @@ const CompanyDetails = () => {
     tel_contact_number: "",
     email: "",
     commision: "",
+    requestTrip: "",
   });
 
   console.log("input dataaaaaaaaaaa", inputData)
@@ -163,6 +166,7 @@ const CompanyDetails = () => {
     tel_contact_number: "",
     email: "",
     commision: "",
+    requestTrip: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -460,6 +464,9 @@ useEffect(() =>{getCompanyDetail()},[])
                           <CTableHeaderCell className="text-center">
                             Action
                           </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                           Request Trip
+                          </CTableHeaderCell>
                         </CTableRow>
                       </CTableHead>
                       <CTableBody>
@@ -499,24 +506,18 @@ useEffect(() =>{getCompanyDetail()},[])
                                 checked={item.status}
                               />
                             </CTableDataCell>
-                            <CTableDataCell className="text-center d-flex company-list-icons">
+                            <CTableDataCell className="text-center company-list-icons">
                               <CButton
                                 id="edit_company_btn"
                                 onClick={() => setEditVisible(!editVisible)}
                               >
-                                {/* <div style={{cursor:"pointer"}} 
- onClick={()=>navigate(`/taxi/edit-company/${item._id}`)}
- ></div> */}
+             
                                 <img
                                   src={editiconimg}
                                   alt="edit"
                                   onClick={() => handleEdit(item._id)}
                                 />{" "}
                               </CButton>
-
-                              {/* <div style={{cursor:"pointer"}} onClick={()=>{
- deleteCompanyHandler(item._id);
- }}> </div> */}
                               <CButton
                                 id="delete_company_btn"
                                 onClick={() => {
@@ -526,6 +527,13 @@ useEffect(() =>{getCompanyDetail()},[])
                               >
                                 <img src={deleteiconimg} alt="delet" />
                               </CButton>
+                            </CTableDataCell>
+
+                            <CTableDataCell>
+                              <div><span><CButton  id="confirmation_btn" onClick={() => {
+                                  setconfirmationVisible(!confirmationVisible);
+                                  
+                                }}><a href="#">Request Trip</a></CButton></span></div>
                             </CTableDataCell>
                           </CTableRow>
                         ))}
@@ -627,6 +635,20 @@ useEffect(() =>{getCompanyDetail()},[])
                           <CCard className="mb-4 edit_company_popup">
                             <CCardBody>
                               <form noValidate onSubmit={formik.handleSubmit} className="row g-3">
+                              <CCol md={6}>
+                              <CFormLabel htmlFor="inputcname">
+                                Hotel ID
+                              </CFormLabel>
+                              <CFormInput
+                                aria-label="Hotel ID"
+                                maxLength="50"
+                                className=
+                                  "form-control bg-transparent"  
+                                name="hotel_name"
+                                autoComplete="off"
+                              />
+                            
+                            </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputcname">
                                     Customer Name
@@ -771,72 +793,7 @@ useEffect(() =>{getCompanyDetail()},[])
                                 </div>
                               ) : null}
                                 </CCol>
-                                {/* <CCol md={6}>
-                                  <CFormLabel htmlFor="inputhousenum">
-                                    Building Number
-                                  </CFormLabel>
-                                  <CFormInput
-                                    aria-label="housenumber"
-                                    value={inputData.house_number}
-                                    onChange={(e) => handleInput(e)}
-                                    maxLength="50"
-                                    className="form-control bg-transparent"
-                                    name="house_number"
-                                    autoComplete="off"
-                                  />
-                                </CCol> */}
-
-                                {/* <CCol md={6}>
-                                  <CFormLabel htmlFor="inputtxinum">
-                                    Describe Your Hotel
-                                  </CFormLabel>
-                                  <CFormInput
-                                    aria-label="taxi company"
-                                    maxLength="50"
-                                    value={inputData.description}
-                                    {...formik.getFieldProps(
-                                      "description"
-                                    )}
-                                    className={clsx(
-                                      "form-control bg-transparent",
-                                      {
-                                        "is-invalid":
-                                          formik.touched
-                                            .description &&
-                                          formik.errors.description,
-                                      },
-                                      {
-                                        "is-valid":
-                                          formik.touched
-                                            .description &&
-                                          !formik.errors.description,
-                                      }
-                                    )}
-                                    name="description"
-                                    autoComplete="off"
-                                  />
-                                  {formik.errors.description &&
-                                    formik.touched.description ? (
-                                    <div className="text-danger">
-                                      {formik.errors.description}
-                                    </div>
-                                  ) : null}
-                                </CCol> */}
-
-                                {/* <CCol md={6}>
-                                  <CFormLabel htmlFor="inputaffi">
-                                    Affiliated with
-                                  </CFormLabel>
-                                  <CFormInput
-                                    aria-label="Affiliated"
-                                    maxLength="50"
-                                    value={inputData.affiliated_with}
-                                    onChange={(e) => handleInput(e)}
-                                    className="form-control bg-transparent"
-                                    name="affiliated_with"
-                                    autoComplete="off"
-                                  />
-                                </CCol> */}
+                             
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputphnnum">
                                     Phone Number
@@ -870,153 +827,7 @@ useEffect(() =>{getCompanyDetail()},[])
                                     </div>
                                   ) : null}
                                 </CCol>
-                                {/* <CCol md={6}>
-                                  <CFormLabel htmlFor="inputwebsite">
-                                    Website
-                                  </CFormLabel>
-                                  <CFormInput
-                                    id="webt_site"
-                                    maxLength="50"
-                                    value={inputData.website}
-                                    {...formik.getFieldProps("website")}
-                                    className={clsx(
-                                      "form-control bg-transparent",
-                                      {
-                                        "is-invalid":
-                                          formik.touched.website &&
-                                          formik.errors.website,
-                                      },
-                                      {
-                                        "is-valid":
-                                          formik.touched.website &&
-                                          !formik.errors.website,
-                                      }
-                                    )}
-                                    name="website"
-                                    autoComplete="off"
-                                  />
-                                  {formik.errors.website &&
-                                    formik.touched.website ? (
-                                    <div className="text-danger">
-                                      {formik.errors.website}
-                                    </div>
-                                  ) : null}
-                                </CCol> */}
-                                {/* <CCol md={6}>
-                                  <CFormLabel htmlFor="inputquality">
-                                    TX Quality Mark
-                                  </CFormLabel>
-                                  <CFormInput
-                                    id="iput_quality"
-                                    maxLength="50"
-                                    value={inputData.tx_quality_mark}
-                                    onChange={(e) => handleInput(e)}
-                                    className="form-control bg-transparent"
-                                    name="tx_quality_mark"
-                                    autoComplete="off"
-                                  />
-                                </CCol> */}
-                                {/* <CCol md={12} className="row add_company_row">
-                                  <CCol md={6}>
-                                    <CFormLabel htmlFor="inputfname">
-                                      First Name
-                                    </CFormLabel>
-                                    <CFormInput
-                                      id="f_name"
-                                      maxLength="50"
-                                      value={inputData.first_name}
-                                      {...formik.getFieldProps("first_name")}
-                                 
-                                      className={clsx(
-                                        "form-control bg-transparent",
-                                        {
-                                          "is-invalid":
-                                            formik.touched.first_name &&
-                                            formik.errors.first_name,
-                                        },
-                                        {
-                                          "is-valid":
-                                            formik.touched.first_name &&
-                                            !formik.errors.first_name,
-                                        }
-                                      )}
-                                      name="first_name"
-                                      autoComplete="off"
-                                    />
-                                    {formik.errors.first_name &&
-                                      formik.touched.first_name ? (
-                                      <div className="text-danger">
-                                        {formik.errors.first_name}
-                                      </div>
-                                    ) : null}
-                                  </CCol>
-                                  <CCol md={6}>
-                                    <CFormLabel htmlFor="inputlname">
-                                      Last Name
-                                    </CFormLabel>
-                                    <CFormInput
-                                      id="l_name"
-                                      maxLength="50"
-                                      value={inputData.last_name}
-                                      {...formik.getFieldProps("last_name")}
-                                 
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.last_name &&
-                                        formik.errors.last_name,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.last_name &&
-                                        !formik.errors.last_name,
-                                    }
-                                  )}
-                                  name="last_name"
-                                  autoComplete="off"
-                                />
-                                {formik.errors.last_name &&
-                                  formik.touched.last_name ? (
-                                  <div className="text-danger">
-                                    {formik.errors.last_name}
-                                  </div>
-                                ) : null}
-                                  </CCol>
-                                </CCol>
-
-                                <CCol md={6}>
-                                  <CFormLabel htmlFor="inputcon_num">
-                                    Telephone Number
-                                  </CFormLabel>
-                                  <CFormInput
-                                    id="tel_Con_nu"
-                                    maxLength="50"
-                                    value={inputData.p_number}
-                                    {...formik.getFieldProps("p_number")}
-                                    className={clsx(
-                                      "form-control bg-transparent",
-                                      {
-                                        "is-invalid":
-                                          formik.touched.p_number &&
-                                          formik.errors.p_number,
-                                      },
-                                      {
-                                        "is-valid":
-                                          formik.touched.p_number &&
-                                          !formik.errors.p_number,
-                                      }
-                                    )}
-                                    name="p_number"
-                                    autoComplete="off"
-                                  />
-                                  {formik.errors.p_number &&
-                                    formik.touched.p_number ? (
-                                    <div className="text-danger">
-                                      {formik.errors.p_number}
-                                    </div>
-                                  ) : null}
-                                </CCol> */}
+                              
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputmailaddress">
                                     Email Address
@@ -1069,15 +880,7 @@ useEffect(() =>{getCompanyDetail()},[])
                                 </CCol>
                               </form>
                             </CCardBody>
-                            {/* <div className="delete_vehicle_popup_outer">
- 
-
- <CButton className="delete_popup"
- 
- >Delete</CButton>
- <CButton className="cancel_popup" onClick={() => setVisible(false)}>
- Cancel</CButton>
- </div> */}
+                      
                           </CCard>
                         </CCol>
                       </CRow>
@@ -1085,6 +888,54 @@ useEffect(() =>{getCompanyDetail()},[])
                   </CModal>
 
                   {/* EndEditcompanypopup */}
+
+
+                  {/* Confirmationcompanypopup */}
+
+
+                  <CModal
+                    alignment="center"
+                    visible={confirmationVisible}
+                    onClose={() => setconfirmationVisible(false)}
+                  >
+                    {/* <CModalHeader>
+ <CModalTitle>Edit Fare</CModalTitle>
+ </CModalHeader> */}
+                    <CModalBody>
+                      <CRow>
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup" id="confirmation_customer_popup">
+                            <CCardBody>
+                              <img src={deletepopup} alt="danger" />
+                              <h2>Are you Sure</h2>
+                              <p>You want to Request a new Trip ?</p>
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+                              <CButton
+                                className="delete_popup"
+                                onClick={() => {
+                                  
+                                  setconfirmationVisible(false);
+                                }}
+                              >
+                                Delete
+                              </CButton>
+                              <CButton
+                                className="cancel_popup"
+                                onClick={() => {
+                                  setconfirmationVisible(false);
+                                }}
+                              >
+                                Cancel
+                              </CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+                  </CModal>
+
+                  {/* Endcompanycompanypopup */}
                 </div>
               </div>
             </div>
