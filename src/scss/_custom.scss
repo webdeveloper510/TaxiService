@@ -995,7 +995,7 @@ button#btn_delete_fare img {
 }
 button#delete_company_btn {
     margin-left: 4px;
-    margin-top: 3px;
+    margin-top: 4px;
 }
 button.search-btn {
     border: none;
@@ -1134,3 +1134,103 @@ button#rest_btn {
     font-size: 18px;
     color: #fff;
 }
+button#confirmation_btn {
+    background: transparent;
+    border: none;
+}
+button#confirmation_btn:hover {
+    background: transparent;
+    border: none;
+}
+button#confirmation_btn:active {
+    background: transparent !important;
+    border: none;
+}
+.company-list-icons button#edit_company_btn {
+    margin-top: 5px;
+}
+div#bookimg-header {
+    top: -84px;
+}
+.booking-content {
+    width: 100%;
+    float: left;
+    background: linear-gradient(to bottom,#ffbf00 0,rgba(255,191,0,.8) 50%,#ffbf00 100%);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.booking-content .banner-inner-text {
+    top: 35px;
+    width: 42%;
+    box-shadow: 0 9px 0 0 #fff, 0 -9px 0 0 #fff, 7px 0 15px -4px rgb(0 0 0 / 30%), -7px 0 15px -4px rgb(0 0 0 / 30%);
+    margin: 0px auto;
+    padding: 10px;
+    border-radius: 6px;
+    background: #fff;
+    position: relative;
+}
+.booking-content .banner-inner-text::before {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+}
+.booking-content .banner-inner-text h3{
+font-family: "Poppins", sans-serif !important;
+font-size: 29px;
+color: #fdbd1b;
+font-weight: 700;
+border-bottom: 1px solid #cccccc52;
+margin-bottom: 12px;
+padding-bottom: 17px;
+padding-top: 20px;
+}
+
+div#bookimg-header .col-md-6 label {
+    text-align: left;
+    width: 100%;
+}
+.confirm_boking_btn {
+    background-color: #ffbf00 !important;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 6px 15px;
+    box-shadow: 6px 6px 0 #efe9e9;
+    transition: .2s;
+    border-radius: 0;
+    font-family: "Poppins", sans-serif !important;
+    border: none;
+}
+section.booking-section-form {
+    background: linear-gradient(to bottom, #ffbf00 0, rgba(255, 191, 0, 0.8) 50%, #ffbf00 100%);
+    float: left;
+}
+.booking-footer footer {
+    margin-top: 0;
+}
+.about-left, .about-right {
+    width: 50%;
+    float: left;
+}
+.about-left img {
+    width: 100%;
+}
+@media screen and (max-width: 768px) {
+    .booking-content .banner-inner-text {
+        width: 100%;
+    }
+    .booking-content .banner-inner-text {
+        margin-top: 20px;
+    }
+    .about-left, .about-right {
+        width: 100%;
+        float: left;
+    }
+    }

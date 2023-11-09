@@ -3,7 +3,8 @@ import Header from "../Header/Header";
 import Footer from "../Footer/footer";
 
 import hero from '../../assets/images/hero-image.png';
-import aboutImg from '../../assets/images/about-car.png'
+import aboutImg from '../../assets/images/home-taxi.png'
+import { Link } from "react-router-dom";
 //import background from '../assets/images/heroimg.png';
 const Home=()=> {
   
@@ -22,7 +23,7 @@ const Home=()=> {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do <br/> eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
             <div class="banner-buttons">
-        <button class="about-me-btn">About Me</button>
+        <button class="about-me-btn"><Link to="/booking-form">About Me</Link></button>
         <button class="learn-more-btn">Learn More</button>
         </div>
           

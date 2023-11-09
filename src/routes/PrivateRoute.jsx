@@ -47,18 +47,16 @@ import ForgotPassword from '../components/Login/ForgotPassword';
 import NewPassword from '../components/Login/NewPassword';
 import EnterOtp from '../components/Login/EnterOtp';
 import EditProfile from '../components/Login/EditProfile';
+import BookingForm from '../components/BookingForm/BookingForm';
 
 
 const PrivateRoute = () => {
-    // const token = localStorage.getItem('token');
 
-    // if (!token) {
-    //     return <Navigate to="/login" />;
-    // }
 
     return (
         <Routes>
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
+            <Route path="/booking-form" element={<BookingForm />} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
             <Route path="/new-password" element={<GuestRoute><NewPassword /></GuestRoute>} />
