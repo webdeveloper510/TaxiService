@@ -137,7 +137,7 @@ const EditpendingTrip = () => {
   useEffect(() => {
     getVehicleType().then((res) => {
       console.log(res.result, "vehicleType");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setVehicle(res.result);
       }
     });
@@ -225,7 +225,7 @@ const EditpendingTrip = () => {
     getTripById(pendingId.id)
       .then((res) => {
         console.log("pending trips id", res);
-        if (res.code == 200) {
+        if (res?.code == 200) {
           const value = res.result;
           setTripFrom(value.trip_from.address)
           setTrimTo(value.trip_to.address)

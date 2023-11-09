@@ -86,7 +86,7 @@ const BookingRequestTable = () => {
     setLoader(true);
     getTripSubAdmin("Booked").then((res) => {
       console.log(res.result, "vehicle");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setBookingTrip(res.result);
       }
       setLoader(false);

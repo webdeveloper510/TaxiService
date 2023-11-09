@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AppHeader from "../TopBar/AppHeader";
 import * as Yup from "yup";
 import {
@@ -34,16 +34,28 @@ import clsx from "clsx";
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 //import background from '../assets/images/heroimg.png';
 import backtovehicle from '../../assets/images/left-arrow.png'
 import { ClipLoader } from "react-spinners";
 import SideBar2 from "../Hotel/SideBar2";
 import profileImg from '../../assets/images/avtar1.jpg'
 import { useFormik } from "formik";
-import { changeForgotPass, changePass } from "../../utils/api";
+import { changeForgotPass, changePass, editCompanyDetail } from "../../utils/api";
 import { toast } from "react-toastify";
+import userContext from "../../utils/context";
+import SuperAdminSideBar from "../SuperAdmin/Sidebar/SideBar";
+import SuperSideBar from "../Taxi/SiderNavBar/Sidebar";
 function EditProfile() {
+  const navigate = useNavigate()
+  const {user, setUser, appLoaded} = useContext(userContext)
+ useEffect(() => {
+  if(appLoaded) {
+    if(!user){
+      navigate("/");
+    }
+  };
+ },[appLoaded])
     const [visible, setVisible] = useState(false);
     const [passVissible, setPassVissible] = useState(false);
     const [icon, setIcon] = useState(eyeOff);
@@ -65,10 +77,20 @@ function EditProfile() {
         // .matches(/[^\w]/, "Password requires a symbol")
         .required("Confirm Password is required"),
     });
+    const validationSchemaProfile = Yup.object().shape({
+      firstName: Yup.string()
+      .required("First Name is required").trim(),
+      lastName: Yup.string()
+        .required("Last Name is required").trim(),
+    });
   
     const initialValues = {
       password: "",
       newPassword: "",
+    };
+    const initialValuesProfile = {
+      firstName: user?.first_name || "",
+      lastName: user?.last_name || "",
     };
     const handleToggle = () => {
       if (!passVissible) {
@@ -80,7 +102,6 @@ function EditProfile() {
       }
     }
     const handleToggleOld = () => {
-      console.log("Toggle old password: ", !passVissibleOld);
       if (!passVissibleOld) {
         setIconOld(eye);
   
@@ -128,6 +149,41 @@ function EditProfile() {
         }).finally(() => { setLoading(false) })
       },
     });
+    const formikProfile = useFormik({
+      initialValues: initialValuesProfile,
+      validationSchema: validationSchemaProfile,
+      onSubmit: async (values) => {
+        setLoading(true);
+        console.log("values", values);
+        editCompanyDetail(user._id,{
+          first_name:values.firstName.trim(),
+          last_name:values.lastName.trim()
+        }).then((response) => {
+          console.log("response---->>>>", response)
+          if (response.data.code === 200
+          
+          ) {
+            toast.success(`${response.data.message}`, {
+              position: 'top-right',
+              autoClose: 1000,
+            });
+            const newUser = {...user};
+            newUser.first_name = values.firstName.trim();
+            newUser.last_name = values.lastName.trim();
+            formikProfile.setFieldValue("firstName", newUser.first_name);
+            formikProfile.setFieldValue("lastName", newUser.last_name);
+  
+          } else {
+            toast.warning(`${response.data.message}`, {
+              position: 'top-right',
+              autoClose: 1000,
+            });
+          }
+        }).catch((error) => {
+          console.log(error)
+        }).finally(() => { setLoading(false) })
+      },
+    });
     return (
       <>
         <div className="container-fluidd">
@@ -135,7 +191,15 @@ function EditProfile() {
           <div className="col-md-12">
   
             <div>
-            <SideBar2/>
+            {
+              user?.role == "SUPER_ADMIN" && <SuperAdminSideBar/>
+            }
+            {
+              user?.role == "COMPANY" && <SuperSideBar/>
+            }
+            {
+              user?.role == "HOTEL" && <SideBar2/>
+            }
   
               <div className="wrapper d-flex flex-column min-vh-100 bg-light">
                 <AppHeader />
@@ -153,7 +217,7 @@ function EditProfile() {
                       <CCol xs={12}>
                         <CCard className="mb-4">
                           
-                          <CCol md={6} className="d-flex edit_profile_user mt-4 ml-2">
+                          {/* <CCol md={6} className="d-flex edit_profile_user mt-4 ml-2">
                             <div className="profile_img"><img src={profileImg} alt="profile-pic"/></div>
                                 
                                 <div className="profile_name_text">
@@ -165,34 +229,62 @@ function EditProfile() {
                                      </div></span>
                                 </div>
                                 
-                              </CCol>
+                              </CCol> */}
                               
                           
                           <CCardBody>
   
   
   
-                            <form noValidate className="row g-3">
+                            <form onSubmit={formikProfile.handleSubmit} noValidate className="row g-3">
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputfirstname">First Name</CFormLabel>
                                 <CFormInput aria-label="First name"
-                                  maxLength="50"
-                                  className=
-                                    "form-control bg-transparent"
-                                 
-                                  name="FirstName"
-                                  autoComplete="off" />
+                  
+                                  {...formikProfile.getFieldProps("firstName")}
+                    maxLength="50"
+                    className={clsx(
+                      "form-control bg-transparent input_pwd",
+                      {
+                        "is-invalid":
+                          formikProfile.touched.firstName && formikProfile.errors.firstName,
+                      },
+                      {
+                        "is-valid":
+                          formikProfile.touched.firstName && !formikProfile.errors.firstName,
+                      }
+                    )}
+                    name="firstName"
+                    autoComplete="off"
+                  />
+                  {formikProfile.errors.firstName && formikProfile.touched.firstName ? (
+                    <div className="text-danger text-start">{formikProfile.errors.firstName}</div>
+                  ) : null}
                               </CCol>
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputlastname">Last Name</CFormLabel>
                                 <CFormInput aria-label="Last name"
-                                  maxLength="50"
-                                  className=
-                                    "form-control bg-transparent"
-                                  name="LastName"
-                                  autoComplete="off" />
+                                   {...formikProfile.getFieldProps("lastName")}
+                                   maxLength="50"
+                                   className={clsx(
+                                     "form-control bg-transparent input_pwd",
+                                     {
+                                       "is-invalid":
+                                         formikProfile.touched.lastName && formikProfile.errors.lastName,
+                                     },
+                                     {
+                                       "is-valid":
+                                         formikProfile.touched.lastName && !formikProfile.errors.lastName,
+                                     }
+                                   )}
+                                   name="lastName"
+                                   autoComplete="off"
+                                 />
+                                 {formikProfile.errors.lastName && formikProfile.touched.lastName ? (
+                                   <div className="text-danger text-start">{formikProfile.errors.lastName}</div>
+                                 ) : null}
                               </CCol>
-                              <CCol md={6}>
+                              {/* <CCol md={6}>
                                 <CFormLabel htmlFor="inputEmail4">Email</CFormLabel>
                                 <CFormInput type="email" id="inputEmail4" 
                                   maxLength="50"
@@ -209,7 +301,7 @@ function EditProfile() {
                                     "form-control bg-transparent"
                                   name="Address1"
                                   autoComplete="off" />   
-                              </CCol>
+                              </CCol> */}
                               <CCol xs={6}>
                               <CButton className="change_pwd_btn" onClick={() => setVisible(!visible)}>Change Password</CButton>
                               </CCol>
@@ -251,7 +343,7 @@ function EditProfile() {
                   </label>
                   <MDBInput
                     id="password"
-                    type={passVissible ? "text" : "password"}
+                    type={passVissibleOld ? "text" : "password"}
                     size="lg" 
                     {...formik.getFieldProps("password")}
                     maxLength="50"

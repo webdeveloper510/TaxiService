@@ -113,7 +113,7 @@ const PendingTrip = () => {
     setLoader(true);
     getTripSubAdmin("Pending").then((res) => {
       console.log(res.result, "pending trip vehicle");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setPendingTrip(res.result);
       }
       setLoader(false);
@@ -128,7 +128,7 @@ const PendingTrip = () => {
     deleteTrips(id)
       .then((res) => {
         console.log("delete success", res);
-        if (res.code == 200) {
+        if (res?.code == 200) {
           toast.success(res.message, {
             position: "top-right",
             autoClose: 1000,

@@ -128,16 +128,16 @@ const SuperPendingTrip = () => {
     getTrip("Pending")
       .then((res) => {
         console.log(res.result, "pending trip vehicle");
-        if (res.code === 200) {
+        if (res?.code === 200) {
           setPendingTrip(res.result);
           getDriver()
             .then((res) => {
               console.log(res.result, "pending trip driver");
-              if (res.code === 200) {
+              if (res?.code === 200) {
                 setDriver(res.result);
                 getVehicle().then((res) => {
                   console.log(res.result, "pending trip vehicle");
-                  if (res.code === 200) {
+                  if (res?.code === 200) {
                     setVehicle(res.result);
                     setLoader(false);
                   }

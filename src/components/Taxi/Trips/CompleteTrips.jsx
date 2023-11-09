@@ -86,7 +86,7 @@ const SuperCompleteTrip = () => {
     setLoader(true);
     getTrip("Completed").then((res) => {
       console.log(res.result, "vehicle");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setCompleteTrip(res.result);
       }
       setLoader(false);

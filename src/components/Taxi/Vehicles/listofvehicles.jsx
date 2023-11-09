@@ -100,7 +100,7 @@ const LisOfVehicles = ({role}) => {
     setLoader(true)
     getVehicle().then(res => {
       console.log(res.result, 'vehicle')
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setVehicle(res.result)
       }
       setLoader(false)

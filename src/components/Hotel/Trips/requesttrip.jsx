@@ -213,7 +213,7 @@ const RequestNewTrip = () => {
   useEffect(() => {
     getVehicleType().then((res) => {
       console.log(res.result, "vehicleType");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setVehicle(res.result);
       }
     });
@@ -222,7 +222,7 @@ const RequestNewTrip = () => {
   // useEffect(() => {
   //   getDriver().then(res => {
   //     console.log(res.result, 'vehicle')
-  //     if (res.code === 200) {
+  //     if (res?.code === 200) {
   //       setDriver(res.result)
   //     }
   //   })

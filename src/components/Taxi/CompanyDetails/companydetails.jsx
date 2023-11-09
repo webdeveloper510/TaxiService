@@ -261,14 +261,11 @@ const CompanyDetails = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-
-  useEffect(() => {
-    getCompanyDetail();
-  }, []);
-
+  const [search , setSearch] = useState("");
+useEffect(() =>{getCompanyDetail()},[])
   const getCompanyDetail = () => {
     setLoading(true);
-    getCompany({role:"HOTEL",name:""})
+    getCompany({role:"HOTEL",name:search})
       .then((res) => {
         console.log(res?.result, "company");
 
@@ -319,7 +316,7 @@ const CompanyDetails = () => {
     getCompanydetailId(id)
       .then((res) => {
         console.log("company detail by id--------------", res);
-        if (res.code == 200) {
+        if (res?.code == 200) {
           setInputData(res.result);
           setAddress(res?.result?.land)
           const values = res.result
@@ -402,8 +399,15 @@ const CompanyDetails = () => {
                 <h1 class="heading-for-every-page">All Customers</h1>
                 <div className="serach-left" id="customers-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
-    <button className="search-btn">
+      <MDBInput placeholder="Search"
+      value={search} onChange={(e)=>{
+        if(e.target.value === "") getCompanyDetail()
+        setSearch(e.target.value)
+      }} 
+      />
+    <button className="search-btn"
+    onClick={getCompanyDetail}
+    >
         <MDBIcon icon='search' />
       </button>
     </MDBInputGroup></div>

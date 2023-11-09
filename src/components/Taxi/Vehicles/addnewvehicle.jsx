@@ -107,7 +107,7 @@ const AddSuperVehicle = () => {
 
     getVehicleType("Active").then(res => {
       console.log(res.result, 'vehicle')
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setVehicleType(res.result)
       }
     })

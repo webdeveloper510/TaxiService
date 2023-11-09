@@ -95,7 +95,7 @@ const [selectedId, setSelectedId ] = useState(null);
     setLoader(true);
     getDriver(role).then((res) => {
       console.log(res.result, "vehicle");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setDriver(res.result);
       }
       setLoader(false);

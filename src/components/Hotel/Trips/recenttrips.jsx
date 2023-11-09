@@ -61,7 +61,7 @@ const RecentTrips=({from})=> {
   useEffect(()=>{
     setLoading(true);
     getRecentTrip(from == "super").then(res => {
-      if (res.code == 200) {
+      if (res?.code == 200) {
         setPendingTrip(res.result)
       }
     }).finally(()=>setLoading(false))

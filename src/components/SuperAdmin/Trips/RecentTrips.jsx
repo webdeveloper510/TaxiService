@@ -135,7 +135,7 @@ const SuperRecentTrips=()=> {
   useEffect(()=>{
     setLoader(true)
     getRecentTrip(true).then(res => {
-      if (res.code == 200 && res?.result) {
+      if (res?.code == 200 && res?.result) {
         setPendingTrip(res?.result)
         setFilterData(res?.result)
       }

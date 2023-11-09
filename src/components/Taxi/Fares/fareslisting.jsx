@@ -119,7 +119,7 @@ const ListOfFares = () => {
   useEffect(() => {
     setLoader(true);
     getFare().then((res) => {
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setFare(res.result);
       }
       setLoader(false);
@@ -191,7 +191,7 @@ const ListOfFares = () => {
   useEffect(() => {
     getVehicleType("Active").then((res) => {
       console.log(res.result, "vehicle");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setVehicleType(res.result);
       }
     });

@@ -16,7 +16,7 @@ const NewUsers=()=> {
   useEffect(()=>{
     getTripCompleted().then((res)=>{
       console.log("response get book trip", res)
-      if(res.code == 200){
+      if(res?.code == 200){
         setData(res.result)
       }
     }).catch((error)=>{

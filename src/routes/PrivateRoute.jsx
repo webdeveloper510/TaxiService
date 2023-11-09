@@ -108,7 +108,7 @@ const PrivateRoute = () => {
             <Route path="/super-admin/vehicle/vehicle-details/:vehicleId" element={<SecureSuperRoleRoute><ViewSingleVehicle role="super" /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/vehicle/addnewvehicle" element={<SecureSuperRoleRoute><AddSuperVehicle /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/vehicle/editvehicle/:vehicleId" element={<SecureSuperRoleRoute><EditVehicle /></SecureSuperRoleRoute>} />
-            <Route path="/edit-profile" element={<SecureSuperRoleRoute><EditProfile /></SecureSuperRoleRoute>} />
+            <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/new-password" element={<SecureSuperRoleRoute><NewPassword /></SecureSuperRoleRoute>} />
             <Route path='*' element={<Navigate to="/" />} />
 

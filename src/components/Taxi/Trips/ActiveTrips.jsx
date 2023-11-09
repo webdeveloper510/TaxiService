@@ -85,7 +85,7 @@ const SuperActiveTrip = () => {
     setLoader(true);
     getTrip("Active").then((res) => {
       console.log(res.result, "vehicle");
-      if (res.code === 200) {
+      if (res?.code === 200) {
         setActiveTrip(res.result);
       }
       setLoader(false);

@@ -57,7 +57,7 @@ const RiderStatusTable=()=> {
     setLoading(true)
     getDriver().then(res => {
       // console.log(res.result, 'vehicle')
-      if (res.code === 200) {
+      if (res?.code === 200) {
         if(res.result) setDriver(res.result)
       }
     }).finally(()=>{setLoading(false)})

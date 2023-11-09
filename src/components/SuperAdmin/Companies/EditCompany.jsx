@@ -196,7 +196,7 @@ const EditCompanyDetails = () => {
     getCompanydetailId(id)
       .then((res) => {
         console.log("company detail by id--------------", res);
-        if (res.code == 200) {
+        if (res?.code == 200) {
           setInputData(res.result);
         }
       })
