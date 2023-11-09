@@ -38,6 +38,7 @@ import {
   editCompanyDetail,
   getCompany,
   getCompanydetailId,
+  requestBookingTrip,
 } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import { capitalLine } from "../../../utils/helpingFunction";
@@ -135,7 +136,7 @@ const CompanyDetails = () => {
   const [inputData, setInputData] = useState({
     _id: "",
     company_name: "",
-    land: "",
+    company_id: "",
     post_code: "",
     description: "",
     phone: "",
@@ -153,7 +154,7 @@ const CompanyDetails = () => {
   const initialValues = {
     _id: "",
     company_name: "",
-    land: "",
+    company_id: "",
     post_code: "",
     house_number: "",
     description: "",
@@ -174,7 +175,7 @@ const CompanyDetails = () => {
       // .min(2,"Customer Name is must be greater than 2")
       .max(50,"Customer Name is must be less than 50")
       .required("Customer Name is required"),
-    // land: Yup.string().min(4).max(20).required("Land is required"),
+      company_id: Yup.string().max(20).required("Hotel ID is required"),
     post_code: Yup.string().max(10).required("Postcode is required"),
     // description: Yup.string()
     //   .min(4)
@@ -211,7 +212,7 @@ const CompanyDetails = () => {
         company_name: values.company_name,
         land: values.land,
         post_code: values.post_code,
-        // house_number: values.house_number,
+        company_id: values.company_id,
         // description: values.description,
         // affiliated_with: values.affiliated_with,
         phone: values.phone,
@@ -391,6 +392,33 @@ useEffect(() =>{getCompanyDetail()},[])
         });
       });
   }
+  const [selectedCustomerId, setSelectedCustomerId] = useState(null)
+  const handelRequest=()=>{
+    if(selectedCustomerId){
+      requestBookingTrip(selectedCustomerId)
+        .then((res) => {
+          if (res.data.code === 200) {
+          toast.success(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+          setconfirmationVisible(false)
+        }else{
+          toast.warning(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
+      })
+        .catch((error) => {
+          console.log(error);
+          toast.warning(`${error.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        });
+    }
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -531,9 +559,12 @@ useEffect(() =>{getCompanyDetail()},[])
 
                             <CTableDataCell>
                               <div><span><CButton  id="confirmation_btn" onClick={() => {
+                                setSelectedCustomerId(item._id)
                                   setconfirmationVisible(!confirmationVisible);
                                   
-                                }}><a href="#">Request Trip</a></CButton></span></div>
+                                }}><span style={{
+                                  color: "black"
+                                }}>Request Trip</span></CButton></span></div>
                             </CTableDataCell>
                           </CTableRow>
                         ))}
@@ -641,12 +672,30 @@ useEffect(() =>{getCompanyDetail()},[])
                               </CFormLabel>
                               <CFormInput
                                 aria-label="Hotel ID"
-                                maxLength="50"
-                                className=
-                                  "form-control bg-transparent"  
-                                name="hotel_name"
-                                autoComplete="off"
-                              />
+                                value={inputData.company_id}
+                                    {...formik.getFieldProps("company_id")}
+                                    className={clsx(
+                                      "form-control bg-transparent",
+                                      {
+                                        "is-invalid":
+                                          formik.touched.company_id &&
+                                          formik.errors.company_id,
+                                      },
+                                      {
+                                        "is-valid":
+                                          formik.touched.company_id &&
+                                          !formik.errors.company_id,
+                                      }
+                                    )}
+                                    name="company_id"
+                                    autoComplete="off"
+                                  />
+                                  {formik.errors.company_id &&
+                                formik.touched.company_id ? (
+                                <div className="text-danger">
+                                  {formik.errors.company_id}
+                                </div>
+                              ) : null}
                             
                             </CCol>
                                 <CCol md={6}>
@@ -914,11 +963,11 @@ useEffect(() =>{getCompanyDetail()},[])
                               <CButton
                                 className="delete_popup"
                                 onClick={() => {
-                                  
+                                  handelRequest()
                                   setconfirmationVisible(false);
                                 }}
                               >
-                                Delete
+                                Sure
                               </CButton>
                               <CButton
                                 className="cancel_popup"

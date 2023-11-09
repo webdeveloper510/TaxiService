@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+ import React, {useEffect, useState} from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/footer";
 import bookingCar from '../../assets/images/booking-car.png'

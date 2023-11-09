@@ -61,7 +61,7 @@ const AddCompany = () => {
     company_name: "",
     land: "",
     post_code: "",
-    // house_number: "",
+    hotelId: "",
     describe_your_taxi_company: "",
     // affiliated_with: "",
     phone: "",
@@ -82,7 +82,7 @@ const AddCompany = () => {
       .required("Customer Name is required"),
     // land: Yup.string().min(4).max(20).required("Address is required"),
     post_code: Yup.string().max(10).required("Postcode is required"),
-    // house_number: Yup.string().max(20).required("Building number is required"),
+    hotelId: Yup.string().max(20).required("Hotel ID is required"),
     // describe_your_taxi_company: Yup.string()
     //   .min(4)
     //   .max(100)
@@ -125,7 +125,7 @@ const AddCompany = () => {
         company_name: values.company_name,
         // land: values.land,
         post_code: values.post_code,
-        // house_number: values.house_number,
+        company_id: values.hotelId,
         // description: values.describe_your_taxi_company,
         // affiliated_with: values.affiliated_with,
         phone: values.phone,
@@ -285,13 +285,30 @@ const AddCompany = () => {
                               </CFormLabel>
                               <CFormInput
                                 aria-label="Hotel ID"
+                                {...formik.getFieldProps("hotelId")}
                                 maxLength="50"
-                                className=
-                                  "form-control bg-transparent"  
-                                name="hotel_name"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.hotelId &&
+                                      formik.errors.hotelId,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.hotelId &&
+                                      !formik.errors.hotelId,
+                                  }
+                                )}
+                                name="hotelId"
                                 autoComplete="off"
                               />
-                            
+                              {formik.errors.hotelId &&
+                                formik.touched.hotelId ? (
+                                <div className="text-danger">
+                                  {formik.errors.hotelId}
+                                </div>
+                              ) : null}
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcname">

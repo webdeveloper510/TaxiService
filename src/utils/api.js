@@ -561,3 +561,17 @@ export const changePass = async (data) => {
       console.log("changePass error", error);
     });
 };
+export const requestBookingTrip = async (id) => {
+  return await Axios.get(`admin/send_request_trip/${id}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "requestBookingTrip");
+      return res;
+    })
+    .catch((error) => {
+      console.log("requestBookingTrip error", error);
+    });
+};

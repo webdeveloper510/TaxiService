@@ -8,6 +8,7 @@ import userContext from './utils/context';
 import { getProfile } from './utils/api';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AppLoader from './components/AppLoader';
+import PrivateRoute from './routes/PrivateRoute';
 function App() {
   const [appLoaded, setAppLoaded] = useState(false)
   const [user, setUser] = useState(null);
@@ -20,7 +21,8 @@ function App() {
     console.log('token: from local storage' + token);
     if(!token){
       setLoading(false)
-      return navigate("/")
+      // return navigate("/")
+      return
        
     }
     console.log("path founder running on react app =====>>>>>,", user)
@@ -61,7 +63,7 @@ function App() {
   return (
     <userContext.Provider value={{user,setUser,appLoaded}}>
     {loading?<AppLoader/>:<div className="App">
-      <Routerpage/>
+      <PrivateRoute/>
       <ToastContainer />
     </div>}
     </userContext.Provider>

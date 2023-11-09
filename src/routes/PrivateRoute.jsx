@@ -55,8 +55,8 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
-            <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/booking-form" element={<BookingForm />} />
+            <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
             <Route path="/new-password" element={<GuestRoute><NewPassword /></GuestRoute>} />
