@@ -34,6 +34,7 @@ import { toast } from "react-toastify";
 import editiconimg from "../../../assets/images/editicon.png";
 import deleteiconimg from "../../../assets/images/deleteicon.png";
 import {
+  changeForgotPass,
   deleteCompany,
   editCompanyDetail,
   getCompany,
@@ -204,6 +205,10 @@ const CompanyDetails = () => {
     commision: "",
     requestTrip: "",
   };
+  const initialValuesPass = {
+   password: "",
+   confirmPassword: "",
+  };
 
   const validationSchema = Yup.object().shape({
     company_name: Yup.string()
@@ -234,6 +239,61 @@ const CompanyDetails = () => {
     //   .typeError('Must be a number')
     //   .required('Number is required')
     //   .max(100, 'Value must be lower than equal to 100')
+  });
+  const validationSchemaPass = Yup.object().shape({
+    password: Yup.string()
+    .min(6, "Password must be 6 characters long")
+    // .matches(/[0-9]/, "Password requires a number")
+    // .matches(/[a-z]/, "Password requires a lowercase letter")
+    // .matches(/[A-Z]/, "Password requires an uppercase letter")
+    // .matches(/[^\w]/, "Password requires a symbol")
+    .required("Password is required"),
+    confirmPassword: Yup.string()
+      .min(6, "Confirm Password must be 6 characters long")
+      // .matches(/[0-9]/, "Password requires a number")
+      // .matches(/[a-z]/, "Password requires a lowercase letter")
+      // .matches(/[A-Z]/, "Password requires an uppercase letter")
+      // .matches(/[^\w]/, "Password requires a symbol")
+      .required("Confirm Password is required"),
+  });
+  const formikPass = useFormik({
+    initialValues:initialValuesPass,
+    validationSchema: validationSchemaPass,
+    onSubmit: async (values) => {
+      if(values.password !== values.confirmPassword){
+        toast.warning("Password and Confirm Password must be same", {
+          position: 'top-right',
+          autoClose: 1000,
+        });
+        return
+      }
+      setLoading(true);
+      console.log("values", values);
+      const email = PasswordChangeEmail
+      changeForgotPass({
+        email,
+        password: values.password
+      }).then((response) => {
+        console.log("response---->>>>", response)
+        if (response.data.code === 200
+        
+        ) {
+          toast.success(`${response.data.message}`, {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+        
+
+        } else {
+          toast.warning("Invalid Credentials", {
+            position: 'top-right',
+            autoClose: 1000,
+          });
+        }
+      }).catch((error) => {
+        console.log(error)
+      }).finally(() => { setLoading(false) })
+    },
   });
   const [formLoader , setFormLoader] = useState(false)
   const formik = useFormik({
@@ -351,6 +411,7 @@ useEffect(() =>{getCompanyDetail()},[])
   const handleInput = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
+  const [PasswordChangeEmail , setPasswordChangeEmail] = useState(null)
 
   const handleEdit = (id) => {
     getCompanydetailId(id)
@@ -361,6 +422,7 @@ useEffect(() =>{getCompanyDetail()},[])
           setAddress(res?.result?.land)
           const values = res.result
           formik.setValues({ ...values })
+          setPasswordChangeEmail(res.result.email)
         }
       })
       .catch((error) => {
@@ -1041,7 +1103,7 @@ useEffect(() =>{getCompanyDetail()},[])
                         <CCol xs={12}>
                           <CCard className="mb-4">
                             <CCardBody>
-                            <form onSubmit={formik.handleSubmit} noValidate>
+                            <form onSubmit={formikPass.handleSubmit} noValidate>
               <div className="change_customer_pwd">
                
                 <div className="d-flex flex-row align-items-center justify-content-center">
@@ -1058,24 +1120,24 @@ useEffect(() =>{getCompanyDetail()},[])
                     id="password"
                     type={passVissible ? "text" : "password"}
                     size="lg"
-                    {...formik.getFieldProps("password")}
+                    {...formikPass.getFieldProps("password")}
                     maxLength="50"
                     className={clsx(
                       "form-control bg-transparent input_pwd",
                       {
                         "is-invalid":
-                          formik.touched.password && formik.errors.password,
+                          formikPass.touched.password && formikPass.errors.password,
                       },
                       {
                         "is-valid":
-                          formik.touched.password && !formik.errors.password,
+                          formikPass.touched.password && !formikPass.errors.password,
                       }
                     )}
                     name="password"
                     autoComplete="off"
                   />
-                  {formik.errors.password && formik.touched.password ? (
-                    <div className="text-danger text-start">{formik.errors.password}</div>
+                  {formikPass.errors.password && formikPass.touched.password ? (
+                    <div className="text-danger text-start">{formikPass.errors.password}</div>
                   ) : null}
 
                   <span class="flex justify-around items-center eye_pwd_icon">
@@ -1094,24 +1156,24 @@ useEffect(() =>{getCompanyDetail()},[])
                     id="password"
                     type={passVissible ? "text" : "password"}
                     size="lg"
-                    {...formik.getFieldProps("confirmPassword")}
+                    {...formikPass.getFieldProps("confirmPassword")}
                     maxLength="50"
                     className={clsx(
                       "form-control bg-transparent input_pwd",
                       {
                         "is-invalid":
-                          formik.touched.confirmPassword && formik.errors.confirmPassword,
+                          formikPass.touched.confirmPassword && formikPass.errors.confirmPassword,
                       },
                       {
                         "is-valid":
-                          formik.touched.confirmPassword && !formik.errors.confirmPassword,
+                          formikPass.touched.confirmPassword && !formikPass.errors.confirmPassword,
                       }
                     )}
                     name="confirmPassword"
                     autoComplete="off"
                   />
-                  {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-                    <div className="text-danger text-start">{formik.errors.confirmPassword}</div>
+                  {formikPass.errors.confirmPassword && formikPass.touched.confirmPassword ? (
+                    <div className="text-danger text-start">{formikPass.errors.confirmPassword}</div>
                   ) : null}
 
                   <span class="flex justify-around items-center eye_pwd_icon">

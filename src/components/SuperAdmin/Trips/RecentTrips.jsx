@@ -241,10 +241,10 @@ const SuperRecentTrips=()=> {
                   <div>{item.company_name}</div>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <div>{item.trip_from.address.length<20?item.trip_from.address:item.trip_from.address.slice(0,18)+"..."}</div>
+                  <div>{item.trip_from?.address.length<20?item.trip_from?.address:item.trip_from?.address.slice(0,18)+"..."}</div>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <div>{item.trip_to.address.length<20?item.trip_to.address: item.trip_to.address.slice(0,18) + "..."}</div>
+                  <div>{item.trip_to?.address.length<20?item.trip_to?.address: item.trip_to?.address.slice(0,18) + "..."}</div>
                 </CTableDataCell>
                 <CTableDataCell>
                   <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
