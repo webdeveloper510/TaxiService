@@ -44,6 +44,9 @@ import AppLoader from "../../AppLoader";
 import { capitalLine } from "../../../utils/helpingFunction";
 import { ClipLoader } from "react-spinners";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { Icon } from 'react-icons-kit';
+import { eyeOff } from 'react-icons-kit/feather/eyeOff';
+import { eye } from 'react-icons-kit/feather/eye'
 // import toggel from "react-toggle/style.css"
 const tableExample = [
   {
@@ -68,6 +71,35 @@ const tableExample = [
   },
 ];
 const CompanyDetails = () => {
+  const [comPassVissible, setComPassVissible] = useState(false);
+  const [icon, setIcon] = useState(eyeOff);
+  const [iconCom, setIconCom] = useState(eyeOff);
+
+
+  const handlePwdChange = () => {
+    setpwdVisible(true);
+    setEditVisible(false); // Close the edit modal if it's open
+    setconfirmationVisible(false); // Close the confirmation modal if it's open
+   
+  };
+  const handleToggle = () => {
+    if (!passVissible) {
+      setIcon(eye);
+
+    } else {
+      setIcon(eyeOff)
+
+    }
+  }
+  const handleToggleCom = () => {
+    if (!passVissible) {
+      setIconCom(eye);
+
+    } else {
+      setIconCom(eyeOff)
+
+    }
+  }
  const [address, setAddress] = useState("");
   const [touched, setTouched] = useState(false)
   const [addressError, setAddressError] = useState(true);
@@ -91,6 +123,9 @@ const CompanyDetails = () => {
       setAddressError(false)
     }
   }
+  const [passVissible, setPassVissible] = useState(false);
+
+  const [pwdVisible, setpwdVisible] = useState(false);
   const [confirmationVisible, setconfirmationVisible] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
   // State variables for popups
@@ -907,7 +942,11 @@ useEffect(() =>{getCompanyDetail()},[])
                                     </div>
                                   ) : null}
                                 </CCol>
-
+                                <CCol xs={12} className="change_your_pwd_txt">
+                              <CButton className="change_pwd_btn_customer" 
+                            onClick={() => handlePwdChange()} >Are you want to Change your Password click here...</CButton>
+                              </CCol> 
+                       
                                 <CCol md={12}>
                                   <div
                                     className="d-flex justify-content-center"
@@ -985,6 +1024,141 @@ useEffect(() =>{getCompanyDetail()},[])
                   </CModal>
 
                   {/* Endcompanycompanypopup */}
+
+
+                  {/* changepasswordmodalpopup */}
+
+                   
+    <CModal
+      visible={pwdVisible}
+      onClose={() => setpwdVisible(false)}
+    >
+      <CModalHeader onClose={() => setpwdVisible(false)}>
+        <CModalTitle id="changepassword">Change Password</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+                      <CRow>
+                        <CCol xs={12}>
+                          <CCard className="mb-4">
+                            <CCardBody>
+                            <form onSubmit={formik.handleSubmit} noValidate>
+              <div className="change_customer_pwd">
+               
+                <div className="d-flex flex-row align-items-center justify-content-center">
+                  {/* <p className="lead me-3">LOG IN</p> */}
+                </div>
+
+              
+
+                <div className="mb-4" id="pwd_field">
+                  <label htmlFor="password" className="form-label">
+                   New  Password
+                  </label>
+                  <MDBInput
+                    id="password"
+                    type={passVissible ? "text" : "password"}
+                    size="lg"
+                    {...formik.getFieldProps("password")}
+                    maxLength="50"
+                    className={clsx(
+                      "form-control bg-transparent input_pwd",
+                      {
+                        "is-invalid":
+                          formik.touched.password && formik.errors.password,
+                      },
+                      {
+                        "is-valid":
+                          formik.touched.password && !formik.errors.password,
+                      }
+                    )}
+                    name="password"
+                    autoComplete="off"
+                  />
+                  {formik.errors.password && formik.touched.password ? (
+                    <div className="text-danger text-start">{formik.errors.password}</div>
+                  ) : null}
+
+                  <span class="flex justify-around items-center eye_pwd_icon">
+                    <Icon onClick={() => {
+                      setPassVissible(!passVissible)
+                      handleToggle()
+                    }} class="absolute mr-10" icon={icon} size={25} />
+                  </span>
+                </div>
+
+                <div className="mb-4" id="pwd_field">
+                  <label htmlFor="password" className="form-label">
+                  Confirm  Password
+                  </label>
+                  <MDBInput
+                    id="password"
+                    type={passVissible ? "text" : "password"}
+                    size="lg"
+                    {...formik.getFieldProps("confirmPassword")}
+                    maxLength="50"
+                    className={clsx(
+                      "form-control bg-transparent input_pwd",
+                      {
+                        "is-invalid":
+                          formik.touched.confirmPassword && formik.errors.confirmPassword,
+                      },
+                      {
+                        "is-valid":
+                          formik.touched.confirmPassword && !formik.errors.confirmPassword,
+                      }
+                    )}
+                    name="confirmPassword"
+                    autoComplete="off"
+                  />
+                  {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+                    <div className="text-danger text-start">{formik.errors.confirmPassword}</div>
+                  ) : null}
+
+                  <span class="flex justify-around items-center eye_pwd_icon">
+                    <Icon onClick={() => {
+                      setComPassVissible(!comPassVissible)
+                      handleToggleCom()
+                    }} class="absolute mr-10" icon={iconCom} size={25} />
+                  </span>
+                </div>
+
+
+
+                {/* <input
+                  type={type}
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+             /> */}
+
+                
+
+                <div className="text-center text-md-start mt-4 pt-2">
+                  {/* <MDBBtn className="custom-login mb-0 px-5">
+                Login
+              </MDBBtn> */}
+                  <button className="custom-login btn btn-primary" type="submit">
+                   Reset Password
+                  </button>
+                </div>
+              </div>
+            </form>
+                            </CCardBody>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+
+    </CModal>
+
+
+      
+
+     
+
+                  {/* endpasswordpopup */}
                 </div>
               </div>
             </div>

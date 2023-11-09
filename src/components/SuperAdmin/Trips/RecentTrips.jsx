@@ -160,7 +160,7 @@ const SuperRecentTrips=()=> {
 
 
                 <div class="filter-outer">
-                  <div className="serach-left">
+                  <div className="serach-left" id="recent-trip-search">
                 <MDBInputGroup>
       <MDBInput placeholder="Search"/>
     <button className="search-btn">

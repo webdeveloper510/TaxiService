@@ -1095,10 +1095,28 @@ div#customers-search .input-group {
 div#customers-search input.form-control {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+   
 }
 div#customers-search button.search-btn {
     padding: 13px;
     box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+}
+div#recent-trip-search .input-group {
+    width: 100%;
+    justify-content: end;
+    margin-bottom: 0px;
+}
+div#recent-trip-search input.form-control {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    height: 40px;
+}
+div#recent-trip-search button.search-btn {
+    padding: 8px;
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+}
+div#recent-trip-search {
+    margin-right: 14px;
 }
 .change_pwd_btn {
     background: #FFD04E;
@@ -1225,6 +1243,23 @@ section.booking-section-form {
 button#confirmation_btn a {
     font-family: "Poppins", sans-serif !important;
     color: #ffc859;
+}
+.change_your_pwd_txt button:hover {
+    background: transparent;
+    border: none;
+    color: #000;
+}
+.change_your_pwd_txt button {
+    background: transparent;
+    border: none;
+    color: #000;
+    font-weight: 900;
+    text-decoration: underline;
+    font-size: 20px;
+    margin-top: 15px;
+}
+.change_your_pwd_txt {
+    text-align: center;
 }
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {

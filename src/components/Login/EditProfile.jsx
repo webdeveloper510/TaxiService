@@ -301,8 +301,8 @@ function EditProfile() {
                                     "form-control bg-transparent"
                                   name="Address1"
                                   autoComplete="off" />   
-                              </CCol> */}
-                              <CCol xs={6}>
+                              </CCol>
+                              <CCol md={6}>
                               <CButton className="change_pwd_btn" onClick={() => setVisible(!visible)}>Change Password</CButton>
                               </CCol>
                        
@@ -328,7 +328,7 @@ function EditProfile() {
       onClose={() => setVisible(false)}
     >
       <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle id="changepassword">Change Passowrd</CModalTitle>
+        <CModalTitle id="changepassword">Change Password</CModalTitle>
       </CModalHeader>
       <CModalBody>
                       <CRow>
@@ -376,7 +376,7 @@ function EditProfile() {
 
                 <div className="mb-4" id="pwd_field">
                   <label htmlFor="password" className="form-label">
-                  Nex  Password
+                  New  Password
                   </label>
                   <MDBInput
                     id="password"
