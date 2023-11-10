@@ -237,10 +237,23 @@ const EditCompanyDetails = () => {
         if (res.data.code == 200) {
           getCompanyDetail();
           setEditVisible(!editVisible);
+          toast.success(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }else{
+          toast.warning(`${error.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
         }
       })
       .catch((error) => {
         console.log(error);
+        toast.warning(`${error.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
       });
   };
   function handleStatusChange(item) {
