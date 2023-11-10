@@ -363,7 +363,7 @@ const CompanyDetails = () => {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
   const [search , setSearch] = useState("");
-useEffect(() =>{getCompanyDetail()},[])
+useEffect(() =>{getCompanyDetail()},[search])
   const getCompanyDetail = () => {
     setLoading(true);
     getCompany({role:"HOTEL",name:search})
@@ -531,7 +531,7 @@ useEffect(() =>{getCompanyDetail()},[])
                 <MDBInputGroup>
       <MDBInput placeholder="Search"
       value={search} onChange={(e)=>{
-        if(e.target.value === "") getCompanyDetail()
+    
         setSearch(e.target.value)
       }} 
       />
@@ -661,8 +661,8 @@ useEffect(() =>{getCompanyDetail()},[])
                                   setconfirmationVisible(!confirmationVisible);
                                   
                                 }}><span style={{
-                                  color: "black"
-                                }}>New Trip<img src={roadTrip}/></span></CButton></span></div>
+                                  color: "white"
+                                }}>New Trip</span></CButton></span></div>
                             </CTableDataCell>
                           </CTableRow>
                         ))}

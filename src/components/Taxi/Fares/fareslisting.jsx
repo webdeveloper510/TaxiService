@@ -602,7 +602,9 @@ const ListOfFares = () => {
                                       Submit
                                     </CButton>
                                     <CButton
-                                      onClick={() => setVisible(false)}
+                                      onClick={() => {setVisible(false)
+                                      formik.resetForm()
+                                      }}
                                       className="cancel-btn"
                                     >
                                       Cancel

@@ -123,7 +123,7 @@ const AddCompany = () => {
       console.log("values", values);
       addCompany({
         company_name: values.company_name,
-        // land: values.land,
+        land: address,
         post_code: values.post_code,
         company_id: values.hotelId,
         // description: values.describe_your_taxi_company,

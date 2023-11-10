@@ -215,6 +215,7 @@ const BookingForm = () => {
     setInputs(data);
     return valid;
   };
+  const [companyName , setCompanyName] = useState("")
   const [expired, setExpired] = useState(false);
   const geteditid = () => {
     setLoading(true)
@@ -222,9 +223,10 @@ const BookingForm = () => {
       .then((res) => {
         console.log("pending trips id", res);
         if (res?.code == 200) {
-          if (res.result.status) {
+          if (res?.result?.status) {
             setExpired(true)
           }
+          setCompanyName(res?.hotelName)
           const value = res.result;
           setTripFrom(value.trip_from.address)
           setTrimTo(value.trip_to.address)
@@ -263,7 +265,7 @@ const BookingForm = () => {
       })
       .catch((error) => {
         console.log(error);
-        setExpired(true)
+        // setExpired(true)
         setLoading(false)
       }).finally(() => {
         setLoading(false)
@@ -371,11 +373,11 @@ const BookingForm = () => {
               
           
               <div class="row booking-content col-md-12">
-              <Link to="/dashboard">
+              <Link to="/">
               <span className="back_to_home"><img src={backtotaxi} />Back to Home </span>
               </Link>
                 <div class="banner-inner-text col-md-6">
-                  <h3>Welcome to Hotel Sky </h3>
+                  <h3>Welcome {companyName} </h3>
 
                   <CRow>
                     <CCol xs={12}>
@@ -407,7 +409,7 @@ const BookingForm = () => {
                                   }
                                 }}
                               >
-                                <option default>{inputData.vehicle}</option>
+                                <option value={""} default>{inputData.vehicle}</option>
                                 {vehicle?.map((e, i) => {
                                   return (
                                     <>

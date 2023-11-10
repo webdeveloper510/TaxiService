@@ -154,7 +154,7 @@ const AddSuperCompany = () => {
       console.log("values", values);
       addCompany({
         company_name: values.company_name,
-        // land: values.land,
+        land: address,
         post_code: values.post_code,
         house_number: values.house_number,
         description: values.describe_your_taxi_company,

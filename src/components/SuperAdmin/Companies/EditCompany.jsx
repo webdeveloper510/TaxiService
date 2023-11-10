@@ -139,9 +139,17 @@ const EditCompanyDetails = () => {
         if (res?.code === 200) {
           setCompany(res?.result);
           setLoading(false);
+          toast.success(`${res?.result?.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
         } else {
           setError(true);
           setLoading(false);
+          toast.warning(`${res?.result?.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
         }
       })
       .catch((err) => {

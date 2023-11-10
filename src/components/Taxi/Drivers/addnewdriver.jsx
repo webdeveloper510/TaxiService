@@ -196,6 +196,25 @@ const AddNewDriver = () => {
       URL.revokeObjectURL(url);
     }
   };
+  function previewPDF() {
+    const file = selectedDoc
+
+    if (file && file.type === 'application/pdf') {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const pdfData = e.target.result;
+
+            // Open a new tab with the PDF content
+            const newTab = window.open();
+            newTab.document.write('<embed width="100%" height="100%" src="data:application/pdf;base64,' + window.btoa(pdfData) + '" type="application/pdf" />');
+        };
+
+        reader.readAsBinaryString(file);
+    } else {
+        alert('Please upload a valid PDF file.');
+    }
+}
   return (
     <>
       <div className="container-fluidd">
@@ -432,7 +451,7 @@ const AddNewDriver = () => {
                                 <CCol sm={12} className="radio_inner">
                                   <CFormCheck inline
                                     type="radio"
-                                    name="gridRadios"
+                                    name="Gender"
                                     id="gridRadios1"
                                     value="Male"
                                     label="Male"
@@ -441,7 +460,7 @@ const AddNewDriver = () => {
                                   />
                                   <CFormCheck inline
                                     type="radio"
-                                    name="gridRadios"
+                                    name="Gender"
                                     id="gridRadios2"
                                     value="Female"
                                     label="Female"
@@ -449,6 +468,9 @@ const AddNewDriver = () => {
                                     checked={selectedGender === 'Female'} // Set the checked state if Female is selected
                                   />
                                 </CCol>
+                                {formik.errors.Gender && formik.touched.Gender ? (
+                                <div className="text-danger">{formik.errors.Gender}</div>
+                              ) : null}
                               </fieldset>
                             </CCol>
 
@@ -552,7 +574,7 @@ const AddNewDriver = () => {
                                   >X</button>
                                   <button
                                     className="submit-btn"
-                                    onClick={downloadFile}>Download</button>
+                                    onClick={previewPDF}>Preview</button>
                              
                                 </div>
                               )}
