@@ -8,10 +8,11 @@ import {
 } from '@coreui/react'
 import {
   cilLockLocked,
+  cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
 import threedots from '../../assets/images/threedots.png'
 import UsersStats from '../Taxi/DashboardStats/UsersStats'
 import userContext from '../../utils/context'
@@ -41,6 +42,12 @@ const AppHeaderDropdown = () => {
           <CIcon icon={cilLockLocked} className="me-2" />
           <button className='text-black btn-logout '   >Logout</button>
        
+        </CDropdownItem>
+        <CDropdownItem className='edit_profile'>
+        <CIcon icon={cilUser} className="me-2" />
+        <Link to="/edit-profile">
+          <span>Edit Profile</span>
+       </Link>
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
