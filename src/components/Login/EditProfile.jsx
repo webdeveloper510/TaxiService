@@ -304,10 +304,8 @@ function EditProfile() {
 <<<<<<< HEAD
                               </CCol> */}
                             <CCol xs={6}>
-=======
                               </CCol>
                             <CCol md={6}>
->>>>>>> 0fdbb19827d897e5aecb455283c022694f7b7cd1
                               <CButton className="change_pwd_btn" onClick={() => setVisible(!visible)}>Change Password</CButton>
                             </CCol>
 

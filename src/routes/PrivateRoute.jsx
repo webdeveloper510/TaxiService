@@ -55,7 +55,7 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
-            <Route path="/booking-form" element={<BookingForm />} />
+            <Route path="/booking-form/:id" element={<BookingForm />} />
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
