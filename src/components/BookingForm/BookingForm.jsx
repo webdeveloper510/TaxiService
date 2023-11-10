@@ -322,7 +322,7 @@ const BookingForm = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          // navigate("/trips/pendingtrips");
+          navigate("/");
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",

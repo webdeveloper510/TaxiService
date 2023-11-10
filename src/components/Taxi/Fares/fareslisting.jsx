@@ -604,6 +604,7 @@ const ListOfFares = () => {
                                     <CButton
                                       onClick={() => {setVisible(false)
                                       formik.resetForm()
+                                      setSelectedFare(null)
                                       }}
                                       className="cancel-btn"
                                     >
