@@ -1154,7 +1154,7 @@ useEffect(() =>{getCompanyDetail()},[])
                   </label>
                   <MDBInput
                     id="password"
-                    type={passVissible ? "text" : "password"}
+                    type={comPassVissible ? "text" : "password"}
                     size="lg"
                     {...formikPass.getFieldProps("confirmPassword")}
                     maxLength="50"

@@ -1261,6 +1261,31 @@ button#confirmation_btn a {
 .change_your_pwd_txt {
     text-align: center;
 }
+.link_expired img {
+    width: 30%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.link_expired {
+    width: 80%;
+    margin: 30px auto;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2509803922);
+    border-radius: 10px;
+}
+.link_text strong {
+    font-size: 24px;
+    font-family: "Poppins", sans-serif !important;
+}
+.link_text p {
+    padding-bottom: 22px;
+    padding-top: 12px;
+}
+div#expired_outer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {
         width: 100%;

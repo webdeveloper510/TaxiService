@@ -97,6 +97,7 @@ const SuperRequestTrip = () => {
     pick_up_date: new Date(),
     passenger_detail: [],
   });
+  const [price, setPrice] = useState("")
   const [passengerError, setPassengerError] = useState([{
     name: false,
     phone: false,
@@ -230,7 +231,7 @@ const SuperRequestTrip = () => {
         setVehicle(res.result);
       }
     });
-    getCompany("HOTEL")
+    getCompany({role:"HOTEL",name:""})
     .then((res) => {
       console.log(res?.result, "customer");
 
@@ -332,6 +333,9 @@ const SuperRequestTrip = () => {
       delete data.pick_up_date;
       data.created_by = data.customer;
       delete data.customer;
+      if(price.length > 0){
+        data.price = parseFloat(price)
+      }
       addTrip(data).then((res) => {
         setFormLoader(true)
         console.log("response---->>>>", res);
@@ -390,6 +394,13 @@ const SuperRequestTrip = () => {
       setTripToCoordinates(latLng);
     } catch (error) {
       console.error("Error:", error);
+    }
+  };
+  const handlePriceChange = (event) => {
+    const inputValueRegex = /^\d*\.?\d{0,2}$/; // Regular expression to allow up to 2 decimal places
+
+    if (inputValueRegex.test(event.target.value) || event.target.value === '') {
+      setPrice(event.target.value);
     }
   };
   return (
@@ -691,7 +702,13 @@ const SuperRequestTrip = () => {
                               <CFormLabel htmlFor="inputfixedprice">
                                Fixed Price
                               </CFormLabel>
-                              <CFormInput id="inputfixedprice" name="fixed_price" />
+                              <CFormInput id="inputfixedprice" name="fixed_price"
+                              placeholder="Optional" 
+                              type="number"
+                              step="0.01"
+                              value={price}
+                              onChange={(e)=>handlePriceChange(e)}
+                              />
                             
                             
                             </CCol>
