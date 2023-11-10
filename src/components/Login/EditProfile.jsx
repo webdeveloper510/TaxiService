@@ -184,6 +184,9 @@ function EditProfile() {
       }).finally(() => { setLoading(false) })
     },
   });
+  const back = ()=>{
+    navigate("/")
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -312,7 +315,9 @@ function EditProfile() {
                             <CCol md={12} className="edit_profile_btn">
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
                                 <CButton type="submit" className="submiit-btn">Save Changes</CButton>
-                                <CButton type="button" className="canceel-btn">Cancel</CButton>
+                                <CButton type="button" className="canceel-btn"
+                                onClick={back}
+                                >Cancel</CButton>
                               </div>
                             </CCol>
                           </form>
