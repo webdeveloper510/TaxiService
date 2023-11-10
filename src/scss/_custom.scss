@@ -1321,3 +1321,9 @@ ul.header-nav.top-bar-right ul li {
         float: left;
     }
     }
+    /****css only for mozilla*******/
+@-moz-document url-prefix() { 
+    .header.header-sticky {
+        width: -moz-available;
+      }
+  }
