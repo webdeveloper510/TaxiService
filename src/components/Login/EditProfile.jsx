@@ -184,6 +184,9 @@ function EditProfile() {
       }).finally(() => { setLoading(false) })
     },
   });
+  const back = ()=>{
+    navigate("/")
+  }
   return (
     <>
       <div className="container-fluidd">
