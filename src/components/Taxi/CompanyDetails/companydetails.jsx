@@ -33,6 +33,7 @@ import {
 import { toast } from "react-toastify";
 import editiconimg from "../../../assets/images/editicon.png";
 import deleteiconimg from "../../../assets/images/deleteicon.png";
+import roadTrip from "../../../assets/images/taxi.png"
 import {
   changeForgotPass,
   deleteCompany,
@@ -661,7 +662,7 @@ useEffect(() =>{getCompanyDetail()},[])
                                   
                                 }}><span style={{
                                   color: "black"
-                                }}>Request Trip</span></CButton></span></div>
+                                }}>New Trip<img src={roadTrip}/></span></CButton></span></div>
                             </CTableDataCell>
                           </CTableRow>
                         ))}
@@ -1006,7 +1007,7 @@ useEffect(() =>{getCompanyDetail()},[])
                                 </CCol>
                                 <CCol xs={12} className="change_your_pwd_txt">
                               <CButton className="change_pwd_btn_customer" 
-                            onClick={() => handlePwdChange()} >Are you want to Change your Password click here...</CButton>
+                            onClick={() => handlePwdChange()} >Reset your Password</CButton>
                               </CCol> 
                        
                                 <CCol md={12}>

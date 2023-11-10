@@ -311,7 +311,7 @@ function EditProfile() {
 
                             <CCol md={12} className="edit_profile_btn">
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                <CButton type="submit" className="submiit-btn">Save Changes</CButton>
+                                <CButton type="submit" className="submiit-btn">Update</CButton>
                                 <CButton type="button" className="canceel-btn">Cancel</CButton>
                               </div>
                             </CCol>

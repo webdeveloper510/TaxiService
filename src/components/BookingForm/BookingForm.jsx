@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/footer";
 import bookingCar from '../../assets/images/booking-car.png'
-import bookingImg from '../../assets/images/booking-header.png';
 import {
   CButton,
   CCard,
@@ -18,11 +17,13 @@ import {
 } from '@coreui/react'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { getTripById, getVehicleType, tripsUpdate } from "../../utils/api";
 import { toast } from "react-toastify";
 import sessionExp from '../../assets/images/session-expired.png'
+import backtotaxi from "../../assets/images/taxi.png"
 //import background from '../assets/images/heroimg.png';
 const BookingForm = () => {
   const booking = useParams();
@@ -362,9 +363,13 @@ const BookingForm = () => {
                   
                     </div>
                   </div> :  <section className="booking-section-form">
-            <div className="hero-banner" id="bookimg-header">
-              <div className="hero"><img src={bookingImg} className="heri-img" alt="banner" /></div>
+            <div className="booking-banner" id="bookimg-header">
+              
+          
               <div class="row booking-content col-md-12">
+              <Link to="/dashboard">
+              <span className="back_to_home"><img src={backtotaxi} />Back to Home </span>
+              </Link>
                 <div class="banner-inner-text col-md-6">
                   <h3>Welcome to Hotel Sky </h3>
 

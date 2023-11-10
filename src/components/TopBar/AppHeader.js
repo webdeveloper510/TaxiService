@@ -19,7 +19,7 @@ import menubar from '../../assets/images/menu-bar.png'
 import expandicon from '../../assets/images/hedercrossicon.png'
 // import { logo } from 'src/assets/brand/logo'
 import AppHeaderDropdown from './AppHeaderdropdown'
-import profilepic from '../../assets/images/avtar1.jpg'
+//import profilepic from '../../assets/images/avtar1.jpg'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -76,7 +76,7 @@ const AppHeader = () => {
           {/* <button className='btn btn-warning text-white  '  onClick={logout} >Logout</button> */}
         </CHeaderNav>
 
-        <CHeaderNav className="profile-pic">
+        {/* <CHeaderNav className="profile-pic">
         <CNavItem>
         
             <Link to="/edit-profile">
@@ -84,7 +84,7 @@ const AppHeader = () => {
              </Link>
            
           </CNavItem>
-          </CHeaderNav>
+          </CHeaderNav> */}
           
 
         <CHeaderNav className="top-bar-right">

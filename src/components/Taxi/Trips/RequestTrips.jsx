@@ -700,10 +700,9 @@ const SuperRequestTrip = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputfixedprice">
-                               Fixed Price
+                               Fixed Price € (Optional)
                               </CFormLabel>
-                              <CFormInput id="inputfixedprice" name="fixed_price"
-                              placeholder="Optional" 
+                              <CFormInput id="inputfixedprice" name="fixed_price" 
                               type="number"
                               step="0.01"
                               value={price}

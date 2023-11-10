@@ -1071,8 +1071,13 @@ div#profile_img_outer span {
     text-decoration-thickness: 3px;
     text-underline-offset: 8px;
 }
-html:not([dir=rtl]) .header-nav {
-    padding-left: 14px;
+a.dropdown-item.edit_profile a {
+    background: transparent;
+    border: none;
+    padding-right: 0;
+    padding-left: 0 !important;
+    text-decoration: none;
+    color: #000;
 }
 div#company-search .input-group {
     width: 100%;
@@ -1167,8 +1172,19 @@ button#confirmation_btn:active {
 .company-list-icons button#edit_company_btn {
     margin-top: 5px;
 }
-div#bookimg-header {
-    top: -84px;
+span.back_to_home {
+    text-align: left;
+    width: 100%;
+    float: left;
+    margin-top: 13px;
+    color: #000;
+}
+span.back_to_home:hover {
+    text-decoration: underline;
+}
+span.back_to_home img {
+    padding-right: 4px;
+    margin-top: -2px;
 }
 .booking-content {
     width: 100%;
@@ -1229,6 +1245,7 @@ div#bookimg-header .col-md-6 label {
 section.booking-section-form {
     background: linear-gradient(to bottom, #ffbf00 0, rgba(255, 191, 0, 0.8) 50%, #ffbf00 100%);
     float: left;
+    height: 100%;
 }
 .booking-footer footer {
     margin-top: 0;
@@ -1252,14 +1269,13 @@ button#confirmation_btn a {
 .change_your_pwd_txt button {
     background: transparent;
     border: none;
-    color: #000;
     font-weight: 900;
     text-decoration: underline;
-    font-size: 20px;
-    margin-top: 15px;
+    color: #2c384af2;
+    font-size: 16px;
 }
 .change_your_pwd_txt {
-    text-align: center;
+    text-align: right;
 }
 .link_expired img {
     width: 30%;
@@ -1271,6 +1287,7 @@ button#confirmation_btn a {
     margin: 30px auto;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2509803922);
     border-radius: 10px;
+    background: #fff;
 }
 .link_text strong {
     font-size: 24px;
@@ -1285,6 +1302,12 @@ div#expired_outer {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(to bottom, #ffbf00 0, rgba(255, 191, 0, 0.8) 50%, #ffbf00 100%);
+}
+ul.header-nav.top-bar-right ul li {
+    border-bottom: 1px solid #cccccc70;
+    padding-bottom: 6px;
+    padding-top: 6px;
 }
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {
