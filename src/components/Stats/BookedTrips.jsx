@@ -5,6 +5,7 @@ import {
     MDBCardText,
     MDBCol,
     MDBCardImage,
+    
   
   } from 'mdb-react-ui-kit';
 import trips from "../../assets/images/bookedtrips.png"

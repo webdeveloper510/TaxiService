@@ -26,7 +26,7 @@ function SecureTaxiRoleRoute({ children }) {
       }
     }
   }, [appLoaded, user])
-
+  
  return children
 
 }

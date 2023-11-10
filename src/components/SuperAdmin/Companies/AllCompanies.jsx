@@ -164,7 +164,7 @@ const AllCompanyDetails = () => {
 
   useEffect(() => {
     getCompanyDetail();
-  }, []);
+  }, [search]);
 
   const getCompanyDetail = () => {
     setLoading(true);
@@ -416,7 +416,6 @@ const AllCompanyDetails = () => {
                 <div className="serach-left" id="company-search">
                 <MDBInputGroup>
       <MDBInput value={search} onChange={(e)=>{
-        if(e.target.value === "") getCompanyDetail()
         setSearch(e.target.value);
       }} placeholder="Search"/>
     <button className="search-btn"

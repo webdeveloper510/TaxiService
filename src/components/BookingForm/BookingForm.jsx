@@ -256,9 +256,13 @@ const BookingForm = () => {
             });
           setInputs(add_on);
         }
+        else{
+          setExpired(true)
+        }
       })
       .catch((error) => {
         console.log(error);
+        setExpired(true)
         setLoading(false)
       }).finally(() => {
         setLoading(false)
