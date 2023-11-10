@@ -276,15 +276,11 @@ const CompanyDetails = () => {
         password: values.password
       }).then((response) => {
         console.log("response---->>>>", response)
-        if (response.data.code === 200
-        
-        ) {
+        if (response.data.code === 200) {
           toast.success(`${response.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
-        
-
         } else {
           toast.warning("Invalid Credentials", {
             position: 'top-right',
@@ -324,6 +320,15 @@ const CompanyDetails = () => {
           if (res.data.code == 200) {
             getCompanyDetail();
             setEditVisible(!editVisible);
+            toast.success(`${res.data.message}`, {
+              position: 'top-right',
+              autoClose: 1000,
+            });
+          }else{
+            toast.warning(`${res.data.message}`, {
+              position: 'top-right',
+              autoClose: 1000,
+            });
           }
         })
         .catch((error) => {
