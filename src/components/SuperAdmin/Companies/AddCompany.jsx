@@ -143,12 +143,12 @@ const AddSuperCompany = () => {
   }
   const formik = useFormik({
     initialValues,
-    // validationSchema: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       if(address.length<1){
         setAddressError(true);
         setTouched(true);
-        return;
+       return
       }
       setSubmitLoader(true)
       console.log("values", values);
