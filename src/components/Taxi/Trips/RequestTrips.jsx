@@ -686,6 +686,15 @@ const SuperRequestTrip = () => {
                                 </span>
                               )}
                             </CCol>
+
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputfixedprice">
+                               Fixed Price
+                              </CFormLabel>
+                              <CFormInput id="inputfixedprice" name="fixed_price" />
+                            
+                            
+                            </CCol>
                           </CForm>
                         </CCardBody>
                       </CCard>
