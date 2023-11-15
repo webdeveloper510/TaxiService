@@ -56,6 +56,7 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
+             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
@@ -79,7 +80,7 @@ const PrivateRoute = () => {
             </SecureTaxiRoleRoute>} />
             <Route path="/taxi/companydetails" element={<SecureTaxiRoleRoute><CompanyDetails /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/add-company" element={<SecureTaxiRoleRoute><AddCompany /></SecureTaxiRoleRoute>} />
-            <Route path="/taxi/trips/view-trip-details" element={<ViewSingleTrip/>} />
+           
             <Route path="/taxi/trips/bookedtrips" element={<SecureTaxiRoleRoute><SuperBookedTrips/></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/activetrips" element={<SecureTaxiRoleRoute><SuperActiveTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/pendingtrips" element={<SecureTaxiRoleRoute><SuperPendingTrip /></SecureTaxiRoleRoute>} />

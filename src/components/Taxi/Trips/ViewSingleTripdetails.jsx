@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AppHeader from "../../TopBar/AppHeader";
+import moment from "moment";
+
 // import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-import moment from "moment";
+
 import {
   CButton,
   CCard,
@@ -27,15 +29,35 @@ import backtovehicle from '../../../assets/images/left-arrow.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import car1 from '../../../assets/images/car1.jpg'
-import { getVehicleById } from "../../../utils/api";
+import { getTripById, getVehicleById } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import checkedImg from "../../../assets/images/checked.png"
 import SuperMap from "../../TaxiMap/Map";
-const ViewSingleTrip = ({role}) => {
-
+import userContext from "../../../utils/context";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
+const ViewSingleTrip = () => {
+  const [trip, setTrip] = useState(null)
+  const [customerName, setCustomerName] = useState(null);
   const {vehicleId} = useParams();
- 
- 
+  const {user,setUser,appLoaded} = useContext(userContext);
+ const navigate = useNavigate();
+ const id = useParams().id;
+ useEffect(()=>{
+  if(appLoaded){
+    if(!user){
+      navigate("/")
+    }
+    getTripById(id).then((res)=>{
+      console.log("page data for trip",res);
+      if(res.code === 200){
+        setTrip(res.result)
+        if(res.hotelName){setCustomerName(res.hotelName)}
+      }
+    }).catch((err)=>{
+      console.log(err);
+    }).finally(()=>{})
+  }
+ },[appLoaded])
 
  
   return (
@@ -44,8 +66,8 @@ const ViewSingleTrip = ({role}) => {
 
         <div className="col-md-12">
           <div>
-            <SuperSideBar/>
-
+             {user?.role === "SUPER_ADMIN" && <SuperAdminSideBar/>} 
+              {user?.role === "COMPANY" && <SuperSideBar/>}
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
@@ -76,23 +98,23 @@ const ViewSingleTrip = ({role}) => {
                            </CCol>
                            
                             <CCol className="vehicle_info_right" md={7}>
-                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Trip ID. : </CFormLabel>
+                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Trip ID. : {trip?.trip_id} </CFormLabel>
                               <span className="vehicle_info"></span> &nbsp;<br/>
-                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Customer Name : </CFormLabel>
+                              {customerName && <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Customer Name : {customerName}</CFormLabel>}
                               <span className="vehicle_info"> </span><br/>
                              
-                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/>Trip From :</CFormLabel>
+                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/>Trip From : {trip?.trip_from?.address}</CFormLabel>
                              
                                  <span className="vehicle_info"> </span>&nbsp;<br/>
-                                 <CFormLabel htmlFor="inputseating"><img src={checkedImg}/>Trip To :</CFormLabel>
+                                 <CFormLabel htmlFor="inputseating"><img src={checkedImg}/>Trip To : {trip?.trip_to?.address}</CFormLabel>
                                  <span className="vehicle_info"></span><br/>
-                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Date :</CFormLabel>
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Date : {moment(trip?.pickup_date_time).format("MMM Do YY")}</CFormLabel>
                                  <span className="vehicle_info"></span><br/>
-                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Time : </CFormLabel>
+                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Time : {moment(trip?.pickup_date_time).format("h:mm a")} </CFormLabel>
                                  <span className="vehicle_info"></span><br/>
-                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Drive Name : </CFormLabel>
+                                {trip?.driver_name && <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Drive Name : {trip?.driver_name}</CFormLabel>}
                                  <span className="vehicle_info"></span><br/>
-                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/> Fare (in €) : </CFormLabel>
+                                {trip?.price && <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/> Fare (in €) : {trip?.price}</CFormLabel>}
                                  <span className="vehicle_info"></span><br/>
                                  
                             </CCol>

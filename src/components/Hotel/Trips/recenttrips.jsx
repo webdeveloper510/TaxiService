@@ -160,7 +160,7 @@ const RecentTrips=({from})=> {
                       </CTableDataCell>        
                       <CTableDataCell>
                         <div className="view_details_btn">
-                        <Link to="/taxi/trips/view-trip-details">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
                           View Details
                           </Link>
                           </div>
