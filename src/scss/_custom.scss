@@ -1309,6 +1309,29 @@ ul.header-nav.top-bar-right ul li {
     padding-bottom: 6px;
     padding-top: 6px;
 }
+.view_details_btn {
+    background: #FFD04E;
+    border: #FFD04E;
+    margin-left: 10px;
+    font-size: 14px;
+    padding: 8px 6px 8px 6px;
+    width: 110px;
+    box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif !important;
+}
+.view_details_btn:hover {
+    background: #FFD04E;
+    border: #FFD04E;
+}
+.single-trip-map iframe {
+    height: 310px;
+}
+.view_details_btn a {
+    font-family: "Poppins", sans-serif !important;
+    color: #000;
+    text-decoration: none;
+}
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {
         width: 100%;

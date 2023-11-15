@@ -48,6 +48,7 @@ import NewPassword from '../components/Login/NewPassword';
 import EnterOtp from '../components/Login/EnterOtp';
 import EditProfile from '../components/Login/EditProfile';
 import BookingForm from '../components/BookingForm/BookingForm';
+import ViewSingleTrip from '../components/Taxi/Trips/ViewSingleTripdetails';
 
 
 const PrivateRoute = () => {
@@ -78,6 +79,7 @@ const PrivateRoute = () => {
             </SecureTaxiRoleRoute>} />
             <Route path="/taxi/companydetails" element={<SecureTaxiRoleRoute><CompanyDetails /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/add-company" element={<SecureTaxiRoleRoute><AddCompany /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/trips/view-trip-details" element={<ViewSingleTrip/>} />
             <Route path="/taxi/trips/bookedtrips" element={<SecureTaxiRoleRoute><SuperBookedTrips/></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/activetrips" element={<SecureTaxiRoleRoute><SuperActiveTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/pendingtrips" element={<SecureTaxiRoleRoute><SuperPendingTrip /></SecureTaxiRoleRoute>} />

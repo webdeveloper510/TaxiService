@@ -15,6 +15,7 @@ import { getRecentTrip, getTrip } from "../../../utils/api";
 import moment from "moment";
 import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
+import { Link } from 'react-router-dom';
 //import background from '../assets/images/heroimg.png';
 const tableExample = [
   {
@@ -104,6 +105,7 @@ const RecentTrips=({from})=> {
                     <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
                     {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
                     <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -155,7 +157,14 @@ const RecentTrips=({from})=> {
                           width: '100px',
                           margin: '0 auto',
                          }}>{status}</span>  
-                      </CTableDataCell>           
+                      </CTableDataCell>        
+                      <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to="/taxi/trips/view-trip-details">
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                     </CTableRow>
                     
                     )
