@@ -334,7 +334,7 @@ onClick={()=>{
   deleteDriverHandler(selectedId)
 }}
                               >Delete</CButton>
-                              <CButton className="cancel_popup">
+                              <CButton onClick={()=>setDeleteVisible(false)} className="cancel_popup">
                                 Cancel</CButton>
                             </div>
                           </CCard>

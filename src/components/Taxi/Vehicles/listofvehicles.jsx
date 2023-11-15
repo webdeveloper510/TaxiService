@@ -26,6 +26,7 @@ import deletevehicleicon from "../../../assets/images/deletevehi.png"
 import deletepopup from '../../../assets/images/deletepopup.png'
 import { toast } from "react-toastify";
 import EmptyData from "../../EmptyData";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 
 
 const LisOfVehicles = ({role}) => {
@@ -133,7 +134,7 @@ const LisOfVehicles = ({role}) => {
   return (
     <div className="container-fluid">
       <div className="col-md-12">
-        <SuperSideBar/>
+        {role == "super" ? <SuperAdminSideBar/>:<SuperSideBar/>}
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
           <AppHeader />
           <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>

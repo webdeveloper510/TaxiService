@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import userContext from './context';
+import AppLoader from '../components/AppLoader';
 function GuestRoute({ children }) {
     const navigate = useNavigate()
     const { user, setUser, appLoaded } = useContext(userContext);
@@ -15,6 +16,7 @@ function GuestRoute({ children }) {
                }
         }
     },[appLoaded])
+
       return children
     
     

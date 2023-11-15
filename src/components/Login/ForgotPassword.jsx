@@ -137,7 +137,7 @@ function ForgotPassword() {
                 </div>
 
                 <div className="mb-4 bak-to-login-btn">
-                <Link to={"/enter-otp"} className="back-to-login" href="!#">enter new otp</Link>
+                {/* <Link to={"/enter-otp"} className="back-to-login" href="!#">enter new otp</Link> */}
                   <Link to={"/login"} className="back-to-login" href="!#">
                   <img src={backtologin} alt="edit" />  Back to Login
                   </Link>

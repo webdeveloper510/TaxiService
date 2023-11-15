@@ -24,6 +24,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addVehicle, getVehicleById, getVehicleType } from "../../../utils/api";
 import uploadfileImg from '../../../assets/images/upload-btn.png'
 import SuperSideBar from "../SiderNavBar/Sidebar";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 
 
 const AddSuperVehicle = () => {
@@ -180,7 +181,7 @@ const AddSuperVehicle = () => {
         <div className="col-md-12">
 
           <div>
-            <SuperSideBar />
+            <SuperAdminSideBar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />

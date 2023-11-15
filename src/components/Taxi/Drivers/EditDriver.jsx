@@ -192,7 +192,7 @@ function EditDriver() {
                 <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                 
                   <h1 class="heading-for-every-page">
-                    <Link to="/taxi/driver/listofdrivers">
+                    <Link to="/super-admin/driver/listofdrivers">
                     <img src={backtovehicle} alt="edit" />  Edit Driver</Link></h1>
                  
                   

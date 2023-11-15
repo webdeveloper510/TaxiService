@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { getProfile } from './api';
 import userContext from './context';
+import AppLoader from '../components/AppLoader';
 
 function SecureSuperRoleRoute({ children }) {
  
@@ -28,7 +29,7 @@ function SecureSuperRoleRoute({ children }) {
     }
   }, [appLoaded, user])
 
- return children
+ return  appLoaded  ? children : <AppLoader/>
 
 }
 
