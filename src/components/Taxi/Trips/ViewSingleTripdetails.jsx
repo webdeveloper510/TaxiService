@@ -38,6 +38,7 @@ import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 const ViewSingleTrip = () => {
   const [trip, setTrip] = useState(null)
   const [customerName, setCustomerName] = useState(null);
+  const [loading, setLoading] = useState(false);
   const {vehicleId} = useParams();
   const {user,setUser,appLoaded} = useContext(userContext);
  const navigate = useNavigate();
@@ -47,6 +48,7 @@ const ViewSingleTrip = () => {
     if(!user){
       navigate("/")
     }
+    setLoading(true);
     getTripById(id).then((res)=>{
       console.log("page data for trip",res);
       if(res.code === 200){
@@ -55,7 +57,9 @@ const ViewSingleTrip = () => {
       }
     }).catch((err)=>{
       console.log(err);
-    }).finally(()=>{})
+    }).finally(()=>{
+      setLoading(false);
+    })
   }
  },[appLoaded])
 
@@ -70,7 +74,7 @@ const ViewSingleTrip = () => {
               {user?.role === "COMPANY" && <SuperSideBar/>}
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
-              <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
+             {loading ? <AppLoader/> : <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                <h1 class="heading-for-every-page">
                <Link to="/taxi/dashboard" className="view_detail">
                     <img src={backtovehicle} alt="edit" /> View Trip Details
@@ -137,7 +141,7 @@ const ViewSingleTrip = () => {
                   </CRow>
                 </div>
 
-              </div>
+              </div>}
 
             </div>
           </div>
