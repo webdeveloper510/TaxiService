@@ -1332,6 +1332,24 @@ ul.header-nav.top-bar-right ul li {
     color: #000;
     text-decoration: none;
 }
+.trip-details label {
+    float: left;
+    width: 40%;
+}
+.trip-details span {
+    float: left;
+    width: 60%;
+}
+.trip-details {
+    float: left;
+    width: 100%;
+    text-align: left;
+}
+form.row.g-3.view_single_trip_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {
         width: 100%;

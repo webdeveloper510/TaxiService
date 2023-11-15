@@ -89,7 +89,7 @@ const ViewSingleTrip = () => {
                         </CCardHeader> */}
                         <CCardBody>
                         
-                          <form noValidate className="row g-3">
+                          <form noValidate className="row g-3 view_single_trip_form">
                          
                           <CCol md={5} className="single-trip-map">
                             
@@ -98,24 +98,31 @@ const ViewSingleTrip = () => {
                            </CCol>
                            
                             <CCol className="vehicle_info_right" md={7}>
-                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Trip ID. : {trip?.trip_id} </CFormLabel>
-                              <span className="vehicle_info"></span> &nbsp;<br/>
-                              {customerName && <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Customer Name : {customerName}</CFormLabel>}
-                              <span className="vehicle_info"> </span><br/>
+                            <div class="trip-details">
+                              <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Trip ID :</CFormLabel>
+                              <span className="vehicle_info">{trip?.trip_id}</span> <br/></div>
+                              <div class="trip-details">
+                              {customerName && <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg}/>Customer Name :</CFormLabel>}
+                              <span className="vehicle_info">{customerName} </span><br/></div>
+                              <div class="trip-details">
+                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/>Trip From :</CFormLabel>
                              
-                                  <CFormLabel htmlFor="inputvehivlemodal"><img src={checkedImg}/>Trip From : {trip?.trip_from?.address}</CFormLabel>
-                             
-                                 <span className="vehicle_info"> </span>&nbsp;<br/>
-                                 <CFormLabel htmlFor="inputseating"><img src={checkedImg}/>Trip To : {trip?.trip_to?.address}</CFormLabel>
-                                 <span className="vehicle_info"></span><br/>
-                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Date : {moment(trip?.pickup_date_time).format("MMM Do YY")}</CFormLabel>
-                                 <span className="vehicle_info"></span><br/>
-                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Time : {moment(trip?.pickup_date_time).format("h:mm a")} </CFormLabel>
-                                 <span className="vehicle_info"></span><br/>
-                                {trip?.driver_name && <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Drive Name : {trip?.driver_name}</CFormLabel>}
-                                 <span className="vehicle_info"></span><br/>
-                                {trip?.price && <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/> Fare (in €) : {trip?.price}</CFormLabel>}
-                                 <span className="vehicle_info"></span><br/>
+                                 <span className="vehicle_info"> {trip?.trip_from?.address}</span><br/></div>
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputseating"><img src={checkedImg}/>Trip To :</CFormLabel>
+                                 <span className="vehicle_info"> {trip?.trip_to?.address}</span><br/></div>
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Date :</CFormLabel>
+                                 <span className="vehicle_info">{moment(trip?.pickup_date_time).format("MMM Do YY")}</span><br/></div>
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Time :</CFormLabel>
+                                 <span className="vehicle_info">{moment(trip?.pickup_date_time).format("h:mm a")}</span><br/></div>
+                                 <div class="trip-details">
+                                {trip?.driver_name && <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Drive Name :</CFormLabel>}
+                                 <span className="vehicle_info">{trip?.driver_name}</span><br/></div>
+                                 <div class="trip-details">
+                                {trip?.price && <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/> Fare (in €) :</CFormLabel>}
+                                 <span className="vehicle_info">{trip?.price}</span><br/></div>
                                  
                             </CCol>
 
