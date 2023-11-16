@@ -5,6 +5,8 @@ import deleteiconimg from "../../../assets/images/deleteicon.png";
 import deletepopup from "../../../assets/images/deletepopup.png";
 import * as Yup from "yup";
 import clsx from "clsx";
+import editicon from "../../../assets/images/editicon.png";
+
 import {
   CTable,
   CTableBody,
@@ -381,6 +383,15 @@ const SuperPendingTrip = () => {
                                 >
                                   <img src={deleteiconimg} alt="images" />
                                 </div>
+                                <div>
+                                      <Link
+                                        to={`/taxi/trips/editpendingtrips/${item._id}`}
+                                      >
+                                        <CButton className="allocate_accept_driver">
+                                          <img src={editicon} alt="img" />
+                                        </CButton>
+                                      </Link>
+                                    </div>
                               </CTableDataCell>
                             </CTableRow>
                           ))

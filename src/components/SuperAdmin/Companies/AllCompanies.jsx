@@ -255,21 +255,19 @@ const AllCompanyDetails = () => {
       .min(4)
       .max(100)
       .required("Describe your taxi number is required"),
-    affiliated_with: Yup.string().required("Affiliated with is required"),
+    affiliated_with: Yup.string(),
     phone: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
     website: Yup.string()
-      .url("Invalid URL format. Please enter a valid URL.")
-      .required("Website is required"),
-      tx_quality_mark: Yup.string().required("TX Quality is required"),
+      .url("Invalid URL format. Please enter a valid URL."),
+      tx_quality_mark: Yup.string(),
     first_name: Yup.string().required("First Name is required"),
     last_name: Yup.string().required("Last Name is required"),
     p_number: Yup.string()
       .min(6, "minimum length must be 6")
       .max(18, "max length must be 6")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Tel Contact Number is required"),
+      .matches(/^[0-9]+$/, "Must be only digits"),
     email: Yup.string().email().required("Email Address is required"),
     commision: Yup.number()
       .typeError('Must be a number')

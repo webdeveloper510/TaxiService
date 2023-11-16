@@ -28,8 +28,10 @@ import backtovehicle from "../../../assets/images/left-arrow.png";
 import { getTripById, getVehicleType, tripsUpdate } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import { toast } from "react-toastify";
+import { SuperBar } from "../../SuperAdmin/Sidebar/AppSideNavBar";
+import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 
-const EditpendingTrip = () => {
+const EditpendingTrip = ({ role }) => {
   const pendingId = useParams();
   console.log("pending id", pendingId.id);
   const navigate = useNavigate();
@@ -147,13 +149,13 @@ const EditpendingTrip = () => {
     var re = /\S+@\S+\.\S+/;
     const phoneRegex = /^[0-9]{10}$/;
     let valid = true;
-    for (let index = 0; index < data.length; index++) {
+    for (let index = 0; index < data?.length; index++) {
       // const element = data[index];
       if (data[index].name == "") {
         data[index].nameCheck = "Name required";
         data[index].nameLengthCheck = "";
         valid = false;
-      } else if (data[index].name.length < 3) {
+      } else if (data[index].name?.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -187,8 +189,8 @@ const EditpendingTrip = () => {
       // valid = false;
       // } 
       else if (
-        data[index].phone.length < 7 &&
-        data[index].phone.length > 16
+        data[index].phone?.length < 7 &&
+        data[index].phone?.length > 16
       ) {
         data[index].phoneLengthCheck = "Please enter valid phone number";
         data[index].phoneCheck = "";
@@ -203,8 +205,8 @@ const EditpendingTrip = () => {
         data[index].addressLengthCheck = "";
         valid = false;
       } else if (
-        data[index].address.length < 7 &&
-        data[index].address.length > 16
+        data[index].address?.length < 7 &&
+        data[index].address?.length > 16
       ) {
         data[index].addressLengthCheck = "Please enter valid address";
         data[index].addressCheck = "";
@@ -277,7 +279,7 @@ const EditpendingTrip = () => {
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
-      data.trip_from.address.length < 1
+      data.trip_from.address?.length < 1
     ) {
       console.log("enter valid trip from");
       valid = false;
@@ -286,16 +288,16 @@ const EditpendingTrip = () => {
     if (
       !data.trip_to.lat ||
       !data.trip_to.log ||
-      data.trip_to.address.length < 1
+      data.trip_to.address?.length < 1
     ) {
       valid = false;
       newErrors.trip_to = "Please enter valid trip to address";
     }
-    if (data.vehicle.length < 1) {
+    if (data.vehicle?.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
     }
-    if (inputData.pick_up_date.length < 1) {
+    if (inputData.pick_up_date?.length < 1) {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
@@ -317,7 +319,8 @@ const EditpendingTrip = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          navigate("/trips/pendingtrips");
+          back()
+          
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -338,7 +341,9 @@ const EditpendingTrip = () => {
   }, []);
 
   console.log("passengerssssssssssss", inputData);
-
+  const back = ()=>{
+    navigate(`${role=="hotel"?"":"/taxi"}/trips/pendingtrips`);
+  }
   const addOnChangeHandler = (e, index) => {
     let arr = inputs;
     console.log(inputs);
@@ -354,7 +359,7 @@ const EditpendingTrip = () => {
       <div className="container-fluidd">
         <div className="col-md-12">
           <div>
-            <SideBar2 />
+            {role == "hotel"? < SideBar2 /> : <SuperSideBar/>}
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -363,7 +368,7 @@ const EditpendingTrip = () => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">
-                  <Link to="/trips/pendingtrips">
+                  <Link to={`${role=="hotel"?"":"/taxi"}/trips/pendingtrips`}>
                     <img src={backtovehicle} alt="edit" /> Edit Pending Trip
                   </Link>
                 </h1>
@@ -397,6 +402,7 @@ const EditpendingTrip = () => {
                               </CFormLabel>
                               <CFormSelect
                                 name="vehicle"
+                                value={inputData.vehicle}
                                 onChange={(data) => {
                                   console.log(data.target.value);
                                   setInputData({
@@ -413,7 +419,7 @@ const EditpendingTrip = () => {
                                   }
                                 }}
                               >
-                                <option default>{inputData.vehicle}</option>
+                                <option selected>{inputData.vehicle}</option>
                                 {vehicle?.map((e, i) => {
                                   return (
                                     <>
@@ -665,10 +671,10 @@ const EditpendingTrip = () => {
                                     }}
                                   />
                                   <div style={{ color: "red" }}>
-                                  {passenger.nameCheck}
-                                  <br />
-                                  {passenger.nameLengthCheck}
-                                </div>
+                                    {passenger.nameCheck}
+                                    <br />
+                                    {passenger.nameLengthCheck}
+                                  </div>
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputphnno">
@@ -682,11 +688,11 @@ const EditpendingTrip = () => {
                                       addOnChangeHandler(e, index);
                                     }}
                                   />
-                                   <div style={{ color: "red" }}>
-                                  {passenger.phoneCheck}
-                                  <br />
-                                  {passenger.phoneLengthCheck}
-                                </div>
+                                  <div style={{ color: "red" }}>
+                                    {passenger.phoneCheck}
+                                    <br />
+                                    {passenger.phoneLengthCheck}
+                                  </div>
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputtemailadd">
@@ -701,11 +707,11 @@ const EditpendingTrip = () => {
                                     }}
                                   />
                                   <div style={{ color: "red" }}>
-                                  {passenger.emailCheck}
-                                  <br />
-                                  {passenger.emailFormat}
-                                </div>
-                                  
+                                    {passenger.emailCheck}
+                                    <br />
+                                    {passenger.emailFormat}
+                                  </div>
+
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputaddress">
@@ -719,11 +725,11 @@ const EditpendingTrip = () => {
                                     name="address"
                                     value={passenger.address}
                                   />
-                                   <div style={{ color: "red" }}>
-                                  {passenger.addressCheck}
-                                  <br />
-                                  {passenger.addressLengthCheck}
-                                </div>
+                                  <div style={{ color: "red" }}>
+                                    {passenger.addressCheck}
+                                    <br />
+                                    {passenger.addressLengthCheck}
+                                  </div>
                                 </CCol>
                               </CForm>
                             </CCardBody>
@@ -754,7 +760,7 @@ const EditpendingTrip = () => {
                       <CButton type="submit" className="submit-btn" onClick={adddata}>
                         Submit
                       </CButton>
-                      <CButton type="button" className="cancel-btn">
+                      <CButton type="button" className="cancel-btn" onClick={back}>
                         Cancel
                       </CButton>
                     </div>

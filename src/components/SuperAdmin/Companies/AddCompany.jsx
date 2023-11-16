@@ -105,7 +105,7 @@ const AddSuperCompany = () => {
       .min(4)
       .max(100)
       .required("Describe your taxi number is required"),
-    affiliated_with: Yup.string().required("Affiliated with is required"),
+    affiliated_with: Yup.string(),
     phone: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
@@ -113,17 +113,15 @@ const AddSuperCompany = () => {
     // chamber_of_comerce_number: Yup.string().required("Chamber of Commerce Number is required"),
     // vat:Yup.string().min(4).max(18).required("VAT Number is required"),
     website: Yup.string()
-      .url("Invalid URL format. Please enter a valid URL.")
-      .required("Website is required"),
-    tx_quality: Yup.string().required("TX Quality is required"),
+      .url("Invalid URL format. Please enter a valid URL."),
+    tx_quality: Yup.string(),
     // contact: Yup.string().required("Contact is required"),
     first_name: Yup.string().required("First Name is required"),
     last_name: Yup.string().required("Last Name is required"),
     tel_contact_number: Yup.string()
       .min(6, "minimum length must be 6")
       .max(18, "max length must be 6")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Tel Contact Number is required"),
+      .matches(/^[0-9]+$/, "Must be only digits"),
     email: Yup.string().email().required("Email Address is required"),
     commision : Yup.number()
     .typeError('Must be a number')
@@ -912,7 +910,12 @@ const AddSuperCompany = () => {
                                 className="d-flex justify-content-center"
                                 style={{ marginTop: "40px" }}
                               >
-                                <CButton type="submit" className="submit-btn">
+                                <CButton type="submit" onClick={()=>{
+                                  if(address.length<1){
+                                    setAddressError(true);
+                                    setTouched(true);
+                                  }
+                                }} className="submit-btn">
                                 {submitLoader ?
                       <ClipLoader color="#000000" /> : "Submit"}
                                 </CButton>
