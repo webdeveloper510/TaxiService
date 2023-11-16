@@ -96,6 +96,10 @@ const SuperRequestTrip = () => {
     trip_to: { address: "", lat: null, log: null },
     pick_up_date: new Date(),
     passenger_detail: [],
+    commission_type: "Fixed",
+    commission_value: "",
+    comment: "",
+    pay_option: "Cash",
   });
   const [price, setPrice] = useState("")
   const [passengerError, setPassengerError] = useState([{
@@ -187,6 +191,10 @@ const SuperRequestTrip = () => {
     pick_up_date: null,
     customer: null,
     passenger_detail: [],
+    commission_type: null,
+    commission_value: null,
+    comment: null,
+    pay_option: null,
   });
 
   const handlepickupDateChange = (date) => {
@@ -320,10 +328,20 @@ const SuperRequestTrip = () => {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
+    if (inputData.commission_value.length < 1) {
+      valid = false;
+      newErrors.pick_up_date = "Please enter commission value";
+      return
+    }
+    if(inputData.commission_type == "Percentage" && parseFloat(inputData.commission_value) > 100){
+      valid = false;
+      newErrors.commission_value = "Value should be less than equal 100"
+    }
     if (!valid) {
       setErrors(newErrors);
       return console.log(errors);
     }
+
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
     if (errorRes) {
@@ -710,6 +728,121 @@ const SuperRequestTrip = () => {
                               />
                             
                             
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputvehicletype">
+                                Pay Type
+                              </CFormLabel>
+                              <CFormSelect
+                                name="pay"
+                                onChange={(data) => {
+                                  console.log(data.target.value);
+                                  setInputData({
+                                    ...inputData,
+                                    pay_option: data.target.value,
+                                  });
+                                  if (data.target.value < 1) {
+                                    setErrors({
+                                      ...errors,
+                                      pay_option: "Please select commission type",
+                                    });
+                                  } else {
+                                    setErrors({ ...errors, pay_option: null });
+                                  }
+                                }}
+                              >
+                                <option value={"Cash"} selected>Cash</option>
+                                {/* <option value="Fixed">Cash</option> */}
+                                <option value='Hotel Account'>Hotel Account</option>
+
+
+                              </CFormSelect>
+                             
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Comment
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                onChange={(e)=>{
+                                  setInputData({
+                                    ...inputData,
+                                    comment: e.target.value,
+                                  });
+                                }}
+                              />
+
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputvehicletype">
+                                Commission Type
+                              </CFormLabel>
+                              <CFormSelect
+                                name="commission_type"
+                                onChange={(data) => {
+                                  setInputData((prev)=>{
+                                    const newValue = prev;
+                                    newValue.commission_type= data.target.value;
+                                    newValue.commission_value= "";
+                                    return newValue;
+                                  });
+                                  if (data.target.value < 1) {
+                                    setErrors({
+                                      ...errors,
+                                      commission_type: "Please select commission type",
+                                    });
+                                  } else {
+                                    setErrors({ ...errors, commission_type: null });
+                                  }
+                                }}
+                              >
+                                <option value={"Fixed"} selected>Fixed</option>
+                                {/* <option value="Fixed">Cash</option> */}
+                                <option value='Percentage'>Percentage</option>
+
+
+                              </CFormSelect>
+                             
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Commission Value
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                type="number"
+                                value={inputData.commission_value}
+                                onChange={(e)=>{
+                                  if(inputData.commission_type == "Percentage"){
+                                    if(e.target.value > 100){
+                                      setErrors({
+                                        ...errors, commission_value:"Value should be smaller than 100"
+                                      })
+                                      setInputData({
+                                        ...inputData,
+                                        commission_value: e.target.value,
+                                      });
+                                     return
+                                    }
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    commission_value: e.target.value,
+                                  });
+                                  setErrors({
+                                    ...errors, commission_value: null
+                                  })
+                                }}
+                              />
+                               {errors.commission_value && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.commission_value}
+                                </span>
+                              )}
                             </CCol>
                           </CForm>
                         </CCardBody>
