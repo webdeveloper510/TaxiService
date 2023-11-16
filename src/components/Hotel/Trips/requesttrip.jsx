@@ -26,10 +26,13 @@ import { getDriver, getVehicle, getVehicleType } from "../../../utils/api";
 import { addTrip } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import userContext from "../../../utils/context";
 
 
 
 const RequestNewTrip = () => {
+  const {user,setUser} = useContext(userContext);
   function customSetHours(date, hour) {
     if (date instanceof Date) {
       const newDate = new Date(date);
@@ -361,6 +364,21 @@ const RequestNewTrip = () => {
       console.error("Error:", error);
     }
   };
+  const copy = ()=>{
+    const textToCopy = `https://taxi-service-demo.vercel.app/${user._id}`
+    const textarea = document.createElement('textarea');
+    textarea.value = textToCopy;
+    document.body.appendChild(textarea);
+
+    // Select the text inside the textarea
+    textarea.select();
+
+    // Execute the copy command
+    document.execCommand('copy');
+
+    // Remove the textarea from the document
+    document.body.removeChild(textarea);
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -375,6 +393,12 @@ const RequestNewTrip = () => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">Request Trip</h1>
+                <CButton
+                        
+                        onClick={copy}
+                      >
+                        Copy Hotel Booking Link
+                </CButton>
                 <div class="active-trip-outer">
                   <CRow>
                     <CCol xs={12}>

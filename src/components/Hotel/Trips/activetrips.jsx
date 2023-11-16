@@ -80,17 +80,18 @@ const ActiveTrip = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
+  const [search,setSearch] = useState("")
 
   useEffect(() => {
     setLoader(true);
-    getTripSubAdmin("Active").then((res) => {
+    getTripSubAdmin("Active",search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setActiveTrip(res.result);
       }
       setLoader(false);
     });
-  }, []);
+  }, [search]);
 
   return (
     <>
@@ -106,7 +107,7 @@ const ActiveTrip = () => {
                 <div className="company-active-trips">
                 <div className="serach-left" id="active-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div>
@@ -163,6 +164,9 @@ const ActiveTrip = () => {
                               Trip To
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Time
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -194,7 +198,11 @@ const ActiveTrip = () => {
                                     <CTableDataCell>
                                       <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
-
+                                    <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
+                                  </CTableDataCell>
                                     <CTableDataCell>
                                       <div>
                                         {moment(item.pickup_date_time).format(

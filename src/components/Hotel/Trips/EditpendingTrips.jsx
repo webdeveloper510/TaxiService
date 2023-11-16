@@ -53,6 +53,10 @@ const EditpendingTrip = ({ role }) => {
     trip_to: { address: "", lat: null, log: null },
     pick_up_date: new Date(),
     passenger_detail: [],
+    commission_type: "Fixed",
+    commission_value: "",
+    comment: "",
+    pay_option: "Cash",
   });
   const [errors, setErrors] = useState({
     vehicle: null,
@@ -60,6 +64,10 @@ const EditpendingTrip = ({ role }) => {
     trip_to: null,
     pick_up_date: null,
     passenger_detail: [],
+    commission_type: null,
+    commission_value: null,
+    comment: null,
+    pay_option: null,
   });
   const [inputs, setInputs] = useState([
     { name: "", email: "", phone: "", address: "" },
@@ -731,6 +739,7 @@ const EditpendingTrip = ({ role }) => {
                                     {passenger.addressLengthCheck}
                                   </div>
                                 </CCol>
+                            
                               </CForm>
                             </CCardBody>
                           </CCard>

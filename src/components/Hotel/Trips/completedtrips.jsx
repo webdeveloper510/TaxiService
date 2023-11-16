@@ -80,17 +80,18 @@ const CompletedTrip = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
+  const [search,setSearch] = useState("")
 
   useEffect(() => {
     setLoader(true);
-    getTripSubAdmin("Completed").then((res) => {
+    getTripSubAdmin("Completed",search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setCompleteTrip(res.result);
       }
       setLoader(false);
     });
-  }, []);
+  }, [search]);
 
   return (
     <>
@@ -106,7 +107,7 @@ const CompletedTrip = () => {
                 <div className="company-complete-trips">
                 <div className="serach-left" id="complete-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div>
@@ -166,6 +167,9 @@ const CompletedTrip = () => {
                               Trip To
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Start Time
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -202,6 +206,11 @@ const CompletedTrip = () => {
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>

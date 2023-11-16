@@ -81,17 +81,18 @@ const BookingRequestTable = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
+  const [search,setSearch] = useState("")
 
   useEffect(() => {
     setLoader(true);
-    getTripSubAdmin("Booked").then((res) => {
+    getTripSubAdmin("Booked",search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setBookingTrip(res.result);
       }
       setLoader(false);
     });
-  }, []);
+  }, [search]);
 
   return (
     <>
@@ -107,7 +108,7 @@ const BookingRequestTable = () => {
                 <div className="company-booked-trips">
                 <div className="serach-left" id="booked-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div>
@@ -166,6 +167,9 @@ const BookingRequestTable = () => {
                               Trip To
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Allocated Driver
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -198,6 +202,11 @@ const BookingRequestTable = () => {
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>{item.driver_name}</div>

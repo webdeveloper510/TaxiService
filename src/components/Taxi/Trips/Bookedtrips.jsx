@@ -81,17 +81,18 @@ const SuperBookedTrips = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
+  const [search,setSearch] = useState("")
 
   useEffect(() => {
     setLoader(true);
-    getTrip("Booked").then((res) => {
+    getTrip("Booked",search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setBookingTrip(res.result);
       }
       setLoader(false);
     });
-  }, []);
+  }, [search]);
 
   return (
     <>
@@ -107,7 +108,7 @@ const SuperBookedTrips = () => {
                 <div className="company-booked-trips">
                 <div className="serach-left" id="pending-booked-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div></div>
@@ -172,6 +173,9 @@ const SuperBookedTrips = () => {
                               Trip To
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Allocated Driver
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -209,9 +213,14 @@ const SuperBookedTrips = () => {
                                 <div>{item?.trip_to.address?.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
+                                  </CTableDataCell>
+                                <CTableDataCell>
                                   <div>{item.trip_to?.driver_name?.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
                                 </CTableDataCell>
-
+                                
                                 <CTableDataCell>
                                   <div>
                                     {moment(item.pickup_date_time).format(

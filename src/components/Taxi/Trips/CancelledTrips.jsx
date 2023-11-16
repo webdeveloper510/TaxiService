@@ -88,17 +88,17 @@ const SuperCancelledTrip = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-
+  const [search,setSearch] = useState("")
   useEffect(() => {
     setLoader(true);
-    getTrip("Canceled").then((res) => {
+    getTrip("Canceled",search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setActiveTrip(res.result);
       }
       setLoader(false);
     });
-  }, []);
+  }, [search]);
   return (
     <>
 
@@ -117,7 +117,7 @@ const SuperCancelledTrip = () => {
                 <div className="company-cancelled-trips">
                 <div className="serach-left" id="cancelled-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div></div>
@@ -168,7 +168,9 @@ const SuperCancelledTrip = () => {
                             <CTableHeaderCell className="text-center">
                               Trip To
                             </CTableHeaderCell>
-
+                            <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                               Time
                             </CTableHeaderCell>
@@ -216,7 +218,11 @@ const SuperCancelledTrip = () => {
 
                                 <div>{item.trip_to.address.slice(0, 20) + `${item.trip_to.address.length < 21 ? "" : "..."}`}</div>
                               </CTableDataCell>
-
+                              <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
+                                  </CTableDataCell>
                               <CTableDataCell>
                                 <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm a")}</div>
 

@@ -59,14 +59,15 @@ const RecentTrips=({from})=> {
    
   const [pendinTrip, setPendingTrip] = useState([])
   const [loading, setLoading] = useState(false);
+  const [search,setSearch] = useState("")
   useEffect(()=>{
     setLoading(true);
-    getRecentTrip(from == "super").then(res => {
+    getRecentTrip(from == "super","").then(res => {
       if (res?.code == 200) {
         setPendingTrip(res.result)
       }
     }).finally(()=>setLoading(false))
-  },[])
+  },[search])
 
       return (
        <>

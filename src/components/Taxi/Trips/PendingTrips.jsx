@@ -124,10 +124,11 @@ const SuperPendingTrip = () => {
   if (data?.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
+  const [search,setSearch] = useState("")
 
   async function onLoadComponent() {
     setLoader(true);
-    getTrip("Pending")
+    getTrip("Pending",search)
       .then((res) => {
         console.log(res.result, "pending trip vehicle");
         if (res?.code === 200) {
@@ -160,7 +161,7 @@ const SuperPendingTrip = () => {
   }
   useEffect(() => {
     onLoadComponent();
-  }, []);
+  }, [search]);
 
   const [selectDriver, setSelectDriver] = useState();
   const [selectVehicle, setSelectVehicle] = useState();
@@ -269,7 +270,7 @@ const SuperPendingTrip = () => {
 <div className="company-pending-trips">
                 <div className="serach-left" id="pending-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div></div>
@@ -328,6 +329,9 @@ const SuperPendingTrip = () => {
                             Trip To
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
                             Time
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
@@ -363,6 +367,11 @@ const SuperPendingTrip = () => {
                               <CTableDataCell>
                                 <div>{item?.trip_to?.address.slice(0, 20) + `${item?.trip_to?.address?.length < 21 ? "" : "..."}`}</div>
                               </CTableDataCell>
+                              <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
+                                  </CTableDataCell>
                               <CTableDataCell>
                                 <div>
                                   {moment(item.pickup_date_time).format(

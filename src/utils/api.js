@@ -131,8 +131,8 @@ export const getFare = async() => {
 };
 
 
-export const getTrip = async(data) => {
-  return await Axios.get(`admin/get_trip/${data}` , {
+export const getTrip = async(data,search) => {
+  return await Axios.post(`admin/get_trip/${data}`, {comment:search || ""}, {
     headers: {
       "x-access-token": token,
     },
@@ -145,8 +145,8 @@ export const getTrip = async(data) => {
     console.log("GET_TRIP", error);
   });
 };
-export const getTripSubAdmin = async(data) => {
-  return await Axios.get(`subadmin/get_trip/${data}` , {
+export const getTripSubAdmin = async(data,search) => {
+  return await Axios.post(`subadmin/get_trip/${data}` , {comment: search || ""},{
     headers: {
       "x-access-token": token,
     },
@@ -389,8 +389,8 @@ export const allocateDriver = async (data,id) => {
 };
 
 
-export const getRecentTrip = async(role) => {
-  return await Axios.get(`admin/${role? "get_recent_trip_super": "get_recent_trip"}` , {
+export const getRecentTrip = async(role,comment) => {
+  return await Axios.post(`admin/${role? "get_recent_trip_super": "get_recent_trip"}`,{comment} , {
     headers: {
       "x-access-token": token,
     },
@@ -491,6 +491,20 @@ export const getTripById = async(id) => {
   });
 };
 
+export const addLinkTrip = async (data) => {
+  return await Axios.post(`admin/add_trip_link`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, " addLinkTrip");
+      return res;
+    })
+    .catch((error) => {
+      console.log("addLinkTrip", error);
+    });
+};
 export const tripsUpdate = async (id,data) => {
   return await Axios.put(`subadmin/edit_trip/${id}`, data, {
     headers: {
@@ -498,11 +512,11 @@ export const tripsUpdate = async (id,data) => {
     },
   })
     .then((res) => {
-      console.log(res, "edit vehicle");
+      console.log(res, "tripsUpdate");
       return res;
     })
     .catch((error) => {
-      console.log("EDIT_VEHICLE", error);
+      console.log("tripsUpdate", error);
     });
 };
 export const sendForgotEmail = async (email) => {

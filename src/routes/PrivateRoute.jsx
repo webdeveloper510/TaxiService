@@ -49,6 +49,7 @@ import EnterOtp from '../components/Login/EnterOtp';
 import EditProfile from '../components/Login/EditProfile';
 import BookingForm from '../components/BookingForm/BookingForm';
 import ViewSingleTrip from '../components/Taxi/Trips/ViewSingleTripdetails';
+import BookingStaffForm from '../components/BookingForm/BookingStaffForm';
 
 
 const PrivateRoute = () => {
@@ -58,6 +59,8 @@ const PrivateRoute = () => {
         <Routes>
             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
+            <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
+
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />

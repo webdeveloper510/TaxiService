@@ -97,6 +97,7 @@ const SuperRecentTrips=()=> {
       return null;
     }
   });
+  const [search,setSearch] = useState("")
   useEffect(()=>{
     if(!selectedType) setFilterData(pendinTrip);
     else {
@@ -134,13 +135,13 @@ const SuperRecentTrips=()=> {
   }
   useEffect(()=>{
     setLoader(true)
-    getRecentTrip(true).then(res => {
+    getRecentTrip(true,search).then(res => {
       if (res?.code == 200 && res?.result) {
         setPendingTrip(res?.result)
         setFilterData(res?.result)
       }
     }).finally(() => {setLoader(false)})
-  },[])
+  },[search])
 
       return (
        <>
@@ -162,7 +163,7 @@ const SuperRecentTrips=()=> {
                 <div class="filter-outer">
                   <div className="serach-left" id="recent-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
     
     </MDBInputGroup></div>
     <div className="filter-right">
@@ -211,6 +212,9 @@ const SuperRecentTrips=()=> {
               <CTableHeaderCell className="text-center">Customer Name</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
               <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
               <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
               {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
@@ -244,6 +248,11 @@ const SuperRecentTrips=()=> {
                 <CTableDataCell>
                   <div>{item.trip_to?.address.length<20?item.trip_to?.address: item.trip_to?.address.slice(0,18) + "..."}</div>
                 </CTableDataCell>
+                <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
+                                    </div>
+                                  </CTableDataCell>
                 <CTableDataCell>
                   <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
                 </CTableDataCell> 

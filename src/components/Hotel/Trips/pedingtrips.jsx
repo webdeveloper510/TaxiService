@@ -105,19 +105,19 @@ const PendingTrip = () => {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
 
+  const [search,setSearch] = useState("")
   useEffect(() => {
     getpendingtrip();
-  }, []);
-
+  }, [search]);
   const getpendingtrip = () => {
     setLoader(true);
-    getTripSubAdmin("Pending").then((res) => {
-      console.log(res.result, "pending trip vehicle");
+    getTripSubAdmin("Pending",search).then((res) => {
+      console.log(res?.result, "pending trip vehicle");
       if (res?.code === 200) {
         setPendingTrip(res.result);
       }
-      setLoader(false);
-    });
+      
+    }).finally(()=>{setLoader(false);});
   };
 
   const handleDelet = (id) => {
@@ -165,7 +165,7 @@ const PendingTrip = () => {
                 <div className="company-pending-trips">
                 <div className="serach-left" id="pending-trip-search">
                 <MDBInputGroup>
-      <MDBInput placeholder="Search"/>
+      <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
   
     </MDBInputGroup>
     </div>
@@ -225,6 +225,9 @@ const PendingTrip = () => {
                                 Trip To
                               </CTableHeaderCell>
                               <CTableHeaderCell className="text-center">
+                                Comment
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
                                 Time
                               </CTableHeaderCell>
                               <CTableHeaderCell className="text-center">
@@ -267,6 +270,11 @@ const PendingTrip = () => {
                                           ? ""
                                           : "..."
                                         }`}
+                                    </div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>
+                                      {item?.comment}
                                     </div>
                                   </CTableDataCell>
                                   <CTableDataCell>
