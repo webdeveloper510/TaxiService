@@ -31,7 +31,7 @@ import { Link } from "react-router-dom";
 import deletepopup from "../../../assets/images/deletepopup.png";
 import EmptyData from "../../EmptyData";
 import { toast } from "react-toastify";
-
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 const tableExample = [
   {
     Srnum: "1",
@@ -162,6 +162,14 @@ const PendingTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Pending Trips</h1>
+                <div className="company-pending-trips">
+                <div className="serach-left" id="pending-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div>
+	</div>
                 <div className="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">

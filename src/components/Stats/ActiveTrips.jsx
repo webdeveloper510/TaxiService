@@ -29,7 +29,7 @@ const ActiveTrips=()=> {
        <>
       <MDBCard>
           <MDBCardBody className="d-flex booked-trips-card">
-          <MDBCol sm='4'>
+          <MDBCol sm='4' className="booked-trip-icon">
           <MDBCardImage position='top' alt='...' src={trips} />
           </MDBCol>
           <MDBCol sm='8'>

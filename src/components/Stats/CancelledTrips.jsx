@@ -28,7 +28,7 @@ const CancelledTrips=()=> {
        <>
       <MDBCard>
           <MDBCardBody className="d-flex cancelled-trips">
-          <MDBCol sm='4'>
+          <MDBCol sm='4' className="booked-trip-icon">
           <MDBCardImage position='top' alt='...' src={canceltrip} />
           </MDBCol>
           <MDBCol sm='8'>

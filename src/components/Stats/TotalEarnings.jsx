@@ -16,7 +16,7 @@ const TotalEarnings=()=> {
        <br/>
       <MDBCard>
           <MDBCardBody className="d-flex total-earinings">
-          <MDBCol sm='4'>
+          <MDBCol sm='4' className="booked-trip-icon">
           <MDBCardImage position='top' alt='...' src={earningimg} />
           </MDBCol>
           <MDBCol sm='8'>

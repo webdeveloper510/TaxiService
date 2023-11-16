@@ -20,6 +20,7 @@ import { getTrip } from "../../../utils/api";
 import { PulseLoader } from "react-spinners";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import EmptyData from "../../EmptyData";
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 
 const SuperCompleteTrip = () => {
   const [completeTrip, setCompleteTrip] = useState([]);
@@ -104,6 +105,13 @@ const SuperCompleteTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Completed Trip </h1>
+                <div className="company-complete-trips">
+                <div className="serach-left" id="complete-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div></div>
                 <div className="active-trip-outer" id="completed-trips">
                   {/* <div className="trips-head d-flex justify-content-between">
             <div className="box-shd d-flex justify-content-between">
