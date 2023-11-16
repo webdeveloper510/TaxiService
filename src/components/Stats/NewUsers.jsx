@@ -29,7 +29,7 @@ const NewUsers=()=> {
        <br/>
       <MDBCard>
           <MDBCardBody className="d-flex new-users">
-          <MDBCol sm='4'>
+          <MDBCol sm='4' className="booked-trip-icon">
           <MDBCardImage position='top' alt='...' src={newuserimg} />
           </MDBCol>
           <MDBCol sm='8'>

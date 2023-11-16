@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
-
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import {
   CTable,
   CTableBody,
@@ -114,7 +114,13 @@ const SuperCancelledTrip = () => {
               <div className="body flex-grow-1 px-3">
 
                 <h1 className="heading-for-every-page">Cancelled Trips</h1>
-
+                <div className="company-cancelled-trips">
+                <div className="serach-left" id="cancelled-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div></div>
                 <div className="active-trip-outer">
 
                   {/* <div className="trips-head d-flex justify-content-between">

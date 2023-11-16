@@ -20,6 +20,9 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 import moment from "moment";
 import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+
+
 const RequestAcceptTrip = () => {
   const [activeTrip, setActiveTrip] = useState([]);
 
@@ -104,6 +107,13 @@ const RequestAcceptTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Approved Trips</h1>
+                <div className="company-approved-trips">
+                <div className="serach-left" id="approved-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div></div>
                 <div className="active-trip-outer">
                   {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">

@@ -50,7 +50,7 @@ import moment from "moment";
 import { PulseLoader } from "react-spinners";
 import AppLoader from "../../AppLoader";
 import EmptyData from "../../EmptyData";
-
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 const tableExample = [
   {
     Srnum: "1",
@@ -266,7 +266,15 @@ const SuperPendingTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Pending Trips</h1>
+<div className="company-pending-trips">
+                <div className="serach-left" id="pending-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div></div>
                 <div className="active-trip-outer" id="pending-trips">
+             
                   {/* <div className="trips-head d-flex justify-content-between">
  <div className="box-shd d-flex justify-content-between">
  <div className="left-trip-content">
@@ -363,6 +371,7 @@ const SuperPendingTrip = () => {
                                 </div>
                               </CTableDataCell>
                               <CTableDataCell className="pending-trips-icons">
+                                <div className="pending-icons-outer">
                                 <div>
                                   <CButton id="allocate_driver"
                                     className="allocate_accept_driver"
@@ -391,6 +400,7 @@ const SuperPendingTrip = () => {
                                           <img src={editicon} alt="img" />
                                         </CButton>
                                       </Link>
+                                    </div>
                                     </div>
                               </CTableDataCell>
                             </CTableRow>

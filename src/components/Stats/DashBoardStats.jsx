@@ -24,24 +24,24 @@ const DashboardStats=()=> {
        
       <div className="row">
      
-      <div className="col-md-6 dashboard-grph-img">
+      {/* <div className="col-md-6 dashboard-grph-img">
         <DashboardGraph/>
         
-        </div>
-       <div className="col-md-6 hotel-stats">
+        </div> */}
+       <div className="col-md-12 hotel-stats">
 
         <div className="booked-trips-outer">
         <MDBRow>
-        <MDBCol sm='6' className="booked-trips">
+        <MDBCol md='6' className="booked-trips">
        < BookedTrips/>
       </MDBCol>
-      <MDBCol sm='6' className="cancelledtrips">
+      <MDBCol md='6' className="cancelledtrips">
        < CancelledTrips/>
       </MDBCol>
-      <MDBCol sm='6' className="newUsers">
+      <MDBCol md='6' className="newUsers">
        < NewUsers/>
       </MDBCol>
-      <MDBCol sm='6' className="totalEarnings">
+      <MDBCol md='6' className="totalEarnings">
        < TotalEarnings/>
       </MDBCol>
     </MDBRow>

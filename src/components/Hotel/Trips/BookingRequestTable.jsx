@@ -20,7 +20,7 @@ import moment from "moment";
 import PulseLoader from "react-spinners/PulseLoader";
 import { date } from "yup";
 import EmptyData from "../../EmptyData";
-
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 const BookingRequestTable = () => {
   const [bookingTrip, setBookingTrip] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -104,6 +104,14 @@ const BookingRequestTable = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">Booked Trip</h1>
+                <div className="company-booked-trips">
+                <div className="serach-left" id="booked-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div>
+	</div>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">

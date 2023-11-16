@@ -18,6 +18,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import moment from "moment";
 import EmptyData from "../../EmptyData";
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 
 const SuperActiveTrip = () => {
   const [activeTrip, setActiveTrip] = useState([]);
@@ -103,6 +104,13 @@ const SuperActiveTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Active Trips</h1>
+                <div className="company-active-trips">
+                <div className="serach-left" id="active-trip-search">
+                <MDBInputGroup>
+      <MDBInput placeholder="Search"/>
+  
+    </MDBInputGroup>
+    </div></div>
                 <div className="active-trip-outer">
                   {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
