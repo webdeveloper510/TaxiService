@@ -11,18 +11,9 @@ import trips from "../../../assets/images/bookedtrips.png"
 import { getCountDashboard } from "../../../utils/api";
 //import background from '../assets/images/heroimg.png';
 
-const BookedStats=()=> {
+const BookedStats=({count})=> {
    
-  const [count , setCount] = useState([])
 
-  useEffect(()=>{
-    getCountDashboard().then((res)=>{
-      
-      if(res?.result ) setCount(res?.result);
-    }).catch((error)=>{
-      console.log(error)
-    })
-  },[])
   
       return (
        <>
@@ -35,7 +26,7 @@ const BookedStats=()=> {
             <MDBCardText>
               <div>
                 <h5>Booked Trips</h5>
-            <span>{count.bookedTrips}</span>
+            <span>{count?.bookedTrips}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

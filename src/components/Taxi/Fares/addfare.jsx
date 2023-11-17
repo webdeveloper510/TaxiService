@@ -34,7 +34,7 @@ const AddFare = () => {
     vehicle_type: "",
     vehicle_fare_per_km: "",
     minimum_fare: "",
-    minimum_distance: "",
+    price_per_min: "",
     waiting_fare: "",
 
   };
@@ -44,7 +44,7 @@ const AddFare = () => {
     vehicle_type: Yup.string().required("Vehicle Type  is required"),
     vehicle_fare_per_km: Yup.string().required("Vehicle Fare  is required"),
     minimum_fare: Yup.string().required("Minimum Fare  is required"),
-    minimum_distance: Yup.string().required("Minimum Distance  is required"),
+    price_per_min: Yup.string().required("Vehicle Fare  is required"),
     waiting_fare: Yup.string().required("Waiting Fare is required"),
 
   });
@@ -205,8 +205,10 @@ const AddFare = () => {
                               ) : null}
                             </CCol> */}
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare (in €) Per Miles</CFormLabel>
-                              <CFormInput onKeyDown={(e) => { handleFare(e,5) }} aria-label="vehicle fare"
+                              <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare (in €) Per Km</CFormLabel>
+                              <CFormInput 
+                              aria-label="vehicle fare"
+                              type="number"
                                {...formik.getFieldProps("vehicle_fare_per_km")}
                                 maxLength="50"
                                 className={clsx(
@@ -228,7 +230,7 @@ const AddFare = () => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputvehicleminfare">Minimum Fare  (in €)</CFormLabel>
-                              <CFormInput onKeyDown={(e) => { handleFare(e,5) }} id="inputvehicleminfare"    {...formik.getFieldProps("minimum_fare")}
+                              <CFormInput type="number" id="inputvehicleminfare"    {...formik.getFieldProps("minimum_fare")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -248,30 +250,30 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputmindistance">Minimum Distance (in Miles)</CFormLabel>
-                              <CFormInput onKeyDown={(e) => { handleFare(e,5) }} id="inputmindistance"   {...formik.getFieldProps("minimum_distance")}
+                              <CFormLabel htmlFor="inputmindistance">Vehicle Fare (in €) Per Minute</CFormLabel>
+                              <CFormInput type="number" id="inputmindistance"   {...formik.getFieldProps("price_per_min")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
                                     "is-invalid":
-                                      formik.touched.minimum_distance && formik.errors.minimum_distance,
+                                      formik.touched.price_per_min && formik.errors.price_per_min,
                                   },
                                   {
                                     "is-valid":
-                                      formik.touched.minimum_distance && !formik.errors.minimum_distance,
+                                      formik.touched.price_per_min && !formik.errors.price_per_min,
                                   }
                                 )}
-                                name="minimum_distance"
+                                name="price_per_min"
                                 autoComplete="off" />
-                              {formik.errors.minimum_distance && formik.touched.minimum_distance ? (
-                                <div className="text-danger">{formik.errors.minimum_distance}</div>
+                              {formik.errors.price_per_min && formik.touched.price_per_min ? (
+                                <div className="text-danger">{formik.errors.price_per_min}</div>
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputwaiting_fare">Waiting Fare  (in €)
                               </CFormLabel>
-                              <CFormInput onKeyDown={(e) => { handleFare(e,5) }} id="inputwaiting_fare" {...formik.getFieldProps("waiting_fare")}
+                              <CFormInput type="number" id="inputwaiting_fare" {...formik.getFieldProps("waiting_fare")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",

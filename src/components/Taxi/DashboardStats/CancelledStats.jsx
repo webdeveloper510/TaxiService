@@ -10,18 +10,8 @@ import {
 import canceltrip from "../../../assets/images/cancelled-trip.png"
 import { getCountDashboard } from "../../../utils/api";
 
-const CancelledStats=()=> {
+const CancelledStats=({count})=> {
 
-  const [count , setCount] = useState([])
-  useEffect(()=>{
-    getCountDashboard().then((res)=>{
-      console.log("dashborad count response=============", res)
-      if(res?.result) setCount(res.result)
-    }).catch((error)=>{
-      console.log(error)
-    })
-  },[])
-   
       return (
        <>
       <MDBCard>
@@ -33,7 +23,7 @@ const CancelledStats=()=> {
             <MDBCardText>
               <div>
                 <h5>Cancelled Trips</h5>
-            <span>{count.cancelTrips}</span>
+            <span>{count?.cancelTrips}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

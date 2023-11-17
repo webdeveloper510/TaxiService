@@ -27,6 +27,7 @@ import { ClipLoader } from "react-spinners";
 
 const AddCompany = () => {
   const [address, setAddress] = useState("");
+  const [addressCoordinates, setAddressCoordinates] = useState(null);
   const [touched, setTouched] = useState(false)
   const [addressError, setAddressError] = useState(true);
   const { companyId } = useParams();
@@ -51,7 +52,9 @@ const AddCompany = () => {
     try {
       formik.setFieldValue("land", selectedAddress )
       setAddress(selectedAddress)
-      
+      const results = await geocodeByAddress(selectedAddress);
+      const latLng = await getLatLng(results[0]);
+      setAddressCoordinates(latLng)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -135,7 +138,12 @@ const AddCompany = () => {
         // last_name: values.last_name,
         // p_number: values.tel_contact_number,
         email: values.email,
-        role: "HOTEL"
+        role: "HOTEL",
+        hotel_location: {
+          address : address,
+          lat : addressCoordinates.lat,
+          log : addressCoordinates.lng
+        }
       }).then((res) => {
         console.log("response---->>>>", res);
         if (res?.data?.code === 200) {

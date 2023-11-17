@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
  
     MDBRow,
@@ -9,10 +9,22 @@ import BookedStats from "./BookedStats";
 import CancelledStats from "./CancelledStats";
 import UsersStats from "./UsersStats";
 import EarningStats from "./EaringStats";
+import { getCountDashboard, getTripCompleted } from "../../../utils/api";
+import { Link } from "react-router-dom";
 //import DashboardGraph from "../Hotel/DashboardChart/dashboardgraph";
 
 const AllDashboardStats=()=> {
+  const [count , setCount] = useState(null)
 
+  useEffect(()=>{
+    getTripCompleted().then((res)=>{
+      console.log("counts from sub admin", res);
+      if(res?.result ) setCount(res?.result);
+      
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
       return (
        <>
        <br/>
@@ -33,13 +45,13 @@ const AllDashboardStats=()=> {
         <div className="booked-trips-outer">
         <MDBRow>
         <MDBCol sm='6' className="booked-trips">
-      <BookedStats/>
+        <Link to={"/taxi/trips/bookedtrips"}><BookedStats count={count}/></Link>
       </MDBCol>
       <MDBCol sm='6' className="cancelledtrips">
-      <CancelledStats/>
+      <Link to={"/taxi/trips/cancelledtrips"}><CancelledStats count={count}/></Link>
       </MDBCol>
       <MDBCol sm='6' className="newUsers">
-       < UsersStats/>
+      <Link to={"/taxi/trips/pendingtrips"}>< UsersStats count={count} /></Link>
       </MDBCol>
       <MDBCol sm='6' className="totalEarnings">
        < EarningStats/>

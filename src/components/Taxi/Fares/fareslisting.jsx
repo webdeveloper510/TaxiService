@@ -45,7 +45,7 @@ const ListOfFares = () => {
     vehicle_type: "",
     vehicle_fare_per_km: "",
     minimum_fare: "",
-    minimum_distance: "",
+    price_per_min: "",
     waiting_fare: "",
   };
   const [visible, setVisible] = useState(false);
@@ -182,7 +182,7 @@ const ListOfFares = () => {
     vehicle_type: Yup.string().required("Vehicle Type  is required"),
     vehicle_fare_per_km: Yup.string().required("Vehicle Fare  is required"),
     minimum_fare: Yup.string().required("Minimum Fare  is required"),
-    minimum_distance: Yup.string().required("Minimum Distance  is required"),
+    price_per_min: Yup.string().required("Vehicle Fare  is required"),
     waiting_fare: Yup.string().required("Waiting Fare is required"),
   });
 
@@ -278,13 +278,13 @@ const ListOfFares = () => {
                               Vehicle Type
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Fare Per Miles
+                              Fare Per Km
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                               Minimum Fare (€)
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Minimum Distance Per Miles
+                            Fare Per Minute
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                               Waiting Fare (€)
@@ -306,19 +306,19 @@ const ListOfFares = () => {
                                   <div>{index + 1}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.vehicle_type}</div>
+                                  <div>{item?.vehicle_type}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.vehicle_fare_per_km}</div>
+                                  <div>{item?.vehicle_fare_per_km}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.minimum_fare}</div>
+                                  <div>{item?.minimum_fare}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.minimum_distance}</div>
+                                  <div>{item?.price_per_min}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.waiting_fare}</div>
+                                  <div>{item?.waiting_fare}</div>
                                 </CTableDataCell>
                                 <CTableDataCell className="d-flex action-icons driver-icons">
                                   <div>
@@ -451,7 +451,7 @@ const ListOfFares = () => {
                                 </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputvehicle_fare_per_km">
-                                    Vehicle Fare Per Miles
+                                    Vehicle Fare Per Km
                                   </CFormLabel>
                                   <CFormInput
                                     onKeyDown={(e) => {
@@ -521,7 +521,7 @@ const ListOfFares = () => {
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputmindistance">
-                                    Minimum Distance
+                                  Vehicle Fare Per Minute
                                   </CFormLabel>
                                   <CFormInput
                                     onKeyDown={(e) => {
@@ -529,29 +529,29 @@ const ListOfFares = () => {
                                     }}
                                     id="inputmindistance"
                                     {...formik.getFieldProps(
-                                      "minimum_distance"
+                                      "price_per_min"
                                     )}
                                     maxLength="50"
                                     className={clsx(
                                       "form-control bg-transparent",
                                       {
                                         "is-invalid":
-                                          formik.touched.minimum_distance &&
-                                          formik.errors.minimum_distance,
+                                          formik.touched.price_per_min &&
+                                          formik.errors.price_per_min,
                                       },
                                       {
                                         "is-valid":
-                                          formik.touched.minimum_distance &&
-                                          !formik.errors.minimum_distance,
+                                          formik.touched.price_per_min &&
+                                          !formik.errors.price_per_min,
                                       }
                                     )}
-                                    name="minimum_distance"
+                                    name="price_per_min"
                                     autoComplete="off"
                                   />
-                                  {formik.errors.minimum_distance &&
-                                    formik.touched.minimum_distance ? (
+                                  {formik.errors.price_per_min &&
+                                    formik.touched.price_per_min ? (
                                     <div className="text-danger">
-                                      {formik.errors.minimum_distance}
+                                      {formik.errors.price_per_min}
                                     </div>
                                   ) : null}
                                 </CCol>

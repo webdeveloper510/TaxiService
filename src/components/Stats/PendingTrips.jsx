@@ -10,19 +10,9 @@ import {
 import canceltrip from "../../assets/images/cancelled-trip.png"
 import { getTripCompleted } from "../../utils/api";
 
-const PendingTrips=()=> {
+const PendingTrips=({data})=> {
 
-  const [ data , setData] = useState([])
-  useEffect(()=>{
-    getTripCompleted().then((res)=>{
-      console.log("response get book trip", res)
-      if(res?.code == 200){
-        setData(res.result)
-      }
-    }).catch((error)=>{
-      console.log(error)
-    })
-  },[])
+  
    
       return (
        <>
@@ -35,7 +25,7 @@ const PendingTrips=()=> {
             <MDBCardText>
               <div>
                 <h5>Pending Trips</h5>
-            <span>{data.cancelTrips}</span>
+            <span>{data?.pendingTrip}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

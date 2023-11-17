@@ -51,6 +51,20 @@ export const getVehicle = async () => {
     });
 };
 
+export const getVehicleByType = async (type) => {
+  return await Axios.get(`admin/get_vehicles_with_type/${type}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+
+      return res.data;
+    })
+    .catch((error) => {
+      console.log("GET_VEHICLE", error);
+    });
+};
 export const editVehicle = async (data,id) => {
   return await Axios.put(`admin/edit_vehicle/${id}`, data, {
     headers: {

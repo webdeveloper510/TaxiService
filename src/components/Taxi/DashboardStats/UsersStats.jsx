@@ -10,17 +10,7 @@ import {
 import newuserimg from "../../../assets/images/newuser.png"
 import { getCountDashboard } from "../../../utils/api";
 
-const UsersStats=()=> {
-   
-  const [count , setCount] = useState([])
-  useEffect(()=>{
-    getCountDashboard().then((res)=>{
-      console.log("dashborad count response=============", res)
-      if(res?.result) setCount(res?.result)
-    }).catch((error)=>{
-      console.log(error)
-    })
-  },[])
+const UsersStats=({count})=> {
 
       return (
        <>
@@ -33,8 +23,8 @@ const UsersStats=()=> {
           <MDBCol sm='8'>
             <MDBCardText>
               <div>
-                <h5>Companies</h5>
-            <span>{count.companies}</span>
+                <h5>Pending Trips</h5>
+            <span>{count?.pendingTrip}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>

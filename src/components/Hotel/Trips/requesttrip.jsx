@@ -32,7 +32,8 @@ import userContext from "../../../utils/context";
 
 
 const RequestNewTrip = () => {
-  const {user,setUser} = useContext(userContext);
+
+  const {user,setUser, app} = useContext(userContext);
   function customSetHours(date, hour) {
     if (date instanceof Date) {
       const newDate = new Date(date);
@@ -83,7 +84,11 @@ const RequestNewTrip = () => {
   const [vehicle, setVehicle] = useState();
   const [inputData, setInputData] = useState({
     vehicle: "",
-    trip_from: { address: "", lat: null, log: null },
+    trip_from: { 
+      address: user?.company_detail?.hotel_location?.address, 
+      lat: user?.company_detail?.hotel_location?.lat, 
+      log: user?.company_detail?.hotel_location?.log, 
+    },
     trip_to: { address: "", lat: null, log: null },
     pick_up_date: new Date(),
     passenger_detail: [],
@@ -328,7 +333,7 @@ const RequestNewTrip = () => {
       });
     }
   };
-  const [tripFrom, setTripFrom] = useState("");
+  const [tripFrom, setTripFrom] = useState(user?.company_detail?.hotel_location?.address);
   const [tripFromCoordinates, setTripFromCoordinates] = useState(null);
   const [tripTo, setTrimTo] = useState("");
   const [tripToCoordinates, setTripToCoordinates] = useState(null);

@@ -43,6 +43,7 @@ import {
   getDriver,
   getTrip,
   getVehicle,
+  getVehicleByType,
   tripsUpdate,
 } from "../../../utils/api";
 import { toast } from "react-toastify";
@@ -68,6 +69,7 @@ const SuperPendingTrip = () => {
   const [driver, setDriver] = useState([]);
   const [vehicle, setVehicle] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
+  const [selectedVehicleType, setSelectedVehicleType] = useState(null);
   const [delvisible, setDelvisible] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageLimit, setPageLimit] = React.useState(3);
@@ -138,13 +140,6 @@ const SuperPendingTrip = () => {
               console.log(res.result, "pending trip driver");
               if (res?.code === 200) {
                 setDriver(res.result);
-                getVehicle().then((res) => {
-                  console.log(res.result, "pending trip vehicle");
-                  if (res?.code === 200) {
-                    setVehicle(res.result);
-                    setLoader(false);
-                  }
-                });
               }
             })
             .catch((err) => {
@@ -162,7 +157,15 @@ const SuperPendingTrip = () => {
   useEffect(() => {
     onLoadComponent();
   }, [search]);
-
+  useEffect(() => {
+    getVehicleByType(selectedVehicleType).then((res) => {
+      console.log(res?.result, "pending trip vehicle type");
+      if (res?.code === 200) {
+        setVehicle(res?.result);
+      }
+    });
+  }, [selectedVehicleType]);
+  
   const [selectDriver, setSelectDriver] = useState();
   const [selectVehicle, setSelectVehicle] = useState();
   const [errors, setErrors] = useState({
@@ -386,7 +389,8 @@ const SuperPendingTrip = () => {
                                     className="allocate_accept_driver"
                                     onClick={() => {
                                       setVisible(!visible);
-                                      setSelectedId(item._id);
+                                      setSelectedId(item?._id);
+                                      setSelectedVehicleType(item?.vehicle_type)
                                     }}
                                   >
                                     <img src={accepticonimg} alt="images" />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
  
     MDBRow,
@@ -9,9 +9,21 @@ import NewUsers from '../../Stats/NewUsers'
 import TotalEarnings from "../../Stats/TotalEarnings";
 import ActiveTrips from "../../Stats/ActiveTrips";
 import PendingTrips from "../../Stats/PendingTrips";
+import { Link } from "react-router-dom";
+import { getCountDashboard, getTripCompleted } from "../../../utils/api";
 
 const SuperStats=()=> {
-   
+  const [ data , setData] = useState([])
+  useEffect(()=>{
+    getCountDashboard().then((res)=>{
+      console.log("response get book trip", res)
+      if(res?.code == 200){
+        setData(res.result)
+      }
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
       return (
        <>
        <br/>
@@ -28,13 +40,13 @@ const SuperStats=()=> {
         <div className="booked-trips-outer">
         <MDBRow>
         <MDBCol sm='6' className="booked-trips">
-       <ActiveTrips/>
+        <Link to={"/super-admin/trips/recent-trips"}><ActiveTrips data={data}/></Link>
       </MDBCol>
       <MDBCol sm='6' className="cancelledtrips">
-       <PendingTrips/>
+      <Link to={"/super-admin/trips/recent-trips"}><PendingTrips data={data}/></Link>
       </MDBCol>
       <MDBCol sm='6' className="newUsers">
-       < NewUsers/>
+      <Link to={"/super-admin/trips/recent-trips"}>< NewUsers data={data} /></Link>
       </MDBCol>
       <MDBCol sm='6' className="totalEarnings">
        < TotalEarnings/>

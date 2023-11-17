@@ -10,20 +10,8 @@ import {
 import newuserimg from "../../assets/images/newuser.png"
 import { getTripCompleted } from "../../utils/api";
 
-const NewUsers=()=> {
+const NewUsers=({data})=> {
    
-  const [ data , setData] = useState([])
-  useEffect(()=>{
-    getTripCompleted().then((res)=>{
-      console.log("response get book trip", res)
-      if(res?.code == 200){
-        setData(res.result)
-      }
-    }).catch((error)=>{
-      console.log(error)
-    })
-  },[])
-
       return (
        <>
        <br/>
@@ -36,7 +24,7 @@ const NewUsers=()=> {
             <MDBCardText>
               <div>
                 <h5>Completed Trips</h5>
-            <span>{data.completeTrips}</span>
+            <span>{data?.completedTrip}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>
