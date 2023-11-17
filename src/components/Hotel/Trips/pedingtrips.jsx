@@ -256,8 +256,8 @@ const PendingTrip = () => {
 
                                   <CTableDataCell>
                                     <div>
-                                      {item.trip_from.address.slice(0, 20) +
-                                        `${item.trip_from.address.length < 21
+                                      {item?.trip_from?.address?.slice(0, 20) +
+                                        `${item?.trip_from?.address?.length < 21
                                           ? ""
                                           : "..."
                                         }`}
@@ -265,8 +265,8 @@ const PendingTrip = () => {
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>
-                                      {item.trip_to.address.slice(0, 20) +
-                                        `${item.trip_to.address.length < 21
+                                      {item?.trip_to?.address?.slice(0, 20) +
+                                        `${item?.trip_to?.address?.length < 21
                                           ? ""
                                           : "..."
                                         }`}
@@ -279,7 +279,7 @@ const PendingTrip = () => {
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>
-                                      {moment(item.pickup_date_time).format(
+                                      {moment(item?.pickup_date_time).format(
                                         "MMM Do YYYY, h:mm a"
                                       )}
                                     </div>
