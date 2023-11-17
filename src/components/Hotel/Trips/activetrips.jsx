@@ -187,16 +187,16 @@ const ActiveTrip = () => {
                                       <div>{firstIndex + index + 1}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_id}</div>
+                                      <div>{item?.trip_id}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.driver_name}</div>
+                                      <div>{item?.driver_name}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
+                                      <div>{item?.trip_from?.address?.slice(0,20) + `${item?.trip_from?.address?.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
-                                      <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                      <div>{item?.trip_to?.address?.slice(0,20) + `${item?.trip_to?.address?.length<21?"":"..."}`}</div>
                                     </CTableDataCell>
                                     <CTableDataCell>
                                     <div>
@@ -205,7 +205,7 @@ const ActiveTrip = () => {
                                   </CTableDataCell>
                                     <CTableDataCell>
                                       <div>
-                                        {moment(item.pickup_date_time).format(
+                                        {moment(item?.pickup_date_time).format(
                                           "MMMM Do YYYY, h:mm a"
                                         )}
                                       </div>

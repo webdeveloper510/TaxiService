@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import SideBar2 from "../SideBar2"
+import * as geolib from "geolib";
+
 // import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -22,7 +24,7 @@ import {
 } from '@coreui/react'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { getDriver, getVehicle, getVehicleType } from "../../../utils/api";
+import { getDriver, getFare, getVehicle, getVehicleType } from "../../../utils/api";
 import { addTrip } from "../../../utils/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
@@ -32,7 +34,7 @@ import userContext from "../../../utils/context";
 
 
 const RequestNewTrip = () => {
-
+  const [refreshPrice , setRefreshPrice] = useState(false);
   const {user,setUser, app} = useContext(userContext);
   function customSetHours(date, hour) {
     if (date instanceof Date) {
@@ -54,9 +56,12 @@ const RequestNewTrip = () => {
       throw new Error('Invalid Date object');
     }
   }
+  const [fares, setFares] = useState(null);
+  const [selectedFare, setSelectedFare] = useState(null);
   const navigate = useNavigate();
-
+  const [price, setPrice] = useState(0)
   const [pickupDate, setpickupDate] = useState(new Date());
+ 
   useEffect(() => {
     const today = new Date();
     if (pickupDate.toDateString() == today.toDateString()) {
@@ -96,6 +101,28 @@ const RequestNewTrip = () => {
     pay_option: "Cash",
 
   });
+  const priceCalculator = ()=>{
+    
+    let distance = null;
+    if(inputData?.trip_from?.log && inputData?.trip_to?.log){
+      distance = (geolib.getDistance(
+        {
+          latitude: inputData?.trip_from?.lat,
+          longitude: inputData?.trip_from?.log
+        },
+        {
+          latitude: inputData?.trip_to?.lat,
+          longitude: inputData?.trip_to?.log,
+        }
+      )/1000
+    ).toFixed(2);
+    }
+    console.log("distance is from priceCalculator",distance);
+    if(distance && selectedFare){
+      setPrice(distance*selectedFare?.vehicle_fare_per_km)
+    }
+  }
+  useEffect(priceCalculator,refreshPrice)
   const [passengerError, setPassengerError] = useState([{
     name: false,
     phone: false,
@@ -230,6 +257,13 @@ const RequestNewTrip = () => {
         setVehicle(res.result);
       }
     });
+    getFare().then((res) => {
+      console.log(res?.result, "fares");
+      if (res?.code === 200) {
+        setFares(res?.result);
+      }
+    });
+    
   }, []);
 
   // useEffect(() => {
@@ -349,6 +383,8 @@ const RequestNewTrip = () => {
       setInputData(newInputData);
       setTripFrom(selectedAddress);
       setTripFromCoordinates(latLng);
+      priceCalculator()
+
     } catch (error) {
       console.error("Error:", error);
     }
@@ -365,6 +401,7 @@ const RequestNewTrip = () => {
       setInputData(newInputData);
       setTrimTo(selectedAddress);
       setTripToCoordinates(latLng);
+      priceCalculator()
     } catch (error) {
       console.error("Error:", error);
     }
@@ -383,6 +420,14 @@ const RequestNewTrip = () => {
 
     // Remove the textarea from the document
     document.body.removeChild(textarea);
+  }
+  const setFareOnVehicleType =(vehicle_type)=>{
+    fares.forEach((fare)=>{
+      if(fare.vehicle_type == vehicle_type){
+        setSelectedFare(fare);
+        console.log("selectecd fare is" , fare)
+      }
+    })
   }
   return (
     <>
@@ -435,7 +480,9 @@ const RequestNewTrip = () => {
                               <CFormSelect
                                 name="vehicle"
                                 onChange={(data) => {
+
                                   console.log(data.target.value);
+                                  setFareOnVehicleType(data.target.value);
                                   setInputData({
                                     ...inputData,
                                     vehicle: data.target.value,
@@ -448,6 +495,7 @@ const RequestNewTrip = () => {
                                   } else {
                                     setErrors({ ...errors, vehicle: null });
                                   }
+                                  priceCalculator()
                                 }}
                               >
                                 <option default>Select Vehicle</option>
@@ -502,6 +550,7 @@ const RequestNewTrip = () => {
                                       pick_up_date: null,
                                     });
                                   }
+                                  
                                 }}
                               />
                               {errors.pick_up_date && (
@@ -708,7 +757,13 @@ const RequestNewTrip = () => {
                               />
                                 
                             </CCol>
-
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Price: {price} (€)
+                              </CFormLabel>
+                        
+                                
+                            </CCol>
 
                           </CForm>
                         </CCardBody>

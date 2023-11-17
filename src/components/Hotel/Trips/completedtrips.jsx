@@ -196,16 +196,16 @@ const CompletedTrip = () => {
                                     <div>{firstIndex + index + 1}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.trip_id}</div>
+                                    <div>{item?.trip_id}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.driver_name}</div>
+                                    <div>{item?.driver_name}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
+                                    <div>{item?.trip_from?.address?.slice(0,20) + `${item?.trip_from?.address?.length<21?"":"..."}`}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                    <div>{item?.trip_to?.address?.slice(0,20) + `${item?.trip_to?.address?.length<21?"":"..."}`}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>
@@ -214,7 +214,7 @@ const CompletedTrip = () => {
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>
-                                      {moment(item.pickup_date_time).format(
+                                      {moment(item?.pickup_date_time)?.format(
                                         "MMMM Do YYYY, h:mm a"
                                       )}
                                     </div>
@@ -222,7 +222,7 @@ const CompletedTrip = () => {
 
                                   <CTableDataCell>
                                     <div>
-                                      {moment(item.pickup_date_time).format(
+                                      {moment(item?.pickup_date_time)?.format(
                                         "MMMM Do YYYY, h:mm a"
                                       )}
                                     </div>
@@ -231,12 +231,12 @@ const CompletedTrip = () => {
                                     <div>{`${(
                                       geolib.getDistance(
                                         {
-                                          latitude: item.trip_from.log,
-                                          longitude: item.trip_from.lat,
+                                          latitude: item?.trip_from?.log,
+                                          longitude: item?.trip_from?.lat,
                                         },
                                         {
-                                          latitude: item.trip_to.log,
-                                          longitude: item.trip_to.lat,
+                                          latitude: item?.trip_to?.log,
+                                          longitude: item?.trip_to?.lat,
                                         }
                                       ) * 0.00062137
                                     ).toFixed(2)} Miles`}</div>

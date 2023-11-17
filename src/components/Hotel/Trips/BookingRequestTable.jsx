@@ -78,7 +78,7 @@ const BookingRequestTable = () => {
   };
 
   let pageIncreament = null;
-  if (data.length > maxPage) {
+  if (data?.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
   const [search,setSearch] = useState("")
@@ -88,7 +88,7 @@ const BookingRequestTable = () => {
     getTripSubAdmin("Booked",search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
-        setBookingTrip(res.result);
+        setBookingTrip(res?.result);
       }
       setLoader(false);
     });
@@ -192,16 +192,16 @@ const BookingRequestTable = () => {
                                     <div>{firstIndex + index + 1}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.trip_id}</div>
+                                    <div>{item?.trip_id}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.passenger_detail.length}</div>
+                                    <div>{item?.passenger_detail?.length}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
+                                    <div>{item?.trip_from?.address?.slice(0,20) + `${item?.trip_from?.address?.length<21?"":"..."}`}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                    <div>{item?.trip_to?.address?.slice(0,20) + `${item?.trip_to?.address?.length<21?"":"..."}`}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>
@@ -209,12 +209,12 @@ const BookingRequestTable = () => {
                                     </div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.driver_name}</div>
+                                    <div>{item?.driver_name}</div>
                                   </CTableDataCell>
 
                                   <CTableDataCell>
                                     <div>
-                                      {moment(item.pickup_date_time).format(
+                                      {moment(item?.pickup_date_time).format(
                                         "MMMM Do YYYY, h:mm a"
                                       )}
                                     </div>
