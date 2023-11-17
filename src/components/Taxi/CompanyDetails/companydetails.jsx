@@ -522,6 +522,25 @@ useEffect(() =>{getCompanyDetail()},[search])
         });
     }
   }
+  const copy = (hotelId)=>{
+    const textToCopy = `https://taxi-service-demo.vercel.app/booking-staff-form/${hotelId}`
+    const textarea = document.createElement('textarea');
+    textarea.value = textToCopy;
+    document.body.appendChild(textarea);
+
+    // Select the text inside the textarea
+    textarea.select();
+
+    // Execute the copy command
+    document.execCommand('copy');
+
+    // Remove the textarea from the document
+    document.body.removeChild(textarea);
+    toast.success(`Booking link copy to clipboard`, {
+      position: "top-right",
+      autoClose: 1000,
+    });
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -662,12 +681,12 @@ useEffect(() =>{getCompanyDetail()},[search])
 
                             <CTableDataCell>
                               <div><span><CButton  id="confirmation_btn" onClick={() => {
-                                setSelectedCustomerId(item._id)
-                                  setconfirmationVisible(!confirmationVisible);
-                                  
+                                // setSelectedCustomerId(item._id)
+                                //   setconfirmationVisible(!confirmationVisible);
+                                  copy(item?._id)
                                 }}><span style={{
                                   color: "white"
-                                }}>New Trip</span></CButton></span></div>
+                                }}>Copy Link</span></CButton></span></div>
                             </CTableDataCell>
                           </CTableRow>
                         ))}

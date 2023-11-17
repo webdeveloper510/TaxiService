@@ -407,7 +407,7 @@ const RequestNewTrip = () => {
     }
   };
   const copy = ()=>{
-    const textToCopy = `https://taxi-service-demo.vercel.app/${user._id}`
+    const textToCopy = `https://taxi-service-demo.vercel.app/booking-staff-form/${user._id}`
     const textarea = document.createElement('textarea');
     textarea.value = textToCopy;
     document.body.appendChild(textarea);
@@ -420,6 +420,10 @@ const RequestNewTrip = () => {
 
     // Remove the textarea from the document
     document.body.removeChild(textarea);
+    toast.success(`Booking link copy to clipboard`, {
+      position: "top-right",
+      autoClose: 1000,
+    });
   }
   const setFareOnVehicleType =(vehicle_type)=>{
     fares.forEach((fare)=>{
