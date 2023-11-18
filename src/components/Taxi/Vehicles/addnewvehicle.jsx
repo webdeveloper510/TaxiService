@@ -50,19 +50,19 @@ const AddSuperVehicle = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    vehicleNo: Yup.string().required("Vehicle No is required"),
-    vehicleType: Yup.string().required("Vehicle Type is required"),
-    vehicleModal: Yup.string().required("Vehicle Model is required"),
-    vehicleMake: Yup.string().required("Vehicle Make is required"),
-    seatingCapacity: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Seating Capacity is required"),
+    vehicleNo: Yup.string().trim().required("Vehicle No is required"),
+    vehicleType: Yup.string().trim().required("Vehicle Type is required"),
+    vehicleModal: Yup.string().trim().required("Vehicle Model is required"),
+    vehicleMake: Yup.string().trim().required("Vehicle Make is required"),
+    seatingCapacity: Yup.string().trim().matches(/^[0-9]+$/, "Must be only digits").required("Seating Capacity is required"),
     // pricePerKm: Yup.string().required("Price per km is required"),
     // minimumFare: Yup.string().required("Minimum Fare is required"),
     // commission: Yup.string().required("Commission is required"),
-    passengerTimeLimit: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Passenger Time Limit is required"),
+    passengerTimeLimit: Yup.string().trim().matches(/^[0-9]+$/, "Must be only digits").required("Passenger Time Limit is required"),
     passengerCharges: Yup.number().required("Passenger Cancellation Charges is required").max(10000000,"Passenger Charges must be less than 10000000"),
     vehicleinsuranceDate: Yup.date().required("Insurance Renewal Date is required"),
     file: Yup.mixed().required("Vehicle Image is required"),
-    AC: Yup.string().required("AC type is required"),
+    AC: Yup.string().trim().required("AC type is required"),
   });
   const handleMobile = (event, max) => {
     const pattern = /^[0-9]+$/;

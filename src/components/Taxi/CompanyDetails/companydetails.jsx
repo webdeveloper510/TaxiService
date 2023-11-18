@@ -212,17 +212,17 @@ const CompanyDetails = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    company_name: Yup.string()
+    company_name: Yup.string().trim()
       // .min(2,"Customer Name is must be greater than 2")
       .max(50,"Customer Name is must be less than 50")
       .required("Customer Name is required"),
-      company_id: Yup.string().max(20).required("Hotel ID is required"),
-    post_code: Yup.string().max(10).required("Postcode is required"),
+      company_id: Yup.string().trim().max(20).required("Hotel ID is required"),
+    post_code: Yup.string().trim().max(10).required("Postcode is required"),
     // description: Yup.string()
     //   .min(4)
     //   .max(100)
     //   .required("Describe your hotel is required"),
-    phone: Yup.string()
+    phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
     // website: Yup.string()
@@ -235,7 +235,7 @@ const CompanyDetails = () => {
     //   .max(18, "max length must be 6")
     //   .matches(/^[0-9]+$/, "Must be only digits")
     //   .required("Tel Contact Number is required"),
-    email: Yup.string().email().required("Email Address is required"),
+    email: Yup.string().trim().email().required("Email Address is required"),
     // commision: Yup.number()
     //   .typeError('Must be a number')
     //   .required('Number is required')

@@ -43,6 +43,7 @@ import {
 import AppLoader from "../../AppLoader";
 import SuperAdminSideBar from "../Sidebar/SideBar";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import EmptyData from "../../EmptyData";
 // import toggel from "react-toggle/style.css"
 const tableExample = [
   {
@@ -244,31 +245,31 @@ const AllCompanyDetails = () => {
   })
 
   const validationSchema = Yup.object().shape({
-    company_name: Yup.string()
+    company_name: Yup.string().trim()
       .min(2)
       .max(20)
       .required("Company Name is required"),
-    land: Yup.string().min(4).max(20).required("Land is required"),
-    post_code: Yup.string().max(10).required("Postcode is required"),
-    house_number: Yup.string().max(20).required("Building number is required"),
-    description: Yup.string()
+    land: Yup.string().trim().min(4).max(20).required("Land is required"),
+    post_code: Yup.string().trim().max(10).required("Postcode is required"),
+    house_number: Yup.string().trim().max(20).required("Building number is required"),
+    description: Yup.string().trim()
       .min(4)
       .max(100)
       .required("Describe your taxi number is required"),
-    affiliated_with: Yup.string(),
-    phone: Yup.string()
+    affiliated_with: Yup.string().trim(),
+    phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
-    website: Yup.string()
+    website: Yup.string().trim()
       .url("Invalid URL format. Please enter a valid URL."),
-      tx_quality_mark: Yup.string(),
-    first_name: Yup.string().required("First Name is required"),
-    last_name: Yup.string().required("Last Name is required"),
-    p_number: Yup.string()
+      tx_quality_mark: Yup.string().trim(),
+    first_name: Yup.string().trim().required("First Name is required"),
+    last_name: Yup.string().trim().required("Last Name is required"),
+    p_number: Yup.string().trim()
       .min(6, "minimum length must be 6")
       .max(18, "max length must be 6")
       .matches(/^[0-9]+$/, "Must be only digits"),
-    email: Yup.string().email().required("Email Address is required"),
+    email: Yup.string().trim().email().required("Email Address is required"),
     commision: Yup.number()
       .typeError('Must be a number')
       .required('Number is required')
@@ -445,7 +446,8 @@ const AllCompanyDetails = () => {
                   {loading ? (
                     <AppLoader />
                   ) : (
-                    <CTable align="middle" className="mb-0" hover responsive>
+                    <>
+                  {data.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
                       <CTableHead>
                         <CTableRow>
                           {/* <CTableHeaderCell className="text-center">
@@ -542,7 +544,8 @@ const AllCompanyDetails = () => {
                           </CTableRow>
                         ))}
                       </CTableBody>
-                    </CTable>
+                    </CTable>: <EmptyData/>}
+                    </>
                   )}
 
                   {data?.length > 0 ? (

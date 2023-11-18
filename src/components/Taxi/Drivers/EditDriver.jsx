@@ -96,16 +96,16 @@ function EditDriver() {
   
   
     const validationSchema = Yup.object().shape({
-      FirstName: Yup.string().required("First Name No is required"),
-      LastName: Yup.string().required("Last Name  is required"),
-      Address1: Yup.string().required("Address1  is required"),
-      Address2: Yup.string().required("Address2  is required"),
-      Country: Yup.string().required("Country is required"),
-      City: Yup.string().required("City  is required"),
-      Zip: Yup.string().required("Zip is required"),
-      Email: Yup.string().required("Email  is required"),
-      MobileNo: Yup.string().required("MobileNo is required"),
-      Gender: Yup.string().required("Gender is required"),
+      FirstName: Yup.string().trim().required("First Name No is required"),
+      LastName: Yup.string().trim().required("Last Name  is required"),
+      Address1: Yup.string().trim().required("Address1  is required"),
+      Address2: Yup.string().trim().required("Address2  is required"),
+      Country: Yup.string().trim().required("Country is required"),
+      City: Yup.string().trim().required("City  is required"),
+      Zip: Yup.string().trim().required("Zip is required"),
+      Email: Yup.string().trim().required("Email  is required"),
+      MobileNo: Yup.string().trim().required("MobileNo is required"),
+      Gender: Yup.string().trim().required("Gender is required"),
     });
   
     const uploadFile = (e) => {
@@ -477,7 +477,7 @@ function EditDriver() {
                                   ) :
                                   ""}
   
-                                <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+                                <CFormInput accept="image/*" type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
   
                                  
                                   

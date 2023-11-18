@@ -179,11 +179,11 @@ const ListOfFares = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    vehicle_type: Yup.string().required("Vehicle Type  is required"),
-    vehicle_fare_per_km: Yup.string().required("Vehicle Fare  is required"),
-    minimum_fare: Yup.string().required("Minimum Fare  is required"),
-    price_per_min: Yup.string().required("Vehicle Fare  is required"),
-    waiting_fare: Yup.string().required("Waiting Fare is required"),
+    vehicle_type: Yup.string().trim().required("Vehicle Type  is required"),
+    vehicle_fare_per_km: Yup.string().trim().required("Vehicle Fare  is required"),
+    minimum_fare: Yup.string().trim().required("Minimum Fare  is required"),
+    price_per_min: Yup.string().trim().required("Vehicle Fare  is required"),
+    waiting_fare: Yup.string().trim().required("Waiting Fare is required"),
   });
 
   const [vehicleType, setVehicleType] = useState();

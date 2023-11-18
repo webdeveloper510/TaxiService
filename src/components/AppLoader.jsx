@@ -9,7 +9,7 @@ function AppLoader() {
                       color="#FFD04E"
                       loading={true}
                       margin={4}
-                      size={60}
+                      size={30}
                       speedMultiplier={0.5}
                     />
                   </div>
