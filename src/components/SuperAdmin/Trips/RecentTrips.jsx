@@ -237,7 +237,7 @@ const SuperRecentTrips=()=> {
                   <div>{firstIndex+ index+1}</div>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <div>{item.trip_id}</div>
+                  <div>{item.series_id}</div>
                 </CTableDataCell>
                 <CTableDataCell>
                   <div>{item.company_name}</div>
@@ -254,7 +254,7 @@ const SuperRecentTrips=()=> {
                                     </div>
                                   </CTableDataCell>
                 <CTableDataCell>
-                  <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
+                  <div>{moment(item.pickup_date_time).format("MMM Do YYYY")}</div>
                 </CTableDataCell> 
                 <CTableDataCell>
                   <div>{moment(item.pickup_date_time).format("h:mm a")}</div>

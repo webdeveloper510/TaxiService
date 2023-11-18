@@ -224,7 +224,7 @@ const SuperCancelledTrip = () => {
                                     </div>
                                   </CTableDataCell>
                               <CTableDataCell>
-                                <div>{moment(item.pickup_date_time).format("MMM Do YY , h:mm a")}</div>
+                                <div>{moment(item.pickup_date_time).format("MMM Do YYYY , h:mm a")}</div>
 
                               </CTableDataCell>
 

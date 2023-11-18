@@ -137,7 +137,7 @@ const RecentTrips=({from})=> {
                         <div>{item.trip_to?.address}</div>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <div>{moment(item.pickup_date_time).format("MMM Do YY")}</div>
+                        <div>{moment(item.pickup_date_time).format("MMM Do YYYY")}</div>
                       </CTableDataCell> 
                       <CTableDataCell>
                         <div>{moment(item.pickup_date_time).format("h:mm a")}</div>

@@ -143,9 +143,9 @@ const FareManagement = () => {
                     </CTableHeaderCell> */}
                         <CTableHeaderCell className="text-center">Sr No.</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Fare Per Miles</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Fare Per Km</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Minimum Fare (€)</CTableHeaderCell>
-                        <CTableHeaderCell className="text-center">Minimum Distance Per Miles</CTableHeaderCell>
+                        <CTableHeaderCell className="text-center">Fare Per Minute</CTableHeaderCell>
                         <CTableHeaderCell className="text-center">Waiting Fare (€)</CTableHeaderCell>
                         {/* <CTableHeaderCell className="text-center">Action</CTableHeaderCell> */}
                       </CTableRow>
@@ -159,19 +159,19 @@ const FareManagement = () => {
                             <div>{index+ 1}</div>
                           </CTableDataCell>
                           <CTableDataCell>
-                            <div>{item.vehicle_type}</div>
+                            <div>{item?.vehicle_type}</div>
                           </CTableDataCell>
                           <CTableDataCell>
-                            <div>{item.vehicle_fare_per_km}</div>
+                            <div>{item?.vehicle_fare_per_km}</div>
                           </CTableDataCell>
                           <CTableDataCell>
-                            <div>{item.minimum_fare}</div>
+                            <div>{item?.minimum_fare}</div>
                           </CTableDataCell>
                           <CTableDataCell>
-                            <div>{item.minimum_distance}</div>
+                            <div>{item?.price_per_min}</div>
                           </CTableDataCell>
                           <CTableDataCell>
-                            <div>{item.waiting_fare}</div>
+                            <div>{item?.waiting_fare}</div>
                           </CTableDataCell>
                           {/* <CTableDataCell className="d-flex action-icons driver-icons">
                             <div> <CButton onClick={() => setVisible(!visible)} ><img src={editiconimg} /></CButton></div>
@@ -254,7 +254,7 @@ const FareManagement = () => {
                                   <CFormInput id="inputvehicleminfare" />
                                 </CCol>
                                 <CCol xs={6}>
-                                  <CFormLabel htmlFor="inputmindistance">Minimum Distance</CFormLabel>
+                                  <CFormLabel htmlFor="inputmindistance">Fare Per Minute</CFormLabel>
                                   <CFormInput id="inputmindistance" />
                                 </CCol>
                                 <CCol xs={6}>

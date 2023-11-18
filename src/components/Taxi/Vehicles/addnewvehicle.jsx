@@ -59,10 +59,10 @@ const AddSuperVehicle = () => {
     // minimumFare: Yup.string().required("Minimum Fare is required"),
     // commission: Yup.string().required("Commission is required"),
     passengerTimeLimit: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Passenger Time Limit is required"),
-    passengerCharges: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Passenger Cancellation Charges is required"),
+    passengerCharges: Yup.number().required("Passenger Cancellation Charges is required").max(10000000,"Passenger Charges must be less than 10000000"),
     vehicleinsuranceDate: Yup.date().required("Insurance Renewal Date is required"),
-    file: Yup.mixed().required("Vehicle Documents are required"),
-    AC: Yup.string().required("Gender is required"),
+    file: Yup.mixed().required("Vehicle Image is required"),
+    AC: Yup.string().required("AC type is required"),
   });
   const handleMobile = (event, max) => {
     const pattern = /^[0-9]+$/;
@@ -96,7 +96,7 @@ const AddSuperVehicle = () => {
 
   const [selectedAC, setSelectedAC] = useState('');
 
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
 
   const handleACtype = (event) => {
     setSelectedAC(event.target.value);
@@ -414,9 +414,7 @@ const AddSuperVehicle = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
                               <CFormInput id="inputpassengercharges"
-                                onKeyDown={(e) => {
-                                  handleMobile(e, 17);
-                                }}
+                                type="number"
                                 {...formik.getFieldProps("passengerCharges")}
                                 maxLength="50"
                                 className={clsx(
@@ -493,6 +491,9 @@ const AddSuperVehicle = () => {
                                   />
                                 </CCol>
                               </fieldset>
+                              {formik.errors.AC && formik.touched.AC ? (
+                                <div className="text-danger">{formik.errors.AC}</div>
+                              ) : null}
                             </CCol>
 
                             <CCol md={6} className="upload-file-input">
@@ -503,7 +504,7 @@ const AddSuperVehicle = () => {
                                   <img src={image} alt='img' height={300} width={100} />
                                 ) :
                                 ""}
-                              <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+                              <CFormInput accept="image/*" type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"
                                 className={clsx(
@@ -519,7 +520,7 @@ const AddSuperVehicle = () => {
                                 )}
                                 name="file"
                                 autoComplete="off" />
-                              {formik.errors.file && formik.touched.file ? (
+                              { !image && formik.errors.file && formik.touched.file ? (
                                 <div className="text-danger">{formik.errors.file}</div>
                               ) : null}
                               <label htmlFor="formFile" className="custom-file-upload">
