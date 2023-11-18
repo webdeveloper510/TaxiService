@@ -283,28 +283,6 @@ const EditVehicle = () => {
                                 <div className="text-danger">{formik.errors.vehicleType}</div>
                               ) : null}
                             </CCol>
-
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
-                              <CFormInput   {...formik.getFieldProps("vehicleModal")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.vehicleModal && formik.errors.vehicleModal,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.vehicleModal && !formik.errors.vehicleModal,
-                                  }
-                                )}
-                                name="vehicleModal"
-                                autoComplete="off" />
-                              {formik.errors.vehicleModal && formik.touched.vehicleModal ? (
-                                <div className="text-danger">{formik.errors.vehicleModal}</div>
-                              ) : null}
-                            </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputvehivlemodal">Vehicle Make</CFormLabel>
                               <CFormInput   {...formik.getFieldProps("vehicleMake")}
@@ -326,6 +304,28 @@ const EditVehicle = () => {
                                 <div className="text-danger">{formik.errors.vehicleMake}</div>
                               ) : null}
                             </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
+                              <CFormInput   {...formik.getFieldProps("vehicleModal")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.vehicleModal && formik.errors.vehicleModal,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.vehicleModal && !formik.errors.vehicleModal,
+                                  }
+                                )}
+                                name="vehicleModal"
+                                autoComplete="off" />
+                              {formik.errors.vehicleModal && formik.touched.vehicleModal ? (
+                                <div className="text-danger">{formik.errors.vehicleModal}</div>
+                              ) : null}
+                            </CCol>
+                            
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
