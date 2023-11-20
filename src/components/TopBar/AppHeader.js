@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
@@ -19,16 +19,17 @@ import menubar from '../../assets/images/menu-bar.png'
 import expandicon from '../../assets/images/hedercrossicon.png'
 // import { logo } from 'src/assets/brand/logo'
 import AppHeaderDropdown from './AppHeaderdropdown'
+import userContext from '../../utils/context';
 //import profilepic from '../../assets/images/avtar1.jpg'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
+  const {user, setUser} = useContext(userContext);
   const sidebarShow = useSelector((state) => state.sidebarShow)
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -57,7 +58,9 @@ const AppHeader = () => {
           </CNavItem> */}
         </CHeaderNav>
         
-        <span className='welcome_line'>taxi company!</span>
+        {user?.role == "HOTEL" && <span className='welcome_line'>Hotel!</span>}
+        {user?.role  == "COMPANY" && <span className='welcome_line'>Taxi Company!</span>}
+        {user?.role  == "SUPER_ADMIN" && <span className='welcome_line'>Admin!</span>}
         <CHeaderNav className='bell-icon'>
         
           
