@@ -57,10 +57,7 @@ const AppHeader = () => {
           </CNavItem> */}
         </CHeaderNav>
         
-        <span>Welcome to taxi company</span>
-        <span>Welcome to Customer</span>
-        <span>Welcome to Super Admin</span>
-          
+        <span className='welcome_line'>taxi company!</span>
         <CHeaderNav className='bell-icon'>
         
           

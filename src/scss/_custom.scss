@@ -1459,6 +1459,11 @@ div#recent-trip-outer .table-responsive td .view_details_btn {
         float: left;
     }
     }
+    span.welcome_line {
+        color: #ffcc54;
+        font-weight: 700;
+        text-transform: capitalize;
+    }
     /****css only for mozilla*******/
 @-moz-document url-prefix() { 
     .header.header-sticky {
