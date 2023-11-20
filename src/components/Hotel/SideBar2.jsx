@@ -7,6 +7,7 @@ import SimpleBar from 'simplebar-react';
 import { AppSidebarNav } from './AppSidebarNav'
 import 'simplebar-react/dist/simplebar.min.css';
 import applogo from '../../assets/images/taxi-logo.png'
+import { Link } from "react-router-dom";
 // sidebar nav config
 import navigation from '../../_nav';
 
@@ -35,7 +36,9 @@ const SideBar2 = () => {
         <CSidebarBrand className="d-none d-md-flex" to="/">
           {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
           <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
+              <Link to={`/dashboard`} >
           <img src={applogo} height={50} width={100}/>
+          </Link>
         </CSidebarBrand>
         <CSidebarNav>
           <SimpleBar>

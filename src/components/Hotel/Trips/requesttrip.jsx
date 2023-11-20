@@ -447,12 +447,14 @@ const RequestNewTrip = () => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">Request Trip</h1>
-                <CButton
+                <div className="bookiing_btn">
+                <CButton id="hotel_booking_link"
                         
                         onClick={copy}
                       >
                         Copy Hotel Booking Link
                 </CButton>
+                </div>
                 <div class="active-trip-outer">
                   <CRow>
                     <CCol xs={12}>
@@ -479,7 +481,7 @@ const RequestNewTrip = () => {
                             </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Vehicle Type
+                                Vehicle Type<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormSelect
                                 name="vehicle"
@@ -569,7 +571,7 @@ const RequestNewTrip = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
-                                Trip From
+                                Trip From<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               {/* <CFormInput id="inputtripfrom" name="trip_from" onChange={inputHandler} /> */}
                               {/* <Autocomplete
@@ -647,7 +649,7 @@ const RequestNewTrip = () => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripto">
-                                Trip To
+                                Trip To<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               {/* <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} /> */}
                               <PlacesAutocomplete
@@ -711,7 +713,7 @@ const RequestNewTrip = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Pay Type
+                                Pay Type<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormSelect
                                 name="pay"

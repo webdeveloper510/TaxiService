@@ -202,7 +202,7 @@ const AddSuperVehicle = () => {
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
 
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehiclenum">Vehicle No.</CFormLabel>
+                              <CFormLabel htmlFor="inputvehiclenum">Vehicle No.<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput aria-label="vehicle no."  {...formik.getFieldProps("vehicleNo")}
                                 maxLength="50"
                                 className={clsx(
@@ -224,7 +224,7 @@ const AddSuperVehicle = () => {
                             </CCol>
 
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormSelect  {...formik.getFieldProps("vehicleType")}
                                 maxLength="50"
                                 className={clsx(
@@ -256,7 +256,7 @@ const AddSuperVehicle = () => {
                             </CCol>
 
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Make</CFormLabel>
+                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Make <span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput   {...formik.getFieldProps("vehicleMake")}
                                 maxLength="50"
                                 className={clsx(
@@ -277,7 +277,7 @@ const AddSuperVehicle = () => {
                               ) : null}
                             </CCol>
 <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model</CFormLabel>
+                              <CFormLabel htmlFor="inputvehivlemodal">Vehicle Model<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput   {...formik.getFieldProps("vehicleModal")}
                                 maxLength="50"
                                 className={clsx(
@@ -299,7 +299,7 @@ const AddSuperVehicle = () => {
                             </CCol>
 
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
+                              <CFormLabel htmlFor="inputseating">Seating Capacity<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput onKeyDown={(e) => {
                                 handleMobile(e, 17);
                               }}  {...formik.getFieldProps("seatingCapacity")}
@@ -322,74 +322,10 @@ const AddSuperVehicle = () => {
                               ) : null}
                             </CCol>
 
-                            {/* <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpricekm">Price per k/m (in $) </CFormLabel>
-                              <CFormInput  {...formik.getFieldProps("pricePerKm")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.pricePerKm && formik.errors.pricePerKm,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.pricePerKm && !formik.errors.pricePerKm,
-                                  }
-                                )}
-                                name="pricePerKm"
-                                autoComplete="off" />
-                              {formik.errors.pricePerKm && formik.touched.pricePerKm ? (
-                                <div className="text-danger">{formik.errors.pricePerKm}</div>
-                              ) : null}
-                            </CCol>
+                            
 
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputfare">Minimum Fare (in $) </CFormLabel>
-                              <CFormInput {...formik.getFieldProps("minimumFare")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.minimumFare && formik.errors.minimumFare,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.minimumFare && !formik.errors.minimumFare,
-                                  }
-                                )}
-                                name="minimumFare"
-                                autoComplete="off" />
-                              {formik.errors.minimumFare && formik.touched.minimumFare ? (
-                                <div className="text-danger">{formik.errors.minimumFare}</div>
-                              ) : null}
-                            </CCol>
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputcomission">Commission (in %) </CFormLabel>
-                              <CFormInput id="inputcomission" {...formik.getFieldProps("commission")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.commission && formik.errors.commission,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.commission && !formik.errors.commission,
-                                  }
-                                )}
-                                name="commission"
-                                autoComplete="off" />
-                              {formik.errors.commission && formik.touched.commission ? (
-                                <div className="text-danger">{formik.errors.commission}</div>
-                              ) : null}
-                            </CCol> */}
-
-
-                            <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
+                              <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput id="inputpassengertimelimit" onKeyDown={(e) => {
                                 handleMobile(e, 17);
                               }}  {...formik.getFieldProps("passengerTimeLimit")}
@@ -412,7 +348,7 @@ const AddSuperVehicle = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
+                              <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) <span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput id="inputpassengercharges"
                                 type="number"
                                 {...formik.getFieldProps("passengerCharges")}
@@ -468,16 +404,19 @@ const AddSuperVehicle = () => {
                             </CCol>
 
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputgender" ></CFormLabel>
+                              <CFormLabel htmlFor="inputgender" >Select AC Type <span class="asterisk-mark">*</span></CFormLabel>
                               <fieldset className="row mb-12">
                                 <CCol sm={12} className="mt-3">
+                               
                                   <CFormCheck inline
                                     type="radio"
                                     name="gridRadios"
                                     id="gridRadios1"
                                     value="true"
                                     label="AC"
-                                    onChange={handleACtype} // Add the onChange event handler
+                                    onChange={handleACtype} 
+                                    
+                                    // Add the onChange event handler
                                     checked={selectedAC === 'true'} // Set the checked state if Male is selected
                                   />
                                   <CFormCheck inline
@@ -497,7 +436,7 @@ const AddSuperVehicle = () => {
                             </CCol>
 
                             <CCol md={6} className="upload-file-input">
-                              <CFormLabel htmlFor="inputmobile">Upload Vehicle Image</CFormLabel>
+                              <CFormLabel htmlFor="inputmobile">Upload Vehicle Image<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormLabel htmlFor="formFile"></CFormLabel>
                               {image?.length > 0 ?
                                 (

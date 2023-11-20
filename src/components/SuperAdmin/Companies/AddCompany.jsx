@@ -301,7 +301,7 @@ const AddSuperCompany = () => {
                           >
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcname">
-                                Company Name
+                                Company Name<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="vehicle fare"
@@ -336,7 +336,7 @@ const AddSuperCompany = () => {
                             }}
                             >
                               <CFormLabel htmlFor="inputtripfrom">
-                                Address
+                                Address<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <PlacesAutocomplete
                                 value={address}
@@ -428,7 +428,7 @@ const AddSuperCompany = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpcode">
-                                Post Code
+                                Post Code<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="postcode"
@@ -459,7 +459,7 @@ const AddSuperCompany = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputhousenum">
-                                Building Number
+                                Building Number<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="housenumber"
@@ -491,7 +491,7 @@ const AddSuperCompany = () => {
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputtxinum">
-                                Describe Your Taxi Company
+                                Describe Your Taxi Company<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="taxi company"
@@ -558,7 +558,7 @@ const AddSuperCompany = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputphnnum">
-                                Phone Number
+                                Phone Number<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="phone number"
@@ -589,74 +589,7 @@ const AddSuperCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            {/* <CCol md={6}>
- <CFormLabel htmlFor="inputnumcars">Number of Cars</CFormLabel>
- <CFormInput id="num_cars"
- {...formik.getFieldProps("number_of_cars")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.number_of_cars && formik.errors.number_of_cars,
- },
- {
- "is-valid":
- formik.touched.number_of_cars && !formik.errors.number_of_cars,
- }
- )}
- name="number_of_cars"
- autoComplete="off" />
- {formik.errors.number_of_cars && formik.touched.number_of_cars ? (
- <div className="text-danger">{formik.errors.number_of_cars}</div>
- ) : null} 
- </CCol>
- */}
-                            {/* 
- <CCol md={6}>
- <CFormLabel htmlFor="inputcomnum">Chamber of Commerce Number </CFormLabel>
- <CFormInput id="com_numbers"
- {...formik.getFieldProps("chamber_of_comerce_number")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.chamber_of_comerce_number && formik.errors.chamber_of_comerce_number,
- },
- {
- "is-valid":
- formik.touched.chamber_of_comerce_number && !formik.errors.chamber_of_comerce_number,
- }
- )}
- name="chamber_of_comerce_number"
- autoComplete="off" />
- {formik.errors.chamber_of_comerce_number && formik.touched.chamber_of_comerce_number ? (
- <div className="text-danger">{formik.errors.chamber_of_comerce_number}</div>
- ) : null} 
- </CCol> */}
-                            {/* <CCol md={6}>
- <CFormLabel htmlFor="inputcomnum">VAT Number </CFormLabel>
- <CFormInput id="vat_numbers"
- {...formik.getFieldProps("vat")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.vat && formik.errors.vat,
- },
- {
- "is-valid":
- formik.touched.vat && !formik.errors.vat,
- }
- )}
- name="vat"
- autoComplete="off" />
- {formik.errors.vat && formik.touched.vat ? (
- <div className="text-danger">{formik.errors.vat}</div>
- ) : null} 
- </CCol> */}
+                           
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputwebsite">
                                 Website
@@ -719,33 +652,10 @@ const AddSuperCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            {/* <CCol md={6}>
- <CFormLabel htmlFor="inputwebsite">Contact</CFormLabel>
- <CFormInput id="cont_act"
- {...formik.getFieldProps("contact")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.contact && formik.errors.contact,
- },
- {
- "is-valid":
- formik.touched.contact && !formik.errors.contact,
- }
- )}
- name="contact"
- autoComplete="off" />
- {formik.errors.contact && formik.touched.contact ? (
- <div className="text-danger">{formik.errors.contact}</div>
- ) : null} 
- </CCol> */}
-
-                            {/* <CCol md={6} className="row add_company_row"> */}
+                            
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcommision">
-                              Commission in (%)
+                              Commission in (%)<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                               type="number"
@@ -779,7 +689,7 @@ const AddSuperCompany = () => {
                             </CCol>
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputfname">
-                                  First Name
+                                  First Name<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="f_name"
@@ -810,7 +720,7 @@ const AddSuperCompany = () => {
                               </CCol>
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputlname">
-                                  Last Name
+                                  Last Name<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="l_name"
@@ -877,7 +787,7 @@ const AddSuperCompany = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputmailaddress">
-                                Email Address
+                                Email Address<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 id="email_address"

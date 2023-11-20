@@ -243,7 +243,7 @@ const AddNewDriver = () => {
 
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputfirstname">First Name</CFormLabel>
+                              <CFormLabel htmlFor="inputfirstname">First Name<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput aria-label="First name" {...formik.getFieldProps("FirstName")}
                                 maxLength="50"
                                 className={clsx(
@@ -264,7 +264,7 @@ const AddNewDriver = () => {
                               ) : null}
                             </CCol>
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputlastname">Last Name</CFormLabel>
+                              <CFormLabel htmlFor="inputlastname">Last Name<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput aria-label="Last name" {...formik.getFieldProps("LastName")}
                                 maxLength="50"
                                 className={clsx(
@@ -285,7 +285,7 @@ const AddNewDriver = () => {
                               ) : null}
                             </CCol>
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputAddress">Street Address 1</CFormLabel>
+                              <CFormLabel htmlFor="inputAddress">Street Address 1<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput id="inputAddress" {...formik.getFieldProps("Address1")}
                                 maxLength="50"
                                 className={clsx(
@@ -306,7 +306,7 @@ const AddNewDriver = () => {
                               ) : null}
                             </CCol>
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputAddress2">Street Address 2</CFormLabel>
+                              <CFormLabel htmlFor="inputAddress2">Street Address 2<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput id="inputAddress2"  {...formik.getFieldProps("Address2")}
                                 maxLength="50"
                                 className={clsx(
@@ -355,7 +355,7 @@ const AddNewDriver = () => {
                               ) : null}
                             </CCol>
                             <CCol md={4}>
-                              <CFormLabel htmlFor="inputCity">City</CFormLabel>
+                              <CFormLabel htmlFor="inputCity">City<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput id="inputCity" {...formik.getFieldProps("City")}
                                 maxLength="50"
                                 className={clsx(
@@ -377,7 +377,7 @@ const AddNewDriver = () => {
                             </CCol>
 
                             <CCol md={4}>
-                              <CFormLabel htmlFor="inputZip">Zip</CFormLabel>
+                              <CFormLabel htmlFor="inputZip">Zip<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput id="inputZip" {...formik.getFieldProps("Zip")}
                                 maxLength="50"
                                 className={clsx(
@@ -398,7 +398,7 @@ const AddNewDriver = () => {
                               ) : null}
                             </CCol>
                             <CCol md={4}>
-                              <CFormLabel htmlFor="inputEmail4">Email</CFormLabel>
+                              <CFormLabel htmlFor="inputEmail4">Email<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput type="email" id="inputEmail4" {...formik.getFieldProps("Email")}
                                 maxLength="50"
                                 className={clsx(
@@ -419,7 +419,7 @@ const AddNewDriver = () => {
                               ) : null}
                             </CCol>
                             <CCol md={4}>
-                              <CFormLabel htmlFor="inputmobile">Mobile No.</CFormLabel>
+                              <CFormLabel htmlFor="inputmobile">Mobile No.<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput type="text" id="inputmobile"
                                 onKeyDown={(e) => {
                                   handleMobile(e, 17);
@@ -446,7 +446,7 @@ const AddNewDriver = () => {
 
 
                             <CCol md={3} className="gender-outer">
-                              <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
+                              <CFormLabel htmlFor="inputgender">Gender<span class="asterisk-mark">*</span></CFormLabel>
                               <fieldset className="row mb-12">
                                 <CCol sm={12} className="radio_inner">
                                   <CFormCheck inline
@@ -507,7 +507,7 @@ const AddNewDriver = () => {
 
 
                             <CCol md={6} className="upload-file-input image-docs">
-                              <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel>
+                              <CFormLabel htmlFor="inputmobile">Upload Profile Photo<span class="asterisk-mark">*</span></CFormLabel>
 
                               <div class="driver_img_outer">
                                 {image?.length > 0 ?
@@ -556,7 +556,7 @@ const AddNewDriver = () => {
 
                             <CCol md={6} className="upload-file-input driver-docs">
 
-                              <CFormLabel htmlFor="inputmobile">Upload Driver Doc in PDF</CFormLabel>
+                              <CFormLabel htmlFor="inputmobile">Upload Driver Doc in PDF<span class="asterisk-mark">*</span></CFormLabel>
 
                               {/* {doc?.length > 0 ?
                                 (

@@ -289,7 +289,7 @@ const AddCompany = () => {
                           >
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcname">
-                                Hotel ID
+                                Hotel ID<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="Hotel ID"
@@ -320,7 +320,7 @@ const AddCompany = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcname">
-                                Customer Name
+                                Customer Name<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="vehicle fare"
@@ -355,7 +355,7 @@ const AddCompany = () => {
                             }}
                             >
                               <CFormLabel htmlFor="inputtripfrom">
-                                Address
+                                Address<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <PlacesAutocomplete
                                 value={address}
@@ -447,7 +447,7 @@ const AddCompany = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpcode">
-                                Post Code
+                                Post Code<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="postcode"
@@ -476,108 +476,10 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputhousenum">
-                                Building Number
-                              </CFormLabel>
-                              <CFormInput
-                                aria-label="housenumber"
-                                {...formik.getFieldProps("house_number")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.house_number &&
-                                      formik.errors.house_number,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.house_number &&
-                                      !formik.errors.house_number,
-                                  }
-                                )}
-                                name="house_number"
-                                autoComplete="off"
-                              />
-                              {formik.errors.house_number &&
-                                formik.touched.house_number ? (
-                                <div className="text-danger">
-                                  {formik.errors.house_number}
-                                </div>
-                              ) : null}
-                            </CCol> */}
-
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputtxinum">
-                                Describe Your Hotel
-                              </CFormLabel>
-                              <CFormInput
-                                aria-label="taxi company"
-                                {...formik.getFieldProps(
-                                  "describe_your_taxi_company"
-                                )}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched
-                                        .describe_your_taxi_company &&
-                                      formik.errors.describe_your_taxi_company,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched
-                                        .describe_your_taxi_company &&
-                                      !formik.errors.describe_your_taxi_company,
-                                  }
-                                )}
-                                name="describe_your_taxi_company"
-                                autoComplete="off"
-                              />
-                              {formik.errors.describe_your_taxi_company &&
-                                formik.touched.describe_your_taxi_company ? (
-                                <div className="text-danger">
-                                  {formik.errors.describe_your_taxi_company}
-                                </div>
-                              ) : null}
-                            </CCol> */}
-
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputaffi">
-                                Affiliated with
-                              </CFormLabel>
-                              <CFormInput
-                                aria-label="Affiliated"
-                                {...formik.getFieldProps("affiliated_with")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.affiliated_with &&
-                                      formik.errors.affiliated_with,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.affiliated_with &&
-                                      !formik.errors.affiliated_with,
-                                  }
-                                )}
-                                name="affiliated_with"
-                                autoComplete="off"
-                              />
-                              {formik.errors.affiliated_with &&
-                                formik.touched.affiliated_with ? (
-                                <div className="text-danger">
-                                  {formik.errors.affiliated_with}
-                                </div>
-                              ) : null}
-                            </CCol> */}
+                            
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputphnnum">
-                                Phone Number
+                                Phone Number <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 aria-label="phone number"
@@ -608,261 +510,10 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            {/* <CCol md={6}>
- <CFormLabel htmlFor="inputnumcars">Number of Cars</CFormLabel>
- <CFormInput id="num_cars"
- {...formik.getFieldProps("number_of_cars")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.number_of_cars && formik.errors.number_of_cars,
- },
- {
- "is-valid":
- formik.touched.number_of_cars && !formik.errors.number_of_cars,
- }
- )}
- name="number_of_cars"
- autoComplete="off" />
- {formik.errors.number_of_cars && formik.touched.number_of_cars ? (
- <div className="text-danger">{formik.errors.number_of_cars}</div>
- ) : null} 
- </CCol>
- */}
-                            {/* 
- <CCol md={6}>
- <CFormLabel htmlFor="inputcomnum">Chamber of Commerce Number </CFormLabel>
- <CFormInput id="com_numbers"
- {...formik.getFieldProps("chamber_of_comerce_number")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.chamber_of_comerce_number && formik.errors.chamber_of_comerce_number,
- },
- {
- "is-valid":
- formik.touched.chamber_of_comerce_number && !formik.errors.chamber_of_comerce_number,
- }
- )}
- name="chamber_of_comerce_number"
- autoComplete="off" />
- {formik.errors.chamber_of_comerce_number && formik.touched.chamber_of_comerce_number ? (
- <div className="text-danger">{formik.errors.chamber_of_comerce_number}</div>
- ) : null} 
- </CCol> */}
-                            {/* <CCol md={6}>
- <CFormLabel htmlFor="inputcomnum">VAT Number </CFormLabel>
- <CFormInput id="vat_numbers"
- {...formik.getFieldProps("vat")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.vat && formik.errors.vat,
- },
- {
- "is-valid":
- formik.touched.vat && !formik.errors.vat,
- }
- )}
- name="vat"
- autoComplete="off" />
- {formik.errors.vat && formik.touched.vat ? (
- <div className="text-danger">{formik.errors.vat}</div>
- ) : null} 
- </CCol> */}
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputwebsite">
-                                Website
-                              </CFormLabel>
-                              <CFormInput
-                                id="webt_site"
-                                {...formik.getFieldProps("website")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.website &&
-                                      formik.errors.website,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.website &&
-                                      !formik.errors.website,
-                                  }
-                                )}
-                                name="website"
-                                autoComplete="off"
-                              />
-                              {formik.errors.website &&
-                                formik.touched.website ? (
-                                <div className="text-danger">
-                                  {formik.errors.website}
-                                </div>
-                              ) : null}
-                            </CCol> */}
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputquality">
-                                TX Quality Mark
-                              </CFormLabel>
-                              <CFormInput
-                                id="iput_quality"
-                                {...formik.getFieldProps("tx_quality")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.tx_quality &&
-                                      formik.errors.tx_quality,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.tx_quality &&
-                                      !formik.errors.tx_quality,
-                                  }
-                                )}
-                                name="tx_quality"
-                                autoComplete="off"
-                              />
-                              {formik.errors.tx_quality &&
-                                formik.touched.tx_quality ? (
-                                <div className="text-danger">
-                                  {formik.errors.tx_quality}
-                                </div>
-                              ) : null}
-                            </CCol> */}
-                            {/* <CCol md={6}>
- <CFormLabel htmlFor="inputwebsite">Contact</CFormLabel>
- <CFormInput id="cont_act"
- {...formik.getFieldProps("contact")}
- maxLength="50"
- className={clsx(
- "form-control bg-transparent",
- {
- "is-invalid":
- formik.touched.contact && formik.errors.contact,
- },
- {
- "is-valid":
- formik.touched.contact && !formik.errors.contact,
- }
- )}
- name="contact"
- autoComplete="off" />
- {formik.errors.contact && formik.touched.contact ? (
- <div className="text-danger">{formik.errors.contact}</div>
- ) : null} 
- </CCol> */}
-
-                            {/* <CCol md={6} className="row add_company_row"> */}
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputfname">
-                                First Name
-                              </CFormLabel>
-                              <CFormInput
-                                id="f_name"
-                                {...formik.getFieldProps("first_name")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.first_name &&
-                                      formik.errors.first_name,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.first_name &&
-                                      !formik.errors.first_name,
-                                  }
-                                )}
-                                name="first_name"
-                                autoComplete="off"
-                              />
-                              {formik.errors.first_name &&
-                                formik.touched.first_name ? (
-                                <div className="text-danger">
-                                  {formik.errors.first_name}
-                                </div>
-                              ) : null}
-                            </CCol>
-                            <CCol md={6}>
-                              <CFormLabel htmlFor="inputlname">
-                                Last Name
-                              </CFormLabel>
-                              <CFormInput
-                                id="l_name"
-                                {...formik.getFieldProps("last_name")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.last_name &&
-                                      formik.errors.last_name,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.last_name &&
-                                      !formik.errors.last_name,
-                                  }
-                                )}
-                                name="last_name"
-                                autoComplete="off"
-                              />
-                              {formik.errors.last_name &&
-                                formik.touched.last_name ? (
-                                <div className="text-danger">
-                                  {formik.errors.last_name}
-                                </div>
-                              ) : null}
-                            </CCol> */}
-                            {/* </CCol> */}
-
-                            {/* <CCol md={6}>
-                              <CFormLabel htmlFor="inputcon_num">
-                                Telephone Number
-                              </CFormLabel>
-                              <CFormInput
-                                id="tel_Con_nu"
-                                onKeyDown={(e) => {
-                                  handleMobile(e, 17);
-                                }}
-                                {...formik.getFieldProps("tel_contact_number")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.tel_contact_number &&
-                                      formik.errors.tel_contact_number,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.tel_contact_number &&
-                                      !formik.errors.tel_contact_number,
-                                  }
-                                )}
-                                name="tel_contact_number"
-                                autoComplete="off"
-                              />
-                              {formik.errors.tel_contact_number &&
-                                formik.touched.tel_contact_number ? (
-                                <div className="text-danger">
-                                  {formik.errors.tel_contact_number}
-                                </div>
-                              ) : null}
-                            </CCol> */}
+                         
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputmailaddress">
-                                Email Address
+                                Email Address<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 id="email_address"

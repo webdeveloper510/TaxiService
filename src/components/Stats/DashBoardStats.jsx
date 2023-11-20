@@ -32,16 +32,16 @@ const DashboardStats=()=> {
 
         <div className="booked-trips-outer">
         <MDBRow>
-        <MDBCol md='6' className="booked-trips">
+        <MDBCol md='6' className="booked-trips all_same">
        < BookedTrips/>
       </MDBCol>
-      <MDBCol md='6' className="cancelledtrips">
+      <MDBCol md='6' className="cancelledtrips all_same">
        < CancelledTrips/>
       </MDBCol>
-      <MDBCol md='6' className="newUsers">
+      <MDBCol md='6' className="newUsers all_same">
        < NewUsers/>
       </MDBCol>
-      <MDBCol md='6' className="totalEarnings">
+      <MDBCol md='6' className="totalEarnings all_same">
        < TotalEarnings/>
       </MDBCol>
     </MDBRow>

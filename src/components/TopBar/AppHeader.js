@@ -56,7 +56,15 @@ const AppHeader = () => {
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}
         </CHeaderNav>
+        
+        <span>Welcome to taxi company</span>
+        <span>Welcome to Customer</span>
+        <span>Welcome to Super Admin</span>
+          
         <CHeaderNav className='bell-icon'>
+        
+          
+         
           <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilBell} size="lg" />

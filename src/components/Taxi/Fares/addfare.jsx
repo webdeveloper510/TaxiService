@@ -153,7 +153,7 @@ const AddFare = () => {
                          
                           <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
                           <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicletype">Vehicle Type <span class="asterisk-mark">*</span></CFormLabel>
                               <CFormSelect  {...formik.getFieldProps("vehicle_type")}
                                 maxLength="50"
                                 className={clsx(
@@ -205,7 +205,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol> */}
                             <CCol md={6}>
-                              <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare (in €) Per Km</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicle_fare_per_km">Vehicle Fare (in €) Per Km <span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput 
                               aria-label="vehicle fare"
                               type="number"
@@ -229,7 +229,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputvehicleminfare">Minimum Fare  (in €)</CFormLabel>
+                              <CFormLabel htmlFor="inputvehicleminfare">Minimum Fare  (in €)<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput type="number" id="inputvehicleminfare"    {...formik.getFieldProps("minimum_fare")}
                                 maxLength="50"
                                 className={clsx(
@@ -250,7 +250,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputmindistance">Vehicle Fare (in €) Per Minute</CFormLabel>
+                              <CFormLabel htmlFor="inputmindistance">Vehicle Fare (in €) Per Minute <span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput type="number" id="inputmindistance"   {...formik.getFieldProps("price_per_min")}
                                 maxLength="50"
                                 className={clsx(
@@ -271,7 +271,7 @@ const AddFare = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}>
-                              <CFormLabel htmlFor="inputwaiting_fare">Waiting Fare  (in €)
+                              <CFormLabel htmlFor="inputwaiting_fare">Waiting Fare  (in €)<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput type="number" id="inputwaiting_fare" {...formik.getFieldProps("waiting_fare")}
                                 maxLength="50"
