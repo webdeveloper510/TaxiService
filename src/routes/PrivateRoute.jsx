@@ -50,6 +50,7 @@ import EditProfile from '../components/Login/EditProfile';
 import BookingForm from '../components/BookingForm/BookingForm';
 import ViewSingleTrip from '../components/Taxi/Trips/ViewSingleTripdetails';
 import BookingStaffForm from '../components/BookingForm/BookingStaffForm';
+import DriverRoute from '../components/DriverRoute';
 
 
 const PrivateRoute = () => {
@@ -58,6 +59,7 @@ const PrivateRoute = () => {
     return (
         <Routes>
             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />
+            <Route path="/driverRoute" element={<DriverRoute />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
             <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
 

@@ -32,6 +32,7 @@ import deletepopup from "../../../assets/images/deletepopup.png";
 import EmptyData from "../../EmptyData";
 import { toast } from "react-toastify";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import AppLoader from "../../AppLoader";
 const tableExample = [
   {
     Srnum: "1",
@@ -184,18 +185,7 @@ const PendingTrip = () => {
                     </div> */}
                   </div>
                   {loader ? (
-                    <div
-                      className=" d-flex justify-content-center align-items-center"
-                      style={{ height: 400 }}
-                    >
-                      <PulseLoader
-                        color="#FFD04E"
-                        loading={true}
-                        margin={4}
-                        size={60}
-                        speedMultiplier={0.5}
-                      />
-                    </div>
+                   <AppLoader/>
                   ) : (
                     <>
                       {data?.length == 0 ? (

@@ -27,6 +27,7 @@ import deletepopup from '../../../assets/images/deletepopup.png'
 import { toast } from "react-toastify";
 import EmptyData from "../../EmptyData";
 import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
+import AppLoader from "../../AppLoader";
 
 
 const LisOfVehicles = ({role}) => {
@@ -144,16 +145,7 @@ const LisOfVehicles = ({role}) => {
               
               <div className='p-4 vehicle-cards'>
                 {loader ? (<>
-                  <div className=" d-flex justify-content-center align-items-center"
-                    style={{ height: 400 }}>
-                    <PulseLoader
-                      color="#FFD04E"
-                      loading={true}
-                      margin={4}
-                      size={60}
-                      speedMultiplier={0.5}
-                    />
-                  </div>
+                  <AppLoader/>
 
                 </>) : (<>
                   <Row>

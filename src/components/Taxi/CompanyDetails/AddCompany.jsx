@@ -80,18 +80,18 @@ const AddCompany = () => {
     email: "",
   };
   const validationSchema = Yup.object().shape({
-    company_name: Yup.string()
+    company_name: Yup.string().trim()
       .max(20,"Length should be small than 20 character")
       .required("Customer Name is required"),
     // land: Yup.string().min(4).max(20).required("Address is required"),
-    post_code: Yup.string().max(10).required("Postcode is required"),
-    hotelId: Yup.string().max(20).required("Hotel ID is required"),
+    post_code: Yup.string().trim().max(10).required("Postcode is required"),
+    hotelId: Yup.string().trim().max(20).required("Hotel ID is required"),
     // describe_your_taxi_company: Yup.string()
     //   .min(4)
     //   .max(100)
     //   .required("Describe your Hotel is required"),
     // affiliated_with: Yup.string().required("Affiliated with is required"),
-    phone: Yup.string()
+    phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
     // number_of_cars: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Number of cars is required"),
@@ -109,7 +109,7 @@ const AddCompany = () => {
     //   .max(18, "max length must be 6")
     //   .matches(/^[0-9]+$/, "Must be only digits")
     //   .required("Tel Contact Number is required"),
-    email: Yup.string().email().required("Email Address is required"),
+    email: Yup.string().trim().email().required("Email Address is required"),
   });
   const [formLoader , setFormLoader] = useState(false)
   const formik = useFormik({

@@ -94,35 +94,35 @@ const AddSuperCompany = () => {
     email: "",
   };
   const validationSchema = Yup.object().shape({
-    company_name: Yup.string()
-      .min(2)
-      .max(20)
+    company_name: Yup.string().trim()
+      .min(2,"Company Name must be at least 2 characters")
+      .max(50,"Company Name must be at most 50 characters")
       .required("Company Name is required"),
     // land: Yup.string().min(4).max(20).required("Land is required"),
-    post_code: Yup.string().max(10).required("Postcode is required"),
-    house_number: Yup.string().max(20).required("Building number is required"),
-    describe_your_taxi_company: Yup.string()
-      .min(4)
-      .max(100)
-      .required("Describe your taxi number is required"),
-    affiliated_with: Yup.string(),
-    phone: Yup.string()
+    post_code: Yup.string().trim().max(10,"Post Code must be at most 10 characters").matches(/\S/, 'Field must not contain only white spaces').required("Postcode is required"),
+    house_number: Yup.string().trim().max(20).required("Building number is required"),
+    describe_your_taxi_company: Yup.string().trim()
+      .min(2, "Describe your taxi company must be at least 2 characters")
+      .max(50,"Describe your taxi company must be at most 50 characters")
+      .required("Describe your taxi company is required"),
+    affiliated_with: Yup.string().trim(),
+    phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone number is required"),
     // number_of_cars: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Number of cars is required"),
     // chamber_of_comerce_number: Yup.string().required("Chamber of Commerce Number is required"),
     // vat:Yup.string().min(4).max(18).required("VAT Number is required"),
-    website: Yup.string()
+    website: Yup.string().trim()
       .url("Invalid URL format. Please enter a valid URL."),
-    tx_quality: Yup.string(),
+    tx_quality: Yup.string().trim(),
     // contact: Yup.string().required("Contact is required"),
-    first_name: Yup.string().required("First Name is required"),
-    last_name: Yup.string().required("Last Name is required"),
-    tel_contact_number: Yup.string()
+    first_name: Yup.string().trim().required("First Name is required"),
+    last_name: Yup.string().trim().required("Last Name is required"),
+    tel_contact_number: Yup.string().trim()
       .min(6, "minimum length must be 6")
       .max(18, "max length must be 6")
       .matches(/^[0-9]+$/, "Must be only digits"),
-    email: Yup.string().email().required("Email Address is required"),
+    email: Yup.string().trim().email().required("Email Address is required"),
     commision : Yup.number()
     .typeError('Must be a number')
     .required('Number is required')
@@ -306,7 +306,7 @@ const AddSuperCompany = () => {
                               <CFormInput
                                 aria-label="vehicle fare"
                                 {...formik.getFieldProps("company_name")}
-                                maxLength="50"
+                            
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -433,7 +433,7 @@ const AddSuperCompany = () => {
                               <CFormInput
                                 aria-label="postcode"
                                 {...formik.getFieldProps("post_code")}
-                                maxLength="50"
+                               
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -498,7 +498,7 @@ const AddSuperCompany = () => {
                                 {...formik.getFieldProps(
                                   "describe_your_taxi_company"
                                 )}
-                                maxLength="50"
+                             
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {

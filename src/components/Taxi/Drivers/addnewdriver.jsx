@@ -80,18 +80,18 @@ const AddNewDriver = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    FirstName: Yup.string().required("First Name No is required"),
-    LastName: Yup.string().required("Last Name  is required"),
-    Address1: Yup.string().required("Address1  is required"),
-    Address2: Yup.string().required("Address2  is required"),
-    Country: Yup.string().required("Country is required"),
-    City: Yup.string().required("City  is required"),
-    Zip: Yup.string().required("Zip is required"),
-    Email: Yup.string().email().required("Email  is required"),
-    MobileNo: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("MobileNo is required"),
-    Gender: Yup.string().required("Gender is required"),
+    FirstName: Yup.string().trim().required("First Name No is required"),
+    LastName: Yup.string().trim().required("Last Name  is required"),
+    Address1: Yup.string().trim().required("Address1  is required"),
+    Address2: Yup.string().trim().required("Address2  is required"),
+    Country: Yup.string().trim().required("Country is required"),
+    City: Yup.string().trim().required("City  is required"),
+    Zip: Yup.string().trim().required("Zip is required"),
+    Email: Yup.string().trim().email().required("Email  is required"),
+    MobileNo: Yup.string().trim().matches(/^[0-9]+$/, "Must be only digits").required("MobileNo is required"),
+    Gender: Yup.string().trim().required("Gender is required"),
     file: Yup.mixed().required("Driver's Photo is required"),
-    doc: Yup.mixed().required("Driver's Documents is required"),
+    doc: Yup.mixed().required("Driver's Document is required"),
   });
 
   const uploadFile = (e) => {
@@ -524,7 +524,7 @@ const AddNewDriver = () => {
                                   ) :
                                   ""}</div>
                                   {!image?.length > 0 && <>
-                              <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+                              <CFormInput  accept="image/*" type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
                                 maxLength="50"
                                 className={clsx(
@@ -542,7 +542,7 @@ const AddNewDriver = () => {
                                 autoComplete="off" />
                              
                              
-                                {formik.errors.file && formik.touched.file ? (
+                                {!image && formik.errors.file && formik.touched.file ? (
                                   <div className="text-danger">{formik.errors.file}</div>
                                 ) : null}
                                 <label htmlFor="formFile" className="custom-file-upload">
@@ -556,7 +556,7 @@ const AddNewDriver = () => {
 
                             <CCol md={6} className="upload-file-input driver-docs">
 
-                              <CFormLabel htmlFor="inputmobile">Upload Driver Doc</CFormLabel>
+                              <CFormLabel htmlFor="inputmobile">Upload Driver Doc in PDF</CFormLabel>
 
                               {/* {doc?.length > 0 ?
                                 (
@@ -580,7 +580,7 @@ const AddNewDriver = () => {
                               )}
                               {!selectedDoc && <>
                                 <CFormInput type="file"
-                                  accept="application/pdf,application/vnd.ms-excel"
+                                  accept=".pdf"
                                   id="formFile" onChange={(e) => { uploadDoc(e) }}
 
                                   className={clsx(

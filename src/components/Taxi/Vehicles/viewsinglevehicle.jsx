@@ -30,6 +30,7 @@ import car1 from '../../../assets/images/car1.jpg'
 import { getVehicleById } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import checkedImg from "../../../assets/images/checked.png"
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 const ViewSingleVehicle = ({role}) => {
 
   const {vehicleId} = useParams();
@@ -68,7 +69,7 @@ const ViewSingleVehicle = ({role}) => {
 
         <div className="col-md-12">
           <div>
-            <SuperSideBar/>
+            {role == "taxi"?<SuperSideBar/>:<SuperAdminSideBar/>}
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -120,7 +121,7 @@ const ViewSingleVehicle = ({role}) => {
                                  <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Passenger Cancellation Charges (in € ) : </CFormLabel>
                                  <span className="vehicle_info">{vehicle?.cancelation_charges}</span><br/>
                                  <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/>Insurance Renewal Date: </CFormLabel>
-                                 <span className="vehicle_info">{moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY, h:mm a')}</span> &nbsp;<br/>
+                                 <span className="vehicle_info">{moment(vehicle?.insurance_renewal_date).format('MMMM Do YYYY')}</span> &nbsp;<br/>
                                  <CFormLabel htmlFor="inputgender" ><img src={checkedImg}/>Is air conditioner :</CFormLabel>
                                  <span className="vehicle_info">{vehicle?.AC ? "Yes" : "No"}</span>
                             </CCol>

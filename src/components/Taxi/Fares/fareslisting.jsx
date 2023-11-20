@@ -40,6 +40,7 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
 import deletepopup from '../../../assets/images/deletepopup.png'
 import EmptyData from "../../EmptyData";
+import AppLoader from "../../AppLoader";
 const ListOfFares = () => {
   const initialValues = {
     vehicle_type: "",
@@ -179,11 +180,11 @@ const ListOfFares = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    vehicle_type: Yup.string().required("Vehicle Type  is required"),
-    vehicle_fare_per_km: Yup.string().required("Vehicle Fare  is required"),
-    minimum_fare: Yup.string().required("Minimum Fare  is required"),
-    price_per_min: Yup.string().required("Vehicle Fare  is required"),
-    waiting_fare: Yup.string().required("Waiting Fare is required"),
+    vehicle_type: Yup.string().trim().required("Vehicle Type  is required"),
+    vehicle_fare_per_km: Yup.string().trim().required("Vehicle Fare  is required"),
+    minimum_fare: Yup.string().trim().required("Minimum Fare  is required"),
+    price_per_min: Yup.string().trim().required("Vehicle Fare  is required"),
+    waiting_fare: Yup.string().trim().required("Waiting Fare is required"),
   });
 
   const [vehicleType, setVehicleType] = useState();
@@ -250,18 +251,7 @@ const ListOfFares = () => {
                   </div>
                   {loader ? (
                     <>
-                      <div
-                        className=" d-flex justify-content-center align-items-center"
-                        style={{ height: 400 }}
-                      >
-                        <PulseLoader
-                          color="#FFD04E"
-                          loading={true}
-                          margin={4}
-                          size={60}
-                          speedMultiplier={0.5}
-                        />
-                      </div>
+<AppLoader/>
                     </>
                   ) : (
                     <>

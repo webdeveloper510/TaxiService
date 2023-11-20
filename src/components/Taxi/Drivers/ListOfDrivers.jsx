@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import EmptyData from "../../EmptyData";
 import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
+import AppLoader from "../../AppLoader";
 
 const ListOfDrivers = ({role}) => {
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -143,18 +144,7 @@ const [selectedId, setSelectedId ] = useState(null);
                 <div class="active-trip-outer">
                   {loader ? (
                     <>
-                      <div
-                        className=" d-flex justify-content-center align-items-center"
-                        style={{ height: 400 }}
-                      >
-                        <PulseLoader
-                          color="#FFD04E"
-                          loading={true}
-                          margin={4}
-                          size={60}
-                          speedMultiplier={0.5}
-                        />
-                      </div>
+                     <AppLoader/>
                     </>
                   ) : (
                     <>

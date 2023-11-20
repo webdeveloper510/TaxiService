@@ -100,16 +100,16 @@ const EditVehicle = () => {
     onLoadComponent()
   }, [])
   const validationSchema = Yup.object().shape({
-    vehicleNo: Yup.string().required("Vehicle No is required"),
-    vehicleType: Yup.string().required("Vehicle Type is required"),
-    vehicleModal: Yup.string().required("Vehicle Modal is required"),
-    vehicleMake: Yup.string().required("Vehicle Make is required"),
-    seatingCapacity: Yup.string().required("Seating Capacity is required"),
+    vehicleNo: Yup.string().trim().required("Vehicle No is required"),
+    vehicleType: Yup.string().trim().required("Vehicle Type is required"),
+    vehicleModal: Yup.string().trim().required("Vehicle Modal is required"),
+    vehicleMake: Yup.string().trim().required("Vehicle Make is required"),
+    seatingCapacity: Yup.string().trim().required("Seating Capacity is required"),
     // pricePerKm: Yup.string().required("Price per km is required"),
     // minimumFare: Yup.string().required("Minimum Fare is required"),
     // commission: Yup.string().required("Commission is required"),
-    passengerTimeLimit: Yup.string().required("Passenger Time Limit is required"),
-    passengerCharges: Yup.string().required("Passenger Cancellation Charges is required"),
+    passengerTimeLimit: Yup.string().trim().required("Passenger Time Limit is required"),
+    passengerCharges: Yup.string().trim().required("Passenger Cancellation Charges is required"),
     vehicleinsuranceDate: Yup.date().required("Insurance Renewal Date is required"),
   });
 
@@ -202,6 +202,34 @@ const EditVehicle = () => {
 
     },
   });
+  const handleMobile = (event, max) => {
+    const pattern = /^[0-9]+$/;
+    if (
+      event.key === "Backspace" ||
+      event.key === "Enter" ||
+      event.key === "Tab" ||
+      event.key === "Shift" ||
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ) {
+      formik.setFieldValue(event.target.name, event.target.value);
+      formik.setFieldTouched(event.target.name, true);
+    } else {
+      let value = event.target.value.toString();
+      if (value.length > max) {
+        event.stopPropagation();
+        event.preventDefault();
+      } else {
+        if (!pattern.test(event.key)) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          formik.setFieldValue(event.target.name, event.target.value);
+          formik.setFieldTouched(event.target.name, true);
+        }
+      }
+    }
+  };
   return (
     <>
       <div className="container-fluidd">
@@ -214,7 +242,7 @@ const EditVehicle = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                 <h1 class="heading-for-every-page edit_vehicles">
-                  <Link to="/taxi/vehicle/listofvehicles">
+                  <Link to="/super-admin/vehicle/viewallvehicle">
                     <img src={backtovehicle} alt="edit" /> Edit Vehicle Details</Link></h1>
 
 
@@ -329,7 +357,7 @@ const EditVehicle = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputseating">Seating Capacity</CFormLabel>
-                              <CFormInput  {...formik.getFieldProps("seatingCapacity")}
+                              <CFormInput onKeyDown={(e)=>{handleMobile(e, 17)}}   {...formik.getFieldProps("seatingCapacity")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -417,7 +445,7 @@ const EditVehicle = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassenger">Passenger Cancellation Time Limit (in Minutes)</CFormLabel>
-                              <CFormInput id="inputpassengertimelimit"  {...formik.getFieldProps("passengerTimeLimit")}
+                              <CFormInput type="number" onKeyDown={(e)=>{handleMobile(e, 17)}} id="inputpassengertimelimit"  {...formik.getFieldProps("passengerTimeLimit")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -438,7 +466,7 @@ const EditVehicle = () => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputpassengercharges">Passenger Cancellation Charges (in € ) </CFormLabel>
-                              <CFormInput id="inputpassengercharges"  {...formik.getFieldProps("passengerCharges")}
+                              <CFormInput type="number" id="inputpassengercharges"  {...formik.getFieldProps("passengerCharges")}
                                 maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
@@ -523,7 +551,7 @@ const EditVehicle = () => {
                                   <img src={image} alt='img' height={300} width={100} />
                                 ) :
                                 ""}
-                              <CFormInput type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+                              <CFormInput type="file" id="formFile"  accept="image/*" onChange={(e) => { uploadFile(e) }}
 
                               />
                               <label htmlFor="formFile" className="custom-file-upload">
