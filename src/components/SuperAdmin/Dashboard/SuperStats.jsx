@@ -39,16 +39,16 @@ const SuperStats=()=> {
 
         <div className="booked-trips-outer">
         <MDBRow>
-        <MDBCol sm='6' className="booked-trips">
+        <MDBCol sm='6' className="booked-trips all_same">
         <Link to={"/super-admin/trips/recent-trips"}><ActiveTrips data={data}/></Link>
       </MDBCol>
-      <MDBCol sm='6' className="cancelledtrips">
+      <MDBCol sm='6' className="cancelledtrips all_same">
       <Link to={"/super-admin/trips/recent-trips"}><PendingTrips data={data}/></Link>
       </MDBCol>
-      <MDBCol sm='6' className="newUsers">
+      <MDBCol sm='6' className="newUsers all_same">
       <Link to={"/super-admin/trips/recent-trips"}>< NewUsers data={data} /></Link>
       </MDBCol>
-      <MDBCol sm='6' className="totalEarnings">
+      <MDBCol sm='6' className="totalEarnings all_same">
        < TotalEarnings/>
       </MDBCol>
     </MDBRow>

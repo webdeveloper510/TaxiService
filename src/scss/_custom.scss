@@ -1375,6 +1375,48 @@ div#booked-trip-search .input-group{
 div#pending-trips {
     margin-bottom: 20px;
 }
+
+ /****pankaj CSS*******/
+.cancelledtrips a, .booked-trips a, .newUsers a {
+    text-decoration: none !important;
+}
+.all_same .card {
+    min-height: 150px;
+}
+div#recent-trip-outer .table-responsive td div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    height: 45px;
+}
+.vehiclemodalinfo {
+    justify-content: inherit;
+    line-height: 35px;
+}
+.vehiclemodalinfo .vehicle-title {
+    width: 47%;
+}
+.vehiclemodalinfo .hypen {
+    width: 5%;
+}
+.vehiclemodalinfo .vehicle-title-info {
+    width: 47%;
+    text-align: left;
+}
+.vehicle-title-info p {
+    white-space: nowrap;
+    width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.vehicle-title p {
+    white-space: nowrap;
+    width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 @media screen and (max-width: 768px) {
     .booking-content .banner-inner-text {
         width: 100%;
