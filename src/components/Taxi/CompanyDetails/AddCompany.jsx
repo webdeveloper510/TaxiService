@@ -48,6 +48,7 @@ const AddCompany = () => {
     // setLoading(false)
     // }
   }, []);
+  const [selectAddress, setSelectAddress] = useState(false) 
   const handleSelectAddress = async (selectedAddress) => {
     try {
       formik.setFieldValue("land", selectedAddress )
@@ -55,6 +56,7 @@ const AddCompany = () => {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
       setAddressCoordinates(latLng)
+      setSelectAddress(true)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -81,18 +83,20 @@ const AddCompany = () => {
   };
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
-      .max(20,"Length should be small than 20 character")
+      .max(20,"Customer Name must be at most 20 characters")
       .required("Customer Name is required"),
     // land: Yup.string().min(4).max(20).required("Address is required"),
-    post_code: Yup.string().trim().max(10).required("Postcode is required"),
-    hotelId: Yup.string().trim().max(20).required("Hotel ID is required"),
+     post_code:  Yup.string().trim().matches(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, 'Invalid Netherlands Post Code')
+     .required('Post Code is required'),
+    //Yup.string().trim().max(10,"Post Code  must be at most 20 characters").required("Postcode is required"),
+    hotelId: Yup.string().trim().max(20,"Hotel ID must be at most 20 characters").required("Hotel ID is required"),
     // describe_your_taxi_company: Yup.string()
     //   .min(4)
     //   .max(100)
     //   .required("Describe your Hotel is required"),
     // affiliated_with: Yup.string().required("Affiliated with is required"),
     phone: Yup.string().trim()
-      .matches(/^[0-9]+$/, "Must be only digits")
+      .matches(/^[0-9]+$/, "Must be only digits").min(6,"Phone number must be at least 6 characters").max(16,"Phone number must be at most 20 characters")
       .required("Phone number is required"),
     // number_of_cars: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Number of cars is required"),
     // chamber_of_comerce_number: Yup.string().required("Chamber of Commerce Number is required"),
@@ -116,8 +120,8 @@ const AddCompany = () => {
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      if(address.length<1){
-        console.log(" address must be at least one character")
+      if(address.length<1 || !selectAddress){
+        console.log("Address must be selected from list")
         setAddressError(true);
         setTouched(true);
         return;
@@ -363,9 +367,10 @@ const AddCompany = () => {
                                 onChange={(data) => {
                                   
                                  console.log(data, " from place holder")
-                                  setAddress(data);
-                                  if (data.length < 1) {
+                                  setAddress(data.trim());
+                                  if (data.trim().length < 1) {
                                     setAddressError(true)
+                                    setSelectAddress(false)
                                   } else {
                                    setAddressError(false)
                                   }
@@ -406,7 +411,7 @@ const AddCompany = () => {
                                     />
                                     {addressError && touched && 
                                 <div className="text-danger">
-                                  Address is Required
+                                 Address must be selected from list
                                 </div>
                               }
                                     <div className="suugestion-div">
@@ -546,7 +551,14 @@ const AddCompany = () => {
                                 className="d-flex justify-content-center"
                                 style={{ marginTop: "40px" }}
                               >
-                                <CButton type="submit" className="submit-btn">
+                                <CButton type="submit" onClick={()=>{
+                                   if(address.length<1 || !selectAddress){
+                                    console.log(" address must be at least one character")
+                                    setAddressError(true);
+                                    setTouched(true);
+                                    return;
+                                  }
+                                }}className="submit-btn">
                                   {formLoader?<ClipLoader color="#000000" />:"Submit"}
                                 </CButton>
                                 <CButton

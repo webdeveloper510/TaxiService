@@ -61,6 +61,7 @@ function EditProfile() {
   const [icon, setIcon] = useState(eyeOff);
   const [passVissibleOld, setPassVissibleOld] = useState(false);
   const [iconOld, setIconOld] = useState(eyeOff);
+
   const validationSchema = Yup.object().shape({
     password: Yup.string()
       .min(6, "Password must be 6 characters long")
@@ -149,6 +150,14 @@ function EditProfile() {
       }).finally(() => { setLoading(false) })
     },
   });
+  
+  useEffect(()=>{
+    if(!visible){
+      setIcon(eyeOff)
+      setIconOld(eyeOff);
+      formik.resetForm();
+    }
+  },[visible])
   const formikProfile = useFormik({
     initialValues: initialValuesProfile,
     validationSchema: validationSchemaProfile,

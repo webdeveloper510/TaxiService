@@ -42,10 +42,10 @@ const AddFare = () => {
 
   const validationSchema = Yup.object().shape({
     vehicle_type: Yup.string().trim().required("Vehicle Type  is required"),
-    vehicle_fare_per_km: Yup.string().trim().required("Vehicle Fare  is required"),
-    minimum_fare: Yup.string().trim().required("Minimum Fare  is required"),
-    price_per_min: Yup.string().trim().required("Vehicle Fare  is required"),
-    waiting_fare: Yup.string().trim().required("Waiting Fare is required"),
+    vehicle_fare_per_km: Yup.number().max(1000,"Vehicle Fare must be less than or equal to 1000 in euro").required("Vehicle Fare  is required"),
+    minimum_fare: Yup.number().max(1000,"Minimum Fare must be less than or equal to 1000 in euro").required("Minimum Fare  is required"),
+    price_per_min: Yup.number().max(1000,"Vehicle Fare Per Minute must be less than or equal to 1000 in euro").required("Vehicle Fare  is required"),
+    waiting_fare: Yup.number().max(1000,"Waiting Fare must be less than or equal to 1000 in euro").required("Waiting Fare is required"),
 
   });
 
@@ -78,8 +78,8 @@ const AddFare = () => {
 
       addFare(values).then((res) => {
         console.log("response---->>>>", res)
-        if (res.data.code === 200) {
-          toast.success(`${res.data.message}`, {
+        if (res?.data?.code === 200) {
+          toast.success(`${res?.data?.message}`, {
             position: 'top-right',
             autoClose: 1000,
           });
@@ -90,8 +90,11 @@ const AddFare = () => {
             autoClose: 1000,
           });
         }
-      }).finally(()=>{
-        setSubmitLoader(true)
+      }).catch(error=> toast.warning(`There is some problem`, {
+        position: 'top-right',
+        autoClose: 1000,
+      })).finally(()=>{
+        setSubmitLoader(false)
       })
 
 
@@ -210,7 +213,6 @@ const AddFare = () => {
                               aria-label="vehicle fare"
                               type="number"
                                {...formik.getFieldProps("vehicle_fare_per_km")}
-                                maxLength="50"
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -231,7 +233,7 @@ const AddFare = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputvehicleminfare">Minimum Fare  (in €)<span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput type="number" id="inputvehicleminfare"    {...formik.getFieldProps("minimum_fare")}
-                                maxLength="50"
+                                
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -252,7 +254,7 @@ const AddFare = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputmindistance">Vehicle Fare (in €) Per Minute <span class="asterisk-mark">*</span></CFormLabel>
                               <CFormInput type="number" id="inputmindistance"   {...formik.getFieldProps("price_per_min")}
-                                maxLength="50"
+                                
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -274,7 +276,7 @@ const AddFare = () => {
                               <CFormLabel htmlFor="inputwaiting_fare">Waiting Fare  (in €)<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput type="number" id="inputwaiting_fare" {...formik.getFieldProps("waiting_fare")}
-                                maxLength="50"
+                                
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {

@@ -43,7 +43,7 @@ import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
 const ListOfFares = () => {
   const initialValues = {
-    vehicle_type: "",
+    // vehicle_type: "",
     vehicle_fare_per_km: "",
     minimum_fare: "",
     price_per_min: "",
@@ -178,13 +178,13 @@ const ListOfFares = () => {
       }
     }
   };
-
+ 
   const validationSchema = Yup.object().shape({
-    vehicle_type: Yup.string().trim().required("Vehicle Type  is required"),
-    vehicle_fare_per_km: Yup.string().trim().required("Vehicle Fare  is required"),
-    minimum_fare: Yup.string().trim().required("Minimum Fare  is required"),
-    price_per_min: Yup.string().trim().required("Vehicle Fare  is required"),
-    waiting_fare: Yup.string().trim().required("Waiting Fare is required"),
+    // vehicle_type: Yup.string().trim().required("Vehicle Type  is required"),
+    vehicle_fare_per_km: Yup.number().max(1000,"Vehicle Fare must be less than or equal to 1000 in euro").required("Vehicle Fare  is required"),
+    minimum_fare: Yup.number().max(1000,"Minimum Fare must be less than or equal to 1000 in euro").required("Minimum Fare  is required"),
+    price_per_min: Yup.number().max(1000,"Vehicle Fare Per Minute must be less than or equal to 1000 in euro").required("Vehicle Fare  is required"),
+    waiting_fare: Yup.number().max(1000,"Waiting Fare must be less than or equal to 1000 in euro").required("Waiting Fare is required"),
   });
 
   const [vehicleType, setVehicleType] = useState();
@@ -197,6 +197,7 @@ const ListOfFares = () => {
       }
     });
   }, []);
+  
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
@@ -398,7 +399,7 @@ const ListOfFares = () => {
                                 noValidate
                                 className="row g-3"
                               >
-                                <CCol md={6}>
+                                {/* <CCol md={6}>
                                   <CFormLabel htmlFor="inputvehicletype">
                                     Vehicle Type
                                   </CFormLabel>
@@ -438,7 +439,7 @@ const ListOfFares = () => {
                                       {formik.errors.vehicle_type}
                                     </div>
                                   ) : null}
-                                </CCol>
+                                </CCol> */}
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputvehicle_fare_per_km">
                                     Vehicle Fare Per Km
