@@ -544,7 +544,7 @@ const RequestNewTrip = () => {
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpickupdate">
-                                Pickup Date and Time
+                                Pickup Date and Time<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <br />
                               <DatePicker

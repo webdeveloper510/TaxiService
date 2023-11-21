@@ -360,7 +360,7 @@ const BookingStaffForm = () => {
                               <CForm className="row g-3">
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputvehicletype">
-                                    Vehicle Type
+                                    Vehicle Type <span class="asterisk-mark">*</span>
                                   </CFormLabel>
                                   <CFormSelect
                                     name="vehicle"

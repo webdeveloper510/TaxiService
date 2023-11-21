@@ -1469,6 +1469,12 @@ div#recent-trip-outer .table-responsive td .view_details_btn {
         box-shadow: none;
         outline: none;
     }
+    button#btn_delete_pending_trip img {
+        margin-top: 0px;
+    }
+    td.d-flex.pending-trips-icons {
+        border-bottom: 0px;
+    }
     /****css only for mozilla*******/
 @-moz-document url-prefix() { 
     .header.header-sticky {
