@@ -241,7 +241,7 @@ const RequestNewTrip = () => {
       email: false,
       address: false,
     }])
-    // formValidation()
+    setFormValid(false)
   };
   const handleBlur = (index, key) => {
     const newPassengersError = [...passengerError]
@@ -255,7 +255,7 @@ const RequestNewTrip = () => {
     const newPassengersError = [...passengerError]
     newPassengersError.splice(index, 1);
     setPassengerError(newPassengersError)
-    // formValidation()
+    setFormValid(false)
   };
 
   useEffect(() => {
@@ -315,7 +315,7 @@ const RequestNewTrip = () => {
     let data = inputData;
     let valid = true;
     let newErrors = { ...errors };
-    const errorRes = formValidation(passengers);
+    const errorRes = formValidation();
     console.log("data beafore vehicle", vehicle);
     if (
       !data.trip_from.lat ||

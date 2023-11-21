@@ -603,3 +603,18 @@ export const requestBookingTrip = async (id) => {
       console.log("requestBookingTrip error", error);
     });
 };
+
+
+export const getPastTripsdriver = async() => {
+  return await Axios.get(`driver/get_trips_for_driver/completed` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res.data;    
+  })
+  .catch((error) => {
+    console.log("get trip error", error);
+  });
+};
