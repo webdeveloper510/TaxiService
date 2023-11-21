@@ -8,9 +8,8 @@ import {
   import BookedTrips from "./BookedTrips";
 import CancelledTrips from "./CancelledTrips";
 import NewUsers from "./NewUsers";
-import TotalEarnings from "./TotalEarnings";
 import DashboardGraph from "../Hotel/DashboardChart/dashboardgraph";
-
+import PendingTrips from "./PendingTrips";
 const DashboardStats=()=> {
    
       return (
@@ -35,15 +34,16 @@ const DashboardStats=()=> {
         <MDBCol md='6' className="booked-trips all_same">
        < BookedTrips/>
       </MDBCol>
+      <MDBCol sm='6' className="pendingtrips all_same">
+    <PendingTrips/>
+      </MDBCol>
       <MDBCol md='6' className="cancelledtrips all_same">
        < CancelledTrips/>
       </MDBCol>
       <MDBCol md='6' className="newUsers all_same">
        < NewUsers/>
       </MDBCol>
-      <MDBCol md='6' className="totalEarnings all_same">
-       < TotalEarnings/>
-      </MDBCol>
+     
     </MDBRow>
 
           </div>

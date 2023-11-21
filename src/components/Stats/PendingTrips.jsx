@@ -7,7 +7,7 @@ import {
     MDBCardImage,
   
   } from 'mdb-react-ui-kit';
-import canceltrip from "../../assets/images/cancelled-trip.png"
+  import newuserimg from "../../assets/images/newuser.png"
 import { getTripCompleted } from "../../utils/api";
 
 const PendingTrips=({data})=> {
@@ -16,10 +16,11 @@ const PendingTrips=({data})=> {
    
       return (
        <>
+       
       <MDBCard>
-          <MDBCardBody className="d-flex cancelled-trips">
+          <MDBCardBody className="d-flex new-users">
           <MDBCol sm='4' className="booked-trip-icon">
-          <MDBCardImage position='top' alt='...' src={canceltrip} />
+          <MDBCardImage position='top' alt='...' src={newuserimg} />
           </MDBCol>
           <MDBCol sm='8'>
             <MDBCardText>

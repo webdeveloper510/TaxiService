@@ -1464,6 +1464,11 @@ div#recent-trip-outer .table-responsive td .view_details_btn {
         font-weight: 700;
         text-transform: capitalize;
     }
+    button#edit_company_btn:focus-visible {
+        border: none;
+        box-shadow: none;
+        outline: none;
+    }
     /****css only for mozilla*******/
 @-moz-document url-prefix() { 
     .header.header-sticky {

@@ -9,6 +9,7 @@ import BookedStats from "./BookedStats";
 import CancelledStats from "./CancelledStats";
 import UsersStats from "./UsersStats";
 import EarningStats from "./EaringStats";
+//import PendingTrips from "../../Stats/PendingTrips"
 import { getCountDashboard, getTripCompleted } from "../../../utils/api";
 import { Link } from "react-router-dom";
 //import DashboardGraph from "../Hotel/DashboardChart/dashboardgraph";
