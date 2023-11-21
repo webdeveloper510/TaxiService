@@ -30,6 +30,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import userContext from "../../../utils/context";
+import { isValidDate } from "../../../utils/helpingFunction";
 
 
 
@@ -45,6 +46,8 @@ const RequestNewTrip = () => {
       throw new Error('Invalid Date object');
     }
   }
+  const [selectedFrom, setSelectedFrom] = useState(true);
+  const [selectedTo, setSelectedTo] = useState(false);
 
   // Function to set the minute component of a Date object
   function customSetMinutes(date, minute) {
@@ -64,7 +67,7 @@ const RequestNewTrip = () => {
  
   useEffect(() => {
     const today = new Date();
-    if (pickupDate.toDateString() == today.toDateString()) {
+    if (pickupDate?.toDateString() == today?.toDateString()) {
       SetCurrentTime({
         hour: today.getHours(),
         minute: today.getMinutes() + 1,
@@ -84,7 +87,7 @@ const RequestNewTrip = () => {
     minute: 0,
   })
   const [passengers, setPassengers] = useState([
-    // { name: "", email: "", phone: "", address: "" },
+   
   ]);
   const [vehicle, setVehicle] = useState();
   const [inputData, setInputData] = useState({
@@ -98,7 +101,7 @@ const RequestNewTrip = () => {
     pick_up_date: new Date(),
     passenger_detail: [],
     comment: "",
-    pay_option: "Cash",
+    pay_option: "",
 
   });
   const priceCalculator = ()=>{
@@ -119,17 +122,19 @@ const RequestNewTrip = () => {
     }
     console.log("distance is from priceCalculator",distance);
     if(distance && selectedFare){
-      setPrice(distance*selectedFare?.vehicle_fare_per_km)
+      setPrice((distance*selectedFare?.vehicle_fare_per_km).toFixed(2))
+    }else{
+      setPrice(0)
     }
   }
-  useEffect(priceCalculator,refreshPrice)
-  const [passengerError, setPassengerError] = useState([{
-    name: false,
-    phone: false,
-    email: false,
-    address: false,
-  }])
-  const formValidation = (passengers) => {
+  
+  useEffect(priceCalculator,[refreshPrice])
+  const [passengerError, setPassengerError] = useState([])
+  const [formValid , setFormValid] = useState(true);
+  useEffect(()=>{
+    console.log(formValid,"formvalidation check")
+  }, [formValid])
+  const formValidation = () => {
     const data = [...passengers];
     var re = /\S+@\S+\.\S+/;
     const phoneRegex = /^[0-9]*$/
@@ -147,7 +152,7 @@ const RequestNewTrip = () => {
       } else {
         data[index].nameCheck = "";
         data[index].nameLengthCheck = "";
-        valid = true;
+        
       }
 
       if (data[index].email == "") {
@@ -161,7 +166,7 @@ const RequestNewTrip = () => {
       } else {
         data[index].emailCheck = "";
         data[index].emailFormat = "";
-        valid = true;
+        
       }
       if (data[index].phone == "") {
         data[index].phoneCheck = "Phone required";
@@ -181,7 +186,7 @@ const RequestNewTrip = () => {
       } else {
         data[index].phoneCheck = "";
         data[index].phoneLengthCheck = "";
-        valid = true;
+       
       }
       if (data[index].address == "") {
         data[index].addressCheck = "Address required";
@@ -197,10 +202,11 @@ const RequestNewTrip = () => {
       } else {
         data[index].addressCheck = "";
         data[index].addressLengthCheck = "";
-        valid = true;
+      
       }
     }
-
+    setFormValid(valid);
+    
     setPassengers(data);
     return valid;
   };
@@ -235,6 +241,7 @@ const RequestNewTrip = () => {
       email: false,
       address: false,
     }])
+    // formValidation()
   };
   const handleBlur = (index, key) => {
     const newPassengersError = [...passengerError]
@@ -248,6 +255,7 @@ const RequestNewTrip = () => {
     const newPassengersError = [...passengerError]
     newPassengersError.splice(index, 1);
     setPassengerError(newPassengersError)
+    // formValidation()
   };
 
   useEffect(() => {
@@ -291,10 +299,10 @@ const RequestNewTrip = () => {
     let arr = passengers;
     console.log(passengers);
     let obj = arr[index];
-    obj[e.target.name] = e.target.value;
+    obj[e.target.name] = e.target.value.trimStart();
     arr[index] = obj;
     setPassengers([...arr]);
-    const isValid = formValidation(passengers);
+    formValidation();
     // const errorRes = formValidation(passengers);
     // if(errorRes){
     //   console.log("success")
@@ -312,35 +320,42 @@ const RequestNewTrip = () => {
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
-      data.trip_from.address?.length < 1
+      data.trip_from.address?.length < 1 ||
+      !selectedFrom
     ) {
       console.log("enter valid trip from");
       valid = false;
-      newErrors.trip_from = "Please enter valid trip from address";
+      newErrors.trip_from = "Please select valid trip from address";
     }
     if (
       !data.trip_to.lat ||
       !data.trip_to.log ||
-      data.trip_to.address?.length < 1
+      data.trip_to.address?.length < 1 ||
+      !selectedTo
     ) {
       valid = false;
-      newErrors.trip_to = "Please enter valid trip to address";
+      newErrors.trip_to = "Please select valid trip to address";
     }
     if (data.vehicle?.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
     }
-    if (inputData.pick_up_date?.length < 1) {
+    if (inputData.pick_up_date?.length < 1 || !isValidDate(inputData.pick_up_date)) {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
+    if (inputData.pay_option?.length < 1) {
+      valid = false;
+      newErrors.pay_option = "Please select valid Pay Option";
+    }
+    
     if (!valid) {
       setErrors(newErrors);
       return console.log(errors);
     }
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
-    if (errorRes) {
+    if (formValid) {
       data.vehicle_type = data.vehicle
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;
@@ -383,8 +398,9 @@ const RequestNewTrip = () => {
       setInputData(newInputData);
       setTripFrom(selectedAddress);
       setTripFromCoordinates(latLng);
-      priceCalculator()
-
+      // priceCalculator()
+      setRefreshPrice(!refreshPrice)
+      setSelectedFrom(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -401,7 +417,9 @@ const RequestNewTrip = () => {
       setInputData(newInputData);
       setTrimTo(selectedAddress);
       setTripToCoordinates(latLng);
-      priceCalculator()
+      // priceCalculator()
+      setRefreshPrice(!refreshPrice)
+      setSelectedTo(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -501,7 +519,8 @@ const RequestNewTrip = () => {
                                   } else {
                                     setErrors({ ...errors, vehicle: null });
                                   }
-                                  priceCalculator()
+                                  // priceCalculator()
+                                  setRefreshPrice(!refreshPrice)
                                 }}
                               >
                                 <option default>Select Vehicle</option>
@@ -544,7 +563,7 @@ const RequestNewTrip = () => {
                                     ...inputData,
                                     pick_up_date: data,
                                   });
-                                  if (data < 1) {
+                                  if (data < 1 || !isValidDate(data) ) {
                                     setErrors({
                                       ...errors,
                                       pick_up_date:
@@ -586,15 +605,16 @@ const RequestNewTrip = () => {
                                 onChange={(data) => {
                                   console.log(data);
                                   setTripFrom(data);
-                                  if (data < 1) {
+                                  setSelectedFrom(false);
+                                  // if (data < 1 || !selectedFrom) {
                                     setErrors({
                                       ...errors,
                                       trip_from:
-                                        "Please add valid trip from address",
+                                        "Please select valid trip from address",
                                     });
-                                  } else {
-                                    setErrors({ ...errors, trip_from: null });
-                                  }
+                                  // } else {
+                                  //   setErrors({ ...errors, trip_from: null });
+                                  // }
                                 }}
                                 onSelect={handleSelectTripFrom}
                               >
@@ -657,15 +677,16 @@ const RequestNewTrip = () => {
                                 onChange={(data) => {
                                   console.log(data);
                                   setTrimTo(data);
-                                  if (data < 1) {
+                                  setSelectedTo(false);
+                                  // if (data < 1 || !setSelectedTo) {
                                     setErrors({
                                       ...errors,
                                       trip_to:
-                                        "Please add valid trip to address",
+                                        "Please select valid trip to address",
                                     });
-                                  } else {
-                                    setErrors({ ...errors, trip_to: null });
-                                  }
+                                  // } else {
+                                  //   setErrors({ ...errors, trip_to: null });
+                                  // }
                                 }}
                                 onSelect={handleSelectTripTo}
                               >
@@ -717,6 +738,7 @@ const RequestNewTrip = () => {
                               </CFormLabel>
                               <CFormSelect
                                 name="pay"
+
                                 onChange={(data) => {
                                   console.log(data.target.value);
                                   setInputData({
@@ -733,18 +755,19 @@ const RequestNewTrip = () => {
                                   }
                                 }}
                               >
-                                <option value={"Cash"} selected>Cash</option>
+                                <option value="" disabled selected>Select a Pay Option</option>
+                                <option value={"Cash"} >Cash</option>
                                 {/* <option value="Fixed">Cash</option> */}
                                 <option value='Hotel Account'>Hotel Account</option>
 
 
                               </CFormSelect>
-                              {errors.vehicle && (
+                              {errors.pay_option && (
                                 <span
                                   style={{ color: "red" }}
                                   className="text-danger"
                                 >
-                                  {errors.vehicle}
+                                  {errors.pay_option}
                                 </span>
                               )}
                             </CCol>
@@ -827,6 +850,7 @@ const RequestNewTrip = () => {
                                 <CFormInput
                                   id="inputphnno"
                                   name="phone"
+                                  type="number"
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
@@ -851,6 +875,7 @@ const RequestNewTrip = () => {
                                   name="email"
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
+                                    
                                   }}
                                   onBlur={() => {
                                     handleBlur(index, "email")

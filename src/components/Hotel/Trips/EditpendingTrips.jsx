@@ -115,8 +115,8 @@ const EditpendingTrip = ({ role }) => {
   };
 
   const addPassenger = () => {
-    setPassengers([
-      ...passengers,
+    setInputs([
+      ...inputs,
       { name: "", email: "", phone: "", address: "" },
     ]);
   };
@@ -141,8 +141,8 @@ const EditpendingTrip = ({ role }) => {
   }
 
   const removePassenger = (index) => {
-    const updatedPassengers = passengers.filter((_, i) => i !== index);
-    setPassengers(updatedPassengers);
+    const updatedPassengers = inputs.filter((_, i) => i !== index);
+    setInputs(updatedPassengers);
   };
   useEffect(() => {
     getVehicleType().then((res) => {
