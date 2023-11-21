@@ -612,10 +612,9 @@ export const getPastTripsdriver = async() => {
     },
   }) 
   .then((res) => {
-    console.log("response post trips driver", res)
     return res.data;    
   })
   .catch((error) => {
-    console.log("GET_TRIP", error);
+    console.log("get trip error", error);
   });
 };

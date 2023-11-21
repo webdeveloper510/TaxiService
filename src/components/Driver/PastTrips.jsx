@@ -100,11 +100,6 @@ const PastTrips = () => {
                       
                     />
                   </Box>
-                  {/* <h2>Add New Driver</h2> */}
-                  {/* {loading?<AppLoader/>: */}
-
-                  {/* // } */}
-                {/* </div> */}
               </div>
             </div>
           </div>

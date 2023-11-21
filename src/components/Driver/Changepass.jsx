@@ -61,6 +61,10 @@ const Changepass = () => {
       // .matches(/[a-z]/, "Password requires a lowercase letter")
       // .matches(/[A-Z]/, "Password requires an uppercase letter")
       // .matches(/[^\w]/, "Password requires a symbol")
+      .oneOf(
+        [Yup.ref("password")],
+        "Password and Confirm Password didn't match"
+      )
       .required("Confirm Password is required"),
   });
   const initialValues = {
@@ -70,7 +74,6 @@ const Changepass = () => {
 
   const navigate = useNavigate();
 
-  const [submitLoader, setSubmitLoader] = useState(false);
   const back = () => {
     navigate("/super-admin/driver/listofdrivers");
   };
