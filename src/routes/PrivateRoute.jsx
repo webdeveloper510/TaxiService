@@ -51,6 +51,9 @@ import BookingForm from '../components/BookingForm/BookingForm';
 import ViewSingleTrip from '../components/Taxi/Trips/ViewSingleTripdetails';
 import BookingStaffForm from '../components/BookingForm/BookingStaffForm';
 import DriverRoute from '../components/DriverRoute';
+import EditdriverData from '../components/Driver/Editdriver';
+import Changepass from '../components/Driver/Changepass';
+import PastTrips from '../components/Driver/PastTrips';
 
 
 const PrivateRoute = () => {
@@ -58,11 +61,16 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
+
+            <Route path="/edit-driver-data" element={<EditdriverData />} />
+            <Route path="/change-password" element={<Changepass />} />
+            <Route path="/past-trips" element={<PastTrips />} />
+
             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />
             <Route path="/driverRoute" element={<DriverRoute />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
             <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
-
+            
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />

@@ -206,9 +206,6 @@ function EditDriver() {
                             <strong>Basic Infromation</strong>
                           </CCardHeader>
                           <CCardBody>
-  
-  
-  
                             <form onSubmit={formik.handleSubmit} noValidate className="row g-3">
                               <CCol md={6}>
                                 <CFormLabel htmlFor="inputfirstname">First Name</CFormLabel>
