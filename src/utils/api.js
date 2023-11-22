@@ -575,6 +575,21 @@ export const changeForgotPass = async (data) => {
       console.log("changeForgotPass error", error);
     });
 };
+export const changeDriverPass = async (data) => {
+  return await Axios.put(`driver/reset_password`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "changeDriverPass");
+      return res;
+    })
+    .catch((error) => {
+      console.log("changeDriverPass error", error);
+    });
+};
+
 export const changePass = async (data) => {
   return await Axios.post(`/admin/reset_password`, data, {
     headers: {
@@ -606,7 +621,7 @@ export const requestBookingTrip = async (id) => {
 
 
 export const getPastTripsdriver = async() => {
-  return await Axios.get(`driver/get_trips_for_driver/completed` , {
+  return await Axios.get(`driver/get_trips_for_driver/Completed` , {
     headers: {
       "x-access-token": token,
     },

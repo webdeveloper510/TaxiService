@@ -13,11 +13,14 @@ function GuestRoute({ children }) {
                 return navigate("/super-admin/dashboard");
                }else if(user?.role == "HOTEL"){
                 return navigate("dashboard");
+               }else if(user?.role == "DRIVER"){
+                return navigate("/past-trips");
                }
+               
         }
     },[appLoaded])
 
-      return children
+      return !appLoaded?children:<AppLoader/>
     
     
     }

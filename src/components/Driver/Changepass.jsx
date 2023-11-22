@@ -39,7 +39,7 @@ import {
   CModalHeader,
   CModalTitle,
 } from "@coreui/react";
-import { changePass } from "../../utils/api";
+import { changeDriverPass, changePass } from "../../utils/api";
 
 const Changepass = () => {
   const [loading, setLoading] = useState(false);
@@ -49,23 +49,23 @@ const Changepass = () => {
   const [passVissibleOld, setPassVissibleOld] = useState(false);
   const validationSchema = Yup.object().shape({
     password: Yup.string()
-      .min(6, "Password must be 6 characters long")
+      .min(6, "Old Password must be 6 characters long")
       // .matches(/[0-9]/, "Password requires a number")
       // .matches(/[a-z]/, "Password requires a lowercase letter")
       // .matches(/[A-Z]/, "Password requires an uppercase letter")
       // .matches(/[^\w]/, "Password requires a symbol")
-      .required("Password is required"),
+      .required("Old Password is required"),
     newPassword: Yup.string()
       .min(6, "New Password must be 6 characters long")
       // .matches(/[0-9]/, "Password requires a number")
       // .matches(/[a-z]/, "Password requires a lowercase letter")
       // .matches(/[A-Z]/, "Password requires an uppercase letter")
       // .matches(/[^\w]/, "Password requires a symbol")
-      .oneOf(
-        [Yup.ref("password")],
-        "Password and Confirm Password didn't match"
-      )
-      .required("Confirm Password is required"),
+      // .oneOf(
+      //   [Yup.ref("password")],
+      //   "Password and Confirm Password didn't match"
+      // )
+      .required("New Password is required"),
   });
   const initialValues = {
     password: "",
@@ -106,13 +106,14 @@ const Changepass = () => {
       }
       setLoading(true);
       console.log("values", values);
-      changePass({
+      changeDriverPass({
         oldPassword: values.password,
         password: values.newPassword,
       })
         .then((response) => {
           console.log("response---->>>>", response);
           if (response.data.code === 200) {
+            formik.resetForm()
             toast.success(`${response.data.message}`, {
               position: "top-right",
               autoClose: 1000,

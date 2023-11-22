@@ -45,12 +45,12 @@ function App() {
             //     return <Navigate to="/" />;
             }else{
               console.log("remove token from wrong app")
-              localStorage.clear();
+              // localStorage.clear();
               // navigate("/")
             }
           }).catch((err)=>{
             console.log("remove token from catch app")
-            localStorage.clear();
+            // localStorage.clear();
             // navigate("/")
           }).finally(()=>{
             setLoading(false);

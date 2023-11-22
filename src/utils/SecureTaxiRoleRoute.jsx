@@ -22,7 +22,9 @@ function SecureTaxiRoleRoute({ children }) {
         else if(user?.role == "HOTEL") {
           return navigate("/dashboard")
   
-        }
+        }else if(user?.role == "DRIVER"){
+          return navigate("/past-trips");
+         }
   
       }
     }

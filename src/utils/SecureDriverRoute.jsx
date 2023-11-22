@@ -3,13 +3,13 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { getProfile } from './api';
 import userContext from './context';
 import AppLoader from '../components/AppLoader';
-function SecureHotelRoleRoute({ children }) {
+function SecureDriverRoute({ children }) {
 
   const { user, setUser, appLoaded } = useContext(userContext);
   const token = localStorage.getItem('token');
   const navigate = useNavigate()
   useEffect(() => {
-    console.log('user role is from secure taxi routes: ', user?.role, window.location.href);
+   
     if(appLoaded && user){
       console.log('user role is from secure accelerator routes: ', user , appLoaded)
       if (!token || !user || !user.role) {
@@ -22,9 +22,10 @@ function SecureHotelRoleRoute({ children }) {
         else if(user?.role == "COMPANY") {
           return navigate("/taxi/dashboard")
   
-        }else if(user?.role == "DRIVER"){
-          return navigate("/past-trips");
-         }
+        } else if(user?.role == "HOTEL") {
+          return navigate("/dashboard")
+  
+        }
   
       }
     }
@@ -35,4 +36,4 @@ function SecureHotelRoleRoute({ children }) {
 }
 
 
-export default SecureHotelRoleRoute
+export default SecureDriverRoute

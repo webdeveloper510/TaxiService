@@ -25,7 +25,7 @@ import { eye } from 'react-icons-kit/feather/eye'
 import { ClipLoader } from "react-spinners";
 function Login() {
   const { user, setUser } = useContext(userContext)
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     phoneNo: Yup.string()
@@ -73,14 +73,14 @@ function Login() {
             navigate("/taxi/dashboard")
 
 
-          }
-          if (response.data.result.role === "SUPER_ADMIN") {
+          } else if (response.data.result.role === "SUPER_ADMIN") {
 
             navigate("/super-admin/dashboard")
 
 
-          }
-          else {
+          } else if (response.data.result.role === "DRIVER") {
+            return navigate("/past-trips");
+          } else {
 
             navigate("/dashboard")
 
@@ -262,7 +262,7 @@ function Login() {
                     Enter otp
                   </Link> */}
                 </div>
-               
+
                 <div className="text-center text-md-start mt-4 pt-2">
                   {/* <MDBBtn className="custom-login mb-0 px-5">
                 Login

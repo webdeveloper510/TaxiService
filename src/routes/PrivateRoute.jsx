@@ -54,6 +54,7 @@ import DriverRoute from '../components/DriverRoute';
 import EditdriverData from '../components/Driver/Editdriver';
 import Changepass from '../components/Driver/Changepass';
 import PastTrips from '../components/Driver/PastTrips';
+import SecureDriverRoute from '../utils/SecureDriverRoute';
 
 
 const PrivateRoute = () => {
@@ -61,10 +62,11 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
-
-            <Route path="/edit-driver-data" element={<EditdriverData />} />
-            <Route path="/change-password" element={<Changepass />} />
-            <Route path="/past-trips" element={<PastTrips />} />
+           
+            <Route path="/edit-driver-data" element={<SecureDriverRoute><EditdriverData /></SecureDriverRoute>} />
+            <Route path="/change-password" element={<SecureDriverRoute><Changepass /></SecureDriverRoute>} />
+            <Route path="/past-trips" element={<SecureDriverRoute><PastTrips type="past" /></SecureDriverRoute>} />
+            <Route path="/trips-payment" element={<SecureDriverRoute><PastTrips type="payment" /></SecureDriverRoute>} />
 
             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />
             <Route path="/driverRoute" element={<DriverRoute />} />

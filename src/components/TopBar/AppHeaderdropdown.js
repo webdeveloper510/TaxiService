@@ -43,12 +43,12 @@ const AppHeaderDropdown = () => {
           <button className='text-black btn-logout '   >Logout</button>
        
         </CDropdownItem>
-        <CDropdownItem className='edit_profile'>
+        {user.role != "DRIVER" && <CDropdownItem className='edit_profile'>
         <CIcon icon={cilUser} className="me-2" />
         <Link to="/edit-profile">
           <span>Edit Profile</span>
        </Link>
-        </CDropdownItem>
+        </CDropdownItem>}
       </CDropdownMenu>
     </CDropdown>
   )
