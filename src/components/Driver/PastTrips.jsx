@@ -141,6 +141,12 @@ const PastTrips = ({type}) => {
      
     },
     {
+      field: "price",
+      headerName: "Commission",
+      width: 200,
+     
+    },
+    {
       field: "trip_to",
       headerName: "Trip To",
       width: 200,
