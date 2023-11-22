@@ -35,6 +35,7 @@ import checkedImg from "../../../assets/images/checked.png"
 import SuperMap from "../../TaxiMap/Map";
 import userContext from "../../../utils/context";
 import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
+import SidebarDriver from "../../Driver/Sidebar";
 const ViewSingleTrip = () => {
   const [trip, setTrip] = useState(null)
   const [customerName, setCustomerName] = useState(null);
@@ -72,11 +73,13 @@ const ViewSingleTrip = () => {
           <div>
              {user?.role === "SUPER_ADMIN" && <SuperAdminSideBar/>} 
               {user?.role === "COMPANY" && <SuperSideBar/>}
+              {user?.role === "DRIVER" && <SidebarDriver/>}
+              
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
              {loading ? <AppLoader/> : <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
                <h1 class="heading-for-every-page">
-               <Link to="/taxi/dashboard" className="view_detail">
+               <Link to="/" className="view_detail">
                     <img src={backtovehicle} alt="edit" /> View Trip Details
                     </Link>
                     </h1>
