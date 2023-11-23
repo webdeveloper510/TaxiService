@@ -50,6 +50,65 @@ const FeedbackMsj = () => {
             }
         }).finally(() => { setLoading(false); });
     }, [])
+
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [pageLimit, setPageLimit] = React.useState(3);
+    const [maxPage, setMaxPage] = React.useState(3);
+    const [minPage, setMinPage] = React.useState(0);
+    const recordPage = 10;
+    const lastIndex = currentPage * recordPage;
+    const firstIndex = lastIndex - recordPage;
+    const data = feedback?.slice(firstIndex, lastIndex);
+    const nPage = Math.ceil(feedback?.length / recordPage);
+    const number = [...Array(nPage + 1).keys()].slice(1);
+
+    const pageNumber = number.map((num, i) => {
+        if (num < maxPage + 1 && num > minPage) {
+            return (
+                <>
+                    <li
+                        key={i}
+                        className={currentPage == num ? `active_btn ` : `unactive_btn`}
+                    >
+                        <button onClick={() => changePage(num)}>{num}</button>
+                    </li>
+                </>
+            );
+        } else {
+            return null;
+        }
+    });
+
+    const handlePrePage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+            if ((currentPage - 1) % pageLimit == 0) {
+                setMaxPage(maxPage - pageLimit);
+                setMinPage(minPage - pageLimit);
+            }
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage !== nPage) {
+            setCurrentPage(currentPage + 1);
+            if (currentPage + 1 > maxPage) {
+                setMaxPage(maxPage + pageLimit);
+                setMinPage(minPage + pageLimit);
+            }
+        }
+    };
+
+    const changePage = (id) => {
+        setCurrentPage(id);
+    };
+
+    let pageIncreament = null;
+    if (data.length > maxPage) {
+        pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
+    }
+
+
     return (
         <>
             <div>
@@ -70,7 +129,7 @@ const FeedbackMsj = () => {
                                         <CCol xs={12}>
                                             <div class="active-trip-outer mx-5 p-4">
                                                 <Accordion>
-                                                    {feedback.map((item) => {
+                                                    {data?.map((item) => {
                                                         return <Accordion.Item
                                                             key={item._id} eventKey={item._id}>
                                                             <Accordion.Header><span>{item?.company_name} </span><span>{moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span></Accordion.Header>
@@ -80,7 +139,47 @@ const FeedbackMsj = () => {
                                                         </Accordion.Item>
                                                     })}
                                                 </Accordion>
+
+                                              
                                             </div>
+                                            {data?.length > 0 ? (
+                                                    <div
+                                                        className="pagination-outer me-5"
+                                                        style={{
+                                                            display: "flex",
+                                                            flexDirection: "row",
+                                                        }}
+                                                    >
+                                                        <div
+                                                            className="prev_btn"
+                                                            style={{
+                                                                display: "flex",
+                                                                flexDirection: "row",
+                                                            }}
+                                                        >
+                                                            {
+                                                                currentPage == 1?" ":  <button onClick={() => handlePrePage()}>
+                                                                Previous
+                                                            </button>
+                                                            }
+                                                          
+                                                        </div>
+                                                        <div className="previous-page">
+                                                            <ul>
+                                                                {pageNumber}
+                                                                <button className="dots_btn">{pageIncreament}</button>
+                                                            </ul>
+                                                        </div>
+                                                        <div className="next_btn">
+                                                        {
+                                                                currentPage !== 1?" ":  <button onClick={() => handleNextPage()}>Next</button>
+                                                            }
+                                                            
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    ""
+                                                )}
                                         </CCol>
                                         {/* <CCol xs={2}></CCol> */}
                                     </CRow>
