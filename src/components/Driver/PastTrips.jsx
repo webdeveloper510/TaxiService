@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AppHeader from "../TopBar/AppHeader";
 import SidebarDriver from "./Sidebar";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import { getPastTripsdriver } from "../../utils/api";
 import moment from "moment";
 import AppLoader from "../AppLoader";
@@ -270,7 +270,17 @@ const PastTrips = ({type}) => {
   const back = () => {
     navigate("/super-admin/driver/listofdrivers");
   };
-
+  
+    const renderCellContent = (params) => {
+      const { value } = params;
+      return (
+        <Tooltip title={value} arrow>
+          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {value}
+          </div>
+        </Tooltip>
+      );
+    }
   return (
     <div>
       <div className="container-fluidd">
@@ -289,9 +299,14 @@ const PastTrips = ({type}) => {
                  {loader? <AppLoader/>: <Box sx={{ height: 500, width: "100%" }}>
                     <DataGrid
                     slots={{ toolbar: GridToolbar }}
+                   
                     checkboxSelection={false}
                       rows={trips}
-                      columns={type == "payment"?paymentColumns:columns}
+                      columns= {columns.map((column) => ({
+                        ...column,
+                        renderCell: (params) => renderCellContent(params),
+                      }))}
+                      // {type == "payment"?paymentColumns:columns}
                       getRowId={(row) => row._id}
                       initialState={{
                         pagination: {
