@@ -63,16 +63,15 @@ const PastTrips = ({type}) => {
       field: "trip_from",
       headerName: "Trip From",
       width: 200,
-      valueGetter: (params) => params.row.trip_from.address ,
-    
+      renderCell:(params) => renderCellContent( params.row.trip_from.address) ,
       // type: "number",
     },
     {
       field: "trip_to",
       headerName: "Trip To",
       width: 200,
-      
-      valueGetter: (params) => params.row.trip_to.address ,
+      renderCell:(params) => renderCellContent( params.row.trip_to.address) ,
+      // valueGetter: (params) => params.row.trip_to.address ,
       // type: "number",
     },
     {
@@ -91,10 +90,13 @@ const PastTrips = ({type}) => {
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#fff2cf"
-          }} className="submit-btn"><svg xmlns="http://www.w3.org/2000/svg" width="90px" height="90px" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16" strokeWidth="8">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-          <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-        </svg></button>
+          }} className="submit-btn">
+           
+        <svg xmlns="http://www.w3.org/2000/svg" width="90px" height="90px"fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+</svg>
+        </button>
         </Link>
       ),
     },
@@ -131,16 +133,15 @@ const PastTrips = ({type}) => {
       field: "trip_from",
       headerName: "Trip From",
       width: 200,
-      valueGetter: (params) => params.row.trip_from.address ,
-    
+      renderCell:(params) => renderCellContent( params.row.trip_from.address) ,
       // type: "number",
     },
     {
       field: "trip_to",
       headerName: "Trip To",
       width: 200,
-      
-      valueGetter: (params) => params.row.trip_to.address ,
+      renderCell:(params) => renderCellContent( params.row.trip_to.address) ,
+      // valueGetter: (params) => params.row.trip_to.address ,
       // type: "number",
     },
     {
