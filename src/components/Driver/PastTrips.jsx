@@ -129,6 +129,14 @@ const PastTrips = ({type}) => {
       // type: "number",
     },
     {
+      field: "trip_to",
+      headerName: "Trip To",
+      width: 200,
+      
+      valueGetter: (params) => params.row.trip_to.address ,
+      // type: "number",
+    },
+    {
       field: "pay_option",
       headerName: "Pay option",
       width: 200,
@@ -141,19 +149,13 @@ const PastTrips = ({type}) => {
      
     },
     {
-      field: "price",
+      field: "commission",
       headerName: "Commission",
       width: 200,
+      valueGetter: (params) => params.row.price
      
     },
-    {
-      field: "trip_to",
-      headerName: "Trip To",
-      width: 200,
-      
-      valueGetter: (params) => params.row.trip_to.address ,
-      // type: "number",
-    },
+    
     {
       field: 'invoice',
       headerName: 'Invoice',
@@ -176,7 +178,7 @@ const PastTrips = ({type}) => {
     // Get the HTML content as a string
  
     const data = {
-      _id: user._id,
+      _id: trip.trip_id,
       tripFrom: trip.trip_from.address,
       tripTo: trip.trip_to.address,
       price: trip.price,

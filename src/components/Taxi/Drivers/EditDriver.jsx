@@ -152,7 +152,7 @@ function EditDriver() {
         formData.append('email', values.Email);
         formData.append('phone', values.MobileNo);
         formData.append('gender', values.Gender);
-        formData.append('password', '12587574545');
+
         formData.append('driver_image', image1);
         setSubmitLoader(true)
         editDriver(formData,driverId).then((res) => {

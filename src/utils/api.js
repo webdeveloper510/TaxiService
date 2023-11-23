@@ -633,3 +633,29 @@ export const getPastTripsdriver = async() => {
     console.log("get trip error", error);
   });
 };
+export const sendFeedback = async(data) => {
+  return await Axios.post(`admin/save_feedback` , data, {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res.data;    
+  })
+  .catch((error) => {
+    console.log("get trip error", error);
+  });
+};
+export const getFeedback = async() => {
+  return await Axios.get(`admin/get_feedback` , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res?.data;    
+  })
+  .catch((error) => {
+    console.log("get trip error", error);
+  });
+};

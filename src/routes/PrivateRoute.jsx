@@ -55,6 +55,8 @@ import EditdriverData from '../components/Driver/Editdriver';
 import Changepass from '../components/Driver/Changepass';
 import PastTrips from '../components/Driver/PastTrips';
 import SecureDriverRoute from '../utils/SecureDriverRoute';
+import Feedback from '../components/Hotel/Feedback/feedback';
+import FeedbackMsj from '../components/SuperAdmin/Feedback/feedback';
 
 
 const PrivateRoute = () => {
@@ -62,7 +64,7 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
-           
+
             <Route path="/edit-driver-data" element={<SecureDriverRoute><EditdriverData /></SecureDriverRoute>} />
             <Route path="/change-password" element={<SecureDriverRoute><Changepass /></SecureDriverRoute>} />
             <Route path="/past-trips" element={<SecureDriverRoute><PastTrips type="past" /></SecureDriverRoute>} />
@@ -72,18 +74,19 @@ const PrivateRoute = () => {
             <Route path="/driverRoute" element={<DriverRoute />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
             <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
-            
+
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
             <Route path="/new-password" element={<GuestRoute><NewPassword /></GuestRoute>} />
             <Route path="/enter-otp" element={<GuestRoute><EnterOtp /></GuestRoute>} />
+            <Route path="/feedback" element={<SecureHotelRoleRoute><Feedback /></SecureHotelRoleRoute>} />
             <Route path="/dashboard" element={<SecureHotelRoleRoute><Dashboard /></SecureHotelRoleRoute>} />
             <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} />
             <Route path="/trips/activetrips" element={<SecureHotelRoleRoute><ActiveTrip /></SecureHotelRoleRoute>} />
             <Route path="/trips/requestnewtrip" element={<SecureHotelRoleRoute><RequestNewTrip /></SecureHotelRoleRoute>} />
             <Route path="/trips/pendingtrips" element={<SecureHotelRoleRoute><PendingTrip /></SecureHotelRoleRoute>} />
-            <Route path="/trips/editpendingtrips/:id" element={<SecureHotelRoleRoute><EditpendingTrip  role={"hotel"} /></SecureHotelRoleRoute>} />
+            <Route path="/trips/editpendingtrips/:id" element={<SecureHotelRoleRoute><EditpendingTrip role={"hotel"} /></SecureHotelRoleRoute>} />
             <Route path="/trips/completetrips" element={<SecureHotelRoleRoute><CompletedTrip /></SecureHotelRoleRoute>} />
             <Route path="/trips/requestbookings" element={<SecureHotelRoleRoute><BookingRequestTable /></SecureHotelRoleRoute>} />
             <Route path="/driver/listofdrivers" element={<SecureHotelRoleRoute><DriverList /></SecureHotelRoleRoute>} />
@@ -127,6 +130,7 @@ const PrivateRoute = () => {
             <Route path="/super-admin/vehicle/editvehicle/:vehicleId" element={<SecureSuperRoleRoute><EditVehicle /></SecureSuperRoleRoute>} />
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/new-password" element={<SecureSuperRoleRoute><NewPassword /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/feedback" element={<SecureSuperRoleRoute><FeedbackMsj /></SecureSuperRoleRoute>} />
             <Route path='*' element={<Navigate to="/" />} />
 
         </Routes>

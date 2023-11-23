@@ -159,7 +159,6 @@ const AddNewDriver = () => {
       formData.append('gender', values.Gender);
       formData.append('driver_image', values.file);
       formData.append('driver_documents', values.doc);
-      formData.append('password', '12587574545');
       setSubmitLoader(true);
       addDriver(formData).then((res) => {
         console.log("response---->>>>", res)
