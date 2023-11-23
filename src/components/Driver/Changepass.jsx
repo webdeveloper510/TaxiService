@@ -151,7 +151,9 @@ const Changepass = () => {
                 <CRow>
                   <CCol xs={2}></CCol>
                   <CCol xs={8}>
-                    <div class="active-trip-outer mx-5 p-4">
+                    <div style={{
+                      height:"50vh"
+                    }} class="active-trip-outer mx-5 p-4">
                       <form onSubmit={formik.handleSubmit} noValidate>
                         <div className="change-password-content">
                           <div className="mb-4" id="pwd_field">

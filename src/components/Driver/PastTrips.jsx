@@ -77,7 +77,7 @@ const PastTrips = ({type}) => {
     },
     {
       field: 'showDetail',
-      headerName: 'Show Detail',
+      headerName: 'Action',
       width: 150,
       renderCell: (params) => (
         <Link
@@ -271,8 +271,8 @@ const PastTrips = ({type}) => {
     navigate("/super-admin/driver/listofdrivers");
   };
   
-    const renderCellContent = (params) => {
-      const { value } = params;
+    const renderCellContent = (value) => {
+      
       return (
         <Tooltip title={value} arrow>
           <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -302,11 +302,7 @@ const PastTrips = ({type}) => {
                    
                     checkboxSelection={false}
                       rows={trips}
-                      columns= {columns.map((column) => ({
-                        ...column,
-                        renderCell: (params) => renderCellContent(params),
-                      }))}
-                      // {type == "payment"?paymentColumns:columns}
+                      columns= {type == "payment"?paymentColumns:columns}
                       getRowId={(row) => row._id}
                       initialState={{
                         pagination: {
