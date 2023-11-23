@@ -800,10 +800,11 @@ img.map-img {
   color: var(--cui-accordion-color);
   background-color: var(--cui-accordion-bg);
   border: var(--cui-accordion-border-width) solid #fdc101 !important;
+  outline: none !important;
 }
 .accordion-button:not(.collapsed) {
   color: #000 !important;
-  background-color: #ffd04e !important;
+  background-color: #fff2cf !important;
   box-shadow: inset 0 calc(-1 * var(--cui-accordion-border-width)) 0  #fdc101 !important;
 }
 .accordion-button:focus {
@@ -811,4 +812,7 @@ img.map-img {
   border-color: #ffd04e !important;
   outline: 0;
   box-shadow: var(--cui-accordion-btn-focus-box-shadow);
+}
+.MuiDataGrid-columnHeaderTitle.css-t89xny-MuiDataGrid-columnHeaderTitle {
+  font-weight: 800;
 }

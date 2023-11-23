@@ -85,9 +85,16 @@ const PastTrips = ({type}) => {
           to={`/trips/view-trip-details/${params.row._id}`}
         >
           <button style={{
-            width:"80px",
+            width:"40px",
             height:"40px",
-          }} className="submit-btn">Show</button>
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#fff2cf"
+          }} className="submit-btn"><svg xmlns="http://www.w3.org/2000/svg" width="90px" height="90px" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16" strokeWidth="8">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+        </svg></button>
         </Link>
       ),
     },
@@ -144,7 +151,7 @@ const PastTrips = ({type}) => {
     },
     {
       field: "price",
-      headerName: "Earning",
+      headerName: "Earning in Euro",
       width: 200,
      
     },
@@ -152,7 +159,7 @@ const PastTrips = ({type}) => {
       field: "commission",
       headerName: "Commission",
       width: 200,
-      valueGetter: (params) => params.row.price
+      valueGetter: (params) =>"10%"
      
     },
     
@@ -163,10 +170,17 @@ const PastTrips = ({type}) => {
       renderCell: (params) => (
         
           <button style={{
-            width:"1200px",
+            width:"40px",
             height:"40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#fff2cf"
           }}
-          onClick={()=>downloadPdf(params.row,user)} className="submit-btn">Download</button>
+          onClick={()=>downloadPdf(params.row,user)} className="submit-btn"><svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg></button>
         
       ),
     },
