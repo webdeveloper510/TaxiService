@@ -132,8 +132,22 @@ const FeedbackMsj = () => {
                                                     {data?.map((item) => {
                                                         return <Accordion.Item
                                                             key={item._id} eventKey={item._id}>
-                                                            <Accordion.Header><span>{item?.company_name} </span><span>{moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span></Accordion.Header>
+                                                            <Accordion.Header>
+                                                              <div style={{display:"flex", justifyContent:"space-around"}}>
+                                                              <div><span>
+                                                              {item?.company_name} 
+                                                              </span>
+                                                                </div>
+                                                                <div style={{marginLeft:"40px"}}>
+                                                                    <span>
+                                                                    {moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                                    </span>
+                                                                </div>
+                                                              </div>
+                                                              </Accordion.Header>
                                                             <Accordion.Body>
+                                                                <h6 style={{color:"black"}}>{item.title}
+                                                                </h6>
                                                                 {item.comment}
                                                             </Accordion.Body>
                                                         </Accordion.Item>

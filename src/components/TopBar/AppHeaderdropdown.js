@@ -36,6 +36,13 @@ const AppHeaderDropdown = () => {
       <CDropdownMenu className="pt-0" placement="bottom-end">
         {/* <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
         <CDropdownDivider /> */}
+       
+        {user?.role != "DRIVER" && <CDropdownItem className='edit_profile'>
+        <CIcon icon={cilUser} className="me-2" />
+        <Link to="/edit-profile">
+          <span>Edit Profile</span>
+       </Link>
+        </CDropdownItem>}
         <CDropdownItem onClick={()=>{
             logout()
           }} className='logout-dropdown'>
@@ -43,12 +50,6 @@ const AppHeaderDropdown = () => {
           <button className='text-black btn-logout '   >Logout</button>
        
         </CDropdownItem>
-        {user?.role != "DRIVER" && <CDropdownItem className='edit_profile'>
-        <CIcon icon={cilUser} className="me-2" />
-        <Link to="/edit-profile">
-          <span>Edit Profile</span>
-       </Link>
-        </CDropdownItem>}
       </CDropdownMenu>
     </CDropdown>
   )

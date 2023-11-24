@@ -40,12 +40,16 @@ const Feedback = () => {
     const [loading, setLoading] = useState(false);
     const validationSchema = Yup.object().shape({
         feedback: Yup.string()
-            .min(10)
+            .min(20,"Feedback must be at least 20 characters")
             .required("Feedback is required"),
+        title:Yup.string()
+            .min(4,"Title must be at least 4 characters")
+            .required("Title is required")
 
     });
     const initialValues = {
         feedback: "",
+        title:""
     };
 
     const navigate = useNavigate();
@@ -55,7 +59,8 @@ const Feedback = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             console.log(values)
-            sendFeedback({comment:values.feedback}).then((res) => {
+            sendFeedback({comment:values.feedback,
+            title:values.title}).then((res) => {
                 console.log(res, "fromFeedback")
                 if(res?.code === 200) {
                     toast.success(`Thank you for your feedback`, {
@@ -95,18 +100,56 @@ const Feedback = () => {
                                     <CRow>
                                         <CCol xs={2}></CCol>
                                         <CCol xs={8}>
-                                            <div class="active-trip-outer mx-5 p-4">
+                                            <div style={{overflow:"hidden",height: "78vh"}} class="active-trip-outer mx-5 p-4">
                                                 <form onSubmit={formik.handleSubmit} noValidate>
                                                     <div className="">
+                                                    <div className="mb-4" id="pwd_field">
+                                                            <label htmlFor="title" className="form-label">
+                                                                Title
+                                                            </label>
+                                                            <input
+                                                                id="title"
+                                                                type="text"
+                                                                {...formik.getFieldProps("title")}
+                                                                // maxLength="50"
+                                                                className={clsx(
+                                                                    "form-control bg-transparent ",
+                                                                    {
+                                                                        "is-invalid":
+                                                                            formik.touched.title &&
+                                                                            formik.errors.title,
+                                                                    },
+                                                                    {
+                                                                        "is-valid":
+                                                                            formik.touched.title &&
+                                                                            !formik.errors.title,
+                                                                    }
+                                                                )}
+                                                                name="title"
+                                                                autoComplete="off"
+                                                            />
+                                                            {formik.errors.title &&
+                                                                formik.touched.title ? (
+                                                                <div className="text-danger text-start">
+                                                                    {formik.errors.title}
+                                                                </div>
+                                                            ) : null}
+
+
+                                                        </div>
                                                         <div className="mb-4" id="pwd_field">
                                                             <label htmlFor="feedback" className="form-label">
-                                                                Feedback
+                                                                Description
                                                             </label>
                                                             <textarea
                                                                 id="feedback"
                                                                 type="text"
+                                                                 
                                                                 rows={15}
-                                                                style={{height:"200px"}}
+                                                                style={{
+                                                                    height:"200px",
+                                                                    resize: "none",
+                                                            }}
                                                                 // size="lg"
                                                                 {...formik.getFieldProps("feedback")}
                                                                 // maxLength="50"
