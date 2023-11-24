@@ -179,7 +179,7 @@ const [selectedId, setSelectedId ] = useState(null);
                         </CTableHead>
                         <CTableBody>
                           {data?.length > 0
-                            ? driver.map((item, index) => {
+                            ? data.map((item, index) => {
                               let status = "Offline";
                               if (item.status) {
                                 status = "Online"
