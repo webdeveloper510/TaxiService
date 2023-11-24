@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SideBar2 from '../SideBar2'
 import AppHeader from '../../TopBar/AppHeader'
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import clsx from "clsx";
@@ -39,10 +39,10 @@ const Feedback = () => {
 
     const [loading, setLoading] = useState(false);
     const validationSchema = Yup.object().shape({
-        feedback: Yup.string()
+        feedback: Yup.string().trim()
             .min(20,"Feedback must be at least 20 characters")
             .required("Feedback is required"),
-        title:Yup.string()
+        title:Yup.string().trim()
             .min(4,"Title must be at least 4 characters")
             .required("Title is required")
 
@@ -58,6 +58,7 @@ const Feedback = () => {
         initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
+           
             console.log(values)
             sendFeedback({comment:values.feedback,
             title:values.title}).then((res) => {
