@@ -36,7 +36,7 @@ import { isValidDate } from "../../../utils/helpingFunction";
 
 const RequestNewTrip = () => {
   const [refreshPrice , setRefreshPrice] = useState(false);
-  const {user,setUser, app} = useContext(userContext);
+  const {user,setUser} = useContext(userContext);
   function customSetHours(date, hour) {
     if (date instanceof Date) {
       const newDate = new Date(date);
@@ -46,7 +46,7 @@ const RequestNewTrip = () => {
       throw new Error('Invalid Date object');
     }
   }
-  const [selectedFrom, setSelectedFrom] = useState(true);
+  const [selectedFrom, setSelectedFrom] = useState(false);
   const [selectedTo, setSelectedTo] = useState(false);
 
   // Function to set the minute component of a Date object

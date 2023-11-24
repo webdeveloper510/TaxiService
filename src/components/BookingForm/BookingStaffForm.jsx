@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/footer";
+import * as geolib from "geolib";
+
 import bookingCar from '../../assets/images/booking-car.png'
 import {
   CButton,
@@ -20,16 +22,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import { addLinkTrip, getCompanyById, getTripById, getVehicleType, tripsUpdate } from "../../utils/api";
+import { addLinkTrip, getCompanyById, getFare, getTripById, getVehicleType, tripsUpdate } from "../../utils/api";
 import { toast } from "react-toastify";
 import sessionExp from '../../assets/images/session-expired.png'
 import backtotaxi from "../../assets/images/taxi.png"
 //import background from '../assets/images/heroimg.png';
 const BookingStaffForm = () => {
+  const [fares, setFares] = useState(null);
+  const [selectedFare, setSelectedFare] = useState(null);
   const booking = useParams();
   console.log("pending id", booking.id);
   const navigate = useNavigate();
-
+  const [refreshPrice, setRefreshPrice] = useState(false);
+  const [price, setPrice] = useState(0)
   const [pickupDate, setpickupDate] = useState(new Date());
   const [passengers, setPassengers] = useState([]);
   const [vehicle, setVehicle] = useState();
@@ -40,8 +45,33 @@ const BookingStaffForm = () => {
     },
     minute: 0,
   });
+  const priceCalculator = () => {
+
+    let distance = null;
+    if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
+      distance = (geolib.getDistance(
+        {
+          latitude: inputData?.trip_from?.lat,
+          longitude: inputData?.trip_from?.log
+        },
+        {
+          latitude: inputData?.trip_to?.lat,
+          longitude: inputData?.trip_to?.log,
+        }
+      ) / 1000
+      ).toFixed(2);
+    }
+    console.log("distance is from priceCalculator", distance);
+    if (distance && selectedFare) {
+      setPrice((distance * selectedFare?.vehicle_fare_per_km).toFixed(2))
+    } else {
+      setPrice(0)
+    }
+  }
+  const [selectedFrom, setSelectedFrom] = useState(false);
+  const [selectedTo, setSelectedTo] = useState(false);
   const [inputData, setInputData] = useState({
-    vehicle: "Select a vehicle Type",
+    vehicle: "",
     trip_from: { address: "", lat: null, log: null },
     trip_to: { address: "", lat: null, log: null },
     pick_up_date: new Date(),
@@ -75,6 +105,8 @@ const BookingStaffForm = () => {
       setInputData(newInputData);
       setTripFrom(selectedAddress);
       setTripFromCoordinates(latLng);
+      setRefreshPrice(!refreshPrice)
+      setSelectedFrom(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -91,6 +123,8 @@ const BookingStaffForm = () => {
       setInputData(newInputData);
       setTrimTo(selectedAddress);
       setTripToCoordinates(latLng);
+      setRefreshPrice(!refreshPrice)
+      setSelectedTo(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -137,7 +171,19 @@ const BookingStaffForm = () => {
         setVehicle(res.result);
       }
     });
+    getFare().then((res) => {
+      console.log(res?.result, "fares");
+      if (res?.code === 200) {
+        setFares(res?.result);
+      }
+    });
   }, []);
+  getFare().then((res) => {
+    console.log(res?.result, "fares");
+    if (res?.code === 200) {
+      setFares(res?.result);
+    }
+  });
   const formValidation = (inputs) => {
     const data = [...inputs];
     var re = /\S+@\S+\.\S+/;
@@ -241,31 +287,33 @@ const BookingStaffForm = () => {
   const adddata = () => {
     let id = booking.id
     let data = inputData;
-    console.log(data,"data after submit")
+    console.log(data, "data after submit")
     let valid = true;
     let newErrors = { ...errors };
     const errorRes = formValidation(inputs);
-    console.log("data beafore vehicle", vehicle);
+    console.log("data beafore vehicle", data);
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
-      data.trip_from.address?.length < 1
+      data.trip_from.address?.length < 1 ||
+      !selectedFrom
     ) {
       console.log("enter valid trip from");
       valid = false;
-      newErrors.trip_from = "Please enter valid trip from address";
+      newErrors.trip_from = "Please select valid trip from address";
     }
     if (
       !data.trip_to.lat ||
       !data.trip_to.log ||
-      data.trip_to.address?.length < 1
+      data.trip_to.address?.length < 1 ||
+      !selectedTo
     ) {
       valid = false;
-      newErrors.trip_to = "Please enter valid trip to address";
+      newErrors.trip_to = "Please select valid trip to address";
     }
     if (data.vehicle?.length < 1) {
       valid = false;
-      newErrors.vehicle = "Please select valid vehicle";
+      newErrors.vehicle = "Please select valid vehicle type";
     }
     if (inputData.pick_up_date?.length < 1) {
       valid = false;
@@ -284,21 +332,21 @@ const BookingStaffForm = () => {
       data.pickup_date_time = data.pick_up_date;
       delete data.pick_up_date;
       data.created_by = id
-      addLinkTrip( data).then((res) => {
-          console.log("response---->>>>", res);
-          if (res?.data?.code === 200) {
-            toast.success(`Your requested successfully submitted`, {
-              position: "top-right",
-              autoClose: 1000,
-            });
-            navigate("/");
-          } else {
-            toast.warning(`${res.data.message}`, {
-              position: "top-right",
-              autoClose: 1000,
-            });
-          }
-        });
+      addLinkTrip(data).then((res) => {
+        console.log("response---->>>>", res);
+        if (res?.data?.code === 200) {
+          toast.success(`Your requested successfully submitted`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+          // navigate("/");
+        } else {
+          toast.warning(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
+      });
     } else {
       toast.warning("Please Enter Passenger Detail", {
         position: "top-right",
@@ -322,7 +370,15 @@ const BookingStaffForm = () => {
     setInputs([...arr]);
     formValidation(inputs)
   };
-
+  const setFareOnVehicleType = (vehicle_type) => {
+    fares.forEach((fare) => {
+      if (fare.vehicle_type == vehicle_type) {
+        setSelectedFare(fare);
+        console.log("selectecd fare is", fare)
+      }
+    })
+  }
+  useEffect(priceCalculator, [refreshPrice])
   return (
     <>
       {/* <Header /> */}
@@ -366,6 +422,7 @@ const BookingStaffForm = () => {
                                     name="vehicle"
                                     onChange={(data) => {
                                       console.log(data.target.value);
+                                      setFareOnVehicleType(data.target.value);
                                       setInputData({
                                         ...inputData,
                                         vehicle: data.target.value,
@@ -378,9 +435,10 @@ const BookingStaffForm = () => {
                                       } else {
                                         setErrors({ ...errors, vehicle: null });
                                       }
+                                      setRefreshPrice(!refreshPrice);
                                     }}
                                   >
-                                    <option value={""} default>{inputData.vehicle}</option>
+                                    <option value={""} default>Select vehicle type</option>
                                     {vehicle?.map((e, i) => {
                                       return (
                                         <>
@@ -429,18 +487,16 @@ const BookingStaffForm = () => {
                                         ...inputData,
                                         pick_up_date: data,
                                       });
-                                      if (data < 1) {
-                                        setErrors({
-                                          ...errors,
-                                          pick_up_date:
-                                            "Please add valid date for pickup date",
-                                        });
-                                      } else {
-                                        setErrors({
-                                          ...errors,
-                                          pick_up_date: null,
-                                        });
-                                      }
+                                      setSelectedFrom(false);
+                                      // if (data < 1 || !selectedFrom) {
+                                      setErrors({
+                                        ...errors,
+                                        trip_from:
+                                          "Please select valid trip from address",
+                                      });
+                                      // } else {
+                                      //   setErrors({ ...errors, trip_from: null });
+                                      // }
                                     }}
                                   />
                                 </CCol>
@@ -499,7 +555,7 @@ const BookingStaffForm = () => {
                                       </div>
                                     )}
                                   </PlacesAutocomplete>
-                                  {errors.trip_from && (
+                                  {(errors.trip_from || !selectedFrom) && (
                                     <span
                                       style={{ color: "red" }}
                                       className="text-danger"
@@ -525,15 +581,17 @@ const BookingStaffForm = () => {
                                     onChange={(data) => {
                                       console.log(data);
                                       setTrimTo(data);
-                                      if (data < 1) {
-                                        setErrors({
-                                          ...errors,
-                                          trip_to:
-                                            "Please add valid trip to address",
-                                        });
-                                      } else {
-                                        setErrors({ ...errors, trip_to: null });
-                                      }
+                                      setSelectedTo(false);
+                                      // if (data < 1 || !setSelectedTo) {
+                                      setErrors({
+                                        ...errors,
+                                        trip_to:
+                                          "Please select valid trip to address",
+                                      });
+                                      // } else {
+                                      //   setErrors({ ...errors, trip_to: null });
+                                      // }
+
                                     }}
                                     onSelect={handleSelectTripTo}
                                   >
@@ -588,7 +646,13 @@ const BookingStaffForm = () => {
  </CFormSelect> */}
                                   {/* <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} /> */}
                                 </CCol>
+                                <CCol xs={6}>
+                                  <CFormLabel htmlFor="inputtripfrom">
+                                    Price: {price} (€)
+                                  </CFormLabel>
 
+
+                                </CCol>
                                 <CCol xs={12}>
                                   <div
                                     className="d-flex justify-content-center"
