@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link, useNavigate } from "react-router-dom";
 import AppHeader from "../TopBar/AppHeader";
 import SidebarDriver from "./Sidebar";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid";
 import { Box, Tooltip } from "@mui/material";
 import { getPastTripsdriver } from "../../utils/api";
 import moment from "moment";
@@ -271,7 +271,16 @@ const PastTrips = ({type}) => {
   const back = () => {
     navigate("/super-admin/driver/listofdrivers");
   };
-  
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarColumnsButton style={{ color: '#f1c40f' }} />
+        <GridToolbarFilterButton style={{ color: '#f1c40f' }} />
+        <GridToolbarDensitySelector style={{ color: '#f1c40f' }} />
+        <GridToolbarExport style={{ color: '#f1c40f' }} />
+      </GridToolbarContainer>
+    )
+  }
     const renderCellContent = (value) => {
       
       return (
@@ -299,8 +308,9 @@ const PastTrips = ({type}) => {
                 {/* <div class="active-trip-outer"> */}
                  {loader? <AppLoader/>: <Box sx={{ height: 500, width: "100%" }}>
                     <DataGrid
-                    slots={{ toolbar: GridToolbar }}
-                   
+                    slots={{
+                      toolbar: CustomToolbar,
+                    }}                   
                     checkboxSelection={false}
                       rows={trips}
                       columns= {type == "payment"?paymentColumns:columns}
