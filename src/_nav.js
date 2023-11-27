@@ -97,7 +97,11 @@ const _nav = [
         name: 'Completed Trip',
         to: '/trips/completetrips',
       },
-     
+      {
+        component: CNavItem,
+        name: 'Cancelled Trip',
+        to: '/trips/cancelled',
+      },
     
     ],
   },

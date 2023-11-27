@@ -149,6 +149,10 @@ const RequestNewTrip = () => {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
+      }else if (data[index].name?.length > 20) {
+        data[index].nameLengthCheck = "Name must be at most 20 characters";
+        data[index].nameCheck = "";
+        valid = false;
       } else {
         data[index].nameCheck = "";
         data[index].nameLengthCheck = "";
@@ -219,6 +223,7 @@ const RequestNewTrip = () => {
     passenger_detail: [],
     description: null,
     pay_option: null,
+    comment:null
   });
 
   const handlepickupDateChange = (date) => {
@@ -347,6 +352,10 @@ const RequestNewTrip = () => {
     if (inputData.pay_option?.length < 1) {
       valid = false;
       newErrors.pay_option = "Please select valid Pay Option";
+    }
+    if (inputData.comment?.length > 50) {
+      valid = false;
+      newErrors.comment = "Comment must be at Most 50 characters";
     }
     
     if (!valid) {
@@ -782,9 +791,21 @@ const RequestNewTrip = () => {
                                     ...inputData,
                                     comment: e.target.value,
                                   });
+                                  if(e.target.value.length > 50){
+                                    setErrors({...errors, comment:"Comments must be at most 50 characters"})
+                                  }else{
+                                    setErrors({...errors, comment:null})
+                                  }
                                 }}
                               />
-                                
+                                {errors.comment && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.comment}
+                                </span>
+                              )}
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">

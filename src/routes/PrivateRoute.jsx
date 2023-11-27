@@ -4,6 +4,8 @@ import Dashboard from '../components/Hotel/dashboard';
 import ActiveTrip from '../components/Hotel/Trips/activetrips';
 import FareManagement from '../components/Hotel/FareManagement/faremanagement';
 import ViewAllVehicle from '../components/Hotel/Vehicle/viewallvehicle';
+import HotelCancelled from '../components/Hotel/Trips/cancelled';
+
 import CompletedTrip from '../components/Hotel/Trips/completedtrips';
 import BookingRequestTable from '../components/Hotel/Trips/BookingRequestTable';
 import DriverList from '../components/Hotel/Driver/driverlist';
@@ -82,7 +84,7 @@ const PrivateRoute = () => {
             <Route path="/enter-otp" element={<GuestRoute><EnterOtp /></GuestRoute>} />
             <Route path="/feedback" element={<SecureHotelRoleRoute><Feedback /></SecureHotelRoleRoute>} />
             <Route path="/dashboard" element={<SecureHotelRoleRoute><Dashboard /></SecureHotelRoleRoute>} />
-            <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} />
+            <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} /> <Route path="/trips/cancelled" element={<SecureHotelRoleRoute><HotelCancelled/></SecureHotelRoleRoute>} />
             <Route path="/trips/activetrips" element={<SecureHotelRoleRoute><ActiveTrip /></SecureHotelRoleRoute>} />
             <Route path="/trips/requestnewtrip" element={<SecureHotelRoleRoute><RequestNewTrip /></SecureHotelRoleRoute>} />
             <Route path="/trips/pendingtrips" element={<SecureHotelRoleRoute><PendingTrip /></SecureHotelRoleRoute>} />
