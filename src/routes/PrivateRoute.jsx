@@ -82,7 +82,7 @@ const PrivateRoute = () => {
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
             <Route path="/new-password" element={<GuestRoute><NewPassword /></GuestRoute>} />
             <Route path="/enter-otp" element={<GuestRoute><EnterOtp /></GuestRoute>} />
-            <Route path="/feedback" element={<SecureHotelRoleRoute><Feedback /></SecureHotelRoleRoute>} />
+            <Route path="/feedback" element={<SecureHotelRoleRoute><Feedback role = "hotel"/></SecureHotelRoleRoute>} />
             <Route path="/dashboard" element={<SecureHotelRoleRoute><Dashboard /></SecureHotelRoleRoute>} />
             <Route path="/trips/recenttrips" element={<SecureHotelRoleRoute><RecentTrips /></SecureHotelRoleRoute>} /> <Route path="/trips/cancelled" element={<SecureHotelRoleRoute><HotelCancelled/></SecureHotelRoleRoute>} />
             <Route path="/trips/activetrips" element={<SecureHotelRoleRoute><ActiveTrip /></SecureHotelRoleRoute>} />
@@ -98,6 +98,7 @@ const PrivateRoute = () => {
             <Route path="/taxi/dashboard" element={<SecureTaxiRoleRoute>
                 <SuperAdminDashboard />
             </SecureTaxiRoleRoute>} />
+            <Route path="/taxi-feedback" element={<SecureTaxiRoleRoute><Feedback role="taxi"/></SecureTaxiRoleRoute>} />
             <Route path="/taxi/companydetails" element={<SecureTaxiRoleRoute><CompanyDetails /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/add-company" element={<SecureTaxiRoleRoute><AddCompany /></SecureTaxiRoleRoute>} />
 

@@ -34,22 +34,23 @@ import {
 } from "mdb-react-ui-kit";
 import { useNavigate } from 'react-router';
 import { sendFeedback } from '../../../utils/api';
+import SuperSideBar from '../../Taxi/SiderNavBar/Sidebar';
 
-const Feedback = () => {
+const Feedback = ({role}) => {
 
     const [loading, setLoading] = useState(false);
     const validationSchema = Yup.object().shape({
         feedback: Yup.string().trim()
-            .min(20,"Feedback must be at least 20 characters")
+            .min(20, "Feedback must be at least 20 characters")
             .required("Feedback is required"),
-        title:Yup.string().trim()
-            .min(4,"Title must be at least 4 characters")
+        title: Yup.string().trim()
+            .min(4, "Title must be at least 4 characters")
             .required("Title is required")
 
     });
     const initialValues = {
         feedback: "",
-        title:""
+        title: ""
     };
 
     const navigate = useNavigate();
@@ -58,30 +59,31 @@ const Feedback = () => {
         initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-           
+
             console.log(values)
-            sendFeedback({comment:values.feedback,
-            title:values.title}).then((res) => {
+            sendFeedback({
+                comment: values.feedback,
+                title: values.title
+            }).then((res) => {
                 console.log(res, "fromFeedback")
-                if(res?.code === 200) {
+                if (res?.code === 200) {
                     toast.success(`Thank you for your feedback`, {
                         position: "top-right",
                         autoClose: 1000,
-                      });
-                      formik.resetForm()
+                    });
+                    formik.resetForm()
 
-                }else{
+                } else {
                     throw new Error(`Invalid feedback`);
                 }
             }).catch((err) => {
                 toast.warning(`There is some problem`, {
                     position: "top-right",
                     autoClose: 1000,
-                  });
+                });
             });
         },
     });
-
 
     return (
         <>
@@ -89,7 +91,7 @@ const Feedback = () => {
                 <div className="container-fluidd">
                     <div className="col-md-12">
                         <div>
-                            <SideBar2 />
+                           {role =="taxi"? <SuperSideBar/>:<SideBar2 />} 
                             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
                                 <AppHeader />
                                 <div
@@ -101,10 +103,10 @@ const Feedback = () => {
                                     <CRow>
                                         <CCol xs={2}></CCol>
                                         <CCol xs={8}>
-                                            <div style={{overflow:"hidden",height: "78vh"}} class="active-trip-outer mx-5 p-4">
+                                            <div style={{ overflow: "hidden", height: "78vh" }} class="active-trip-outer mx-5 p-4">
                                                 <form onSubmit={formik.handleSubmit} noValidate>
                                                     <div className="">
-                                                    <div className="mb-4" id="pwd_field">
+                                                        <div className="mb-4" id="pwd_field">
                                                             <label htmlFor="title" className="form-label">
                                                                 Title
                                                             </label>
@@ -145,12 +147,12 @@ const Feedback = () => {
                                                             <textarea
                                                                 id="feedback"
                                                                 type="text"
-                                                                 
+
                                                                 rows={15}
                                                                 style={{
-                                                                    height:"200px",
+                                                                    height: "200px",
                                                                     resize: "none",
-                                                            }}
+                                                                }}
                                                                 // size="lg"
                                                                 {...formik.getFieldProps("feedback")}
                                                                 // maxLength="50"

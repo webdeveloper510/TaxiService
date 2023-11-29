@@ -46,7 +46,7 @@ const RequestNewTrip = () => {
       throw new Error('Invalid Date object');
     }
   }
-  const [selectedFrom, setSelectedFrom] = useState(false);
+  const [selectedFrom, setSelectedFrom] = useState(true);
   const [selectedTo, setSelectedTo] = useState(false);
 
   // Function to set the minute component of a Date object

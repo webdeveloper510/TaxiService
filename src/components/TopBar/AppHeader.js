@@ -58,9 +58,9 @@ const AppHeader = () => {
           </CNavItem> */}
         </CHeaderNav>
         
-        {user?.role == "HOTEL" && <span className='welcome_line'>Hotel!</span>}
-        {user?.role  == "COMPANY" && <span className='welcome_line'>Taxi Company!</span>}
-        {user?.role  == "SUPER_ADMIN" && <span className='welcome_line'>Admin!</span>}
+        {user?.role == "HOTEL" && <span className='welcome_line'>{user?.company_detail?.company_name} as Hotel!</span>}
+        {user?.role  == "COMPANY" && <span className='welcome_line'>{`${user?.first_name} ${user?.lastName ? user.lastName : ""}`} as Taxi Company!</span>}
+        {user?.role  == "SUPER_ADMIN" && <span className='welcome_line'>{`${user?.first_name} ${user?.last_name ? user.last_name : ""}`} as Admin!</span>}
         <CHeaderNav className='bell-icon'>
         
           

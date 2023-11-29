@@ -73,7 +73,7 @@ const RiderStatusTable=()=> {
                
                 {driver.length > 0 ?<CTableBody>
                   {driver?.length > 0 ?
-                  driver?.map((item, index) => {
+                  driver.slice(0,5)?.map((item, index) => {
                     let status = "Ofline";
                     if(item.status){
                       status = "Online"

@@ -83,6 +83,8 @@ function EditProfile() {
       .required("First Name is required").trim(),
     lastName: Yup.string()
       .required("Last Name is required").trim(),
+    companyName: Yup.string()
+    .required("Last Name is required").trim(),
   });
 
   const initialValues = {
@@ -92,6 +94,7 @@ function EditProfile() {
   const initialValuesProfile = {
     firstName: user?.first_name || "",
     lastName: user?.last_name || "",
+    companyName: user?.company_detail?.company_name || "",
   };
   const handleToggle = () => {
     if (!passVissible) {
@@ -166,7 +169,8 @@ function EditProfile() {
       console.log("values", values);
       editCompanyDetail(user._id, {
         first_name: values.firstName.trim(),
-        last_name: values.lastName.trim()
+        last_name: values.lastName.trim(),
+        company_name: values.companyName.trim(),
       }).then((response) => {
         console.log("response---->>>>", response)
         if (response.data.code === 200
@@ -294,6 +298,29 @@ function EditProfile() {
                               />
                               {formikProfile.errors.lastName && formikProfile.touched.lastName ? (
                                 <div className="text-danger text-start">{formikProfile.errors.lastName}</div>
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputlastname">Company Name</CFormLabel>
+                              <CFormInput aria-label="Last name"
+                                {...formikProfile.getFieldProps("companyName")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent input_pwd",
+                                  {
+                                    "is-invalid":
+                                      formikProfile.touched.companyName && formikProfile.errors.companyName,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formikProfile.touched.companyName && !formikProfile.errors.companyName,
+                                  }
+                                )}
+                                name="companyName"
+                                autoComplete="off"
+                              />
+                              {formikProfile.errors.companyName && formikProfile.touched.companyName ? (
+                                <div className="text-danger text-start">{formikProfile.errors.companyName}</div>
                               ) : null}
                             </CCol>
                             {/* <CCol md={6}>
