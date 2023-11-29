@@ -130,6 +130,18 @@ const ViewSingleTrip = () => {
                                  {(trip?.price!= null) && <div class="trip-details">
                                  <CFormLabel htmlFor="inputpassengercharges"><img src={checkedImg}/> Fare (in €) :</CFormLabel>
                                  <span className="vehicle_info">{trip?.price}</span><br/></div>}
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Commission Type :</CFormLabel>
+                                 <span className="vehicle_info">{trip?.commission?.commission_type}</span><br/></div>
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Commission Value :</CFormLabel>
+                                 <span className="vehicle_info">{trip?.commission?.commission_value}</span><br/></div>
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Email :</CFormLabel>
+                                 <span className="vehicle_info">{trip?.email}</span><br/></div>
+                                 <div class="trip-details">
+                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg}/>Phone :</CFormLabel>
+                                 <span className="vehicle_info">{trip?.phone}</span><br/></div>
                                  
                             </CCol>
 

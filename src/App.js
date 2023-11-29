@@ -13,6 +13,10 @@ function App() {
   const [appLoaded, setAppLoaded] = useState(false)
   const [user, setUser] = useState(null);
   const [loading , setLoading] = useState(false);
+  const [refreshUser, setRefreshUser] = useState(false);
+  function refreshUserData() {
+    setRefreshUser(!refreshUser);
+  };
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   function onLoadApp(){
@@ -30,28 +34,15 @@ function App() {
             console.log(res, 'profile data')
             if (res?.code === 200) {
               setUser(res.result)
-            //   if(res?.result?.role === "COMPANY") {
-            //     return <Navigate to="/taxi/dashboard" />;
-                
-            //   }
-            //   else if(res?.result?.role === "SUPER_ADMIN") {
-            //     return <Navigate to="/super-admin/dashboard" />;
-                
-            //   }
-            //   else{
-            //     return <Navigate to="/dashboard" />;
-            //   }
-            // }else{
-            //     return <Navigate to="/" />;
             }else{
               console.log("remove token from wrong app")
-              // localStorage.clear();
-              // navigate("/")
+              localStorage.clear();
+              navigate("/")
             }
           }).catch((err)=>{
             console.log("remove token from catch app")
-            // localStorage.clear();
-            // navigate("/")
+            localStorage.clear();
+            navigate("/")
           }).finally(()=>{
             setLoading(false);
             setAppLoaded(true);
@@ -59,9 +50,9 @@ function App() {
   }
   useEffect(()=>{
     onLoadApp()
-  },[token])
+  },[token,refreshUser])
   return (
-    <userContext.Provider value={{user,setUser,appLoaded}}>
+    <userContext.Provider value={{user,setUser,appLoaded, refreshUserData}}>
     {loading?<AppLoader/>:<div className="App">
       <PrivateRoute/>
       <ToastContainer />

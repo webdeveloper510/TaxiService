@@ -59,6 +59,7 @@ import PastTrips from '../components/Driver/PastTrips';
 import SecureDriverRoute from '../utils/SecureDriverRoute';
 import Feedback from '../components/Hotel/Feedback/feedback';
 import FeedbackMsj from '../components/SuperAdmin/Feedback/feedback';
+import EditBookingForm from '../components/Login/EditBookingForm';
 
 
 const PrivateRoute = () => {
@@ -105,6 +106,7 @@ const PrivateRoute = () => {
             <Route path="/taxi/trips/bookedtrips" element={<SecureTaxiRoleRoute><SuperBookedTrips /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/activetrips" element={<SecureTaxiRoleRoute><SuperActiveTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/pendingtrips" element={<SecureTaxiRoleRoute><SuperPendingTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/booking/edit" element={<SecureTaxiRoleRoute><EditBookingForm /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/editpendingtrips/:id" element={<SecureTaxiRoleRoute><EditpendingTrip role={"taxi"} /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/cancelledtrips" element={<SecureTaxiRoleRoute><SuperCancelledTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/completetrips" element={<SecureTaxiRoleRoute><SuperCompleteTrip /></SecureTaxiRoleRoute>} />

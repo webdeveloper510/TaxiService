@@ -354,6 +354,12 @@ const SuperRequestTrip = () => {
       if(price.length > 0){
         data.price = parseFloat(price)
       }
+      data.commission = {
+        commission_type: data.commission_type,
+        commission_value: data.commission_value
+      }
+      delete data.commission_value;
+      delete data.commission_type
       addTrip(data).then((res) => {
         setFormLoader(true)
         console.log("response---->>>>", res);

@@ -36,7 +36,12 @@ const AppHeaderDropdown = () => {
       <CDropdownMenu className="pt-0" placement="bottom-end">
         {/* <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
         <CDropdownDivider /> */}
-       
+       {user?.role === "COMPANY" && <CDropdownItem className='edit_profile'>
+        <CIcon icon={cilUser} className="me-2" />
+        <Link to="/taxi/booking/edit">
+          <span>Edit Booking Page</span>
+       </Link>
+        </CDropdownItem>}
         {user?.role != "DRIVER" && <CDropdownItem className='edit_profile'>
         <CIcon icon={cilUser} className="me-2" />
         <Link to="/edit-profile">
