@@ -178,12 +178,7 @@ const BookingStaffForm = () => {
       }
     });
   }, []);
-  getFare().then((res) => {
-    console.log(res?.result, "fares");
-    if (res?.code === 200) {
-      setFares(res?.result);
-    }
-  });
+
   const formValidation = (inputs) => {
     const data = [...inputs];
     var re = /\S+@\S+\.\S+/;
@@ -339,7 +334,7 @@ const BookingStaffForm = () => {
             position: "top-right",
             autoClose: 1000,
           });
-          // navigate("/");
+          navigate("/");
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -386,7 +381,7 @@ const BookingStaffForm = () => {
         <div class="container-outer" id="expired_outer">
           {expired === true ? (<div>
             <div className="link_expired">
-              <div className="img_outer">  <img src={sessionExp} /></div>
+              <div className="img_outer"> <img src={sessionExp} /></div>
               <div className="link_text">
                 <strong>Something bad happend</strong><br />
                 <p> The invitation link has expired. Please request a new link.</p>
@@ -395,26 +390,32 @@ const BookingStaffForm = () => {
             </div>
           </div>) :
             (
-              <section className="booking-section-form">
-                <div className="booking-banner" id="bookimg-header">
+              <section className="booking-section-form"
+              style={{background:hotel?.meta?.background_color || "white"}}
+              >
+                <div className="booking-banner" id="bookimg-header"
+                style={{
+                  backgroundColor: "pink"
+                }}
+                >
 
 
-                  <div class="row booking-content col-md-12">
+                  <div class="row booking-content col-md-12" style={{background:hotel?.meta?.background_color || "white"}}>
                     <Link to="/">
-                      <span className="back_to_home"><img src={backtotaxi} />Back to Home </span>
+                      <span className="back_to_home"><img src={hotel?.meta?.logo} width={90} />Back to Home </span>
                     </Link>
                     <div class="banner-inner-text col-md-6">
                       <h3>Welcome {hotel?.company_name} </h3>
 
                       <CRow>
                         <CCol xs={12}>
-                          <CCard className="mb-4">
+                          <CCard >
                             {/* <CCardHeader>
-                          <strong>Add Trip Details</strong>
-                        </CCardHeader> */}
+ <strong>Add Trip Details</strong>
+ </CCardHeader> */}
                             <CCardBody>
                               <CForm className="row g-3">
-                                <CCol md={6}>
+                                <CCol>
                                   <CFormLabel htmlFor="inputvehicletype">
                                     Vehicle Type <span class="asterisk-mark">*</span>
                                   </CFormLabel>
@@ -495,7 +496,7 @@ const BookingStaffForm = () => {
                                           "Please select valid trip from address",
                                       });
                                       // } else {
-                                      //   setErrors({ ...errors, trip_from: null });
+                                      // setErrors({ ...errors, trip_from: null });
                                       // }
                                     }}
                                   />
@@ -589,7 +590,7 @@ const BookingStaffForm = () => {
                                           "Please select valid trip to address",
                                       });
                                       // } else {
-                                      //   setErrors({ ...errors, trip_to: null });
+                                      // setErrors({ ...errors, trip_to: null });
                                       // }
 
                                     }}
@@ -675,9 +676,9 @@ const BookingStaffForm = () => {
 
                     </div>
 
-                    <div className="booking-right-content col-md-6">
-                      <img src={bookingCar} />
-                    </div>
+                    {/* <div className="booking-right-content col-md-6">
+ <img src={bookingCar} />
+ </div> */}
 
                   </div>
                 </div>

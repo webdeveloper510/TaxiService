@@ -85,6 +85,7 @@ function EditProfile() {
       .required("Last Name is required").trim(),
     companyName: Yup.string()
     .required("Last Name is required").trim(),
+    phone: Yup.string().min(6).max(16).trim().required()
   });
 
   const initialValues = {
@@ -95,6 +96,7 @@ function EditProfile() {
     firstName: user?.first_name || "",
     lastName: user?.last_name || "",
     companyName: user?.company_detail?.company_name || "",
+    phone: user?.phone || "",
   };
   const handleToggle = () => {
     if (!passVissible) {
@@ -171,6 +173,7 @@ function EditProfile() {
         first_name: values.firstName.trim(),
         last_name: values.lastName.trim(),
         company_name: values.companyName.trim(),
+        phone: values.phone.trim(),
       }).then((response) => {
         console.log("response---->>>>", response)
         if (response.data.code === 200
@@ -321,6 +324,29 @@ function EditProfile() {
                               />
                               {formikProfile.errors.companyName && formikProfile.touched.companyName ? (
                                 <div className="text-danger text-start">{formikProfile.errors.companyName}</div>
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputlastname">Phone Number</CFormLabel>
+                              <CFormInput aria-label="Last name"
+                                {...formikProfile.getFieldProps("phone")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent input_pwd",
+                                  {
+                                    "is-invalid":
+                                      formikProfile.touched.phone && formikProfile.errors.phone,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formikProfile.touched.phone && !formikProfile.errors.phone,
+                                  }
+                                )}
+                                name="phone"
+                                autoComplete="off"
+                              />
+                              {formikProfile.errors.phone && formikProfile.touched.phone ? (
+                                <div className="text-danger text-start">{formikProfile.errors.phone}</div>
                               ) : null}
                             </CCol>
                             {/* <CCol md={6}>

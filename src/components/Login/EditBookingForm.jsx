@@ -90,7 +90,7 @@ function EditBookingForm() {
        const formData = new FormData();
 
       formData.append('background_color', values.background_color);
-      formData.append('logo', values.logo);
+      formData.append('logo', image1);
       setLoading(true);
       console.log("values", values);
       editCompanyDetail(user._id, formData).then((response) => {
@@ -125,6 +125,7 @@ function EditBookingForm() {
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
+      setImage1(selectedFile);
       formikProfile.setFieldValue('logo', selectedFile)
       setImage(URL.createObjectURL(selectedFile))
     }
