@@ -659,3 +659,43 @@ export const getFeedback = async() => {
     console.log("get trip error", error);
   });
 };
+export const payTripCommission = async(id) => {
+  return await Axios.post(`admin/pay_trip_commission/${id}`,{} , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res?.data;    
+  })
+  .catch((error) => {
+    console.log("get trip error", error);
+  });
+};
+export const successTripCommission = async(id) => {
+  return await Axios.post(`admin/success_trip_commission/${id}`,{} , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res?.data;    
+  })
+  .catch((error) => {
+    console.log("get trip error", error);
+  });
+};
+export const failedTripCommission = async(id) => {
+  return await Axios.post(`admin/failed_trip_commission/${id}`,{} , {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res?.data;    
+  })
+  .catch((error) => {
+    console.log("get trip error", error);
+  });
+};
+

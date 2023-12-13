@@ -60,6 +60,8 @@ import SecureDriverRoute from '../utils/SecureDriverRoute';
 import Feedback from '../components/Hotel/Feedback/feedback';
 import FeedbackMsj from '../components/SuperAdmin/Feedback/feedback';
 import EditBookingForm from '../components/Login/EditBookingForm';
+import CancelPaymentPage from '../components/Driver/Cancel';
+import SuccessPaymentPage from '../components/Driver/Success';
 
 
 const PrivateRoute = () => {
@@ -67,7 +69,8 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
-
+             <Route path="/payment/cancel/:id" element={<SecureDriverRoute><CancelPaymentPage/></SecureDriverRoute>} />
+             <Route path="/payment/success/:id" element={<SecureDriverRoute><SuccessPaymentPage/></SecureDriverRoute>} />
             <Route path="/edit-driver-data" element={<SecureDriverRoute><EditdriverData /></SecureDriverRoute>} />
             <Route path="/change-password" element={<SecureDriverRoute><Changepass /></SecureDriverRoute>} />
             <Route path="/past-trips" element={<SecureDriverRoute><PastTrips type="past" /></SecureDriverRoute>} />

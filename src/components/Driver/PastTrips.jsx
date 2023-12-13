@@ -5,7 +5,7 @@ import AppHeader from "../TopBar/AppHeader";
 import SidebarDriver from "./Sidebar";
 import { DataGrid, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid";
 import { Box, Tooltip } from "@mui/material";
-import { getPastTripsdriver } from "../../utils/api";
+import { getPastTripsdriver, payTripCommission } from "../../utils/api";
 import moment from "moment";
 import AppLoader from "../AppLoader";
 import html2pdf from 'html2pdf.js';
@@ -20,6 +20,16 @@ const PastTrips = ({type}) => {
   const navigate = useNavigate();
   const {user, setUser} = useContext(userContext)
   const [trips,setTrips] = useState([])
+  const CompleteStripePayment= (tripId)=>{
+    payTripCommission(tripId).then((res)=>{
+      console.log("🚀 ~ file: PastTrips.jsx:25 ~ payTripCommission ~ res:", res)
+      if(res?.code == 200){
+        const data = res.result;
+        console.log("🚀 ~ file: PastTrips.jsx:27 ~ payTripCommission ~ data:", data)
+        window.location.href = data.url
+      }
+    })
+  }
   const columns = [
     {
       field: 'serial' , 
@@ -80,7 +90,9 @@ const PastTrips = ({type}) => {
       width: 150,
       renderCell: (params) => (
         <Link
-          
+          style={{
+            margin: "auto"
+          }}
           to={`/trips/view-trip-details/${params.row._id}`}
         >
           <button style={{
@@ -89,7 +101,8 @@ const PastTrips = ({type}) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#fff2cf"
+            backgroundColor: "#fff2cf",
+            
           }} className="submit-btn">
            
         <svg xmlns="http://www.w3.org/2000/svg" width="90px" height="90px"fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -98,6 +111,35 @@ const PastTrips = ({type}) => {
 </svg>
         </button>
         </Link>
+      ),
+    },
+    {
+      field: 'pay',
+      headerName: 'Pay Commission',
+      width: 150,
+      renderCell: (params) => (
+        params.row.is_paid?
+        <span style={{
+          fontWeight:"bold"
+        }}> Paid</span> : <button
+          onClick={() =>{
+            CompleteStripePayment(params.row._id)
+          }}
+          style={{
+            width:"40px",
+            height:"40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#fff2cf",
+            margin: "auto",
+          }} className="submit-btn">
+           
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-fill" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1"/>
+</svg>
+        </button>
+    
       ),
     },
   ];
