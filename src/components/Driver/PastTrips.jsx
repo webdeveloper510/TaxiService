@@ -74,6 +74,7 @@ const PastTrips = ({type}) => {
       headerName: "Trip From",
       width: 200,
       renderCell:(params) => renderCellContent( params.row.trip_from.address) ,
+      valueGetter: (params) => params.row.trip_from.address
       // type: "number",
     },
     {
@@ -81,13 +82,15 @@ const PastTrips = ({type}) => {
       headerName: "Trip To",
       width: 200,
       renderCell:(params) => renderCellContent( params.row.trip_to.address) ,
-      // valueGetter: (params) => params.row.trip_to.address ,
+      valueGetter: (params) => params.row.trip_to.address ,
       // type: "number",
     },
     {
       field: 'showDetail',
       headerName: 'Action',
       width: 150,
+      sortable: false,
+      filterable: false,
       renderCell: (params) => (
         <Link
           style={{
@@ -117,6 +120,7 @@ const PastTrips = ({type}) => {
       field: 'pay',
       headerName: 'Pay Commission',
       width: 150,
+      filterable: false,
       renderCell: (params) => (
         params.row.is_paid?
         <span style={{
@@ -141,6 +145,7 @@ const PastTrips = ({type}) => {
         </button>
     
       ),
+      valueGetter: (params) =>params.row.is_paid? "Paid" : "Unpaid"
     },
   ];
   const paymentColumns = [
@@ -176,6 +181,7 @@ const PastTrips = ({type}) => {
       headerName: "Trip From",
       width: 200,
       renderCell:(params) => renderCellContent( params.row.trip_from.address) ,
+      valueGetter: (params) => params.row.trip_from.address ,
       // type: "number",
     },
     {
@@ -183,7 +189,7 @@ const PastTrips = ({type}) => {
       headerName: "Trip To",
       width: 200,
       renderCell:(params) => renderCellContent( params.row.trip_to.address) ,
-      // valueGetter: (params) => params.row.trip_to.address ,
+      valueGetter: (params) => params.row.trip_to.address ,
       // type: "number",
     },
     {
@@ -217,6 +223,8 @@ const PastTrips = ({type}) => {
       field: 'invoice',
       headerName: 'Invoice',
       width: 150,
+      filterable: false,
+      sortable: false,
       renderCell: (params) => (
         
           <button style={{
