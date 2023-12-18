@@ -15,10 +15,17 @@ const SuccessPaymentPage = () => {
         setLoading(true)
         successTripCommission(success.id).then((res)=>{
             console.log("🚀 ~ file: PastTrips.jsx:25 ~ payTripCommission ~ res:", res)
-            setLoading(false)
-            setTimeout(() => {
-                navigate("/past-trips")
-            },3000)
+            if(res?.code === 200){
+              setLoading(false)
+              setTimeout(() => {
+                  navigate("/past-trips")
+              },3000)
+            }else{
+              navigate("/payment/cancel/"+success.id);
+            }
+           
+          }).catch(()=>{
+            navigate("/payment/cancel/"+success.id);
           })
     
     }, [])
