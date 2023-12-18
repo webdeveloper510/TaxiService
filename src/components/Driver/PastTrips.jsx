@@ -91,7 +91,7 @@ const PastTrips = ({type}) => {
       renderCell: (params) => (
         <Link
           style={{
-            margin: "auto"
+            // margin: "auto"
           }}
           to={`/trips/view-trip-details/${params.row._id}`}
         >
@@ -129,10 +129,10 @@ const PastTrips = ({type}) => {
             width:"40px",
             height:"40px",
             display: "flex",
-            alignItems: "center",
+            
             justifyContent: "center",
             backgroundColor: "#fff2cf",
-            margin: "auto",
+            marginLeft: "0px"
           }} className="submit-btn">
            
            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-fill" viewBox="0 0 16 16">
