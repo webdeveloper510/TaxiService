@@ -202,7 +202,14 @@ const PastTrips = ({type}) => {
       field: "commission",
       headerName: "Commission",
       width: 200,
-      valueGetter: (params) =>"10%"
+      valueGetter: (params) =>{
+        const comType = params.row.commission.commission_type;
+        const value = params.row.commission.commission_value;
+        if(comType =="Percentage"){
+          return `${value}%`;
+        }
+        return value
+      }
      
     },
     
@@ -289,18 +296,22 @@ const PastTrips = ({type}) => {
   
   useEffect(()=>{
     getDriverTrips()
-  },[])
+  },[type])
 
   const getDriverTrips =()=>{
     setLoader(true)
     getPastTripsdriver().then((res)=>{
         console.log("get past trips driver", res)
         if(res?.code === 200 && res?.result){
-          const result = res?.result.map((item,index)=>{
+          let result = res?.result.map((item,index)=>{
             item.serial = index+1
             return item
           })
-          
+          if(type == "payment"){
+            result = result.filter((item)=>{
+              return item.is_paid
+            })
+          }
          setTrips(result) 
         }
     }).catch((error)=>{
