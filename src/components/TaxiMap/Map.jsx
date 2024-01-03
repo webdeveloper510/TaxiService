@@ -19,7 +19,10 @@ const SuperMap=()=> {
     })
   }
   useEffect(()=>{
-    setInterval(()=>{locationUpdater()},5000)
+    const timeoutKey = setInterval(()=>{locationUpdater()},5000);
+    return ()=>{
+      clearInterval(timeoutKey);
+    }
   },[])
   const mapContainerStyle = {
     width: '80vw',

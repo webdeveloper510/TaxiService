@@ -29,14 +29,21 @@ const ViewTripLocation = () => {
   const [loading, setLoading] = useState(false);
   const { user, setUser, appLoaded } = useContext(userContext);
   const navigate = useNavigate();
+  const [intervalKey, setIntervalKey] = useState();
   const id = useParams().id;
   useEffect(() => {
     updaterLocation();
   }, [appLoaded]);
+  useEffect(() => {
+    return ()=>{
+        if (intervalKey) clearInterval(intervalKey);
+    }
+  }, []);
   function updaterLocation() {
     if (appLoaded) {
       if (!user) {
         navigate("/");
+        return;
       }
       setLoading(true);
       getTripById(id)
@@ -60,7 +67,7 @@ const ViewTripLocation = () => {
               travelMode: "DRIVING",
             });
             setDriver(res.result.driverInfo);
-            setInterval(() => {
+            const key = setInterval(() => {
               getTripById(id)
                 .then((res) => {
                   if (res.code === 200) {
@@ -83,6 +90,7 @@ const ViewTripLocation = () => {
                   console.log(err);
                 })
             }, 5000);
+            setIntervalKey(key);
           }
         })
         .catch((err) => {
