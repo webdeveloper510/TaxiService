@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppHeader from "../../TopBar/AppHeader";
 import DashboardStats from "../../Stats/DashBoardStats";
 import RecentTrips from "../../Hotel/Trips/recenttrips";
@@ -12,7 +12,6 @@ import AllDashboardStats from "../DashboardStats/AllStats";
 import { useSearchParams } from "react-router-dom";
 
 const SuperAdminDashboard=()=> {
-   
   
       return (
        <>

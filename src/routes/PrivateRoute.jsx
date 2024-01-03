@@ -62,6 +62,7 @@ import FeedbackMsj from '../components/SuperAdmin/Feedback/feedback';
 import EditBookingForm from '../components/Login/EditBookingForm';
 import CancelPaymentPage from '../components/Driver/Cancel';
 import SuccessPaymentPage from '../components/Driver/Success';
+import ViewTripLocation from '../components/Taxi/Trips/ViewTrip';
 
 
 const PrivateRoute = () => {
@@ -75,8 +76,9 @@ const PrivateRoute = () => {
             <Route path="/change-password" element={<SecureDriverRoute><Changepass /></SecureDriverRoute>} />
             <Route path="/past-trips" element={<SecureDriverRoute><PastTrips type="past" /></SecureDriverRoute>} />
             <Route path="/trips-payment" element={<SecureDriverRoute><PastTrips type="payment" /></SecureDriverRoute>} />
-
+            
             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />
+            <Route path="/trips/view-trip-location/:id" element={<ViewTripLocation />} />
             <Route path="/driverRoute" element={<DriverRoute />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
             <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />

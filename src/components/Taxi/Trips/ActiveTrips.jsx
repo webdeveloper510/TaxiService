@@ -20,6 +20,7 @@ import moment from "moment";
 import EmptyData from "../../EmptyData";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import AppLoader from "../../AppLoader";
+import { Link } from "react-router-dom";
 
 const SuperActiveTrip = () => {
   const [activeTrip, setActiveTrip] = useState([]);
@@ -209,9 +210,9 @@ const SuperActiveTrip = () => {
                                       </div>
                                     </CTableDataCell>
                                     <CTableDataCell className="text-center location-icons">
-                                      <div>
+                                      <Link to={`/trips/view-trip-location/${item._id}`}>
                                         <img src={locationimg} alt="img" />
-                                      </div>
+                                      </Link>
                                     </CTableDataCell>
                                   </CTableRow>
                                 </>

@@ -699,3 +699,17 @@ export const failedTripCommission = async(id) => {
   });
 };
 
+export const activeDrivers = async(id) => {
+  return await Axios.get(`admin/get_active_drivers`, {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    return res?.data;    
+  })
+  .catch((error) => {
+    console.log("get active driver error", error);
+  });
+};
+
