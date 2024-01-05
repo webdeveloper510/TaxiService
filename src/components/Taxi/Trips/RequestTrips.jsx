@@ -239,23 +239,23 @@ const SuperRequestTrip = () => {
         setVehicle(res.result);
       }
     });
-    getCompany({role:"HOTEL",name:""})
-    .then((res) => {
-      console.log(res?.result, "customer");
+    getCompany({ role: "HOTEL", name: "" })
+      .then((res) => {
+        console.log(res?.result, "customer");
 
-      if (res?.code === 200) {
-        const values = res?.result
-        if(values) setCustomer(res?.result);
-        
-        
-      } else {
-      
-      }
-    })
-    .catch((err) => {
-    
-    });
-    
+        if (res?.code === 200) {
+          const values = res?.result
+          if (values) setCustomer(res?.result);
+
+
+        } else {
+
+        }
+      })
+      .catch((err) => {
+
+      });
+
   }, []);
 
   // useEffect(() => {
@@ -297,12 +297,12 @@ const SuperRequestTrip = () => {
   const [formLoader, setFormLoader] = useState(false);
 
   const adddata = () => {
-    
+
     let data = inputData;
     let valid = true;
     let newErrors = { ...errors };
     const errorRes = formValidation(passengers);
-    console.log("data beafore vehicle", vehicle);
+    console.log("data beafore vehicle", newErrors);
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
@@ -324,16 +324,19 @@ const SuperRequestTrip = () => {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
     }
+    if (data.customer.length < 1) {
+      valid = false;
+      newErrors.customer = "Please select valid customer";
+    }
     if (inputData.pick_up_date.length < 1) {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
     if (inputData.commission_value.length < 1) {
       valid = false;
-      newErrors.pick_up_date = "Please enter commission value";
-      return
+      newErrors.commission_value = "Please enter commission value";
     }
-    if(inputData.commission_type == "Percentage" && parseFloat(inputData.commission_value) > 100){
+    if (inputData.commission_type == "Percentage" && parseFloat(inputData.commission_value) > 100) {
       valid = false;
       newErrors.commission_value = "Value should be less than equal 100"
     }
@@ -351,7 +354,7 @@ const SuperRequestTrip = () => {
       delete data.pick_up_date;
       data.created_by = data.customer;
       delete data.customer;
-      if(price.length > 0){
+      if (price.length > 0) {
         data.price = parseFloat(price)
       }
       data.commission = {
@@ -724,16 +727,16 @@ const SuperRequestTrip = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputfixedprice">
-                               Fixed Price € (Optional)
+                                Fixed Price € (Optional)
                               </CFormLabel>
-                              <CFormInput id="inputfixedprice" name="fixed_price" 
-                              type="number"
-                              step="0.01"
-                              value={price}
-                              onChange={(e)=>handlePriceChange(e)}
+                              <CFormInput id="inputfixedprice" name="fixed_price"
+                                type="number"
+                                step="0.01"
+                                value={price}
+                                onChange={(e) => handlePriceChange(e)}
                               />
-                            
-                            
+
+
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
@@ -763,7 +766,7 @@ const SuperRequestTrip = () => {
 
 
                               </CFormSelect>
-                             
+
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
@@ -771,7 +774,7 @@ const SuperRequestTrip = () => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
-                                onChange={(e)=>{
+                                onChange={(e) => {
                                   setInputData({
                                     ...inputData,
                                     comment: e.target.value,
@@ -787,10 +790,10 @@ const SuperRequestTrip = () => {
                               <CFormSelect
                                 name="commission_type"
                                 onChange={(data) => {
-                                  setInputData((prev)=>{
+                                  setInputData((prev) => {
                                     const newValue = prev;
-                                    newValue.commission_type= data.target.value;
-                                    newValue.commission_value= "";
+                                    newValue.commission_type = data.target.value;
+                                    newValue.commission_value = "";
                                     return newValue;
                                   });
                                   if (data.target.value < 1) {
@@ -809,7 +812,7 @@ const SuperRequestTrip = () => {
 
 
                               </CFormSelect>
-                             
+
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
@@ -819,17 +822,17 @@ const SuperRequestTrip = () => {
                                 id="inputtripfrom"
                                 type="number"
                                 value={inputData.commission_value}
-                                onChange={(e)=>{
-                                  if(inputData.commission_type == "Percentage"){
-                                    if(e.target.value > 100){
+                                onChange={(e) => {
+                                  if (inputData.commission_type == "Percentage") {
+                                    if (e.target.value > 100) {
                                       setErrors({
-                                        ...errors, commission_value:"Value should be smaller than 100"
+                                        ...errors, commission_value: "Value should be smaller than 100"
                                       })
                                       setInputData({
                                         ...inputData,
                                         commission_value: e.target.value,
                                       });
-                                     return
+                                      return
                                     }
                                   }
                                   setInputData({
@@ -841,7 +844,7 @@ const SuperRequestTrip = () => {
                                   })
                                 }}
                               />
-                               {errors.commission_value && (
+                              {errors.commission_value && (
                                 <span
                                   style={{ color: "red" }}
                                   className="text-danger"
@@ -989,11 +992,11 @@ const SuperRequestTrip = () => {
                       style={{ marginTop: "40px" }}
                     >
                       <CButton type="submit" className="submit-btn"
-                      onClick={()=>{
-                        adddata()
-                      }}
+                        onClick={() => {
+                          adddata()
+                        }}
                       >
-                        
+
                         {formLoader ? <ClipLoader color="#000000" /> : "Submit"}
                       </CButton>
                       <CButton type="button"
