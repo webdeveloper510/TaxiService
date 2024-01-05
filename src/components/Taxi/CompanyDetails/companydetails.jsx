@@ -82,7 +82,7 @@ const CompanyDetails = () => {
     setpwdVisible(true);
     setEditVisible(false); // Close the edit modal if it's open
     setconfirmationVisible(false); // Close the confirmation modal if it's open
-   
+
   };
   const handleToggle = () => {
     if (!passVissible) {
@@ -102,29 +102,21 @@ const CompanyDetails = () => {
 
     }
   }
- const [address, setAddress] = useState("");
+  const [address, setAddress] = useState("");
   const [touched, setTouched] = useState(false)
-  const [addressError, setAddressError] = useState(true);
+  const [addressError, setAddressError] = useState(false);
+  const [selectAddress, setSelectAddress] = useState(true)
   const handleSelectAddress = async (selectedAddress) => {
     try {
-      formik.setFieldValue("land", selectedAddress )
-      setAddress(selectedAddress)
-      
+      setSelectAddress(true);
+      formik.setFieldValue("land", selectedAddress)
+      setAddress(selectedAddress);
+      setAddressError(false);
+
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  const handleAddressError = ()=>{
-    console.log("handle Address error: ", address)
-    if(!address){
-      console.log("handle Address error: true")
-      formik.setFieldError("land","Address is required")
-      setAddressError(true);
-    }
-    else{
-      setAddressError(false)
-    }
-  }
   const [passVissible, setPassVissible] = useState(false);
 
   const [pwdVisible, setpwdVisible] = useState(false);
@@ -207,16 +199,16 @@ const CompanyDetails = () => {
     requestTrip: "",
   };
   const initialValuesPass = {
-   password: "",
-   confirmPassword: "",
+    password: "",
+    confirmPassword: "",
   };
 
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
       // .min(2,"Customer Name is must be greater than 2")
-      .max(50,"Customer Name is must be less than 50")
+      .max(50, "Customer Name is must be less than 50")
       .required("Customer Name is required"),
-      company_id: Yup.string().trim().max(20).required("Hotel ID is required"),
+    company_id: Yup.string().trim().max(20).required("Hotel ID is required"),
     post_code: Yup.string().trim().max(10).required("Postcode is required"),
     // description: Yup.string()
     //   .min(4)
@@ -224,7 +216,7 @@ const CompanyDetails = () => {
     //   .required("Describe your hotel is required"),
     phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Phone number is required"),
+      .required("Phone Number is required"),
     // website: Yup.string()
     //   .url("Invalid URL format. Please enter a valid URL.")
     //   .required("Website is required"),
@@ -243,12 +235,12 @@ const CompanyDetails = () => {
   });
   const validationSchemaPass = Yup.object().shape({
     password: Yup.string()
-    .min(6, "Password must be 6 characters long")
-    // .matches(/[0-9]/, "Password requires a number")
-    // .matches(/[a-z]/, "Password requires a lowercase letter")
-    // .matches(/[A-Z]/, "Password requires an uppercase letter")
-    // .matches(/[^\w]/, "Password requires a symbol")
-    .required("Password is required"),
+      .min(6, "Password must be 6 characters long")
+      // .matches(/[0-9]/, "Password requires a number")
+      // .matches(/[a-z]/, "Password requires a lowercase letter")
+      // .matches(/[A-Z]/, "Password requires an uppercase letter")
+      // .matches(/[^\w]/, "Password requires a symbol")
+      .required("Password is required"),
     confirmPassword: Yup.string()
       .min(6, "Confirm Password must be 6 characters long")
       // .matches(/[0-9]/, "Password requires a number")
@@ -258,10 +250,10 @@ const CompanyDetails = () => {
       .required("Confirm Password is required"),
   });
   const formikPass = useFormik({
-    initialValues:initialValuesPass,
+    initialValues: initialValuesPass,
     validationSchema: validationSchemaPass,
     onSubmit: async (values) => {
-      if(values.password !== values.confirmPassword){
+      if (values.password !== values.confirmPassword) {
         toast.warning("Password and Confirm Password must be same", {
           position: 'top-right',
           autoClose: 1000,
@@ -292,12 +284,18 @@ const CompanyDetails = () => {
       }).finally(() => { setLoading(false) })
     },
   });
-  const [formLoader , setFormLoader] = useState(false)
+  const [formLoader, setFormLoader] = useState(false)
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setFormLoader(true)
+      if (address.length < 1 || !selectAddress) {
+        setAddressError(true);
+        setTouched(true);
+        setFormLoader(false)
+        return;
+      }
       console.log("values", values);
       const id = values._id
       editCompanyDetail(id, {
@@ -324,7 +322,7 @@ const CompanyDetails = () => {
               position: 'top-right',
               autoClose: 1000,
             });
-          }else{
+          } else {
             toast.warning(`${res.data.message}`, {
               position: 'top-right',
               autoClose: 1000,
@@ -333,7 +331,7 @@ const CompanyDetails = () => {
         })
         .catch((error) => {
           console.log(error);
-        }).finally(()=>{
+        }).finally(() => {
           setFormLoader(false)
         });
     },
@@ -367,18 +365,18 @@ const CompanyDetails = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-  const [search , setSearch] = useState("");
-useEffect(() =>{getCompanyDetail()},[search])
+  const [search, setSearch] = useState("");
+  useEffect(() => { getCompanyDetail() }, [search])
   const getCompanyDetail = () => {
     setLoading(true);
-    getCompany({role:"HOTEL",name:search})
+    getCompany({ role: "HOTEL", name: search })
       .then((res) => {
         console.log(res?.result, "company");
 
         if (res?.code === 200) {
           const values = res?.result
           setCompany(res?.result);
-          
+
           setLoading(false);
         } else {
           setError(true);
@@ -412,12 +410,12 @@ useEffect(() =>{getCompanyDetail()},[search])
     setDeleteVisible(false);
   };
 
-  
+
 
   const handleInput = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-  const [PasswordChangeEmail , setPasswordChangeEmail] = useState(null)
+  const [PasswordChangeEmail, setPasswordChangeEmail] = useState(null)
 
   const handleEdit = (id) => {
     getCompanydetailId(id)
@@ -435,37 +433,6 @@ useEffect(() =>{getCompanyDetail()},[search])
         console.log(error);
       });
   };
-
-  // const handleSubimtDetail = (e) => {
-  //   e.preventDefault();
-  //   console.log("input dataaaaaa", inputData);
-  //   const id = inputData._id;
-  //   editCompanyDetail(id, {
-  //     company_name: inputData.company_name,
-  //     land: inputData.land,
-  //     post_code: inputData.post_code,
-  //     house_number: inputData.house_number,
-  //     description: inputData.description,
-  //     affiliated_with: inputData.affiliated_with,
-  //     phone: inputData.phone,
-  //     website: inputData.website,
-  //     tx_quality_mark: inputData.tx_quality_mark,
-  //     first_name: inputData.first_name,
-  //     last_name: inputData.last_name,
-  //     tel_contact_number: inputData.p_number,
-  //     email: inputData.email,
-  //   })
-  //     .then((res) => {
-  //       console.log("ressssssssssss", res);
-  //       if (res.data.code == 200) {
-  //         getCompanyDetail();
-  //         setEditVisible(!editVisible);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
   function handleStatusChange(item) {
     editCompanyDetail(item._id, {
       status: !item.status,
@@ -473,8 +440,8 @@ useEffect(() =>{getCompanyDetail()},[search])
       .then((res) => {
         console.log("status changed", res);
         if (res.data.code === 200) {
-          const newCompanyData = company.map((i)=>{
-            if(i._id == item._id) {
+          const newCompanyData = company.map((i) => {
+            if (i._id == item._id) {
               i.status = !item.status;
               return i;
             }
@@ -496,23 +463,23 @@ useEffect(() =>{getCompanyDetail()},[search])
       });
   }
   const [selectedCustomerId, setSelectedCustomerId] = useState(null)
-  const handelRequest=()=>{
-    if(selectedCustomerId){
+  const handelRequest = () => {
+    if (selectedCustomerId) {
       requestBookingTrip(selectedCustomerId)
         .then((res) => {
           if (res.data.code === 200) {
-          toast.success(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-          setconfirmationVisible(false)
-        }else{
-          toast.warning(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-        }
-      })
+            toast.success(`${res.data.message}`, {
+              position: "top-right",
+              autoClose: 1000,
+            });
+            setconfirmationVisible(false)
+          } else {
+            toast.warning(`${res.data.message}`, {
+              position: "top-right",
+              autoClose: 1000,
+            });
+          }
+        })
         .catch((error) => {
           console.log(error);
           toast.warning(`${error.message}`, {
@@ -522,7 +489,7 @@ useEffect(() =>{getCompanyDetail()},[search])
         });
     }
   }
-  const copy = (hotelId)=>{
+  const copy = (hotelId) => {
     const textToCopy = `https://taxi-service-demo.vercel.app/booking-staff-form/${hotelId}`
     const textarea = document.createElement('textarea');
     textarea.value = textToCopy;
@@ -552,19 +519,19 @@ useEffect(() =>{getCompanyDetail()},[search])
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">All Customers</h1>
                 <div className="serach-left" id="customers-search">
-                <MDBInputGroup>
-      <MDBInput placeholder="Search"
-      value={search} onChange={(e)=>{
-    
-        setSearch(e.target.value)
-      }} 
-      />
-    <button className="search-btn"
-    onClick={getCompanyDetail}
-    >
-        <MDBIcon icon='search' />
-      </button>
-    </MDBInputGroup></div>
+                  <MDBInputGroup>
+                    <MDBInput placeholder="Search"
+                      value={search} onChange={(e) => {
+
+                        setSearch(e.target.value)
+                      }}
+                    />
+                    <button className="search-btn"
+                      onClick={getCompanyDetail}
+                    >
+                      <MDBIcon icon='search' />
+                    </button>
+                  </MDBInputGroup></div>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">
@@ -615,7 +582,7 @@ useEffect(() =>{getCompanyDetail()},[search])
                             Action
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
-                           Request Trip
+                            Request Trip
                           </CTableHeaderCell>
                         </CTableRow>
                       </CTableHead>
@@ -661,7 +628,7 @@ useEffect(() =>{getCompanyDetail()},[search])
                                 id="edit_company_btn"
                                 onClick={() => setEditVisible(!editVisible)}
                               >
-             
+
                                 <img
                                   src={editiconimg}
                                   alt="edit"
@@ -680,13 +647,13 @@ useEffect(() =>{getCompanyDetail()},[search])
                             </CTableDataCell>
 
                             <CTableDataCell>
-                              <div><span><CButton  id="confirmation_btn" onClick={() => {
+                              <div><span><CButton id="confirmation_btn" onClick={() => {
                                 // setSelectedCustomerId(item._id)
                                 //   setconfirmationVisible(!confirmationVisible);
-                                  copy(item?._id)
-                                }}><span style={{
-                                  color: "white"
-                                }}>Copy Link</span></CButton></span></div>
+                                copy(item?._id)
+                              }}><span style={{
+                                color: "white"
+                              }}>Copy Link</span></CButton></span></div>
                             </CTableDataCell>
                           </CTableRow>
                         ))}
@@ -760,6 +727,7 @@ useEffect(() =>{getCompanyDetail()},[search])
                                 className="cancel_popup"
                                 onClick={() => {
                                   setDeleteVisible(false);
+
                                 }}
                               >
                                 Cancel
@@ -788,13 +756,13 @@ useEffect(() =>{getCompanyDetail()},[search])
                           <CCard className="mb-4 edit_company_popup">
                             <CCardBody>
                               <form noValidate onSubmit={formik.handleSubmit} className="row g-3">
-                              <CCol md={6}>
-                              <CFormLabel htmlFor="inputcname">
-                                Hotel ID
-                              </CFormLabel>
-                              <CFormInput
-                                aria-label="Hotel ID"
-                                value={inputData.company_id}
+                                <CCol md={6}>
+                                  <CFormLabel htmlFor="inputcname">
+                                    Hotel ID
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="Hotel ID"
+                                    value={inputData.company_id}
                                     {...formik.getFieldProps("company_id")}
                                     className={clsx(
                                       "form-control bg-transparent",
@@ -813,13 +781,13 @@ useEffect(() =>{getCompanyDetail()},[search])
                                     autoComplete="off"
                                   />
                                   {formik.errors.company_id &&
-                                formik.touched.company_id ? (
-                                <div className="text-danger">
-                                  {formik.errors.company_id}
-                                </div>
-                              ) : null}
-                            
-                            </CCol>
+                                    formik.touched.company_id ? (
+                                    <div className="text-danger">
+                                      {formik.errors.company_id}
+                                    </div>
+                                  ) : null}
+
+                                </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputcname">
                                     Customer Name
@@ -845,93 +813,98 @@ useEffect(() =>{getCompanyDetail()},[search])
                                     autoComplete="off"
                                   />
                                   {formik.errors.company_name &&
-                                formik.touched.company_name ? (
-                                <div className="text-danger">
-                                  {formik.errors.company_name}
-                                </div>
-                              ) : null}
+                                    formik.touched.company_name ? (
+                                    <div className="text-danger">
+                                      {formik.errors.company_name}
+                                    </div>
+                                  ) : null}
                                 </CCol>
                                 <CCol xs={6}
-                            onBlur={()=>{
-                              setTouched(true)
-                            }}
-                            >
-                              <CFormLabel htmlFor="inputtripfrom">
-                                Address
-                              </CFormLabel>
-                              <PlacesAutocomplete
-                                value={address}
-                                
-                                onChange={(data) => {
-                                  
-                                 console.log(data, " from place holder")
-                                  setAddress(data);
-                                  if (data.length < 1) {
-                                    setAddressError(true)
-                                  } else {
-                                   setAddressError(false)
-                                  }
-                                }}
-                                onSelect={handleSelectAddress}
-                                
-                              
-                              >
-                                {({
-                                  getInputProps,
-                                  suggestions,
-                                  getSuggestionItemProps,
-                                  loading,
-                                }) => (
-                                  <div>
-                                    <CFormInput
-                        
-                                      id="inputtripfrom"
-                                      {...getInputProps({
-                                        // placeholder: "Enter a location",
-                                      })}
-                                      className={clsx(
-                                        "form-control bg-transparent",
-                                        {
-                                          "is-invalid":
-                                          touched &&
-                                            addressError
-                                        },
-                                        {
-                                          "is-valid":
-                                            touched &&
-                                            !addressError
+                                  onBlur={() => {
+                                    setTouched(true)
+                                  }}
+                                >
+                                  <CFormLabel htmlFor="inputtripfrom">
+                                    Address
+                                  </CFormLabel>
+                                  <PlacesAutocomplete
+                                    value={address}
+
+                                    onChange={(data) => {
+
+                                      console.log(data, " from place holder")
+                                      setAddress(data.trim());
+                                      if (data.trim().length < 1) {
+                                        setAddressError(true)
+                                        setSelectAddress(false)
+                                      } else {
+                                        setAddressError(true)
+                                        setSelectAddress(false)
+
+                                      }
+                                    }}
+                                    onSelect={handleSelectAddress}
+
+
+                                  >
+                                    {({
+                                      getInputProps,
+                                      suggestions,
+                                      getSuggestionItemProps,
+                                      loading,
+                                    }) => (
+                                      <div>
+                                        <CFormInput
+                                          onBlur={() => {
+                                            console.log("Blur run")
+                                          }}
+                                          id="inputtripfrom"
+                                          {...getInputProps({
+                                            // placeholder: "Enter a location",
+                                          })}
+                                          className={clsx(
+                                            "form-control bg-transparent",
+                                            {
+                                              "is-invalid":
+                                                touched &&
+                                                addressError
+                                            },
+                                            {
+                                              "is-valid":
+                                                touched &&
+                                                !addressError
+                                            }
+                                          )}
+
+                                        />
+                                        {addressError && touched &&
+                                          <div className="text-danger">
+                                            Address must be selected from list
+                                          </div>
                                         }
-                                      )}
-                                  
-                                    />
-                                    {addressError && touched && 
-                                <div className="text-danger">
-                                  Address is Required
-                                </div>
-                              }
-                                    <div className="suugestion-div">
-                                      <div className="suggestion-inner">
-                                        {loading && <div>Loading...</div>}
-                                        {suggestions
-                                          .slice(0, 3)
-                                          .map((suggestion) => (
-                                            <div
-                                              key={suggestion.id}
-                                              {...getSuggestionItemProps(
-                                                suggestion
-                                              )}
-                                            >
-                                              {suggestion.description}
-                                            </div>
-                                          ))}
+                                        <div className="suugestion-div">
+                                          <div className="suggestion-inner">
+                                            {loading && <div>Loading...</div>}
+                                            {suggestions
+                                              .slice(0, 3)
+                                              .map((suggestion) => (
+                                                <div
+                                                  key={suggestion.id}
+                                                  {...getSuggestionItemProps(
+                                                    suggestion
+                                                  )}
+                                                >
+                                                  {suggestion.description}
+                                                </div>
+                                              ))}
+                                          </div>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </div>
-                                )}
-                              </PlacesAutocomplete>
-                             
-                              
-                              </CCol>
+                                    )}
+                                  </PlacesAutocomplete>
+
+
+                                </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputpcode">
                                     Post Code
@@ -958,21 +931,21 @@ useEffect(() =>{getCompanyDetail()},[search])
                                     autoComplete="off"
                                   />
                                   {formik.errors.post_code &&
-                                formik.touched.post_code ? (
-                                <div className="text-danger">
-                                  {formik.errors.post_code}
-                                </div>
-                              ) : null}
+                                    formik.touched.post_code ? (
+                                    <div className="text-danger">
+                                      {formik.errors.post_code}
+                                    </div>
+                                  ) : null}
                                 </CCol>
-                             
+
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputphnnum">
                                     Phone Number
                                   </CFormLabel>
                                   <CFormInput
-                                  type="number"
+                                    type="number"
                                     aria-label="phone number"
-                                  
+
                                     value={inputData.phone}
                                     {...formik.getFieldProps("phone")}
                                     className={clsx(
@@ -998,7 +971,7 @@ useEffect(() =>{getCompanyDetail()},[search])
                                     </div>
                                   ) : null}
                                 </CCol>
-                              
+
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputmailaddress">
                                     Email Address
@@ -1030,22 +1003,26 @@ useEffect(() =>{getCompanyDetail()},[search])
                                   ) : null}
                                 </CCol>
                                 <CCol xs={12} className="change_your_pwd_txt">
-                              <CButton className="change_pwd_btn_customer" 
-                            onClick={() => handlePwdChange()} >Reset your Password</CButton>
-                              </CCol> 
-                       
+                                  <CButton className="change_pwd_btn_customer"
+                                    onClick={() => handlePwdChange()} >Reset your Password</CButton>
+                                </CCol>
+
                                 <CCol md={12}>
                                   <div
                                     className="d-flex justify-content-center"
                                     style={{ marginTop: "40px" }}
                                   >
-                                   <CButton type="submit" className="submit-btn">
-                                  {formLoader?<ClipLoader color="#000000" />:"Submit"}
-                                </CButton>
+                                    <CButton type="submit" className="submit-btn">
+                                      {formLoader ? <ClipLoader color="#000000" /> : "Submit"}
+                                    </CButton>
                                     <CButton
                                       type="button"
-                                      onClick={() =>
+                                      onClick={() => {
                                         setEditVisible(!editVisible)
+                                        formik.resetForm()
+                                        setSelectAddress(true);
+                                        setAddressError(false);
+                                      }
                                       }
                                       className="cancel-btn"
                                     >
@@ -1055,7 +1032,7 @@ useEffect(() =>{getCompanyDetail()},[search])
                                 </CCol>
                               </form>
                             </CCardBody>
-                      
+
                           </CCard>
                         </CCol>
                       </CRow>
@@ -1115,103 +1092,103 @@ useEffect(() =>{getCompanyDetail()},[search])
 
                   {/* changepasswordmodalpopup */}
 
-                   
-    <CModal
-      visible={pwdVisible}
-      onClose={() => setpwdVisible(false)}
-    >
-      <CModalHeader onClose={() => setpwdVisible(false)}>
-        <CModalTitle id="changepassword">Change Password</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
+
+                  <CModal
+                    visible={pwdVisible}
+                    onClose={() => setpwdVisible(false)}
+                  >
+                    <CModalHeader onClose={() => setpwdVisible(false)}>
+                      <CModalTitle id="changepassword">Change Password</CModalTitle>
+                    </CModalHeader>
+                    <CModalBody>
                       <CRow>
                         <CCol xs={12}>
                           <CCard className="mb-4">
                             <CCardBody>
-                            <form onSubmit={formikPass.handleSubmit} noValidate>
-              <div className="change_customer_pwd">
-               
-                <div className="d-flex flex-row align-items-center justify-content-center">
-                  {/* <p className="lead me-3">LOG IN</p> */}
-                </div>
+                              <form onSubmit={formikPass.handleSubmit} noValidate>
+                                <div className="change_customer_pwd">
 
-              
-
-                <div className="mb-4" id="pwd_field">
-                  <label htmlFor="password" className="form-label">
-                   New  Password
-                  </label>
-                  <MDBInput
-                    id="password"
-                    type={passVissible ? "text" : "password"}
-                    size="lg"
-                    {...formikPass.getFieldProps("password")}
-                    maxLength="50"
-                    className={clsx(
-                      "form-control bg-transparent input_pwd",
-                      {
-                        "is-invalid":
-                          formikPass.touched.password && formikPass.errors.password,
-                      },
-                      {
-                        "is-valid":
-                          formikPass.touched.password && !formikPass.errors.password,
-                      }
-                    )}
-                    name="password"
-                    autoComplete="off"
-                  />
-                  {formikPass.errors.password && formikPass.touched.password ? (
-                    <div className="text-danger text-start">{formikPass.errors.password}</div>
-                  ) : null}
-
-                  <span class="flex justify-around items-center eye_pwd_icon">
-                    <Icon onClick={() => {
-                      setPassVissible(!passVissible)
-                      handleToggle()
-                    }} class="absolute mr-10" icon={icon} size={25} />
-                  </span>
-                </div>
-
-                <div className="mb-4" id="pwd_field">
-                  <label htmlFor="password" className="form-label">
-                  Confirm  Password
-                  </label>
-                  <MDBInput
-                    id="password"
-                    type={comPassVissible ? "text" : "password"}
-                    size="lg"
-                    {...formikPass.getFieldProps("confirmPassword")}
-                    maxLength="50"
-                    className={clsx(
-                      "form-control bg-transparent input_pwd",
-                      {
-                        "is-invalid":
-                          formikPass.touched.confirmPassword && formikPass.errors.confirmPassword,
-                      },
-                      {
-                        "is-valid":
-                          formikPass.touched.confirmPassword && !formikPass.errors.confirmPassword,
-                      }
-                    )}
-                    name="confirmPassword"
-                    autoComplete="off"
-                  />
-                  {formikPass.errors.confirmPassword && formikPass.touched.confirmPassword ? (
-                    <div className="text-danger text-start">{formikPass.errors.confirmPassword}</div>
-                  ) : null}
-
-                  <span class="flex justify-around items-center eye_pwd_icon">
-                    <Icon onClick={() => {
-                      setComPassVissible(!comPassVissible)
-                      handleToggleCom()
-                    }} class="absolute mr-10" icon={iconCom} size={25} />
-                  </span>
-                </div>
+                                  <div className="d-flex flex-row align-items-center justify-content-center">
+                                    {/* <p className="lead me-3">LOG IN</p> */}
+                                  </div>
 
 
 
-                {/* <input
+                                  <div className="mb-4" id="pwd_field">
+                                    <label htmlFor="password" className="form-label">
+                                      New  Password
+                                    </label>
+                                    <MDBInput
+                                      id="password"
+                                      type={passVissible ? "text" : "password"}
+                                      size="lg"
+                                      {...formikPass.getFieldProps("password")}
+                                      maxLength="50"
+                                      className={clsx(
+                                        "form-control bg-transparent input_pwd",
+                                        {
+                                          "is-invalid":
+                                            formikPass.touched.password && formikPass.errors.password,
+                                        },
+                                        {
+                                          "is-valid":
+                                            formikPass.touched.password && !formikPass.errors.password,
+                                        }
+                                      )}
+                                      name="password"
+                                      autoComplete="off"
+                                    />
+                                    {formikPass.errors.password && formikPass.touched.password ? (
+                                      <div className="text-danger text-start">{formikPass.errors.password}</div>
+                                    ) : null}
+
+                                    <span class="flex justify-around items-center eye_pwd_icon">
+                                      <Icon onClick={() => {
+                                        setPassVissible(!passVissible)
+                                        handleToggle()
+                                      }} class="absolute mr-10" icon={icon} size={25} />
+                                    </span>
+                                  </div>
+
+                                  <div className="mb-4" id="pwd_field">
+                                    <label htmlFor="password" className="form-label">
+                                      Confirm  Password
+                                    </label>
+                                    <MDBInput
+                                      id="password"
+                                      type={comPassVissible ? "text" : "password"}
+                                      size="lg"
+                                      {...formikPass.getFieldProps("confirmPassword")}
+                                      maxLength="50"
+                                      className={clsx(
+                                        "form-control bg-transparent input_pwd",
+                                        {
+                                          "is-invalid":
+                                            formikPass.touched.confirmPassword && formikPass.errors.confirmPassword,
+                                        },
+                                        {
+                                          "is-valid":
+                                            formikPass.touched.confirmPassword && !formikPass.errors.confirmPassword,
+                                        }
+                                      )}
+                                      name="confirmPassword"
+                                      autoComplete="off"
+                                    />
+                                    {formikPass.errors.confirmPassword && formikPass.touched.confirmPassword ? (
+                                      <div className="text-danger text-start">{formikPass.errors.confirmPassword}</div>
+                                    ) : null}
+
+                                    <span class="flex justify-around items-center eye_pwd_icon">
+                                      <Icon onClick={() => {
+                                        setComPassVissible(!comPassVissible)
+                                        handleToggleCom()
+                                      }} class="absolute mr-10" icon={iconCom} size={25} />
+                                    </span>
+                                  </div>
+
+
+
+                                  {/* <input
                   type={type}
                   name="password"
                   placeholder="Password"
@@ -1220,30 +1197,30 @@ useEffect(() =>{getCompanyDetail()},[search])
                   autoComplete="current-password"
              /> */}
 
-                
 
-                <div className="text-center text-md-start mt-4 pt-2">
-                  {/* <MDBBtn className="custom-login mb-0 px-5">
+
+                                  <div className="text-center text-md-start mt-4 pt-2">
+                                    {/* <MDBBtn className="custom-login mb-0 px-5">
                 Login
               </MDBBtn> */}
-                  <button className="custom-login btn btn-primary" type="submit">
-                   Reset Password
-                  </button>
-                </div>
-              </div>
-            </form>
+                                    <button className="custom-login btn btn-primary" type="submit">
+                                      Reset Password
+                                    </button>
+                                  </div>
+                                </div>
+                              </form>
                             </CCardBody>
                           </CCard>
                         </CCol>
                       </CRow>
                     </CModalBody>
 
-    </CModal>
+                  </CModal>
 
 
-      
 
-     
+
+
 
                   {/* endpasswordpopup */}
                 </div>

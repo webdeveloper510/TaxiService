@@ -48,10 +48,10 @@ const AddCompany = () => {
     // setLoading(false)
     // }
   }, []);
-  const [selectAddress, setSelectAddress] = useState(false) 
+  const [selectAddress, setSelectAddress] = useState(false)
   const handleSelectAddress = async (selectedAddress) => {
     try {
-      formik.setFieldValue("land", selectedAddress )
+      formik.setFieldValue("land", selectedAddress)
       setAddress(selectedAddress)
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
@@ -83,21 +83,21 @@ const AddCompany = () => {
   };
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
-      .max(20,"Customer Name must be at most 20 characters")
+      .max(20, "Customer Name must be at most 20 characters")
       .required("Customer Name is required"),
     // land: Yup.string().min(4).max(20).required("Address is required"),
-     post_code:  Yup.string().trim().matches(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, 'Invalid Netherlands Post Code')
-     .required('Post Code is required'),
+    post_code: Yup.string().trim().matches(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, 'Invalid Netherlands Post Code')
+      .required('Post Code is required'),
     //Yup.string().trim().max(10,"Post Code  must be at most 20 characters").required("Postcode is required"),
-    hotelId: Yup.string().trim().max(20,"Hotel ID must be at most 20 characters").required("Hotel ID is required"),
+    hotelId: Yup.string().trim().max(20, "Hotel ID must be at most 20 characters").required("Hotel ID is required"),
     // describe_your_taxi_company: Yup.string()
     //   .min(4)
     //   .max(100)
     //   .required("Describe your Hotel is required"),
     // affiliated_with: Yup.string().required("Affiliated with is required"),
     phone: Yup.string().trim()
-      .matches(/^[0-9]+$/, "Must be only digits").min(6,"Phone number must be at least 6 characters").max(16,"Phone number must be at most 20 characters")
-      .required("Phone number is required"),
+      .matches(/^[0-9]+$/, "Must be only digits").min(6, "Phone number must be at least 6 characters").max(16, "Phone number must be at most 20 characters")
+      .required("Phone Number is required"),
     // number_of_cars: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Number of cars is required"),
     // chamber_of_comerce_number: Yup.string().required("Chamber of Commerce Number is required"),
     // vat:Yup.string().min(4).max(18).required("VAT Number is required"),
@@ -115,12 +115,12 @@ const AddCompany = () => {
     //   .required("Tel Contact Number is required"),
     email: Yup.string().trim().email().required("Email Address is required"),
   });
-  const [formLoader , setFormLoader] = useState(false)
+  const [formLoader, setFormLoader] = useState(false)
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      if(address.length<1 || !selectAddress){
+      if (address.length < 1 || !selectAddress) {
         console.log("Address must be selected from list")
         setAddressError(true);
         setTouched(true);
@@ -144,9 +144,9 @@ const AddCompany = () => {
         email: values.email,
         role: "HOTEL",
         hotel_location: {
-          address : address,
-          lat : addressCoordinates.lat,
-          log : addressCoordinates.lng
+          address: address,
+          lat: addressCoordinates.lat,
+          log: addressCoordinates.lng
         }
       }).then((res) => {
         console.log("response---->>>>", res);
@@ -162,7 +162,7 @@ const AddCompany = () => {
             autoClose: 1000,
           });
         }
-      }).finally(()=>{
+      }).finally(() => {
         setFormLoader(false)
       });
     },
@@ -240,14 +240,14 @@ const AddCompany = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleAddressError = ()=>{
+  const handleAddressError = () => {
     console.log("handle Address error: ", address)
-    if(!address){
+    if (!address) {
       console.log("handle Address error: true")
-      formik.setFieldError("land","Address is required")
+      formik.setFieldError("land", "Address is required")
       setAddressError(true);
     }
-    else{
+    else {
       setAddressError(false)
     }
   }
@@ -354,30 +354,30 @@ const AddCompany = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}
-                            onBlur={()=>{
-                              setTouched(true)
-                            }}
+                              onBlur={() => {
+                                setTouched(true)
+                              }}
                             >
                               <CFormLabel htmlFor="inputtripfrom">
                                 Address<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <PlacesAutocomplete
                                 value={address}
-                                
+
                                 onChange={(data) => {
-                                  
-                                 console.log(data, " from place holder")
+
+                                  console.log(data, " from place holder")
                                   setAddress(data.trim());
                                   if (data.trim().length < 1) {
                                     setAddressError(true)
                                     setSelectAddress(false)
                                   } else {
-                                   setAddressError(false)
+                                    setAddressError(false)
                                   }
                                 }}
                                 onSelect={handleSelectAddress}
-                                
-                              
+
+
                               >
                                 {({
                                   getInputProps,
@@ -387,7 +387,7 @@ const AddCompany = () => {
                                 }) => (
                                   <div>
                                     <CFormInput
-                                      onBlur={()=>{
+                                      onBlur={() => {
                                         console.log("Blur run")
                                       }}
                                       id="inputtripfrom"
@@ -398,7 +398,7 @@ const AddCompany = () => {
                                         "form-control bg-transparent",
                                         {
                                           "is-invalid":
-                                          touched &&
+                                            touched &&
                                             addressError
                                         },
                                         {
@@ -407,13 +407,13 @@ const AddCompany = () => {
                                             !addressError
                                         }
                                       )}
-                                  
+
                                     />
-                                    {addressError && touched && 
-                                <div className="text-danger">
-                                 Address must be selected from list
-                                </div>
-                              }
+                                    {addressError && touched &&
+                                      <div className="text-danger">
+                                        Address must be selected from list
+                                      </div>
+                                    }
                                     <div className="suugestion-div">
                                       <div className="suggestion-inner">
                                         {loading && <div>Loading...</div>}
@@ -434,13 +434,6 @@ const AddCompany = () => {
                                   </div>
                                 )}
                               </PlacesAutocomplete>
-                              {/* {tripFromCoordinates && (
-                                  <div>
-                                    <p>Latitude: {tripFromCoordinates.lat}</p>
-                                    <p>Longitude: {tripFromCoordinates.lng}</p>
-                                    <p>Address: {tripFrom}</p>
-                                  </div>
-                                )} */}
                               {errors.trip_from && (
                                 <span
                                   style={{ color: "red" }}
@@ -481,7 +474,7 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputphnnum">
                                 Phone Number <span class="asterisk-mark">*</span>
@@ -515,7 +508,7 @@ const AddCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                         
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputmailaddress">
                                 Email Address<span class="asterisk-mark">*</span>
@@ -551,15 +544,15 @@ const AddCompany = () => {
                                 className="d-flex justify-content-center"
                                 style={{ marginTop: "40px" }}
                               >
-                                <CButton type="submit" onClick={()=>{
-                                   if(address.length<1 || !selectAddress){
+                                <CButton type="submit" onClick={() => {
+                                  if (address.length < 1 || !selectAddress) {
                                     console.log(" address must be at least one character")
                                     setAddressError(true);
                                     setTouched(true);
                                     return;
                                   }
-                                }}className="submit-btn">
-                                  {formLoader?<ClipLoader color="#000000" />:"Submit"}
+                                }} className="submit-btn">
+                                  {formLoader ? <ClipLoader color="#000000" /> : "Submit"}
                                 </CButton>
                                 <CButton
                                   onClick={() =>
