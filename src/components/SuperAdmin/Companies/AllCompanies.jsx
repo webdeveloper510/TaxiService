@@ -45,27 +45,6 @@ import SuperAdminSideBar from "../Sidebar/SideBar";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import EmptyData from "../../EmptyData";
 // import toggel from "react-toggle/style.css"
-const tableExample = [
-  {
-    SrNo: "1",
-    companyId: "ID123",
-    companyname: "Mahindra",
-    postcode: "45622",
-    vehiclenumber: "12",
-    address: "34,Alex Street",
-    // action: { checkicon: checkiconimg },
-  },
-
-  {
-    SrNo: "1",
-    companyId: "ID456",
-    companyname: "TATA",
-    postcode: "45236",
-    vehiclenumber: "10",
-    address: "34,Alex Street",
-    // action: { checkicon: checkiconimg },
-  },
-];
 
 const AllCompanyDetails = () => {
   const [address, setAddress] = useState("");
@@ -74,21 +53,21 @@ const AllCompanyDetails = () => {
   const [search, setSearch] = useState("");
   const handleSelectAddress = async (selectedAddress) => {
     try {
-      formik.setFieldValue("land", selectedAddress )
+      formik.setFieldValue("land", selectedAddress)
       setAddress(selectedAddress)
-      
+
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  const handleAddressError = ()=>{
+  const handleAddressError = () => {
     console.log("handle Address error: ", address)
-    if(!address){
+    if (!address) {
       console.log("handle Address error: true")
-      formik.setFieldError("land","Address is required")
+      formik.setFieldError("land", "Address is required")
       setAddressError(true);
     }
-    else{
+    else {
       setAddressError(false)
     }
   }
@@ -116,7 +95,12 @@ const AllCompanyDetails = () => {
   const data = company?.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(company?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
-
+  useEffect(() => { 
+    if (!editVisible){
+      setTouched(false);
+      formik.resetForm();
+    }
+  }, [editVisible])
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -169,7 +153,7 @@ const AllCompanyDetails = () => {
 
   const getCompanyDetail = () => {
     setLoading(true);
-    getCompany({role:"COMPANY",name: search})
+    getCompany({ role: "COMPANY", name: search })
       .then((res) => {
         console.log(res?.result, "company");
         if (res?.code === 200) {
@@ -226,7 +210,7 @@ const AllCompanyDetails = () => {
     commision: "",
   };
 
-  const [inputData , setInputData] = useState({
+  const [inputData, setInputData] = useState({
     _id: "",
     company_name: "",
     land: "",
@@ -249,20 +233,20 @@ const AllCompanyDetails = () => {
       .min(2)
       .max(20)
       .required("Company Name is required"),
-    land: Yup.string().trim().min(4).max(20).required("Land is required"),
+    // land: Yup.string().trim().min(4).max(20).required("Land is required"),
     post_code: Yup.string().trim().max(10).required("Postcode is required"),
     house_number: Yup.string().trim().max(20).required("Building number is required"),
     description: Yup.string().trim()
       .min(4)
       .max(100)
-      .required("Describe your taxi number is required"),
+      .required("Describe your taxi company is required"),
     affiliated_with: Yup.string().trim(),
     phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Phone number is required"),
+      .required("Phone Number is required"),
     website: Yup.string().trim()
       .url("Invalid URL format. Please enter a valid URL."),
-      tx_quality_mark: Yup.string().trim(),
+    tx_quality_mark: Yup.string().trim(),
     first_name: Yup.string().trim().required("First Name is required"),
     last_name: Yup.string().trim().required("Last Name is required"),
     p_number: Yup.string().trim()
@@ -272,17 +256,17 @@ const AllCompanyDetails = () => {
     email: Yup.string().trim().email().required("Email Address is required"),
     commision: Yup.number()
       .typeError('Must be a number')
-      .required('Number is required')
+      // .required('Commision is required')
       .max(100, 'Value must be lower than equal to 100')
   });
 
-  const handleValueCommission = (e)=>{
+  const handleValueCommission = (e) => {
     // console.log("handleValueCommission", e)
     const value = parseFloat(e.target.value);
-    if(value > 100){
+    if (value > 100) {
       console.log("value must be lower than 100")
-      formik.setFieldError("commision","value must be lower than 100")
-    }else{
+      formik.setFieldError("commision", "value must be lower than 100")
+    } else {
       formik.setFieldValue(e.target.name, e.target.value);
       formik.setFieldTouched(e.target.name, true);
     }
@@ -293,10 +277,15 @@ const AllCompanyDetails = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log("values", values);
+      if (address.length < 1) {
+        setAddressError(true);
+        setTouched(true);
+        return
+      }
       const id = values._id
       editCompanyDetail(id, {
         company_name: values.company_name,
-        land: values.land,
+        land: address,
         post_code: values.post_code,
         house_number: values.house_number,
         description: values.description,
@@ -413,16 +402,16 @@ const AllCompanyDetails = () => {
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">Companies Details</h1>
                 <div className="serach-left" id="company-search">
-                <MDBInputGroup>
-      <MDBInput value={search} onChange={(e)=>{
-        setSearch(e.target.value);
-      }} placeholder="Search"/>
-    <button className="search-btn"
-    onClick={getCompanyDetail}
-    >
-        <MDBIcon icon='search' />
-      </button>
-    </MDBInputGroup></div>
+                  <MDBInputGroup>
+                    <MDBInput value={search} onChange={(e) => {
+                      setSearch(e.target.value);
+                    }} placeholder="Search" />
+                    <button className="search-btn"
+                      onClick={getCompanyDetail}
+                    >
+                      <MDBIcon icon='search' />
+                    </button>
+                  </MDBInputGroup></div>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">
@@ -441,110 +430,110 @@ const AllCompanyDetails = () => {
                         </Link>
                       </div>
                     </div> */}
-                    
+
                   </div>
                   {loading ? (
                     <AppLoader />
                   ) : (
                     <>
-                  {data.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
-                      <CTableHead>
-                        <CTableRow>
-                          {/* <CTableHeaderCell className="text-center">
+                      {data.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
+                        <CTableHead>
+                          <CTableRow>
+                            {/* <CTableHeaderCell className="text-center">
  <CIcon icon={cilPeople} />
  </CTableHeaderCell> */}
-                          <CTableHeaderCell className="text-center">
-                            S. No.
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Company ID
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Name
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Email
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Phone
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Status
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Action
-                          </CTableHeaderCell>
-                        </CTableRow>
-                      </CTableHead>
-                      <CTableBody>
-                        {data?.map((item, index) => (
-                          <CTableRow
-                            className="text-center"
-                            v-for="item in tableItems"
-                            key={item._id}
-                          >
-                            <CTableDataCell>
-                              <div>{firstIndex + index + 1}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item?.company_id}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>
-                                {item.first_name + " " + item.last_name}
-                              </div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.email}</div>
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <div>{item.phone}</div>
-                            </CTableDataCell>
+                            <CTableHeaderCell className="text-center">
+                              S. No.
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Company ID
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Name
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Email
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Phone
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Status
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Action
+                            </CTableHeaderCell>
+                          </CTableRow>
+                        </CTableHead>
+                        <CTableBody>
+                          {data?.map((item, index) => (
+                            <CTableRow
+                              className="text-center"
+                              v-for="item in tableItems"
+                              key={item._id}
+                            >
+                              <CTableDataCell>
+                                <div>{firstIndex + index + 1}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item?.company_id}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>
+                                  {item.first_name + " " + item.last_name}
+                                </div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.email}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.phone}</div>
+                              </CTableDataCell>
 
-                            <CTableDataCell>
-                              <Switch
-                                checkedIcon={false}
-                                uncheckedIcon={false}
-                                height={18}
-                                width={35}
-                                onChange={() => {
-                                  handleStatusChange(item);
-                                }}
-                                checked={item.status}
-                              />
-                            </CTableDataCell>
-                            <CTableDataCell className="text-center company-list-icons">
-                              <CButton
-                                id="edit_company_btn"
-                                onClick={() => setEditVisible(!editVisible)}
-                              >
-                                {/* <div style={{cursor:"pointer"}} 
+                              <CTableDataCell>
+                                <Switch
+                                  checkedIcon={false}
+                                  uncheckedIcon={false}
+                                  height={18}
+                                  width={35}
+                                  onChange={() => {
+                                    handleStatusChange(item);
+                                  }}
+                                  checked={item.status}
+                                />
+                              </CTableDataCell>
+                              <CTableDataCell className="text-center company-list-icons">
+                                <CButton
+                                  id="edit_company_btn"
+                                  onClick={() => setEditVisible(!editVisible)}
+                                >
+                                  {/* <div style={{cursor:"pointer"}} 
  onClick={()=>navigate(`/taxi/edit-company/${item._id}`)}
  ></div> */}
-                                <img
-                                  src={editiconimg}
-                                  alt="edit"
-                                  onClick={() => handleEdit(item._id)}
-                                />{" "}
-                              </CButton>
+                                  <img
+                                    src={editiconimg}
+                                    alt="edit"
+                                    onClick={() => handleEdit(item._id)}
+                                  />{" "}
+                                </CButton>
 
-                              {/* <div style={{cursor:"pointer"}} onClick={()=>{
+                                {/* <div style={{cursor:"pointer"}} onClick={()=>{
  deleteCompanyHandler(item._id);
  }}> </div> */}
-                              <CButton
-                                id="delete_company_btn"
-                                onClick={() => {
-                                  setDeleteVisible(!deleteVisible);
-                                  setSelectedCompany(item);
-                                }}
-                              >
-                                <img src={deleteiconimg} alt="delet" />
-                              </CButton>
-                            </CTableDataCell>
-                          </CTableRow>
-                        ))}
-                      </CTableBody>
-                    </CTable>: <EmptyData/>}
+                                <CButton
+                                  id="delete_company_btn"
+                                  onClick={() => {
+                                    setDeleteVisible(!deleteVisible);
+                                    setSelectedCompany(item);
+                                  }}
+                                >
+                                  <img src={deleteiconimg} alt="delet" />
+                                </CButton>
+                              </CTableDataCell>
+                            </CTableRow>
+                          ))}
+                        </CTableBody>
+                      </CTable> : <EmptyData />}
                     </>
                   )}
 
@@ -669,95 +658,95 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.company_name &&
-                                formik.touched.company_name ? (
-                                <div className="text-danger">
-                                  {formik.errors.company_name}
-                                </div>
-                              ) : null}
-                                </CCol>
-                                 <CCol xs={6}
-                            onBlur={()=>{
-                              setTouched(true)
-                            }}
-                            >
-                              <CFormLabel htmlFor="inputtripfrom">
-                                Address
-                              </CFormLabel>
-                              <PlacesAutocomplete
-                                value={address}
-                                
-                                onChange={(data) => {
-                                  
-                                 console.log(data, " from place holder")
-                                  setAddress(data);
-                                  if (data.length < 1) {
-                                    setAddressError(true)
-                                  } else {
-                                   setAddressError(false)
-                                  }
-                                }}
-                                onSelect={handleSelectAddress}
-                                
-                              
-                              >
-                                {({
-                                  getInputProps,
-                                  suggestions,
-                                  getSuggestionItemProps,
-                                  loading,
-                                }) => (
-                                  <div>
-                                    <CFormInput
-                                      onBlur={()=>{
-                                        console.log("Blur run")
-                                      }}
-                                      id="inputtripfrom"
-                                      {...getInputProps({
-                                        // placeholder: "Enter a location",
-                                      })}
-                                      className={clsx(
-                                        "form-control bg-transparent",
-                                        {
-                                          "is-invalid":
-                                          touched &&
-                                            addressError
-                                        },
-                                        {
-                                          "is-valid":
-                                            touched &&
-                                            !addressError
-                                        }
-                                      )}
-                                  
-                                    />
-                                    {addressError && touched && 
-                                <div className="text-danger">
-                                  Address is Required
-                                </div>
-                              }
-                                    <div className="suugestion-div">
-                                      <div className="suggestion-inner">
-                                        {loading && <div>Loading...</div>}
-                                        {suggestions
-                                          .slice(0, 3)
-                                          .map((suggestion) => (
-                                            <div
-                                              key={suggestion.id}
-                                              {...getSuggestionItemProps(
-                                                suggestion
-                                              )}
-                                            >
-                                              {suggestion.description}
-                                            </div>
-                                          ))}
-                                      </div>
+                                    formik.touched.company_name ? (
+                                    <div className="text-danger">
+                                      {formik.errors.company_name}
                                     </div>
-                                  </div>
-                                )}
-                              </PlacesAutocomplete>
-                             
-                              
-                              </CCol>
+                                  ) : null}
+                                </CCol>
+                                <CCol xs={6}
+                                  onBlur={() => {
+                                    setTouched(true)
+                                  }}
+                                >
+                                  <CFormLabel htmlFor="inputtripfrom">
+                                    Address
+                                  </CFormLabel>
+                                  <PlacesAutocomplete
+                                    value={address}
+
+                                    onChange={(data) => {
+
+                                      console.log(data, " from place holder")
+                                      setAddress(data);
+                                      if (data.length < 1) {
+                                        setAddressError(true)
+                                      } else {
+                                        setAddressError(false)
+                                      }
+                                    }}
+                                    onSelect={handleSelectAddress}
+
+
+                                  >
+                                    {({
+                                      getInputProps,
+                                      suggestions,
+                                      getSuggestionItemProps,
+                                      loading,
+                                    }) => (
+                                      <div>
+                                        <CFormInput
+                                          onBlur={() => {
+                                            console.log("Blur run")
+                                          }}
+                                          id="inputtripfrom"
+                                          {...getInputProps({
+                                            // placeholder: "Enter a location",
+                                          })}
+                                          className={clsx(
+                                            "form-control bg-transparent",
+                                            {
+                                              "is-invalid":
+                                                touched &&
+                                                addressError
+                                            },
+                                            {
+                                              "is-valid":
+                                                touched &&
+                                                !addressError
+                                            }
+                                          )}
+
+                                        />
+                                        {addressError && touched &&
+                                          <div className="text-danger">
+                                            Address is Required
+                                          </div>
+                                        }
+                                        <div className="suugestion-div">
+                                          <div className="suggestion-inner">
+                                            {loading && <div>Loading...</div>}
+                                            {suggestions
+                                              .slice(0, 3)
+                                              .map((suggestion) => (
+                                                <div
+                                                  key={suggestion.id}
+                                                  {...getSuggestionItemProps(
+                                                    suggestion
+                                                  )}
+                                                >
+                                                  {suggestion.description}
+                                                </div>
+                                              ))}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </PlacesAutocomplete>
+
+
+                                </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputpcode">
                                     Post Code
@@ -784,11 +773,11 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.post_code &&
-                                formik.touched.post_code ? (
-                                <div className="text-danger">
-                                  {formik.errors.post_code}
-                                </div>
-                              ) : null}
+                                    formik.touched.post_code ? (
+                                    <div className="text-danger">
+                                      {formik.errors.post_code}
+                                    </div>
+                                  ) : null}
                                 </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputhousenum">
@@ -816,11 +805,11 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.house_number &&
-                                formik.touched.house_number ? (
-                                <div className="text-danger">
-                                  {formik.errors.house_number}
-                                </div>
-                              ) : null}
+                                    formik.touched.house_number ? (
+                                    <div className="text-danger">
+                                      {formik.errors.house_number}
+                                    </div>
+                                  ) : null}
                                 </CCol>
 
                                 <CCol md={6}>
@@ -900,29 +889,29 @@ const AllCompanyDetails = () => {
                                     aria-label="Affiliated"
                                     value={inputData.affiliated_with}
                                     {...formik.getFieldProps("affiliated_with")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.affiliated_with &&
-                                      formik.errors.affiliated_with,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.affiliated_with &&
-                                      !formik.errors.affiliated_with,
-                                  }
-                                )}
-                                name="affiliated_with"
-                                autoComplete="off"
-                              />
-                              {formik.errors.affiliated_with &&
-                                formik.touched.affiliated_with ? (
-                                <div className="text-danger">
-                                  {formik.errors.affiliated_with}
-                                </div>
-                              ) : null}
+                                    maxLength="50"
+                                    className={clsx(
+                                      "form-control bg-transparent",
+                                      {
+                                        "is-invalid":
+                                          formik.touched.affiliated_with &&
+                                          formik.errors.affiliated_with,
+                                      },
+                                      {
+                                        "is-valid":
+                                          formik.touched.affiliated_with &&
+                                          !formik.errors.affiliated_with,
+                                      }
+                                    )}
+                                    name="affiliated_with"
+                                    autoComplete="off"
+                                  />
+                                  {formik.errors.affiliated_with &&
+                                    formik.touched.affiliated_with ? (
+                                    <div className="text-danger">
+                                      {formik.errors.affiliated_with}
+                                    </div>
+                                  ) : null}
                                 </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputphnnum">
@@ -964,29 +953,29 @@ const AllCompanyDetails = () => {
                                     id="webt_site"
                                     value={inputData.website}
                                     {...formik.getFieldProps("website")}
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.website &&
-                                      formik.errors.website,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.website &&
-                                      !formik.errors.website,
-                                  }
-                                )}
-                                name="website"
-                                autoComplete="off"
-                              />
-                              {formik.errors.website &&
-                                formik.touched.website ? (
-                                <div className="text-danger">
-                                  {formik.errors.website}
-                                </div>
-                              ) : null}
+                                    maxLength="50"
+                                    className={clsx(
+                                      "form-control bg-transparent",
+                                      {
+                                        "is-invalid":
+                                          formik.touched.website &&
+                                          formik.errors.website,
+                                      },
+                                      {
+                                        "is-valid":
+                                          formik.touched.website &&
+                                          !formik.errors.website,
+                                      }
+                                    )}
+                                    name="website"
+                                    autoComplete="off"
+                                  />
+                                  {formik.errors.website &&
+                                    formik.touched.website ? (
+                                    <div className="text-danger">
+                                      {formik.errors.website}
+                                    </div>
+                                  ) : null}
                                 </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputquality">
@@ -997,7 +986,7 @@ const AllCompanyDetails = () => {
                                     maxLength="50"
                                     value={inputData.tx_quality_mark}
                                     {...formik.getFieldProps("tx_quality_mark")}
-                                   
+
                                     className={clsx(
                                       "form-control bg-transparent",
                                       {
@@ -1031,7 +1020,7 @@ const AllCompanyDetails = () => {
                                       maxLength="50"
                                       value={inputData.first_name}
                                       {...formik.getFieldProps("first_name")}
-                                 
+
                                       className={clsx(
                                         "form-control bg-transparent",
                                         {
@@ -1064,29 +1053,29 @@ const AllCompanyDetails = () => {
                                       maxLength="50"
                                       value={inputData.last_name}
                                       {...formik.getFieldProps("last_name")}
-                                 
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.last_name &&
-                                        formik.errors.last_name,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.last_name &&
-                                        !formik.errors.last_name,
-                                    }
-                                  )}
-                                  name="last_name"
-                                  autoComplete="off"
-                                />
-                                {formik.errors.last_name &&
-                                  formik.touched.last_name ? (
-                                  <div className="text-danger">
-                                    {formik.errors.last_name}
-                                  </div>
-                                ) : null}
+
+                                      className={clsx(
+                                        "form-control bg-transparent",
+                                        {
+                                          "is-invalid":
+                                            formik.touched.last_name &&
+                                            formik.errors.last_name,
+                                        },
+                                        {
+                                          "is-valid":
+                                            formik.touched.last_name &&
+                                            !formik.errors.last_name,
+                                        }
+                                      )}
+                                      name="last_name"
+                                      autoComplete="off"
+                                    />
+                                    {formik.errors.last_name &&
+                                      formik.touched.last_name ? (
+                                      <div className="text-danger">
+                                        {formik.errors.last_name}
+                                      </div>
+                                    ) : null}
                                   </CCol>
                                 </CCol>
 

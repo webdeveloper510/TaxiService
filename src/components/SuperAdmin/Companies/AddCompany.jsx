@@ -54,21 +54,21 @@ const AddSuperCompany = () => {
   }, []);
   const handleSelectAddress = async (selectedAddress) => {
     try {
-      formik.setFieldValue("land", selectedAddress )
+      formik.setFieldValue("land", selectedAddress)
       setAddress(selectedAddress)
-      
+
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  const handleAddressError = ()=>{
+  const handleAddressError = () => {
     console.log("handle Address error: ", address)
-    if(!address){
+    if (!address) {
       console.log("handle Address error: true")
-      formik.setFieldError("land","Address is required")
+      formik.setFieldError("land", "Address is required")
       setAddressError(true);
     }
-    else{
+    else {
       setAddressError(false)
     }
   }
@@ -81,7 +81,7 @@ const AddSuperCompany = () => {
     describe_your_taxi_company: "",
     affiliated_with: "",
     phone: "",
-    commision:"",
+    commision: "",
     // number_of_cars: "",
     // chamber_of_comerce_number: "",
     // vat:"",
@@ -95,20 +95,20 @@ const AddSuperCompany = () => {
   };
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
-      .min(2,"Company Name must be at least 2 characters")
-      .max(50,"Company Name must be at most 50 characters")
+      .min(2, "Company Name must be at least 2 characters")
+      .max(50, "Company Name must be at most 50 characters")
       .required("Company Name is required"),
     // land: Yup.string().min(4).max(20).required("Land is required"),
-    post_code: Yup.string().trim().max(10,"Post Code must be at most 10 characters").matches(/\S/, 'Field must not contain only white spaces').required("Postcode is required"),
+    post_code: Yup.string().trim().max(10, "Post Code must be at most 10 characters").matches(/\S/, 'Field must not contain only white spaces').required("Postcode is required"),
     house_number: Yup.string().trim().max(20).required("Building number is required"),
     describe_your_taxi_company: Yup.string().trim()
       .min(2, "Describe your taxi company must be at least 2 characters")
-      .max(50,"Describe your taxi company must be at most 50 characters")
+      .max(50, "Describe your taxi company must be at most 50 characters")
       .required("Describe your taxi company is required"),
     affiliated_with: Yup.string().trim(),
     phone: Yup.string().trim()
       .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Phone number is required"),
+      .required("Phone Number is required"),
     // number_of_cars: Yup.string().matches(/^[0-9]+$/, "Must be only digits").required("Number of cars is required"),
     // chamber_of_comerce_number: Yup.string().required("Chamber of Commerce Number is required"),
     // vat:Yup.string().min(4).max(18).required("VAT Number is required"),
@@ -123,18 +123,18 @@ const AddSuperCompany = () => {
       .max(18, "max length must be 6")
       .matches(/^[0-9]+$/, "Must be only digits"),
     email: Yup.string().trim().email().required("Email Address is required"),
-    commision : Yup.number()
-    .typeError('Must be a number')
-    .required('Number is required')
-    .max(100, 'Value must be lower than equal to 100')
+    commision: Yup.number()
+      .typeError('Must be a number')
+      .required('Commission  is required')
+      .max(100, 'Value must be lower than equal to 100')
   });
-  const handleValueCommission = (e)=>{
+  const handleValueCommission = (e) => {
     // console.log("handleValueCommission", e)
     const value = parseFloat(e.target.value);
-    if(value > 100){
+    if (value > 100) {
       console.log("value must be lower than 100")
-      formik.setFieldError("commision","value must be lower than 100")
-    }else{
+      formik.setFieldError("commision", "value must be lower than 100")
+    } else {
       formik.setFieldValue(e.target.name, e.target.value);
       formik.setFieldTouched(e.target.name, true);
     }
@@ -143,10 +143,10 @@ const AddSuperCompany = () => {
     initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      if(address.length<1){
+      if (address.length < 1) {
         setAddressError(true);
         setTouched(true);
-       return
+        return
       }
       setSubmitLoader(true)
       console.log("values", values);
@@ -164,8 +164,8 @@ const AddSuperCompany = () => {
         last_name: values.last_name,
         p_number: values.tel_contact_number,
         email: values.email,
-        commision : values.commision,
-        role : "COMPANY"
+        commision: values.commision,
+        role: "COMPANY"
       }).then((res) => {
         console.log("response---->>>>", res);
         if (res?.data?.code === 200) {
@@ -180,7 +180,7 @@ const AddSuperCompany = () => {
             autoClose: 1000,
           });
         }
-      }).finally(()=>{
+      }).finally(() => {
         setSubmitLoader(false)
       });
     },
@@ -306,7 +306,7 @@ const AddSuperCompany = () => {
                               <CFormInput
                                 aria-label="vehicle fare"
                                 {...formik.getFieldProps("company_name")}
-                            
+
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -331,29 +331,29 @@ const AddSuperCompany = () => {
                               ) : null}
                             </CCol>
                             <CCol xs={6}
-                            onBlur={()=>{
-                              setTouched(true)
-                            }}
+                              onBlur={() => {
+                                setTouched(true)
+                              }}
                             >
                               <CFormLabel htmlFor="inputtripfrom">
                                 Address<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <PlacesAutocomplete
                                 value={address}
-                                
+
                                 onChange={(data) => {
-                                  
-                                 console.log(data, " from place holder")
+
+                                  console.log(data, " from place holder")
                                   setAddress(data);
                                   if (data.length < 1) {
                                     setAddressError(true)
                                   } else {
-                                   setAddressError(false)
+                                    setAddressError(false)
                                   }
                                 }}
                                 onSelect={handleSelectAddress}
-                                
-                              
+
+
                               >
                                 {({
                                   getInputProps,
@@ -363,7 +363,7 @@ const AddSuperCompany = () => {
                                 }) => (
                                   <div>
                                     <CFormInput
-                                      onBlur={()=>{
+                                      onBlur={() => {
                                         console.log("Blur run")
                                       }}
                                       id="inputtripfrom"
@@ -374,7 +374,7 @@ const AddSuperCompany = () => {
                                         "form-control bg-transparent",
                                         {
                                           "is-invalid":
-                                          touched &&
+                                            touched &&
                                             addressError
                                         },
                                         {
@@ -383,13 +383,13 @@ const AddSuperCompany = () => {
                                             !addressError
                                         }
                                       )}
-                                  
+
                                     />
-                                    {addressError && touched && 
-                                <div className="text-danger">
-                                  Address is Required
-                                </div>
-                              }
+                                    {addressError && touched &&
+                                      <div className="text-danger">
+                                        Address is Required
+                                      </div>
+                                    }
                                     <div className="suugestion-div">
                                       <div className="suggestion-inner">
                                         {loading && <div>Loading...</div>}
@@ -433,7 +433,7 @@ const AddSuperCompany = () => {
                               <CFormInput
                                 aria-label="postcode"
                                 {...formik.getFieldProps("post_code")}
-                               
+
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -498,7 +498,7 @@ const AddSuperCompany = () => {
                                 {...formik.getFieldProps(
                                   "describe_your_taxi_company"
                                 )}
-                             
+
                                 className={clsx(
                                   "form-control bg-transparent",
                                   {
@@ -589,7 +589,7 @@ const AddSuperCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                           
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputwebsite">
                                 Website
@@ -652,17 +652,17 @@ const AddSuperCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                            
+
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputcommision">
-                              Commission in (%)<span class="asterisk-mark">*</span>
+                                Commission in (%)<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
-                              type="number"
-                              step="0.01"
+                                type="number"
+                                step="0.01"
                                 aria-label="commision"
-                                
-                                
+
+
                                 {...formik.getFieldProps("commision")}
                                 maxLength="50"
                                 className={clsx(
@@ -687,68 +687,68 @@ const AddSuperCompany = () => {
                                 </div>
                               ) : null}
                             </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputfname">
-                                  First Name<span class="asterisk-mark">*</span>
-                                </CFormLabel>
-                                <CFormInput
-                                  id="f_name"
-                                  {...formik.getFieldProps("first_name")}
-                                  maxLength="50"
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.first_name &&
-                                        formik.errors.first_name,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.first_name &&
-                                        !formik.errors.first_name,
-                                    }
-                                  )}
-                                  name="first_name"
-                                  autoComplete="off"
-                                />
-                                {formik.errors.first_name &&
-                                  formik.touched.first_name ? (
-                                  <div className="text-danger">
-                                    {formik.errors.first_name}
-                                  </div>
-                                ) : null}
-                              </CCol>
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputlname">
-                                  Last Name<span class="asterisk-mark">*</span>
-                                </CFormLabel>
-                                <CFormInput
-                                  id="l_name"
-                                  {...formik.getFieldProps("last_name")}
-                                  maxLength="50"
-                                  className={clsx(
-                                    "form-control bg-transparent",
-                                    {
-                                      "is-invalid":
-                                        formik.touched.last_name &&
-                                        formik.errors.last_name,
-                                    },
-                                    {
-                                      "is-valid":
-                                        formik.touched.last_name &&
-                                        !formik.errors.last_name,
-                                    }
-                                  )}
-                                  name="last_name"
-                                  autoComplete="off"
-                                />
-                                {formik.errors.last_name &&
-                                  formik.touched.last_name ? (
-                                  <div className="text-danger">
-                                    {formik.errors.last_name}
-                                  </div>
-                                ) : null}
-                              </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputfname">
+                                First Name<span class="asterisk-mark">*</span>
+                              </CFormLabel>
+                              <CFormInput
+                                id="f_name"
+                                {...formik.getFieldProps("first_name")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.first_name &&
+                                      formik.errors.first_name,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.first_name &&
+                                      !formik.errors.first_name,
+                                  }
+                                )}
+                                name="first_name"
+                                autoComplete="off"
+                              />
+                              {formik.errors.first_name &&
+                                formik.touched.first_name ? (
+                                <div className="text-danger">
+                                  {formik.errors.first_name}
+                                </div>
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputlname">
+                                Last Name<span class="asterisk-mark">*</span>
+                              </CFormLabel>
+                              <CFormInput
+                                id="l_name"
+                                {...formik.getFieldProps("last_name")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent",
+                                  {
+                                    "is-invalid":
+                                      formik.touched.last_name &&
+                                      formik.errors.last_name,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formik.touched.last_name &&
+                                      !formik.errors.last_name,
+                                  }
+                                )}
+                                name="last_name"
+                                autoComplete="off"
+                              />
+                              {formik.errors.last_name &&
+                                formik.touched.last_name ? (
+                                <div className="text-danger">
+                                  {formik.errors.last_name}
+                                </div>
+                              ) : null}
+                            </CCol>
                             {/* </CCol> */}
 
                             <CCol md={6}>
@@ -820,14 +820,14 @@ const AddSuperCompany = () => {
                                 className="d-flex justify-content-center"
                                 style={{ marginTop: "40px" }}
                               >
-                                <CButton type="submit" onClick={()=>{
-                                  if(address.length<1){
+                                <CButton type="submit" onClick={() => {
+                                  if (address.length < 1) {
                                     setAddressError(true);
                                     setTouched(true);
                                   }
                                 }} className="submit-btn">
-                                {submitLoader ?
-                      <ClipLoader color="#000000" /> : "Submit"}
+                                  {submitLoader ?
+                                    <ClipLoader color="#000000" /> : "Submit"}
                                 </CButton>
                                 <CButton
                                   onClick={() =>

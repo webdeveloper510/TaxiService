@@ -20,54 +20,20 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import filterImg from '../../../assets/images/filter-icon.png'
 import { tripEnum } from "../../../utils/saticData";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
-const tableExample = [
-  {
-  SrNo : '1',
-  tripId: 'ID123',
-  drivername: 'Yiorgos Avraamu',
-  tripfrom: 'Shimla',
-  tripto: 'Delhi',
-  date: '16-09-2022',
-  time:'10:10AM',
-  vehicletype: 'AC',
-  activity: 'In a Ride',
-//  action: { checkicon: checkiconimg },
-  },
-  {
-  SrNo : '2',
-  tripId: 'ID456',
-  drivername: 'Avraamu',
-  tripfrom: 'Shimla',
-  tripto: 'Delhi',
-  date: '16-09-2022',
-  time:'10:10AM',
-  vehicletype: 'NON-AC',
-  activity: 'Active',
-    //  action: { checkicon: cibCcMastercard },
-      },
-      {
- SrNo : '3',
- tripId: 'ID456',
-drivername: 'Avraamu',
- tripfrom: 'Shimla',
- tripto: 'Delhi',
- date: '16-09-2022',
-  time:'10:10AM',
-  vehicletype: 'SUV',
-  activity: 'Offline',
-          //  action: { checkicon: cibCcMastercard },
-            },
-]
-const SuperRecentTrips=()=> {
-   
+
+const SuperRecentTrips = () => {
+  let [query, setQuery] = useSearchParams();
+  const status = query.get("filter");
   const [filterData, setFilterData] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('All'); // Initial selected value
-  
+  // const [selectedValue, setSelectedValue] = useState("All"); // Initial selected valu
+
   const handleSelect = (eventKey) => {
-    setSelectedValue(eventKey); // Update the selected value when an item is selected
+    setSelectedType(eventKey); // Update the selected value when an item is selected
   };
-  const [selectedType, setSelectedType] = useState(null);
+  const [selectedType, setSelectedType] = useState(status || "All");
   const [pendinTrip, setPendingTrip] = useState([])
   const [loader, setLoader] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -97,14 +63,14 @@ const SuperRecentTrips=()=> {
       return null;
     }
   });
-  const [search,setSearch] = useState("")
-  useEffect(()=>{
-    if(!selectedType) setFilterData(pendinTrip);
+  const [search, setSearch] = useState("")
+  useEffect(() => {
+    if (!selectedType || selectedType === "All") setFilterData(pendinTrip);
     else {
-      console.log("selectedType in else: ",selectedType)
-      setFilterData(pendinTrip.filter(i=>i.trip_status == selectedType))
+      console.log("selectedType in else: ", selectedType)
+      setFilterData(pendinTrip.filter(i => i.trip_status == selectedType))
     }
-  },[selectedType])
+  }, [selectedType])
   const handlePrePage = () => {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
@@ -133,202 +99,227 @@ const SuperRecentTrips=()=> {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-  useEffect(()=>{
+  useEffect(() => {
     setLoader(true)
-    getRecentTrip(true,search).then(res => {
+    getRecentTrip(true, search).then(res => {
+
       if (res?.code == 200 && res?.result) {
         setPendingTrip(res?.result)
-        setFilterData(res?.result)
+        // setFilterData(res?.result)
+        // console.log("Status is: ", status)
+        // if (!status) setFilterData(res?.result);
+        // else {
+        //   console.log("status in else: ", status)
+        //   setFilterData(res?.result.filter(i => i.trip_status == status))
+        // }
+        if (!selectedType || selectedType === "All") setFilterData(res?.result);
+        else {
+          console.log("selectedType in else: ", selectedType)
+          setFilterData(res?.result.filter(i => i.trip_status == selectedType))
+        }
       }
-    }).finally(() => {setLoader(false)})
-  },[search])
+    }).finally(() => { setLoader(false) })
+  }, [search])
+  // useEffect(() => {
+  //   if (status) {
+  //     setSelectedType(status)
+  //     // setLoader(true);
+  //     //   getRecentTrip(true, search).then(res => {
 
-      return (
-       <>
-    
-     
+  //     //     if (res?.code == 200 && res?.result) {
+  //     //       setPendingTrip(res?.result)
+  //     //       // setFilterData(res?.result)
+  //     //       console.log("Status is: ", status)
+  //     //       if (!status) setFilterData(res?.result);
+  //     //       else {
+  //     //         console.log("status in else: ", status)
+  //     //         setFilterData(res?.result.filter(i => i.trip_status == status))
+  //     //       }
+  //     //     }
+  //     //   }).finally(() => { setLoader(false) })
+  //   }
+  // }, [status])
+  return (
+    <>
+
+
 
       <div className="container-fluidd">
         <div className="col-md-12">
           <div>
-           <SuperAdminSideBar/>
+            <SuperAdminSideBar />
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">All Trips</h1>
-             
+
 
 
 
                 <div class="filter-outer">
                   <div className="serach-left" id="recent-trip-search">
-                <MDBInputGroup>
-                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
-    
-    </MDBInputGroup></div>
-    <div className="filter-right">
+                    <MDBInputGroup>
+                      <MDBInput placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
 
-               <Dropdown onSelect={handleSelect}>
-      <Dropdown.Toggle id="dropdown-basic">
-        <img src={filterImg}/>
-        {selectedValue}
-      </Dropdown.Toggle>
-     
-      <Dropdown.Menu>
-      <Dropdown.Item  eventKey={"All"}
-        onClick={()=>{
-          setSelectedType(null)
-        }}
-        >All</Dropdown.Item>
-      {tripEnum.map((item,i)=>{
-        return <Dropdown.Item key={i} eventKey={item}
-        onClick={()=>{
-          setSelectedType(item)
-        }}
-        >{item}</Dropdown.Item>
-      })}
-      </Dropdown.Menu>
-    </Dropdown>
-    </div>
-               </div>
-                {loader?<AppLoader/>:
-                
-                <div class="active-trip-outer">
-                  <div className="trips-head d-flex justify-content-between">
-                 
+                    </MDBInputGroup></div>
+                  <div className="filter-right">
+
+                    <Dropdown onSelect={handleSelect}>
+                      <Dropdown.Toggle id="dropdown-basic">
+                        <img src={filterImg} />
+                        {selectedType}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        {tripEnum.map((item, i) => {
+                          return <Dropdown.Item key={i} eventKey={item}
+                            onClick={() => {
+                              setSelectedType(item)
+                            }}
+                          >{item}</Dropdown.Item>
+                        })}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
-              
-                  
-                 { data?.length > 0 ? <CTable align="middle" className="mb-0 table-container" hover responsive>
-                 
-          <CTableHead>
-          
-            <CTableRow>
-              {/* <CTableHeaderCell className="text-center">
+                </div>
+                {loader ? <AppLoader /> :
+
+                  <div class="active-trip-outer">
+                    <div className="trips-head d-flex justify-content-between">
+
+                    </div>
+
+
+                    {data?.length > 0 ? <CTable align="middle" className="mb-0 table-container" hover responsive>
+
+                      <CTableHead>
+
+                        <CTableRow>
+                          {/* <CTableHeaderCell className="text-center">
                 <CIcon icon={cilPeople} />
               </CTableHeaderCell> */}
-               <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
-              <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-              <CTableHeaderCell className="text-center">Customer Name</CTableHeaderCell>
-              <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
-              <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
-              <CTableHeaderCell className="text-center">
-                                Comment
-                              </CTableHeaderCell>
-              <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
-              <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
-              {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
-              <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {data?.map((item, index) => {     
-                   const status = item.trip_status;
-                   let background = "#067A88"
-                   if (status === 'Active') background = "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%) "
-                   else if (status === 'Accepted') background = 'linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)'
-                   else if (status === 'Booked') background = 'linear-gradient(90deg, #FF5370 0%, #FF869A 100%)'
-                   else if (status === 'Completed') background= "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
-                   else if (status === 'Canceled') background= 'red'
+                          <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Customer Name</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">
+                            Comment
+                          </CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
+                          {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
+                          <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
+                        </CTableRow>
+                      </CTableHead>
+                      <CTableBody>
+                        {data?.map((item, index) => {
+                          const status = item.trip_status;
+                          let background = "#067A88"
+                          if (status === 'Active') background = "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%) "
+                          else if (status === 'Accepted') background = 'linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)'
+                          else if (status === 'Booked') background = 'linear-gradient(90deg, #FF5370 0%, #FF869A 100%)'
+                          else if (status === 'Completed') background = "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
+                          else if (status === 'Canceled') background = 'red'
 
-              return(                    
-                 <CTableRow className="text-center" v-for="item in tableItems" key={index}>
-                <CTableDataCell >
-                  <div>{firstIndex+ index+1}</div>
-                </CTableDataCell>
-                <CTableDataCell>
-                  <div>{item.series_id}</div>
-                </CTableDataCell>
-                <CTableDataCell>
-                  <div>{item.company_name}</div>
-                </CTableDataCell>
-                <CTableDataCell>
-                  <div>{item.trip_from?.address.length<20?item.trip_from?.address:item.trip_from?.address.slice(0,18)+"..."}</div>
-                </CTableDataCell>
-                <CTableDataCell>
-                  <div>{item.trip_to?.address.length<20?item.trip_to?.address: item.trip_to?.address.slice(0,18) + "..."}</div>
-                </CTableDataCell>
-                <CTableDataCell>
-                                    <div>
-                                      {item?.comment}
-                                    </div>
-                                  </CTableDataCell>
-                <CTableDataCell>
-                  <div>{moment(item.pickup_date_time).format("MMM Do YYYY")}</div>
-                </CTableDataCell> 
-                <CTableDataCell>
-                  <div>{moment(item.pickup_date_time).format("h:mm a")}</div>
-                </CTableDataCell>   
-                {/* <CTableDataCell>
+                          return (
+                            <CTableRow className="text-center" v-for="item in tableItems" key={index}>
+                              <CTableDataCell >
+                                <div>{firstIndex + index + 1}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.series_id}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.company_name}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.trip_from?.address.length < 20 ? item.trip_from?.address : item.trip_from?.address.slice(0, 18) + "..."}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.trip_to?.address.length < 20 ? item.trip_to?.address : item.trip_to?.address.slice(0, 18) + "..."}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>
+                                  {item?.comment}
+                                </div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{moment(item.pickup_date_time).format("MMM Do YYYY")}</div>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div>{moment(item.pickup_date_time).format("h:mm a")}</div>
+                              </CTableDataCell>
+                              {/* <CTableDataCell>
                   <div>{item.vehicle_type}</div>
                 </CTableDataCell>                    */}
-                <CTableDataCell className="text-center location-icons">
-                <span style={{
-                    background,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "8px",
-                    borderRadius : "8px",
-                    fontWeight: "normal",
-                    color: "#fff",
-                    width: '100px',
-                    margin: '0 auto',
-                   }}>{status}</span>  
-                </CTableDataCell>           
-              </CTableRow>
-              
-              )
-            })}
-          </CTableBody>
-        </CTable>: <EmptyData/>}
-      
-        {
+                              <CTableDataCell className="text-center location-icons">
+                                <span style={{
+                                  background,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  padding: "8px",
+                                  borderRadius: "8px",
+                                  fontWeight: "normal",
+                                  color: "#fff",
+                                  width: '100px',
+                                  margin: '0 auto',
+                                }}>{status}</span>
+                              </CTableDataCell>
+                            </CTableRow>
+
+                          )
+                        })}
+                      </CTableBody>
+                    </CTable> : <EmptyData />}
+
+                    {
                       data?.length > 0 ?
-                      <div
-                      className="pagination-outer"
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div
-                        className="prev_btn"
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <button onClick={() => handlePrePage()}>
-                          Previous
-                        </button>
-                      </div>
-                      <div className="previous-page">
-                        <ul>
-                          {pageNumber}
-                          <button className="dots_btn">
-                            {pageIncreament}
-                          </button>
-                        </ul>
-                      </div>
-                      <div className="next_btn">
-                        <button onClick={() => handleNextPage()}>Next</button>
-                      </div>
-                    </div>
-                    :""
-                     }
-     
-             
-                </div>}
+                        <div
+                          className="pagination-outer"
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <div
+                            className="prev_btn"
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <button onClick={() => handlePrePage()}>
+                              Previous
+                            </button>
+                          </div>
+                          <div className="previous-page">
+                            <ul>
+                              {pageNumber}
+                              <button className="dots_btn">
+                                {pageIncreament}
+                              </button>
+                            </ul>
+                          </div>
+                          <div className="next_btn">
+                            <button onClick={() => handleNextPage()}>Next</button>
+                          </div>
+                        </div>
+                        : ""
+                    }
+
+
+                  </div>}
               </div>
             </div>
           </div>
         </div>
       </div>
-       <br/>
-       
-       </>
-      );
-    };
-  
-   export default SuperRecentTrips; 
+      <br />
+
+    </>
+  );
+};
+
+export default SuperRecentTrips; 

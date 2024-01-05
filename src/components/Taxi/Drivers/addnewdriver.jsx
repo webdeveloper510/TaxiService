@@ -80,15 +80,15 @@ const AddNewDriver = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    FirstName: Yup.string().trim().required("First Name No is required"),
+    FirstName: Yup.string().trim().required("First Name is required"),
     LastName: Yup.string().trim().required("Last Name  is required"),
-    Address1: Yup.string().trim().required("Address1  is required"),
-    Address2: Yup.string().trim().required("Address2  is required"),
+    Address1: Yup.string().trim().required("Street Address 1  is required"),
+    Address2: Yup.string().trim().required("Street Address 2  is required"),
     Country: Yup.string().trim().required("Country is required"),
-    City: Yup.string().trim().required("City  is required"),
+    City: Yup.string().trim().required("City is required"),
     Zip: Yup.string().trim().required("Zip is required"),
     Email: Yup.string().trim().email().required("Email  is required"),
-    MobileNo: Yup.string().trim().matches(/^[0-9]+$/, "Must be only digits").required("MobileNo is required"),
+    MobileNo: Yup.string().trim().matches(/^[0-9]+$/, "Must be only digits").required("Mobile Number is required"),
     Gender: Yup.string().trim().required("Gender is required"),
     file: Yup.mixed().required("Driver's Photo is required"),
     doc: Yup.mixed().required("Driver's Document is required"),
@@ -161,8 +161,8 @@ const AddNewDriver = () => {
       formData.append('driver_documents', values.doc);
       setSubmitLoader(true);
       addDriver(formData).then((res) => {
-        console.log("response---->>>>", res)
-        if (res.data.code === 200) {
+        console.log("response from add driver --->>>>", res)
+        if (res?.data?.code === 200) {
           toast.success(`${res.data.message}`, {
             position: 'top-right',
             autoClose: 1000,
@@ -170,12 +170,12 @@ const AddNewDriver = () => {
           // navigate("/taxi/drivernavigate/listofdrivers")
           navigate("/super-admin/driver/listofdrivers")
         } else {
-          toast.warning(`${res.data.message}`, {
+          toast.warning(`${res?.data?.message || "There is some problem"}`, {
             position: 'top-right',
             autoClose: 1000,
           });
         }
-      }).finally(()=>{
+      }).finally(() => {
         setSubmitLoader(false)
       })
 
@@ -199,21 +199,21 @@ const AddNewDriver = () => {
     const file = selectedDoc
 
     if (file && file.type === 'application/pdf') {
-        const reader = new FileReader();
+      const reader = new FileReader();
 
-        reader.onload = function (e) {
-            const pdfData = e.target.result;
+      reader.onload = function (e) {
+        const pdfData = e.target.result;
 
-            // Open a new tab with the PDF content
-            const newTab = window.open();
-            newTab.document.write('<embed width="100%" height="100%" src="data:application/pdf;base64,' + window.btoa(pdfData) + '" type="application/pdf" />');
-        };
+        // Open a new tab with the PDF content
+        const newTab = window.open();
+        newTab.document.write('<embed width="100%" height="100%" src="data:application/pdf;base64,' + window.btoa(pdfData) + '" type="application/pdf" />');
+      };
 
-        reader.readAsBinaryString(file);
+      reader.readAsBinaryString(file);
     } else {
-        alert('Please upload a valid PDF file.');
+      alert('Please upload a valid PDF file.');
     }
-}
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -221,7 +221,7 @@ const AddNewDriver = () => {
         <div className="col-md-12">
 
           <div>
-          <SuperAdminSideBar/>
+            <SuperAdminSideBar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -343,8 +343,8 @@ const AddNewDriver = () => {
                                 name="Country"
                                 autoComplete="off" >
                                 <option default>Netherlands</option>
-                                {countryList.map((c)=>{
-                                   return (<option>{c}</option>)
+                                {countryList.map((c) => {
+                                  return (<option>{c}</option>)
                                 })}
 
                               </CFormSelect>
@@ -468,8 +468,8 @@ const AddNewDriver = () => {
                                   />
                                 </CCol>
                                 {formik.errors.Gender && formik.touched.Gender ? (
-                                <div className="text-danger">{formik.errors.Gender}</div>
-                              ) : null}
+                                  <div className="text-danger">{formik.errors.Gender}</div>
+                                ) : null}
                               </fieldset>
                             </CCol>
 
@@ -517,30 +517,30 @@ const AddNewDriver = () => {
                                       <button
                                         className="remove-btn"
                                         onClick={() => {
-                                         removefile()
+                                          removefile()
                                         }}
                                       >X</button></>
                                   ) :
                                   ""}</div>
-                                  {!image?.length > 0 && <>
-                              <CFormInput  accept="image/*" type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
+                              {!image?.length > 0 && <>
+                                <CFormInput accept="image/*" type="file" id="formFile" onChange={(e) => { uploadFile(e) }}
 
-                                maxLength="50"
-                                className={clsx(
-                                  "form-control bg-transparent",
-                                  {
-                                    "is-invalid":
-                                      formik.touched.file && formik.errors.file,
-                                  },
-                                  {
-                                    "is-valid":
-                                      formik.touched.file && !formik.errors.file,
-                                  }
-                                )}
-                                name="file"
-                                autoComplete="off" />
-                             
-                             
+                                  maxLength="50"
+                                  className={clsx(
+                                    "form-control bg-transparent",
+                                    {
+                                      "is-invalid":
+                                        formik.touched.file && formik.errors.file,
+                                    },
+                                    {
+                                      "is-valid":
+                                        formik.touched.file && !formik.errors.file,
+                                    }
+                                  )}
+                                  name="file"
+                                  autoComplete="off" />
+
+
                                 {!image && formik.errors.file && formik.touched.file ? (
                                   <div className="text-danger">{formik.errors.file}</div>
                                 ) : null}
@@ -574,7 +574,7 @@ const AddNewDriver = () => {
                                   <button
                                     className="submit-btn"
                                     onClick={previewPDF}>Preview</button>
-                             
+
                                 </div>
                               )}
                               {!selectedDoc && <>
@@ -609,7 +609,7 @@ const AddNewDriver = () => {
                             </CCol>
                             <CCol xs={12}>
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                <CButton type="submit" className="submit-btn">{submitLoader?<ClipLoader color="#000000" />:"Submit"}</CButton>
+                                <CButton type="submit" className="submit-btn">{submitLoader ? <ClipLoader color="#000000" /> : "Submit"}</CButton>
 
                                 <CButton type="button" className="cancel-btn" onClick={back}>Cancel</CButton>
                               </div>

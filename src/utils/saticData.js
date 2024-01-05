@@ -155,7 +155,7 @@ export const countryList = [
 	"Namibia",
 	"Nauru",
 	"Nepal",
-	
+
 	"New Caledonia",
 	"New Zealand",
 	"Nicaragua",
@@ -251,4 +251,4 @@ export const countryList = [
 	"Åland Islands"
 ];
 
-export const tripEnum = ['Booked','Active','Completed','Pending','Accepted','Canceled']
+export const tripEnum = ["All", 'Booked', 'Active', 'Completed', 'Pending', 'Accepted', 'Canceled']

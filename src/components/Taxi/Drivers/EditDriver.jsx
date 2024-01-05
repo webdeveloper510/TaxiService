@@ -96,15 +96,15 @@ function EditDriver() {
   
   
     const validationSchema = Yup.object().shape({
-      FirstName: Yup.string().trim().required("First Name No is required"),
-      LastName: Yup.string().trim().required("Last Name  is required"),
-      Address1: Yup.string().trim().required("Address1  is required"),
-      Address2: Yup.string().trim().required("Address2  is required"),
+      FirstName: Yup.string().trim().required("First Name is required"),
+      LastName: Yup.string().trim().required("Last Name is required"),
+      Address1: Yup.string().trim().required("Street Address 1  is required"),
+      Address2: Yup.string().trim().required("Street Address 2  is required"),
       Country: Yup.string().trim().required("Country is required"),
-      City: Yup.string().trim().required("City  is required"),
+      City: Yup.string().trim().required("City is required"),
       Zip: Yup.string().trim().required("Zip is required"),
-      Email: Yup.string().trim().required("Email  is required"),
-      MobileNo: Yup.string().trim().required("MobileNo is required"),
+      Email: Yup.string().trim().required("Email is required"),
+      MobileNo: Yup.string().trim().required("Mobile Number is required"),
       Gender: Yup.string().trim().required("Gender is required"),
     });
   
