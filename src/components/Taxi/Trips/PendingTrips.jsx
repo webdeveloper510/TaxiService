@@ -307,7 +307,7 @@ const SuperPendingTrip = () => {
                             S. No.
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
-                            Customer Name
+                            Customer
                           </CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
                             Trip ID
@@ -373,7 +373,11 @@ const SuperPendingTrip = () => {
                                 </div>
                               </CTableDataCell>
                               <CTableDataCell className="pending-trips-icons">
-                                <div className="pending-icons-outer">
+                                <div style={{
+                                  display: "flex",
+                                  justifyContent: "space-evenly",
+                                  alignItems: "center",
+                                }} className="pending-icons-outer">
                                 <div>
                                   <CButton id="allocate_driver"
                                     className="allocate_accept_driver"

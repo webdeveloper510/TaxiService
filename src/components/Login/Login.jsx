@@ -249,12 +249,12 @@ function Login() {
              /> */}
 
                 <div className="d-flex justify-content-between mb-4 login-remember-forgot">
-                  <MDBCheckbox
+                  {/* <MDBCheckbox
                     name="flexCheck"
                     value=""
                     id="flexCheckDefault"
                     label="Remember me"
-                  />
+                  /> */}
                   <Link to={"/forgot-password"} className="forgot-pwd" href="!#">
                     Forgot password?
                   </Link>

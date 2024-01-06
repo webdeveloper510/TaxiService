@@ -83,10 +83,10 @@ const SuperActiveTrip = () => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-  const [search,setSearch] = useState("")
+  const [search, setSearch] = useState("")
   useEffect(() => {
     setLoader(true);
-    getTrip("Active",search).then((res) => {
+    getTrip("Active", search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setActiveTrip(res.result);
@@ -107,12 +107,12 @@ const SuperActiveTrip = () => {
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Active Trips</h1>
                 <div className="company-active-trips">
-                <div className="serach-left" id="active-trip-search">
-                <MDBInputGroup>
-                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
-  
-    </MDBInputGroup>
-    </div></div>
+                  <div className="serach-left" id="active-trip-search">
+                    <MDBInputGroup>
+                      <MDBInput placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+
+                    </MDBInputGroup>
+                  </div></div>
                 <div className="active-trip-outer">
                   {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
@@ -128,132 +128,133 @@ const SuperActiveTrip = () => {
                   </div> */}
                   {loader ? (
                     <>
-                     <AppLoader/>
+                      <AppLoader />
                     </>
                   ) : (
                     <>
                       {
                         data?.length == 0 ?
-                        <EmptyData/>:
-                        <CTable align="middle" className="mb-0" hover responsive>
-                        <CTableHead>
-                          <CTableRow>
-                            {/* <CTableHeaderCell className="text-center">
+                          <EmptyData /> :
+                          <CTable align="middle" className="mb-0" hover responsive>
+                            <CTableHead>
+                              <CTableRow>
+                                {/* <CTableHeaderCell className="text-center">
   <CIcon icon={cilPeople} />
 </CTableHeaderCell> */}
-                            <CTableHeaderCell className="text-center">
-                              S. No.
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Customer Name
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Trip ID
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Driver Name
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Trip From
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Trip To
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                                Comment
-                              </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Time
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              View Route
-                            </CTableHeaderCell>
-                          </CTableRow>
-                        </CTableHead>
-                        <CTableBody>
-                          {data?.length
-                            ? data.map((item, index) => (
-                                <>
-                                  <CTableRow
-                                    className="text-center"
-                                    v-for="item in tableItems"
-                                    key={item._id}
-                                  >
-                                    <CTableDataCell>
-                                      <div>{firstIndex + index + 1}</div>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      <div>{item?.customer_name}</div>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      <div>{item.trip_id}</div>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      <div>{item.driver_name}</div>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      <div>{item.trip_from.address.slice(0,20) + `${item.trip_from.address.length<21?"":"..."}`}</div>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                      <div>{item.trip_to.address.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
-                                    </CTableDataCell>
-                                    <CTableDataCell>
-                                    <div>
-                                      {item?.comment}
-                                    </div>
-                                  </CTableDataCell>
-                                    <CTableDataCell>
-                                      <div>
-                                        {moment(item.pickup_date_time).format(
-                                          "MMM Do YYYY, h:mm a"
-                                        )}
-                                      </div>
-                                    </CTableDataCell>
-                                    <CTableDataCell className="text-center location-icons">
-                                      <Link to={`/trips/view-trip-location/${item._id}`}>
-                                        <img src={locationimg} alt="img" />
-                                      </Link>
-                                    </CTableDataCell>
-                                  </CTableRow>
-                                </>
-                              ))
-                            : ""}
-                        </CTableBody>
-                      </CTable>}
-                     {
-                      data?.length > 0 ?
-                      <div
-                      className="pagination-outer"
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div
-                        className="prev_btn"
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <button onClick={() => handlePrePage()}>
-                          Previous
-                        </button>
-                      </div>
-                      <div className="previous-page">
-                        <ul>
-                          {pageNumber}
-                          <button className="dots_btn">
-                            {pageIncreament}
-                          </button>
-                        </ul>
-                      </div>
-                      <div className="next_btn">
-                        <button onClick={() => handleNextPage()}>Next</button>
-                      </div>
-                    </div>
-                    :""
-                     }
+                                <CTableHeaderCell className="text-center">
+                                  S. No.
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Customer
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Trip ID
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Driver Name
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Trip From
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Trip To
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Comment
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  Time
+                                </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">
+                                  View Route
+                                </CTableHeaderCell>
+                              </CTableRow>
+                            </CTableHead>
+                            <CTableBody>
+                              {data?.length
+                                ? data.map((item, index) => (
+                                  <>
+                                    <CTableRow
+                                      className="text-center"
+                                      v-for="item in tableItems"
+                                      key={item._id}
+                                    >
+                                      <CTableDataCell>
+                                        <div>{firstIndex + index + 1}</div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+
+                                        <div>{item?.company_name}</div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <div>{item.trip_id}</div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <div>{item.driver_name}</div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <div>{item.trip_from.address.slice(0, 20) + `${item.trip_from.address.length < 21 ? "" : "..."}`}</div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <div>{item.trip_to.address.slice(0, 20) + `${item.trip_to.address.length < 21 ? "" : "..."}`}</div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <div>
+                                          {item?.comment}
+                                        </div>
+                                      </CTableDataCell>
+                                      <CTableDataCell>
+                                        <div>
+                                          {moment(item.pickup_date_time).format(
+                                            "MMM Do YYYY, h:mm a"
+                                          )}
+                                        </div>
+                                      </CTableDataCell>
+                                      <CTableDataCell className="text-center location-icons">
+                                        <Link to={`/trips/view-trip-location/${item._id}`}>
+                                          <img src={locationimg} alt="img" />
+                                        </Link>
+                                      </CTableDataCell>
+                                    </CTableRow>
+                                  </>
+                                ))
+                                : ""}
+                            </CTableBody>
+                          </CTable>}
+                      {
+                        data?.length > 0 ?
+                          <div
+                            className="pagination-outer"
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <div
+                              className="prev_btn"
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                            >
+                              <button onClick={() => handlePrePage()}>
+                                Previous
+                              </button>
+                            </div>
+                            <div className="previous-page">
+                              <ul>
+                                {pageNumber}
+                                <button className="dots_btn">
+                                  {pageIncreament}
+                                </button>
+                              </ul>
+                            </div>
+                            <div className="next_btn">
+                              <button onClick={() => handleNextPage()}>Next</button>
+                            </div>
+                          </div>
+                          : ""
+                      }
                     </>
                   )}
                 </div>

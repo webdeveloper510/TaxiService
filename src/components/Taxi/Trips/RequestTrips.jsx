@@ -126,7 +126,7 @@ const SuperRequestTrip = () => {
       } else {
         data[index].nameCheck = "";
         data[index].nameLengthCheck = "";
-        valid = true;
+        // valid = true;
       }
 
       if (data[index].email == "") {
@@ -140,7 +140,7 @@ const SuperRequestTrip = () => {
       } else {
         data[index].emailCheck = "";
         data[index].emailFormat = "";
-        valid = true;
+        // valid = true;
       }
       if (data[index].phone == "") {
         data[index].phoneCheck = "Phone required";
@@ -160,7 +160,7 @@ const SuperRequestTrip = () => {
       } else {
         data[index].phoneCheck = "";
         data[index].phoneLengthCheck = "";
-        valid = true;
+        // valid = true;
       }
       if (data[index].address == "") {
         data[index].addressCheck = "Address required";
@@ -176,7 +176,7 @@ const SuperRequestTrip = () => {
       } else {
         data[index].addressCheck = "";
         data[index].addressLengthCheck = "";
-        valid = true;
+        // valid = true;
       }
     }
 
@@ -197,14 +197,7 @@ const SuperRequestTrip = () => {
     pay_option: null,
   });
 
-  const handlepickupDateChange = (date) => {
-    setpickupDate(date);
 
-    setInputData({
-      ...inputData,
-      pick_up_date: date,
-    });
-  };
 
   const addPassenger = () => {
     setPassengers([
@@ -300,6 +293,15 @@ const SuperRequestTrip = () => {
 
     let data = inputData;
     let valid = true;
+    const passError = passengerError.map(() => {
+      return {
+        name: true,
+        phone: true,
+        email: true,
+        address: true,
+      }
+    });
+    setPassengerError(passError);
     let newErrors = { ...errors };
     const errorRes = formValidation(passengers);
     console.log("data beafore vehicle", newErrors);
@@ -342,12 +344,17 @@ const SuperRequestTrip = () => {
     }
     if (!valid) {
       setErrors(newErrors);
+      toast.warning("Please Enter Valid Detail", {
+        position: "top-right",
+        autoClose: 1000,
+      });
       return console.log(errors);
     }
 
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
     if (errorRes) {
+
       data.vehicle_type = data.vehicle
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;

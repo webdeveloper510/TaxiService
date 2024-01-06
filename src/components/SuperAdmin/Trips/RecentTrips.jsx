@@ -21,7 +21,7 @@ import filterImg from '../../../assets/images/filter-icon.png'
 import { tripEnum } from "../../../utils/saticData";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import { useParams } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 
 const SuperRecentTrips = () => {
@@ -200,7 +200,7 @@ const SuperRecentTrips = () => {
               </CTableHeaderCell> */}
                           <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
                           <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">Customer Name</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">Customer</CTableHeaderCell>
                           <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
                           <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
                           <CTableHeaderCell className="text-center">
@@ -210,6 +210,8 @@ const SuperRecentTrips = () => {
                           <CTableHeaderCell className="text-center">Time</CTableHeaderCell>
                           {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
                           <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
+                          <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
+
                         </CTableRow>
                       </CTableHead>
                       <CTableBody>
@@ -266,6 +268,13 @@ const SuperRecentTrips = () => {
                                   width: '100px',
                                   margin: '0 auto',
                                 }}>{status}</span>
+                              </CTableDataCell>
+                              <CTableDataCell>
+                                <div className="view_details_btn">
+                                  <Link to={`/trips/view-trip-details/${item._id}`}>
+                                    View Details
+                                  </Link>
+                                </div>
                               </CTableDataCell>
                             </CTableRow>
 

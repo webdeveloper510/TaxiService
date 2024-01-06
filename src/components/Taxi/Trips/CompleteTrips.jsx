@@ -143,7 +143,7 @@ const SuperCompleteTrip = () => {
                               S. No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                            Customer Name
+                            Customer
                           </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                               Trip ID

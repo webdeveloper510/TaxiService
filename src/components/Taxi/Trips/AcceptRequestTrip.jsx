@@ -141,7 +141,7 @@ const RequestAcceptTrip = () => {
                               S. No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                             Customer Name
+                             Customer
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                               Trip ID
@@ -161,9 +161,7 @@ const RequestAcceptTrip = () => {
                             <CTableHeaderCell className="text-center">
                               Date & Time
                             </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              View Route
-                            </CTableHeaderCell>
+                            
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -205,11 +203,7 @@ const RequestAcceptTrip = () => {
                                         )}
                                       </div>
                                     </CTableDataCell>
-                                    <CTableDataCell className="text-center location-icons">
-                                      <div>
-                                        <img src={locationimg} />
-                                      </div>
-                                    </CTableDataCell>
+                                   
                                   </CTableRow>
                                 </>
                               ))

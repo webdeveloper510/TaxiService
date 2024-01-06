@@ -35,8 +35,8 @@ import { isValidDate } from "../../../utils/helpingFunction";
 
 
 const RequestNewTrip = () => {
-  const [refreshPrice , setRefreshPrice] = useState(false);
-  const {user,setUser} = useContext(userContext);
+  const [refreshPrice, setRefreshPrice] = useState(false);
+  const { user, setUser } = useContext(userContext);
   function customSetHours(date, hour) {
     if (date instanceof Date) {
       const newDate = new Date(date);
@@ -64,7 +64,7 @@ const RequestNewTrip = () => {
   const navigate = useNavigate();
   const [price, setPrice] = useState(0)
   const [pickupDate, setpickupDate] = useState(new Date());
- 
+
   useEffect(() => {
     const today = new Date();
     if (pickupDate?.toDateString() == today?.toDateString()) {
@@ -87,15 +87,15 @@ const RequestNewTrip = () => {
     minute: 0,
   })
   const [passengers, setPassengers] = useState([
-   
+
   ]);
   const [vehicle, setVehicle] = useState();
   const [inputData, setInputData] = useState({
     vehicle: "",
-    trip_from: { 
-      address: user?.company_detail?.hotel_location?.address, 
-      lat: user?.company_detail?.hotel_location?.lat, 
-      log: user?.company_detail?.hotel_location?.log, 
+    trip_from: {
+      address: user?.company_detail?.hotel_location?.address,
+      lat: user?.company_detail?.hotel_location?.lat,
+      log: user?.company_detail?.hotel_location?.log,
     },
     trip_to: { address: "", lat: null, log: null },
     pick_up_date: new Date(),
@@ -104,10 +104,10 @@ const RequestNewTrip = () => {
     pay_option: "",
 
   });
-  const priceCalculator = ()=>{
-    
+  const priceCalculator = () => {
+
     let distance = null;
-    if(inputData?.trip_from?.log && inputData?.trip_to?.log){
+    if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
       distance = (geolib.getDistance(
         {
           latitude: inputData?.trip_from?.lat,
@@ -117,25 +117,26 @@ const RequestNewTrip = () => {
           latitude: inputData?.trip_to?.lat,
           longitude: inputData?.trip_to?.log,
         }
-      )/1000
-    ).toFixed(2);
+      ) / 1000
+      ).toFixed(2);
     }
-    console.log("distance is from priceCalculator",distance);
-    if(distance && selectedFare){
-      setPrice((distance*selectedFare?.vehicle_fare_per_km).toFixed(2))
-    }else{
+    console.log("distance is from priceCalculator", distance);
+    if (distance && selectedFare) {
+      setPrice((distance * selectedFare?.vehicle_fare_per_km).toFixed(2))
+    } else {
       setPrice(0)
     }
   }
-  
-  useEffect(priceCalculator,[refreshPrice])
+
+  useEffect(priceCalculator, [refreshPrice])
   const [passengerError, setPassengerError] = useState([])
-  const [formValid , setFormValid] = useState(true);
-  useEffect(()=>{
-    console.log(formValid,"formvalidation check")
+  const [formValid, setFormValid] = useState(true);
+  useEffect(() => {
+    console.log(formValid, "formvalidation check")
   }, [formValid])
   const formValidation = () => {
     const data = [...passengers];
+    console.log("🚀 ~ file: requesttrip.jsx:139 ~ formValidation ~ data:", data)
     var re = /\S+@\S+\.\S+/;
     const phoneRegex = /^[0-9]*$/
     let valid = true;
@@ -149,14 +150,14 @@ const RequestNewTrip = () => {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
-      }else if (data[index].name?.length > 20) {
+      } else if (data[index].name?.length > 20) {
         data[index].nameLengthCheck = "Name must be at most 20 characters";
         data[index].nameCheck = "";
         valid = false;
       } else {
         data[index].nameCheck = "";
         data[index].nameLengthCheck = "";
-        
+
       }
 
       if (data[index].email == "") {
@@ -170,7 +171,7 @@ const RequestNewTrip = () => {
       } else {
         data[index].emailCheck = "";
         data[index].emailFormat = "";
-        
+
       }
       if (data[index].phone == "") {
         data[index].phoneCheck = "Phone required";
@@ -190,7 +191,7 @@ const RequestNewTrip = () => {
       } else {
         data[index].phoneCheck = "";
         data[index].phoneLengthCheck = "";
-       
+
       }
       if (data[index].address == "") {
         data[index].addressCheck = "Address required";
@@ -206,11 +207,11 @@ const RequestNewTrip = () => {
       } else {
         data[index].addressCheck = "";
         data[index].addressLengthCheck = "";
-      
+
       }
     }
     setFormValid(valid);
-    
+
     setPassengers(data);
     return valid;
   };
@@ -223,7 +224,7 @@ const RequestNewTrip = () => {
     passenger_detail: [],
     description: null,
     pay_option: null,
-    comment:null
+    comment: null
   });
 
   const handlepickupDateChange = (date) => {
@@ -276,7 +277,7 @@ const RequestNewTrip = () => {
         setFares(res?.result);
       }
     });
-    
+
   }, []);
 
   // useEffect(() => {
@@ -319,7 +320,17 @@ const RequestNewTrip = () => {
   const adddata = () => {
     let data = inputData;
     let valid = true;
+    const passError = passengerError.map(() => {
+      return {
+        name: true,
+        phone: true,
+        email: true,
+        address: true,
+      }
+    });
+    setPassengerError(passError);
     let newErrors = { ...errors };
+
     const errorRes = formValidation();
     console.log("data beafore vehicle", vehicle);
     if (
@@ -357,14 +368,18 @@ const RequestNewTrip = () => {
       valid = false;
       newErrors.comment = "Comment must be at Most 50 characters";
     }
-    
+
     if (!valid) {
       setErrors(newErrors);
+      toast.warning("Please Enter Valid Detail", {
+        position: "top-right",
+        autoClose: 1000,
+      });
       return console.log(errors);
     }
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
-    if (formValid) {
+    if (errorRes) {
       data.vehicle_type = data.vehicle
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;
@@ -385,7 +400,7 @@ const RequestNewTrip = () => {
         }
       });
     } else {
-      toast.warning("Please Enter Passenger Detail", {
+      toast.warning("Please Enter Valid Detail", {
         position: "top-right",
         autoClose: 1000,
       });
@@ -433,7 +448,7 @@ const RequestNewTrip = () => {
       console.error("Error:", error);
     }
   };
-  const copy = ()=>{
+  const copy = () => {
     const textToCopy = `https://taxi-service-demo.vercel.app/booking-staff-form/${user._id}`
     const textarea = document.createElement('textarea');
     textarea.value = textToCopy;
@@ -452,11 +467,11 @@ const RequestNewTrip = () => {
       autoClose: 1000,
     });
   }
-  const setFareOnVehicleType =(vehicle_type)=>{
-    fares.forEach((fare)=>{
-      if(fare.vehicle_type == vehicle_type){
+  const setFareOnVehicleType = (vehicle_type) => {
+    fares.forEach((fare) => {
+      if (fare.vehicle_type == vehicle_type) {
         setSelectedFare(fare);
-        console.log("selectecd fare is" , fare)
+        console.log("selectecd fare is", fare)
       }
     })
   }
@@ -475,12 +490,12 @@ const RequestNewTrip = () => {
               >
                 <h1 class="heading-for-every-page">Request Trip</h1>
                 <div className="bookiing_btn">
-                <CButton id="hotel_booking_link"
-                        
-                        onClick={copy}
-                      >
-                        Copy Hotel Booking Link
-                </CButton>
+                  <CButton id="hotel_booking_link"
+
+                    onClick={copy}
+                  >
+                    Copy Hotel Booking Link
+                  </CButton>
                 </div>
                 <div class="active-trip-outer">
                   <CRow>
@@ -572,7 +587,7 @@ const RequestNewTrip = () => {
                                     ...inputData,
                                     pick_up_date: data,
                                   });
-                                  if (data < 1 || !isValidDate(data) ) {
+                                  if (data < 1 || !isValidDate(data)) {
                                     setErrors({
                                       ...errors,
                                       pick_up_date:
@@ -584,7 +599,7 @@ const RequestNewTrip = () => {
                                       pick_up_date: null,
                                     });
                                   }
-                                  
+
                                 }}
                               />
                               {errors.pick_up_date && (
@@ -616,11 +631,11 @@ const RequestNewTrip = () => {
                                   setTripFrom(data);
                                   setSelectedFrom(false);
                                   // if (data < 1 || !selectedFrom) {
-                                    setErrors({
-                                      ...errors,
-                                      trip_from:
-                                        "Please select valid trip from address",
-                                    });
+                                  setErrors({
+                                    ...errors,
+                                    trip_from:
+                                      "Please select valid trip from address",
+                                  });
                                   // } else {
                                   //   setErrors({ ...errors, trip_from: null });
                                   // }
@@ -688,11 +703,11 @@ const RequestNewTrip = () => {
                                   setTrimTo(data);
                                   setSelectedTo(false);
                                   // if (data < 1 || !setSelectedTo) {
-                                    setErrors({
-                                      ...errors,
-                                      trip_to:
-                                        "Please select valid trip to address",
-                                    });
+                                  setErrors({
+                                    ...errors,
+                                    trip_to:
+                                      "Please select valid trip to address",
+                                  });
                                   // } else {
                                   //   setErrors({ ...errors, trip_to: null });
                                   // }
@@ -786,19 +801,19 @@ const RequestNewTrip = () => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
-                                onChange={(e)=>{
+                                onChange={(e) => {
                                   setInputData({
                                     ...inputData,
                                     comment: e.target.value,
                                   });
-                                  if(e.target.value.length > 50){
-                                    setErrors({...errors, comment:"Comments must be at most 50 characters"})
-                                  }else{
-                                    setErrors({...errors, comment:null})
+                                  if (e.target.value.length > 50) {
+                                    setErrors({ ...errors, comment: "Comments must be at most 50 characters" })
+                                  } else {
+                                    setErrors({ ...errors, comment: null })
                                   }
                                 }}
                               />
-                                {errors.comment && (
+                              {errors.comment && (
                                 <span
                                   style={{ color: "red" }}
                                   className="text-danger"
@@ -811,8 +826,8 @@ const RequestNewTrip = () => {
                               <CFormLabel htmlFor="inputtripfrom">
                                 Price: {price} (€)
                               </CFormLabel>
-                        
-                                
+
+
                             </CCol>
 
                           </CForm>
@@ -896,7 +911,7 @@ const RequestNewTrip = () => {
                                   name="email"
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
-                                    
+
                                   }}
                                   onBlur={() => {
                                     handleBlur(index, "email")

@@ -170,7 +170,7 @@ const EditpendingTrip = ({ role }) => {
       } else {
         data[index].nameCheck = "";
         data[index].nameLengthCheck = "";
-        valid = true;
+        // valid = true;
       }
 
       if (data[index].email == "") {
@@ -184,7 +184,7 @@ const EditpendingTrip = ({ role }) => {
       } else {
         data[index].emailCheck = "";
         data[index].emailFormat = "";
-        valid = true;
+        // valid = true;
       }
       if (data[index].phone == "") {
         data[index].phoneCheck = "Phone required";
@@ -206,7 +206,7 @@ const EditpendingTrip = ({ role }) => {
       } else {
         data[index].phoneCheck = "";
         data[index].phoneLengthCheck = "";
-        valid = true;
+        // valid = true;
       }
       if (data[index].address == "") {
         data[index].addressCheck = "Address required";
@@ -222,7 +222,7 @@ const EditpendingTrip = ({ role }) => {
       } else {
         data[index].addressCheck = "";
         data[index].addressLengthCheck = "";
-        valid = true;
+        // valid = true;
       }
     }
 
@@ -328,7 +328,7 @@ const EditpendingTrip = ({ role }) => {
             autoClose: 1000,
           });
           back()
-          
+
         } else {
           toast.warning(`${res.data.message}`, {
             position: "top-right",
@@ -349,8 +349,8 @@ const EditpendingTrip = ({ role }) => {
   }, []);
 
   console.log("passengerssssssssssss", inputData);
-  const back = ()=>{
-    navigate(`${role=="hotel"?"":"/taxi"}/trips/pendingtrips`);
+  const back = () => {
+    navigate(`${role == "hotel" ? "" : "/taxi"}/trips/pendingtrips`);
   }
   const addOnChangeHandler = (e, index) => {
     let arr = inputs;
@@ -367,7 +367,7 @@ const EditpendingTrip = ({ role }) => {
       <div className="container-fluidd">
         <div className="col-md-12">
           <div>
-            {role == "hotel"? < SideBar2 /> : <SuperSideBar/>}
+            {role == "hotel" ? < SideBar2 /> : <SuperSideBar />}
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
@@ -376,7 +376,7 @@ const EditpendingTrip = ({ role }) => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">
-                  <Link to={`${role=="hotel"?"":"/taxi"}/trips/pendingtrips`}>
+                  <Link to={`${role == "hotel" ? "" : "/taxi"}/trips/pendingtrips`}>
                     <img src={backtovehicle} alt="edit" /> Edit Pending Trip
                   </Link>
                 </h1>
@@ -427,7 +427,7 @@ const EditpendingTrip = ({ role }) => {
                                   }
                                 }}
                               >
-                                <option selected>{inputData.vehicle}</option>
+                                {/* <option selected>{inputData.vehicle}</option> */}
                                 {vehicle?.map((e, i) => {
                                   return (
                                     <>
@@ -739,7 +739,7 @@ const EditpendingTrip = ({ role }) => {
                                     {passenger.addressLengthCheck}
                                   </div>
                                 </CCol>
-                            
+
                               </CForm>
                             </CCardBody>
                           </CCard>

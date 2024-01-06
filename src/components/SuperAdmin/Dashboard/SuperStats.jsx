@@ -16,7 +16,7 @@ const SuperStats = () => {
   const [data, setData] = useState([])
   useEffect(() => {
     getCountDashboard().then((res) => {
-      console.log("response get book trip", res)
+      console.log("response get book getCountDashboard", res)
       if (res?.code == 200) {
         setData(res.result)
       }
@@ -40,7 +40,7 @@ const SuperStats = () => {
                 <div className="booked-trips-outer">
                   <MDBRow>
                     <MDBCol sm='6' className="booked-trips all_same">
-                      <Link to={"/super-admin/trips/recent-trips?filter=Active"}><ActiveTrips data={data} /></Link>
+                      <Link to={"/super-admin/trips/recent-trips?filter=Booked"}><ActiveTrips data={data} /></Link>
                     </MDBCol>
                     <MDBCol sm='6' className="cancelledtrips all_same">
                       <Link to={"/super-admin/trips/recent-trips?filter=Pending"}><PendingTrips data={data} /></Link>

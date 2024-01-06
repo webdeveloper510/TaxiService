@@ -99,7 +99,7 @@ const RecentTrips=({from})=> {
                     </CTableHeaderCell> */}
                      <CTableHeaderCell className="text-center">S. No.</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip ID</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Customer Name</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Customer</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip From</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Trip To</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Date</CTableHeaderCell>

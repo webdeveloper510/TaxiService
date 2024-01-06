@@ -98,7 +98,7 @@ const BookingStaffForm = () => {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
       setErrors({ ...errors, trip_from: null });
-      const newInputData = inputData;
+      const newInputData = {...inputData};
       inputData.trip_from.address = selectedAddress;
       inputData.trip_from.lat = latLng.lat;
       inputData.trip_from.log = latLng.lng;
@@ -116,7 +116,7 @@ const BookingStaffForm = () => {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
       setErrors({ ...errors, trip_to: null });
-      const newInputData = inputData;
+      const newInputData = {...inputData};
       inputData.trip_to.address = selectedAddress;
       inputData.trip_to.lat = latLng.lat;
       inputData.trip_to.log = latLng.lng;
@@ -307,7 +307,9 @@ const BookingStaffForm = () => {
       newErrors.trip_to = "Please select valid trip to address";
     }
     if (data.vehicle?.length < 1) {
+      console.log("🚀 ~ file: BookingStaffForm.jsx:310 ~ adddata ~ data.vehicle:", data.vehicle)
       valid = false;
+
       newErrors.vehicle = "Please select valid vehicle type";
     }
     if (inputData.pick_up_date?.length < 1) {
@@ -391,16 +393,16 @@ const BookingStaffForm = () => {
           </div>) :
             (
               <section className="booking-section-form"
-              style={{background:hotel?.meta?.background_color || "white"}}
+                style={{ background: hotel?.meta?.background_color || "white" }}
               >
                 <div className="booking-banner" id="bookimg-header"
-                style={{
-                  backgroundColor: "pink"
-                }}
+                  style={{
+                    backgroundColor: "pink"
+                  }}
                 >
 
 
-                  <div class="row booking-content col-md-12" style={{background:hotel?.meta?.background_color || "white"}}>
+                  <div class="row booking-content col-md-12" style={{ background: hotel?.meta?.background_color || "white" }}>
                     <Link to="/">
                       <span className="back_to_home"><img src={hotel?.meta?.logo} width={90} />Back to Home </span>
                     </Link>

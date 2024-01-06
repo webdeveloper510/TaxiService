@@ -64,7 +64,7 @@ const PastTrips = ({type}) => {
     // },
     {
       field: "company_name",
-      headerName: "Customer Name",
+      headerName: "Customer",
       width: 200,
       
       // type: "number",
