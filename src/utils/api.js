@@ -143,6 +143,20 @@ export const getFare = async() => {
     console.log("GET_FARE", error);
   });
 };
+export const getFareById = async (id) => {
+  return await Axios.get(`admin/get_fares/${id}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res.data, "get Fare");
+      return res.data;
+    })
+    .catch((error) => {
+      console.log("GET_FARE", error);
+    });
+};
 
 
 export const getTrip = async(data,search) => {

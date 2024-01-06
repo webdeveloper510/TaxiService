@@ -22,7 +22,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import { addLinkTrip, getCompanyById, getFare, getTripById, getVehicleType, tripsUpdate } from "../../utils/api";
+import { addLinkTrip, getCompanyById, getFare, getFareById, getTripById, getVehicleType, tripsUpdate } from "../../utils/api";
 import { toast } from "react-toastify";
 import sessionExp from '../../assets/images/session-expired.png'
 import backtotaxi from "../../assets/images/taxi.png"
@@ -171,7 +171,7 @@ const BookingStaffForm = () => {
         setVehicle(res.result);
       }
     });
-    getFare().then((res) => {
+    getFareById(booking.id).then((res) => {
       console.log(res?.result, "fares");
       if (res?.code === 200) {
         setFares(res?.result);
