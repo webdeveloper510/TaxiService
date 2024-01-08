@@ -126,11 +126,11 @@ const SuperPendingTrip = () => {
   if (data?.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-  const [search,setSearch] = useState("")
+  const [search, setSearch] = useState("")
 
   async function onLoadComponent() {
     setLoader(true);
-    getTrip("Pending",search)
+    getTrip("Pending", search)
       .then((res) => {
         console.log(res.result, "pending trip vehicle");
         if (res?.code === 200) {
@@ -165,7 +165,7 @@ const SuperPendingTrip = () => {
       }
     });
   }, [selectedVehicleType]);
-  
+
   const [selectDriver, setSelectDriver] = useState();
   const [selectVehicle, setSelectVehicle] = useState();
   const [errors, setErrors] = useState({
@@ -177,7 +177,7 @@ const SuperPendingTrip = () => {
 
     const newErrors = { ...errors };
     let valid = true;
-    if (!selectDriver || setSelectDriver?.length < 1) {
+    if (!selectDriver || selectDriver?.length < 1) {
       newErrors.driver_name = true;
       valid = false;
     }
@@ -259,7 +259,7 @@ const SuperPendingTrip = () => {
       });
     }
   }, [visible]);
-  
+
   return (
     <>
       <div className="container-fluidd">
@@ -271,15 +271,15 @@ const SuperPendingTrip = () => {
               <AppHeader />
               <div className="body flex-grow-1 px-3">
                 <h1 className="heading-for-every-page">Pending Trips</h1>
-<div className="company-pending-trips">
-                <div className="serach-left" id="pending-trip-search">
-                <MDBInputGroup>
-                <MDBInput placeholder="Search" value={search} onChange={(e)=>setSearch(e.target.value)}/>
-  
-    </MDBInputGroup>
-    </div></div>
+                <div className="company-pending-trips">
+                  <div className="serach-left" id="pending-trip-search">
+                    <MDBInputGroup>
+                      <MDBInput placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+
+                    </MDBInputGroup>
+                  </div></div>
                 <div className="active-trip-outer" id="pending-trips">
-             
+
                   {/* <div className="trips-head d-flex justify-content-between">
  <div className="box-shd d-flex justify-content-between">
  <div className="left-trip-content">
@@ -296,110 +296,110 @@ const SuperPendingTrip = () => {
  </div>
  </div> */}
                   {loader ? (
-                    <AppLoader/>
+                    <AppLoader />
                   ) : (
                     <>
 
-                  { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
-                      <CTableHead>
-                        <CTableRow>
-                          <CTableHeaderCell className="text-center">
-                            S. No.
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Customer
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Trip ID
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Vehicle Type
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Trip From
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Trip To
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                                Comment
-                              </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Time
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">
-                            Action
-                          </CTableHeaderCell>
-                        </CTableRow>
-                      </CTableHead>
+                      {data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
+                        <CTableHead>
+                          <CTableRow>
+                            <CTableHeaderCell className="text-center">
+                              S. No.
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Customer
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Trip ID
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Vehicle Type
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Trip From
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Trip To
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Comment
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Time
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Action
+                            </CTableHeaderCell>
+                          </CTableRow>
+                        </CTableHead>
 
-                      <CTableBody>
-                        {data?.length > 0
-                          ? data?.map((item, index) => (
-                            <CTableRow
-                              className="text-center"
-                              v-for="item in tableItems"
-                              key={item._id}
-                            >
-                              <CTableDataCell>
-                                <div>{firstIndex + index + 1}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item.company_name}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item.trip_id}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item.vehicle_type}</div>
-                              </CTableDataCell>
+                        <CTableBody>
+                          {data?.length > 0
+                            ? data?.map((item, index) => (
+                              <CTableRow
+                                className="text-center"
+                                v-for="item in tableItems"
+                                key={item._id}
+                              >
+                                <CTableDataCell>
+                                  <div>{firstIndex + index + 1}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.company_name}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.trip_id}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.vehicle_type}</div>
+                                </CTableDataCell>
 
-                              <CTableDataCell>
-                                <div>{item?.trip_from?.address.slice(0, 20) + `${item?.trip_from?.address?.length < 21 ? "" : "..."}`}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item?.trip_to?.address.slice(0, 20) + `${item?.trip_to?.address?.length < 21 ? "" : "..."}`}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item?.trip_from?.address.slice(0, 20) + `${item?.trip_from?.address?.length < 21 ? "" : "..."}`}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item?.trip_to?.address.slice(0, 20) + `${item?.trip_to?.address?.length < 21 ? "" : "..."}`}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>
+                                    {item?.comment}
+                                  </div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>
+                                    {moment(item.pickup_date_time).format(
+                                      "MMMM Do YYYY, h:mm a"
+                                    )}
+                                  </div>
+                                </CTableDataCell>
+                                <CTableDataCell className="pending-trips-icons">
+                                  <div style={{
+                                    display: "flex",
+                                    justifyContent: "space-evenly",
+                                    alignItems: "center",
+                                  }} className="pending-icons-outer">
                                     <div>
-                                      {item?.comment}
+                                      <CButton id="allocate_driver"
+                                        className="allocate_accept_driver"
+                                        onClick={() => {
+                                          setVisible(!visible);
+                                          setSelectedId(item?._id);
+                                          setSelectedVehicleType(item?.vehicle_type)
+                                        }}
+                                      >
+                                        <img src={accepticonimg} alt="images" />
+                                      </CButton>
                                     </div>
-                                  </CTableDataCell>
-                              <CTableDataCell>
-                                <div>
-                                  {moment(item.pickup_date_time).format(
-                                    "MMMM Do YYYY, h:mm a"
-                                  )}
-                                </div>
-                              </CTableDataCell>
-                              <CTableDataCell className="pending-trips-icons">
-                                <div style={{
-                                  display: "flex",
-                                  justifyContent: "space-evenly",
-                                  alignItems: "center",
-                                }} className="pending-icons-outer">
-                                <div>
-                                  <CButton id="allocate_driver"
-                                    className="allocate_accept_driver"
-                                    onClick={() => {
-                                      setVisible(!visible);
-                                      setSelectedId(item?._id);
-                                      setSelectedVehicleType(item?.vehicle_type)
-                                    }}
-                                  >
-                                    <img src={accepticonimg} alt="images" />
-                                  </CButton>
-                                </div>
-                                <div
-                                  onClick={() => {setSelectedId(item._id);setDelvisible(true)}}
-                                  style={{
-                                    cursor: "pointer",
-                                  }}
-                                  className="reject_icon"
-                                >
-                                  <img src={deleteiconimg} alt="images" />
-                                </div>
-                                <div>
+                                    <div
+                                      onClick={() => { setSelectedId(item._id); setDelvisible(true) }}
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                      className="reject_icon"
+                                    >
+                                      <img src={deleteiconimg} alt="images" />
+                                    </div>
+                                    <div>
                                       <Link
                                         to={`/taxi/trips/editpendingtrips/${item._id}`}
                                       >
@@ -408,13 +408,13 @@ const SuperPendingTrip = () => {
                                         </CButton>
                                       </Link>
                                     </div>
-                                    </div>
-                              </CTableDataCell>
-                            </CTableRow>
-                          ))
-                          : ""}
-                      </CTableBody>
-                    </CTable>: <EmptyData/>}
+                                  </div>
+                                </CTableDataCell>
+                              </CTableRow>
+                            ))
+                            : ""}
+                        </CTableBody>
+                      </CTable> : <EmptyData />}
                     </>
                   )}
 

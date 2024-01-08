@@ -1,53 +1,41 @@
 import React, { useEffect, useState } from "react";
 import {
-    MDBCard,
-    MDBCardBody,
-    MDBCardText,
-    MDBCol,
-    MDBCardImage,
-    
-  
-  } from 'mdb-react-ui-kit';
+  MDBCard,
+  MDBCardBody,
+  MDBCardText,
+  MDBCol,
+  MDBCardImage,
+
+
+} from 'mdb-react-ui-kit';
 import trips from "../../assets/images/bookedtrips.png"
 import { getTripCompleted } from "../../utils/api";
 //import background from '../assets/images/heroimg.png';
 
-const BookedTrips=()=> {
+const BookedTrips = (data) => {
 
-  const [ data , setData] = useState([])
-  useEffect(()=>{
-    getTripCompleted().then((res)=>{
-      console.log("response get book trip", res)
-      if(res?.code == 200){
-        setData(res.result)
-      }
-    }).catch((error)=>{
-      console.log(error)
-    })
-  },[])
-   
-      return (
-       <>
+  return (
+    <>
       <MDBCard>
-          <MDBCardBody className="d-flex booked-trips-card">
+        <MDBCardBody className="d-flex booked-trips-card">
           <MDBCol md='4' className="booked-trip-icon">
-          <MDBCardImage position='top' alt='...' src={trips} />
+            <MDBCardImage position='top' alt='...' src={trips} />
           </MDBCol>
           <MDBCol md='8'>
             <MDBCardText>
               <div>
                 <h5>Booked Trips</h5>
-            <span>{data.bookedTrips}</span>
-            <hr></hr>
-            <p>60% increase in 20 days</p>
-            </div>
+                <span>{data?.bookedTrips || 0}</span>
+                <hr></hr>
+                <p>60% increase in 20 days</p>
+              </div>
             </MDBCardText>
-            </MDBCol>
-          </MDBCardBody>
-        </MDBCard>
-       
-       </>
-      );
-    };
-  
-   export default BookedTrips; 
+          </MDBCol>
+        </MDBCardBody>
+      </MDBCard>
+
+    </>
+  );
+};
+
+export default BookedTrips; 

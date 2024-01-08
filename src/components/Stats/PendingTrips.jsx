@@ -1,42 +1,40 @@
 import React, { useEffect, useState } from "react";
 import {
-    MDBCard,
-    MDBCardBody,
-    MDBCardText,
-    MDBCol,
-    MDBCardImage,
-  
-  } from 'mdb-react-ui-kit';
-  import newuserimg from "../../assets/images/newuser.png"
-import { getTripCompleted } from "../../utils/api";
+  MDBCard,
+  MDBCardBody,
+  MDBCardText,
+  MDBCol,
+  MDBCardImage,
 
-const PendingTrips=({data})=> {
+} from 'mdb-react-ui-kit';
+import trips from "../../assets/images/bookedtrips.png"
 
-  
-   
-      return (
-       <>
-       
+const PendingTrips = ({ data }) => {
+
+
+
+  return (
+    <>
       <MDBCard>
-          <MDBCardBody className="d-flex new-users">
-          <MDBCol sm='4' className="booked-trip-icon">
-          <MDBCardImage position='top' alt='...' src={newuserimg} />
+        <MDBCardBody className="d-flex booked-trips-card">
+          <MDBCol md='4' className="booked-trip-icon">
+            <MDBCardImage position='top' alt='...' src={trips} />
           </MDBCol>
-          <MDBCol sm='8'>
+          <MDBCol md='8'>
             <MDBCardText>
               <div>
                 <h5>Pending Trips</h5>
-            <span>{data?.pendingTrip}</span>
-            <hr></hr>
-            <p>60% increase in 20 days</p>
-            </div>
+                <span>{data?.pendingTrip || 0}</span>
+                <hr></hr>
+                <p>60% increase in 20 days</p>
+              </div>
             </MDBCardText>
-            </MDBCol>
-          </MDBCardBody>
-        </MDBCard>
-       
-       </>
-      );
-    };
-  
-   export default PendingTrips; 
+          </MDBCol>
+        </MDBCardBody>
+      </MDBCard>
+
+    </>
+  );
+};
+
+export default PendingTrips; 

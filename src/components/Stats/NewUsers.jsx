@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -9,7 +9,6 @@ import {
   } from 'mdb-react-ui-kit';
   import earningimg from "../../assets/images/earnings.png"
 
-import { getTripCompleted } from "../../utils/api";
 
 const NewUsers=({data})=> {
    
@@ -24,8 +23,8 @@ const NewUsers=({data})=> {
           <MDBCol sm='8'>
             <MDBCardText>
               <div>
-                <h5>Complete Trips</h5>
-            <span>{data?.completedTrip}</span>
+                <h5>Completed Trips</h5>
+                    <span>{data?.completedTrip || 0}</span>
             <hr></hr>
             <p>60% increase in 20 days</p>
             </div>
