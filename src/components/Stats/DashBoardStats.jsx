@@ -69,7 +69,7 @@ const DashboardStats = () => {
                     </MDBCol>
                     <MDBCol md='6' className="newUsers all_same">
                       <Link to={"/trips/completetrips"}>
-                        < NewUsers />
+                        < NewUsers data={data}/>
                       </Link>
                     </MDBCol>
 
