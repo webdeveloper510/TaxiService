@@ -256,11 +256,13 @@ const RequestNewTrip = () => {
     console.log(passengerError)
   };
   const removePassenger = (index) => {
+    console.log(index, "index")
+    console.log("passengersBefore update", passengers)
     const updatedPassengers = passengers.filter((_, i) => i !== index);
+    console.log("🚀 ~ file: requesttrip.jsx:262 ~ removePassenger ~ updatedPassengers:", updatedPassengers)
     setPassengers(updatedPassengers);
-    const newPassengersError = [...passengerError]
-    newPassengersError.splice(index, 1);
-    setPassengerError(newPassengersError)
+    const errorArray = passengerError.filter((_, i) => i !== index);
+    setPassengerError(errorArray)
     setFormValid(false)
   };
 
@@ -887,6 +889,7 @@ const RequestNewTrip = () => {
                                   id="inputphnno"
                                   name="phone"
                                   type="number"
+                                  value={passenger.phone || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
@@ -909,6 +912,7 @@ const RequestNewTrip = () => {
                                 <CFormInput
                                   id="inputemailadd"
                                   name="email"
+                                  value={passenger.email || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
 
@@ -932,6 +936,7 @@ const RequestNewTrip = () => {
                                 <CFormInput
                                   id="inputaddress"
                                   name="address"
+                                  value={passenger.address || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}

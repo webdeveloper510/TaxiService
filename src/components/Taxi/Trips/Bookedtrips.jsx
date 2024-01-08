@@ -208,7 +208,7 @@ const SuperBookedTrips = () => {
                                     </div>
                                   </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.trip_to?.driver_name?.slice(0,20) + `${item.trip_to.address.length<21?"":"..."}`}</div>
+                                  <div>{item?.driver_name ? item?.driver_name?.slice(0, 20) + `${item?.driver_name?.length<21?"":"..."}` : "NA"}</div>
                                 </CTableDataCell>
                                 
                                 <CTableDataCell>

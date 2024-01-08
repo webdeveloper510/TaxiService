@@ -218,11 +218,11 @@ const SuperRequestTrip = () => {
     console.log(passengerError)
   };
   const removePassenger = (index) => {
+    console.log(index,"index for reamovel")
     const updatedPassengers = passengers.filter((_, i) => i !== index);
     setPassengers(updatedPassengers);
-    const newPassengersError = [...passengerError]
-    newPassengersError.splice(index, 1);
-    setPassengerError(newPassengersError)
+    const errorArray = passengerError.filter((_, i) => i !== index);
+    setPassengerError(errorArray)
   };
   const [customer, setCustomer] = useState([])
   useEffect(() => {
@@ -916,6 +916,7 @@ const SuperRequestTrip = () => {
                                 <CFormInput
                                   id="inputphnno"
                                   name="phone"
+                                  value={passenger.phone || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
@@ -938,6 +939,7 @@ const SuperRequestTrip = () => {
                                 <CFormInput
                                   id="inputemailadd"
                                   name="email"
+                                  value={passenger.email || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
@@ -960,6 +962,7 @@ const SuperRequestTrip = () => {
                                 <CFormInput
                                   id="inputaddress"
                                   name="address"
+                                  value={passenger.address || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);
                                   }}
