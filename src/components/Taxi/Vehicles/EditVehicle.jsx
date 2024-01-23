@@ -31,6 +31,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import AppLoader from "../../AppLoader";
+import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 
 const EditVehicle = () => {
   const initialValues = {
@@ -236,7 +237,7 @@ const EditVehicle = () => {
 
         <div className="col-md-12">
           <div>
-            <SuperSideBar />
+            <SuperAdminSideBar />
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />

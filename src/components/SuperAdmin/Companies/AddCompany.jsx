@@ -102,7 +102,7 @@ const AddSuperCompany = () => {
     post_code: Yup.string().trim().max(10, "Post Code must be at most 10 characters").matches(/\S/, 'Field must not contain only white spaces').required("Postcode is required"),
     house_number: Yup.string().trim().max(20).required("Building number is required"),
     describe_your_taxi_company: Yup.string().trim()
-      .min(2, "Describe your taxi company must be at least 2 characters")
+      .min(4, "Describe your taxi company must be at least 4 characters")
       .max(50, "Describe your taxi company must be at most 50 characters")
       .required("Describe your taxi company is required"),
     affiliated_with: Yup.string().trim(),

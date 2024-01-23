@@ -198,12 +198,21 @@ function EditBookingForm() {
                                 <div className="text-danger text-start">{formikProfile.errors.background_color}</div>
                               ) : null}
                             </CCol>
-                            <CCol md={6} className="upload-file-input">
+                            <CCol md={6} style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                            }} className="upload-file-input">
                               <CFormLabel htmlFor="inputmobile">Upload Logo</CFormLabel>
 
                               {image?.length > 0 ?
                                 (
-                                  <img src={image} alt='img' height={300} width={100} />
+                                  <img
+                                  style={{
+                                    margin:"auto",
+                                    objectFit: "contain",
+                                    maxHeight: "20vh",
+                                  }}
+                                   src={image} alt='img' />
                                 ) :
                                 ""}
 

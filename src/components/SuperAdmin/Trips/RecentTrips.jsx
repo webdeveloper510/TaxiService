@@ -105,13 +105,7 @@ const SuperRecentTrips = () => {
 
       if (res?.code == 200 && res?.result) {
         setPendingTrip(res?.result)
-        // setFilterData(res?.result)
-        // console.log("Status is: ", status)
-        // if (!status) setFilterData(res?.result);
-        // else {
-        //   console.log("status in else: ", status)
-        //   setFilterData(res?.result.filter(i => i.trip_status == status))
-        // }
+      
         if (!selectedType || selectedType === "All") setFilterData(res?.result);
         else {
           console.log("selectedType in else: ", selectedType)
@@ -120,25 +114,7 @@ const SuperRecentTrips = () => {
       }
     }).finally(() => { setLoader(false) })
   }, [search])
-  // useEffect(() => {
-  //   if (status) {
-  //     setSelectedType(status)
-  //     // setLoader(true);
-  //     //   getRecentTrip(true, search).then(res => {
-
-  //     //     if (res?.code == 200 && res?.result) {
-  //     //       setPendingTrip(res?.result)
-  //     //       // setFilterData(res?.result)
-  //     //       console.log("Status is: ", status)
-  //     //       if (!status) setFilterData(res?.result);
-  //     //       else {
-  //     //         console.log("status in else: ", status)
-  //     //         setFilterData(res?.result.filter(i => i.trip_status == status))
-  //     //       }
-  //     //     }
-  //     //   }).finally(() => { setLoader(false) })
-  //   }
-  // }, [status])
+ 
   return (
     <>
 
@@ -236,10 +212,10 @@ const SuperRecentTrips = () => {
                                 <div>{item.company_name}</div>
                               </CTableDataCell>
                               <CTableDataCell>
-                                <div>{item.trip_from?.address.length < 20 ? item.trip_from?.address : item.trip_from?.address.slice(0, 18) + "..."}</div>
+                                <div>{item.trip_from?.address?.length < 20 ? item.trip_from?.address : item.trip_from?.address?.slice(0, 18) + "..."}</div>
                               </CTableDataCell>
                               <CTableDataCell>
-                                <div>{item.trip_to?.address.length < 20 ? item.trip_to?.address : item.trip_to?.address.slice(0, 18) + "..."}</div>
+                                <div>{item.trip_to?.address?.length < 20 ? item.trip_to?.address : item.trip_to?.address?.slice(0, 18) + "..."}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>

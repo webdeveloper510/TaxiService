@@ -33,7 +33,6 @@ import userContext from "../../../utils/context";
 import { isValidDate } from "../../../utils/helpingFunction";
 
 
-
 const RequestNewTrip = () => {
   const [refreshPrice, setRefreshPrice] = useState(false);
   const { user, setUser } = useContext(userContext);
@@ -80,11 +79,8 @@ const RequestNewTrip = () => {
     }
   }, [pickupDate])
   const [currentTime, SetCurrentTime] = useState({
-    hour: {
       hour: (new Date()).getHours(),
       minute: (new Date()).getMinutes() + 1,
-    },
-    minute: 0,
   })
   const [passengers, setPassengers] = useState([
 

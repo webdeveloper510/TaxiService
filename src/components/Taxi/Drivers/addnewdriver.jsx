@@ -474,41 +474,22 @@ const AddNewDriver = () => {
                             </CCol>
 
 
-                            {/*
-                            <CCol md={12} className="upload-file-input">
-                              <CFormLabel htmlFor="inputmobile">Upload Profile Photo</CFormLabel><br />
-                              {uploadedImages.length > 0 ? (
-                                <div className="uploaded-images">
-                                  {uploadedImages.map((url, index) => (
-                                    <img key={index} src={url} alt={`Uploaded ${index + 1}`} />
-                                  ))}
-                                </div>
-                              ) : (
-                                <>
-                                  <input
-                                    type="file"
-                                    id="formFile"
-                                    onChange={handleImageUpload}
-                                    multiple // Allow multiple file selection
-                                    style={{ display: "none" }}
-                                  />
-                                  <label htmlFor="formFile" className="custom-file-upload">
-                                  <div className="files-outer">
-                                  <img className="upload-icon" src={uploadfileImg}/><br/><br/>
-                                    <span>Drop files here or click to upload.</span>
-                                    </div>
-                                  </label>
-                                </>
-                              )}
-                            </CCol> */}
+          
 
 
-
-
-                            <CCol md={6} className="upload-file-input image-docs">
+                            <CCol md={6} style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                            }} className="upload-file-input image-docs">
                               <CFormLabel htmlFor="inputmobile">Upload Profile Photo<span class="asterisk-mark">*</span></CFormLabel>
 
-                              <div class="driver_img_outer">
+                              <div style={{
+                                direction:"flex",
+                                justifyContent:"center",
+                                width:"60%",
+                                margin: "auto"
+
+                              }} class="driver_img_outer">
                                 {image?.length > 0 ?
                                   (
                                     <>
@@ -546,7 +527,10 @@ const AddNewDriver = () => {
                                 ) : null}
                                 <label htmlFor="formFile" className="custom-file-upload">
                                   <div className="files-outer">
-                                    <img className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
+                                    <img style={{
+                                      objectFit:"contain",
+                                      height:"100%",
+                                    }} className="upload-icon" src={uploadfileImg} alt='img' /><br /><br />
                                     <span>Drop Image Here ...</span>
                                   </div>
                                 </label>
@@ -573,6 +557,7 @@ const AddNewDriver = () => {
                                   >X</button>
                                   <button
                                     className="submit-btn"
+                                    type="button"
                                     onClick={previewPDF}>Preview</button>
 
                                 </div>

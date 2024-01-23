@@ -51,6 +51,8 @@ function App() {
   useEffect(()=>{
     onLoadApp()
   },[token,refreshUser])
+
+  
   return (
     <userContext.Provider value={{user,setUser,appLoaded, refreshUserData}}>
     {loading?<AppLoader/>:<div className="App">

@@ -169,10 +169,12 @@ const SuperCompleteTrip = () => {
                             <CTableHeaderCell className="text-center">
                               Distance
                             </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">View Trip</CTableHeaderCell> 
                             {/* <CTableHeaderCell className="text-center">Fare</CTableHeaderCell> */}
                             <CTableHeaderCell className="text-center">
                               View Route
                             </CTableHeaderCell>
+
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -238,6 +240,13 @@ const SuperCompleteTrip = () => {
                                 {/* <CTableDataCell>
                   <div>{item.fare}</div>
                 </CTableDataCell>               */}
+                <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                                 <CTableDataCell className="text-center location-icons">
                                 <Link to={`/trips/view-trip-location/${item._id}`}>
                                         <img src={locationimg} alt="img" />

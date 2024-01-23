@@ -26,6 +26,7 @@ import { addLinkTrip, getCompanyById, getFare, getFareById, getTripById, getVehi
 import { toast } from "react-toastify";
 import sessionExp from '../../assets/images/session-expired.png'
 import backtotaxi from "../../assets/images/taxi.png"
+import { isValidDate } from "../../utils/helpingFunction";
 //import background from '../assets/images/heroimg.png';
 const BookingStaffForm = () => {
   const [fares, setFares] = useState(null);
@@ -39,11 +40,10 @@ const BookingStaffForm = () => {
   const [passengers, setPassengers] = useState([]);
   const [vehicle, setVehicle] = useState();
   const [currentTime, SetCurrentTime] = useState({
-    hour: {
+   
       hour: new Date().getHours(),
       minute: new Date().getMinutes() + 1,
-    },
-    minute: 0,
+   
   });
   const priceCalculator = () => {
 
@@ -461,48 +461,50 @@ const BookingStaffForm = () => {
                                 </CCol>
 
                                 <CCol md={6}>
-                                  <CFormLabel htmlFor="inputpickupdate">
-                                    Pickup Date and Time
-                                  </CFormLabel>
-                                  <br />
-                                  <DatePicker
-                                    selected={pickupDate}
-                                    className="form-control"
-                                    showTimeSelect
-                                    timeIntervals={5}
-                                    minTime={customSetHours(
-                                      customSetMinutes(
-                                        new Date(),
-                                        currentTime.minute
-                                      ),
-                                      currentTime.hour
-                                    )}
-                                    maxTime={customSetHours(
-                                      customSetMinutes(new Date(), 59),
-                                      23
-                                    )}
-                                    dateFormat="MM/dd/yyyy hh:mm a"
-                                    minDate={new Date()}
-                                    onChange={(data) => {
-                                      console.log(data);
-                                      setpickupDate(data);
-                                      setInputData({
-                                        ...inputData,
-                                        pick_up_date: data,
-                                      });
-                                      setSelectedFrom(false);
-                                      // if (data < 1 || !selectedFrom) {
-                                      setErrors({
-                                        ...errors,
-                                        trip_from:
-                                          "Please select valid trip from address",
-                                      });
-                                      // } else {
-                                      // setErrors({ ...errors, trip_from: null });
-                                      // }
-                                    }}
-                                  />
-                                </CCol>
+                              <CFormLabel htmlFor="inputpickupdate">
+                                Pickup Date and Time<span class="asterisk-mark">*</span>
+                              </CFormLabel>
+                              <br />
+                              <DatePicker
+                                selected={pickupDate}
+                                className="form-control"
+                                showTimeSelect
+                                timeIntervals={5}
+                                minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
+                                maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
+                                dateFormat="MM/dd/yyyy hh:mm a"
+                                minDate={new Date()}
+                                onChange={(data) => {
+                                  console.log(data);
+                                  setpickupDate(data)
+                                  setInputData({
+                                    ...inputData,
+                                    pick_up_date: data,
+                                  });
+                                  if (data < 1 || !isValidDate(data)) {
+                                    setErrors({
+                                      ...errors,
+                                      pick_up_date:
+                                        "Please add valid date for pickup date",
+                                    });
+                                  } else {
+                                    setErrors({
+                                      ...errors,
+                                      pick_up_date: null,
+                                    });
+                                  }
+
+                                }}
+                              />
+                              {errors.pick_up_date && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.pick_up_date}
+                                </span>
+                              )}
+                            </CCol>
 
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputtripfrom">

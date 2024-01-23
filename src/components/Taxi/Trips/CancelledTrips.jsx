@@ -211,12 +211,12 @@ const SuperCancelledTrip = () => {
 
                               <CTableDataCell>
 
-                                <div>{item?.trip_from?.address.slice(0, 20) + `${item?.trip_from?.address?.length < 21 ? "" : "..."}`}</div>
+                                <div>{item?.trip_from?.address?.slice(0, 20) + `${item?.trip_from?.address?.length < 21 ? "" : "..."}`}</div>
                               </CTableDataCell>
 
                               <CTableDataCell>
 
-                                <div>{item.trip_to.address.slice(0, 20) + `${item.trip_to.address.length < 21 ? "" : "..."}`}</div>
+                                <div>{item.trip_to.address?.slice(0, 20) + `${item?.trip_to?.address?.length < 21 ? "" : "..."}`}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                     <div>

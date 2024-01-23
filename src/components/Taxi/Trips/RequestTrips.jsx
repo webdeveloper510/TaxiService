@@ -79,11 +79,9 @@ const SuperRequestTrip = () => {
     }
   }, [pickupDate])
   const [currentTime, SetCurrentTime] = useState({
-    hour: {
+   
       hour: (new Date()).getHours(),
       minute: (new Date()).getMinutes() + 1,
-    },
-    minute: 0,
   })
   const [passengers, setPassengers] = useState([
     // { name: "", email: "", phone: "", address: "" },
@@ -251,13 +249,7 @@ const SuperRequestTrip = () => {
 
   }, []);
 
-  // useEffect(() => {
-  //   getDriver().then(res => {
-  //     console.log(res.result, 'vehicle')
-  //     if (res?.code === 200) {
-  //       setDriver(res.result)
-  //     }
-  //   })
+  
 
   const inputHandler = (e) => {
     if (e.target.value.length < 1) {
@@ -288,7 +280,7 @@ const SuperRequestTrip = () => {
     // }
   };
   const [formLoader, setFormLoader] = useState(false);
-
+ 
   const adddata = () => {
 
     let data = inputData;
@@ -354,7 +346,6 @@ const SuperRequestTrip = () => {
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
     if (errorRes) {
-
       data.vehicle_type = data.vehicle
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;
@@ -463,7 +454,7 @@ const SuperRequestTrip = () => {
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Vehicle Type
+                                Vehicle Type <span class="asterisk-mark">*</span>
                               </CFormLabel>
 
                               <CFormSelect
@@ -504,7 +495,7 @@ const SuperRequestTrip = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Customer
+                                Customer <span class="asterisk-mark">*</span>
                               </CFormLabel>
 
                               <CFormSelect
@@ -546,7 +537,7 @@ const SuperRequestTrip = () => {
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpickupdate">
-                                Pickup Date and Time
+                                Pickup Date and Time <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <br />
                               <DatePicker
@@ -591,7 +582,7 @@ const SuperRequestTrip = () => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
-                                Trip From
+                                Trip From <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               {/* <CFormInput id="inputtripfrom" name="trip_from" onChange={inputHandler} /> */}
                               {/* <Autocomplete
@@ -669,8 +660,8 @@ const SuperRequestTrip = () => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripto">
-                                Trip To
-                              </CFormLabel>
+                                Trip To <span class="asterisk-mark">*</span>
+                              </CFormLabel> 
                               {/* <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} /> */}
                               <PlacesAutocomplete
                                 value={tripTo}
@@ -747,7 +738,7 @@ const SuperRequestTrip = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Pay Type
+                                Pay Type <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormSelect
                                 name="pay"
@@ -792,7 +783,7 @@ const SuperRequestTrip = () => {
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Commission Type
+                                Commission Type <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormSelect
                                 name="commission_type"
@@ -823,7 +814,7 @@ const SuperRequestTrip = () => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
-                                Commission Value
+                                Commission Value <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
