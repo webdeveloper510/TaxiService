@@ -32,6 +32,8 @@ import { SuperBar } from "../../SuperAdmin/Sidebar/AppSideNavBar";
 import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 
 const EditpendingTrip = ({ role }) => {
+  const [selectedFrom, setSelectedFrom] = useState(true);
+  const [selectedTo, setSelectedTo] = useState(true);
   const pendingId = useParams();
   console.log("pending id", pendingId.id);
   const navigate = useNavigate();
@@ -89,6 +91,7 @@ const EditpendingTrip = ({ role }) => {
       setInputData(newInputData);
       setTripFrom(selectedAddress);
       setTripFromCoordinates(latLng);
+      setSelectedFrom(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -105,6 +108,7 @@ const EditpendingTrip = ({ role }) => {
       setInputData(newInputData);
       setTrimTo(selectedAddress);
       setTripToCoordinates(latLng);
+      setSelectedTo(true)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -287,7 +291,8 @@ const EditpendingTrip = ({ role }) => {
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
-      data.trip_from.address?.length < 1
+      tripFrom.address?.length < 1 ||
+      !selectedFrom
     ) {
       console.log("enter valid trip from");
       valid = false;
@@ -296,7 +301,8 @@ const EditpendingTrip = ({ role }) => {
     if (
       !data.trip_to.lat ||
       !data.trip_to.log ||
-      data.trip_to.address?.length < 1
+      data.trip_to.address?.length < 1 ||
+      !selectedTo
     ) {
       valid = false;
       newErrors.trip_to = "Please enter valid trip to address";
@@ -470,7 +476,8 @@ const EditpendingTrip = ({ role }) => {
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 onChange={(data) => {
-                                  console.log(data);
+                                  console.log("🚀 ~ EditpendingTrip ~ data:", data)
+                                  
                                   setpickupDate(data);
                                   setInputData({
                                     ...inputData,
@@ -499,17 +506,16 @@ const EditpendingTrip = ({ role }) => {
                               <PlacesAutocomplete
                                 value={tripFrom}
                                 onChange={(data) => {
+                                  setSelectedFrom(false);
                                   console.log(data);
                                   setTripFrom(data);
-                                  if (data < 1) {
+                                  
                                     setErrors({
                                       ...errors,
                                       trip_from:
                                         "Please add valid trip from address",
                                     });
-                                  } else {
-                                    setErrors({ ...errors, trip_from: null });
-                                  }
+                                  
                                 }}
                                 onSelect={handleSelectTripFrom}
                               >
@@ -546,7 +552,7 @@ const EditpendingTrip = ({ role }) => {
                                   </div>
                                 )}
                               </PlacesAutocomplete>
-                              {errors.trip_from && (
+                              {!selectedFrom && (
                                 <span
                                   style={{ color: "red" }}
                                   className="text-danger"
@@ -571,16 +577,15 @@ const EditpendingTrip = ({ role }) => {
                                 value={tripTo}
                                 onChange={(data) => {
                                   console.log(data);
+                                  setSelectedTo(false);
                                   setTrimTo(data);
-                                  if (data < 1) {
+                                  
                                     setErrors({
                                       ...errors,
                                       trip_to:
                                         "Please add valid trip to address",
                                     });
-                                  } else {
-                                    setErrors({ ...errors, trip_to: null });
-                                  }
+                                  
                                 }}
                                 onSelect={handleSelectTripTo}
                               >
@@ -617,7 +622,7 @@ const EditpendingTrip = ({ role }) => {
                                   </div>
                                 )}
                               </PlacesAutocomplete>
-                              {errors.trip_to && (
+                              {!selectedTo && (
                                 <span
                                   style={{ color: "red" }}
                                   className="text-danger"
