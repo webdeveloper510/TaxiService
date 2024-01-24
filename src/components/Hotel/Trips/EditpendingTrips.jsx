@@ -412,7 +412,7 @@ const EditpendingTrip = ({ role }) => {
  </CCol> */}
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Vehicle Type
+                                Vehicle Type <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormSelect
                                 name="vehicle"
@@ -454,7 +454,7 @@ const EditpendingTrip = ({ role }) => {
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpickupdate">
-                                Pickup Date and Time
+                                Pickup Date and Time <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <br />
                               <DatePicker
@@ -501,7 +501,7 @@ const EditpendingTrip = ({ role }) => {
 
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
-                                Trip From
+                                Trip From<span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <PlacesAutocomplete
                                 value={tripFrom}
@@ -571,7 +571,7 @@ const EditpendingTrip = ({ role }) => {
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripto">
-                                Trip To
+                                Trip To <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <PlacesAutocomplete
                                 value={tripTo}
@@ -673,7 +673,7 @@ const EditpendingTrip = ({ role }) => {
                               <CForm className="row g-3">
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputname">
-                                    Name
+                                    Name <span class="asterisk-mark">*</span>
                                   </CFormLabel>
                                   <CFormInput
                                     aria-label="name"
@@ -691,7 +691,7 @@ const EditpendingTrip = ({ role }) => {
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputphnno">
-                                    Phone
+                                    Phone <span class="asterisk-mark">*</span>
                                   </CFormLabel>
                                   <CFormInput
                                     id="inputphnno"
@@ -709,7 +709,7 @@ const EditpendingTrip = ({ role }) => {
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputtemailadd">
-                                    Email Address
+                                    Email Address <span class="asterisk-mark">*</span>
                                   </CFormLabel>
                                   <CFormInput
                                     id="inputemailadd"
@@ -728,7 +728,7 @@ const EditpendingTrip = ({ role }) => {
                                 </CCol>
                                 <CCol xs={6}>
                                   <CFormLabel htmlFor="inputaddress">
-                                    Address
+                                    Address <span class="asterisk-mark">*</span>
                                   </CFormLabel>
                                   <CFormInput
                                     id="inputaddress"

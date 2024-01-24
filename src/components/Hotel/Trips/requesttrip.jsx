@@ -856,7 +856,7 @@ const RequestNewTrip = () => {
                                 <CFormLabel htmlFor="inputname"
 
                                 >
-                                  Name
+                                  Name<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   aria-label="name"
@@ -879,7 +879,7 @@ const RequestNewTrip = () => {
                                 <CFormLabel htmlFor="inputphnno"
 
                                 >
-                                  Phone
+                                  Phone<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputphnno"
@@ -903,7 +903,7 @@ const RequestNewTrip = () => {
                                 <CFormLabel htmlFor="inputtemailadd"
 
                                 >
-                                  Email Address
+                                  Email Address<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputemailadd"
@@ -927,7 +927,7 @@ const RequestNewTrip = () => {
                                 <CFormLabel htmlFor="inputaddress"
 
                                 >
-                                  Address
+                                  Address<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputaddress"

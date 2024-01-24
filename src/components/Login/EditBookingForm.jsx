@@ -202,15 +202,21 @@ function EditBookingForm() {
                               display: 'flex',
                               flexDirection: 'column',
                             }} className="upload-file-input">
-                              <CFormLabel htmlFor="inputmobile">Upload Logo</CFormLabel>
+                              <CFormLabel onClick={e => e.preventDefault()}
+                              style={{
+                                zIndex: "100"
+                              }}
+                               htmlFor="inputmobile">Upload Logo</CFormLabel>
 
                               {image?.length > 0 ?
                                 (
                                   <img
+                                  onClick={e => e.preventDefault()}
                                   style={{
                                     margin:"auto",
                                     objectFit: "contain",
                                     maxHeight: "20vh",
+                                    zIndex: "100"
                                   }}
                                    src={image} alt='img' />
                                 ) :

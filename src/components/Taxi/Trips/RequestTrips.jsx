@@ -879,7 +879,7 @@ const SuperRequestTrip = () => {
                                 <CFormLabel htmlFor="inputname"
 
                                 >
-                                  Name
+                                  Name<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   aria-label="name"
@@ -902,7 +902,7 @@ const SuperRequestTrip = () => {
                                 <CFormLabel htmlFor="inputphnno"
 
                                 >
-                                  Phone
+                                  Phone<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputphnno"
@@ -925,7 +925,7 @@ const SuperRequestTrip = () => {
                                 <CFormLabel htmlFor="inputtemailadd"
 
                                 >
-                                  Email Address
+                                  Email Address<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputemailadd"
@@ -948,7 +948,7 @@ const SuperRequestTrip = () => {
                                 <CFormLabel htmlFor="inputaddress"
 
                                 >
-                                  Address
+                                  Address<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputaddress"

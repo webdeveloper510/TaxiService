@@ -40,10 +40,8 @@ const BookingStaffForm = () => {
   const [passengers, setPassengers] = useState([]);
   const [vehicle, setVehicle] = useState();
   const [currentTime, SetCurrentTime] = useState({
-   
       hour: new Date().getHours(),
-      minute: new Date().getMinutes() + 1,
-   
+      minute: new Date().getMinutes() + 1,   
   });
   const priceCalculator = () => {
 
@@ -470,7 +468,8 @@ const BookingStaffForm = () => {
                                 className="form-control"
                                 showTimeSelect
                                 timeIntervals={5}
-                                minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
+                                // minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
+                                minTime={pickupDate.setHours(0,0,0,0) == (new Date()).setHours(0,0,0,0) ? new Date() : (new Date()).setHours(0,0,0,0)}
                                 maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
