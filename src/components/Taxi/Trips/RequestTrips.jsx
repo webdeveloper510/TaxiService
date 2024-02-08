@@ -117,7 +117,11 @@ const SuperRequestTrip = () => {
         data[index].nameCheck = "Name required";
         data[index].nameLengthCheck = "";
         valid = false;
-      } else if (data[index].name.length < 3) {
+      } else if (/^\d+$/.test(data[index].name)) {
+        data[index].nameCheck = "Name should not be a number";
+        data[index].nameLengthCheck = "";
+        valid = false;
+    } else if (data[index].name.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -149,7 +153,7 @@ const SuperRequestTrip = () => {
         data[index].phoneLengthCheck = "";
         valid = false;
       } else if (
-        data[index].phone.length < 7 &&
+        data[index].phone.length < 7 ||
         data[index].phone.length > 16
       ) {
         data[index].phoneLengthCheck = "Please enter valid phone number";
@@ -165,8 +169,8 @@ const SuperRequestTrip = () => {
         data[index].addressLengthCheck = "";
         valid = false;
       } else if (
-        data[index].address.length < 7 &&
-        data[index].address.length > 16
+        data[index].address.length < 7 ||
+        data[index].address.length > 50
       ) {
         data[index].addressLengthCheck = "Please enter valid address";
         data[index].addressCheck = "";
@@ -321,6 +325,10 @@ const SuperRequestTrip = () => {
     if (data.customer.length < 1) {
       valid = false;
       newErrors.customer = "Please select valid customer";
+    }
+    if (data.comment.length > 20 ) {
+      valid = false;
+      newErrors.comment = "Max 20 character allowed";
     }
     if (inputData.pick_up_date.length < 1) {
       valid = false;
@@ -773,12 +781,30 @@ const SuperRequestTrip = () => {
                               <CFormInput
                                 id="inputtripfrom"
                                 onChange={(e) => {
+                                  if (e.target.value.length > 20) {
+                                    setErrors({
+                                      ...errors,
+                                      comment: "Max 20 characters allowed",
+                                    });
+                                    return
+                                  } else {
+                                    setErrors({ ...errors, comment: null });
+                                  }
                                   setInputData({
                                     ...inputData,
                                     comment: e.target.value,
                                   });
+                                 
                                 }}
                               />
+                              {errors.comment && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.comment}
+                                </span>
+                              )}
 
                             </CCol>
                             <CCol md={6}>
@@ -907,6 +933,7 @@ const SuperRequestTrip = () => {
                                 <CFormInput
                                   id="inputphnno"
                                   name="phone"
+                                  type="number"
                                   value={passenger.phone || ""}
                                   onChange={(e) => {
                                     addOnChangeHandler(e, index);

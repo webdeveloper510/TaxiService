@@ -97,6 +97,7 @@ const AddSuperCompany = () => {
     company_name: Yup.string().trim()
       .min(2, "Company Name must be at least 2 characters")
       .max(50, "Company Name must be at most 50 characters")
+      .matches(/^[^\d]+$/, 'Company Name is not valid')
       .required("Company Name is required"),
     // land: Yup.string().min(4).max(20).required("Land is required"),
     post_code: Yup.string().trim().max(10, "Post Code must be at most 10 characters").matches(/\S/, 'Field must not contain only white spaces').required("Postcode is required"),

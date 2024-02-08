@@ -80,10 +80,15 @@ const AddNewDriver = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    FirstName: Yup.string().trim().required("First Name is required"),
-    LastName: Yup.string().trim().required("Last Name  is required"),
-    Address1: Yup.string().trim().required("Street Address 1  is required"),
-    Address2: Yup.string().trim().required("Street Address 2  is required"),
+    FirstName: Yup.string()
+      .trim()
+      .max(20, "First Name must be at most 20 characters")
+      .matches(/^[^\d]+$/, 'First Name is not valid')
+      .required("First Name is required"),
+    LastName: Yup.string().trim().max(20, "Last Name must be at most 20 characters")
+    .matches(/^[^\d]+$/, 'Last Name is not valid').required("Last Name  is required"),
+    Address1: Yup.string().trim().max(20, "Address must be at most 20 characters").required("Street Address 1  is required"),
+    Address2: Yup.string().trim().max(20, "Address must be at most 20 characters").required("Street Address 2  is required"),
     Country: Yup.string().trim().required("Country is required"),
     City: Yup.string().trim().required("City is required"),
     Zip: Yup.string().trim().required("Zip is required"),

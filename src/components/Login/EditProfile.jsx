@@ -80,8 +80,10 @@ function EditProfile() {
   });
   const validationSchemaProfile = Yup.object().shape({
     firstName: Yup.string()
+    .matches(/^[^\d]+$/, 'First Name is not valid')
       .required("First Name is required").trim(),
     lastName: Yup.string()
+    .matches(/^[^\d]+$/, 'Last Name is not valid')
       .required("Last Name is required").trim(),
     companyName: Yup.string()
     .required("Last Name is required").trim(),

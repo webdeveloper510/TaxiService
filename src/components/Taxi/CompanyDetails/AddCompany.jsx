@@ -84,6 +84,7 @@ const AddCompany = () => {
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
       .max(20, "Customer Name must be at most 20 characters")
+      .matches(/^[^\d]+$/, 'Customer Name is not valid')
       .required("Customer Name is required"),
     // land: Yup.string().min(4).max(20).required("Address is required"),
     post_code: Yup.string().trim().matches(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, 'Invalid Netherlands Post Code')

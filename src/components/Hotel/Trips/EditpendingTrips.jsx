@@ -48,6 +48,12 @@ const EditpendingTrip = ({ role }) => {
     },
     minute: 0,
   });
+  const [passengerError, setPassengerError] = useState([{
+    name: false,
+    phone: false,
+    email: false,
+    address: false,
+  }])
   const [inputData, setInputData] = useState({
     id: "",
     vehicle: "",
@@ -167,7 +173,11 @@ const EditpendingTrip = ({ role }) => {
         data[index].nameCheck = "Name required";
         data[index].nameLengthCheck = "";
         valid = false;
-      } else if (data[index].name?.length < 3) {
+      } else if (/^\d+$/.test(data[index].name)) {
+        data[index].nameCheck = "Name should not be a number";
+        data[index].nameLengthCheck = "";
+        valid = false;
+    } else if (data[index].name?.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -201,7 +211,7 @@ const EditpendingTrip = ({ role }) => {
       // valid = false;
       // } 
       else if (
-        data[index].phone?.length < 7 &&
+        data[index].phone?.length < 7 ||
         data[index].phone?.length > 16
       ) {
         data[index].phoneLengthCheck = "Please enter valid phone number";
@@ -217,8 +227,8 @@ const EditpendingTrip = ({ role }) => {
         data[index].addressLengthCheck = "";
         valid = false;
       } else if (
-        data[index].address?.length < 7 &&
-        data[index].address?.length > 16
+        data[index].address?.length < 7 ||
+        data[index].address?.length > 50
       ) {
         data[index].addressLengthCheck = "Please enter valid address";
         data[index].addressCheck = "";
@@ -280,7 +290,12 @@ const EditpendingTrip = ({ role }) => {
         setLoading(false)
       });
   };
-
+  const handleBlur = (index, key) => {
+    const newPassengersError = [...passengerError]
+    newPassengersError[index][key] = true;
+    setPassengerError(newPassengersError);
+    console.log(passengerError)
+  };
   const adddata = () => {
     let id = inputData.id
     let data = inputData;
@@ -670,82 +685,102 @@ const EditpendingTrip = ({ role }) => {
                               )}
                             </CCardHeader>
                             <CCardBody>
-                              <CForm className="row g-3">
-                                <CCol md={6}>
-                                  <CFormLabel htmlFor="inputname">
-                                    Name <span class="asterisk-mark">*</span>
-                                  </CFormLabel>
-                                  <CFormInput
-                                    aria-label="name"
-                                    name="name"
-                                    value={passenger.name}
-                                    onChange={(e) => {
-                                      addOnChangeHandler(e, index);
-                                    }}
-                                  />
-                                  <div style={{ color: "red" }}>
-                                    {passenger.nameCheck}
-                                    <br />
-                                    {passenger.nameLengthCheck}
-                                  </div>
-                                </CCol>
-                                <CCol xs={6}>
-                                  <CFormLabel htmlFor="inputphnno">
-                                    Phone <span class="asterisk-mark">*</span>
-                                  </CFormLabel>
-                                  <CFormInput
-                                    id="inputphnno"
-                                    name="phone"
-                                    value={passenger.phone}
-                                    onChange={(e) => {
-                                      addOnChangeHandler(e, index);
-                                    }}
-                                  />
-                                  <div style={{ color: "red" }}>
-                                    {passenger.phoneCheck}
-                                    <br />
-                                    {passenger.phoneLengthCheck}
-                                  </div>
-                                </CCol>
-                                <CCol xs={6}>
-                                  <CFormLabel htmlFor="inputtemailadd">
-                                    Email Address <span class="asterisk-mark">*</span>
-                                  </CFormLabel>
-                                  <CFormInput
-                                    id="inputemailadd"
-                                    name="email"
-                                    value={passenger.email}
-                                    onChange={(e) => {
-                                      addOnChangeHandler(e, index);
-                                    }}
-                                  />
-                                  <div style={{ color: "red" }}>
-                                    {passenger.emailCheck}
-                                    <br />
-                                    {passenger.emailFormat}
-                                  </div>
+                            <CForm className="row g-3">
+                              <CCol md={6}>
+                                <CFormLabel htmlFor="inputname"
 
-                                </CCol>
-                                <CCol xs={6}>
-                                  <CFormLabel htmlFor="inputaddress">
-                                    Address <span class="asterisk-mark">*</span>
-                                  </CFormLabel>
-                                  <CFormInput
-                                    id="inputaddress"
-                                    onChange={(e) => {
-                                      addOnChangeHandler(e, index);
-                                    }}
-                                    name="address"
-                                    value={passenger.address}
-                                  />
-                                  <div style={{ color: "red" }}>
-                                    {passenger.addressCheck}
-                                    <br />
-                                    {passenger.addressLengthCheck}
-                                  </div>
-                                </CCol>
+                                >
+                                  Name<span class="asterisk-mark">*</span>
+                                </CFormLabel>
+                                <CFormInput
+                                  aria-label="name"
+                                  name="name"
+                                  value={passenger.name || ""}
+                                  onChange={(e) => {
+                                    addOnChangeHandler(e, index);
+                                  }}
+                                  onBlur={() => {
+                                    handleBlur(index, "name")
+                                  }}
+                                />
+                                {passengerError[index].name && <div style={{ color: "red" }}>
+                                  {passenger.nameCheck}
+                                  <br />
+                                  {passenger.nameLengthCheck}
+                                </div>}
+                              </CCol>
+                              <CCol xs={6}>
+                                <CFormLabel htmlFor="inputphnno"
 
-                              </CForm>
+                                >
+                                  Phone<span class="asterisk-mark">*</span>
+                                </CFormLabel>
+                                <CFormInput
+                                  id="inputphnno"
+                                  name="phone"
+                                  type="number"
+                                  value={passenger.phone || ""}
+                                  onChange={(e) => {
+                                    addOnChangeHandler(e, index);
+                                  }}
+                                  onBlur={() => {
+                                    handleBlur(index, "phone")
+                                  }}
+                                />
+                                {passengerError[index].phone && <div style={{ color: "red" }}>
+                                  {passenger.phoneCheck}
+                                  <br />
+                                  {passenger.phoneLengthCheck}
+                                </div>}
+                              </CCol>
+                              <CCol xs={6}>
+                                <CFormLabel htmlFor="inputtemailadd"
+
+                                >
+                                  Email Address<span class="asterisk-mark">*</span>
+                                </CFormLabel>
+                                <CFormInput
+                                  id="inputemailadd"
+                                  name="email"
+                                  value={passenger.email || ""}
+                                  onChange={(e) => {
+                                    addOnChangeHandler(e, index);
+
+                                  }}
+                                  onBlur={() => {
+                                    handleBlur(index, "email")
+                                  }}
+                                />
+                                {passengerError[index].email && <div style={{ color: "red" }}>
+                                  {passenger.emailCheck}
+                                  <br />
+                                  {passenger.emailFormat}
+                                </div>}
+                              </CCol>
+                              <CCol xs={6}>
+                                <CFormLabel htmlFor="inputaddress"
+
+                                >
+                                  Address<span class="asterisk-mark">*</span>
+                                </CFormLabel>
+                                <CFormInput
+                                  id="inputaddress"
+                                  name="address"
+                                  value={passenger.address || ""}
+                                  onChange={(e) => {
+                                    addOnChangeHandler(e, index);
+                                  }}
+                                  onBlur={() => {
+                                    handleBlur(index, "address")
+                                  }}
+                                />
+                                {passengerError[index].address && <div style={{ color: "red" }}>
+                                  {passenger.addressCheck}
+                                  <br />
+                                  {passenger.addressLengthCheck}
+                                </div>}
+                              </CCol>
+                            </CForm>
                             </CCardBody>
                           </CCard>
                         </CCol>

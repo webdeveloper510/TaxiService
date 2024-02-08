@@ -95,8 +95,8 @@ const EditdriverData = () => {
 
 
   const validationSchema = Yup.object().shape({
-    FirstName: Yup.string().trim().required("First Name No is required"),
-    LastName: Yup.string().trim().required("Last Name  is required"),
+    FirstName: Yup.string().trim().matches(/^[^\d]+$/, 'First Name is not valid').required("First Name No is required"),
+    LastName: Yup.string().trim().matches(/^[^\d]+$/, 'Last Name is not valid').required("Last Name  is required"),
     Address1: Yup.string().trim().required("Address 1  is required"),
     Address2: Yup.string().trim().required("Address 2  is required"),
     Country: Yup.string().trim().required("Country is required"),

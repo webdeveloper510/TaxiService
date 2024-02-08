@@ -142,7 +142,11 @@ const RequestNewTrip = () => {
         data[index].nameCheck = "Name required";
         data[index].nameLengthCheck = "";
         valid = false;
-      } else if (data[index].name?.length < 3) {
+      } else if (/^\d+$/.test(data[index].name)) {
+        data[index].nameCheck = "Name should not be a number";
+        data[index].nameLengthCheck = "";
+        valid = false;
+    } else if (data[index].name?.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -178,7 +182,7 @@ const RequestNewTrip = () => {
         data[index].phoneLengthCheck = "";
         valid = false;
       } else if (
-        data[index].phone?.length < 7 &&
+        data[index].phone?.length < 7 ||
         data[index].phone?.length > 16
       ) {
         data[index].phoneLengthCheck = "Please enter valid phone number";
@@ -194,8 +198,8 @@ const RequestNewTrip = () => {
         data[index].addressLengthCheck = "";
         valid = false;
       } else if (
-        data[index].address?.length < 7 &&
-        data[index].address?.length > 16
+        data[index].address?.length < 7 ||
+        data[index].address?.length > 50
       ) {
         data[index].addressLengthCheck = "Please enter valid address";
         data[index].addressCheck = "";

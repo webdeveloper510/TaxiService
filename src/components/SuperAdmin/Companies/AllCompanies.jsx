@@ -230,15 +230,16 @@ const AllCompanyDetails = () => {
 
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
-      .min(2)
-      .max(20)
+      .min(2,"Company name should be at least 2 characters")
+      .max(20, "Company name should be at most 20 characters")
+      .matches(/^[^\d]+$/, 'Company Name is not valid')
       .required("Company Name is required"),
     // land: Yup.string().trim().min(4).max(20).required("Land is required"),
     post_code: Yup.string().trim().max(10).required("Postcode is required"),
     house_number: Yup.string().trim().max(20).required("Building number is required"),
     description: Yup.string().trim()
-      .min(4)
-      .max(100)
+      .min(4, "Description should be at least 4 characters")
+      .max(100, "Description should be at most 100 characters")
       .required("Describe your taxi company is required"),
     affiliated_with: Yup.string().trim(),
     phone: Yup.string().trim()

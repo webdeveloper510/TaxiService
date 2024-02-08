@@ -206,6 +206,7 @@ const CompanyDetails = () => {
   const validationSchema = Yup.object().shape({
     company_name: Yup.string().trim()
       // .min(2,"Customer Name is must be greater than 2")
+      .matches(/^[^\d]+$/, 'Customer Name is not valid')
       .max(50, "Customer Name is must be less than 50")
       .required("Customer Name is required"),
     company_id: Yup.string().trim().max(20).required("Hotel ID is required"),
