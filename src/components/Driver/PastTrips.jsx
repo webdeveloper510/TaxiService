@@ -200,8 +200,22 @@ const PastTrips = ({type}) => {
     },
     {
       field: "price",
+      headerName: "Total Price in Euro",
+      width: 200,
+     
+    },
+    {
+      field: "earning",
       headerName: "Earning in Euro",
       width: 200,
+      valueGetter: (params) =>{
+        const comType = params.row.commission.commission_type;
+        const value = params.row.commission.commission_value;
+        if(comType =="Percentage"){
+          return `${params.row.price - (params.row.price*value)/100}`;
+        }
+        return params.row.price - value
+      }
      
     },
     {
