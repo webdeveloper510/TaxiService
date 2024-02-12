@@ -161,6 +161,24 @@ ul.nav-group-items li a.nav-link {
     font-weight: 400;
     margin-bottom: 30px;
 }
+.balance-heading{
+    color: #000;
+    font-size: 25px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif !important;
+}
+.pay-btn{
+    background: #FFD04E;
+    border: #FFD04E;
+    margin-left: 10px;
+    font-size: 18px;
+    padding: 10px 20px;
+    // width: 140px;
+    color: #fff;
+    box-shadow: 0px 1px 4px 0px #00000040;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif !important;
+}
 // .sidebar-nav {
 //     flex-direction: initial; 
 // }

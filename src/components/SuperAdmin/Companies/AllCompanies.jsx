@@ -1,4 +1,3 @@
-
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -42,35 +41,36 @@ import {
 } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import SuperAdminSideBar from "../Sidebar/SideBar";
-import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from "mdb-react-ui-kit";
 import EmptyData from "../../EmptyData";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 // import toggel from "react-toggle/style.css"
 
 const AllCompanyDetails = () => {
   const [address, setAddress] = useState("");
-  const [touched, setTouched] = useState(false)
+  const [touched, setTouched] = useState(false);
   const [addressError, setAddressError] = useState(true);
   const [search, setSearch] = useState("");
+  const [show, setShow] = useState(false);
   const handleSelectAddress = async (selectedAddress) => {
     try {
-      formik.setFieldValue("land", selectedAddress)
-      setAddress(selectedAddress)
-
+      formik.setFieldValue("land", selectedAddress);
+      setAddress(selectedAddress);
     } catch (error) {
       console.error("Error:", error);
     }
   };
   const handleAddressError = () => {
-    console.log("handle Address error: ", address)
+    console.log("handle Address error: ", address);
     if (!address) {
-      console.log("handle Address error: true")
-      formik.setFieldError("land", "Address is required")
+      console.log("handle Address error: true");
+      formik.setFieldError("land", "Address is required");
       setAddressError(true);
+    } else {
+      setAddressError(false);
     }
-    else {
-      setAddressError(false)
-    }
-  }
+  };
   const [selectedCompany, setSelectedCompany] = useState(null);
   // State variables for popups
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -95,12 +95,12 @@ const AllCompanyDetails = () => {
   const data = company?.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(company?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
-  useEffect(() => { 
-    if (!editVisible){
+  useEffect(() => {
+    if (!editVisible) {
       setTouched(false);
       formik.resetForm();
     }
-  }, [editVisible])
+  }, [editVisible]);
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -191,6 +191,8 @@ const AllCompanyDetails = () => {
     setDeleteVisible(false);
   };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const initialValues = {
     _id: "",
@@ -226,52 +228,60 @@ const AllCompanyDetails = () => {
     p_number: "",
     email: "",
     commision: "",
-  })
+  });
 
   const validationSchema = Yup.object().shape({
-    company_name: Yup.string().trim()
-      .min(2,"Company name should be at least 2 characters")
+    company_name: Yup.string()
+      .trim()
+      .min(2, "Company name should be at least 2 characters")
       .max(20, "Company name should be at most 20 characters")
-      .matches(/^[^\d]+$/, 'Company Name is not valid')
+      .matches(/^[^\d]+$/, "Company Name is not valid")
       .required("Company Name is required"),
     // land: Yup.string().trim().min(4).max(20).required("Land is required"),
     post_code: Yup.string().trim().max(10).required("Postcode is required"),
-    house_number: Yup.string().trim().max(20).required("Building number is required"),
-    description: Yup.string().trim()
+    house_number: Yup.string()
+      .trim()
+      .max(20)
+      .required("Building number is required"),
+    description: Yup.string()
+      .trim()
       .min(4, "Description should be at least 4 characters")
       .max(100, "Description should be at most 100 characters")
       .required("Describe your taxi company is required"),
     affiliated_with: Yup.string().trim(),
-    phone: Yup.string().trim()
+    phone: Yup.string()
+      .trim()
       .matches(/^[0-9]+$/, "Must be only digits")
       .required("Phone Number is required"),
-    website: Yup.string().trim()
+    website: Yup.string()
+      .trim()
       .url("Invalid URL format. Please enter a valid URL."),
     tx_quality_mark: Yup.string().trim(),
     first_name: Yup.string().trim().required("First Name is required"),
     last_name: Yup.string().trim().required("Last Name is required"),
-    p_number: Yup.string().trim()
+    p_number: Yup.string()
+      .trim()
       .min(6, "minimum length must be 6")
       .max(18, "max length must be 6")
       .matches(/^[0-9]+$/, "Must be only digits"),
     email: Yup.string().trim().email().required("Email Address is required"),
     commision: Yup.number()
-      .typeError('Must be a number')
+      .typeError("Must be a number")
       // .required('Commision is required')
-      .max(100, 'Value must be lower than equal to 100')
+      .max(100, "Value must be lower than equal to 100"),
   });
 
   const handleValueCommission = (e) => {
     // console.log("handleValueCommission", e)
     const value = parseFloat(e.target.value);
     if (value > 100) {
-      console.log("value must be lower than 100")
-      formik.setFieldError("commision", "value must be lower than 100")
+      console.log("value must be lower than 100");
+      formik.setFieldError("commision", "value must be lower than 100");
     } else {
       formik.setFieldValue(e.target.name, e.target.value);
       formik.setFieldTouched(e.target.name, true);
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues,
@@ -281,9 +291,9 @@ const AllCompanyDetails = () => {
       if (address.length < 1) {
         setAddressError(true);
         setTouched(true);
-        return
+        return;
       }
-      const id = values._id
+      const id = values._id;
       editCompanyDetail(id, {
         company_name: values.company_name,
         land: address,
@@ -321,10 +331,10 @@ const AllCompanyDetails = () => {
       .then((res) => {
         console.log("company detail by id--------------", res);
         if (res?.code == 200) {
-          let values = res.result
-          setAddress(values.land)
+          let values = res.result;
+          setAddress(values.land);
           setInputData(res.result);
-          formik.setValues({ ...values })
+          formik.setValues({ ...values });
         }
       })
       .catch((error) => {
@@ -375,9 +385,9 @@ const AllCompanyDetails = () => {
               i.status = !item.status;
               return i;
             }
-            return i
-          })
-          setCompany(newCompanyData)
+            return i;
+          });
+          setCompany(newCompanyData);
         }
         toast.success(`${res.data.message}`, {
           position: "top-right",
@@ -404,15 +414,18 @@ const AllCompanyDetails = () => {
                 <h1 class="heading-for-every-page">Companies Details</h1>
                 <div className="serach-left" id="company-search">
                   <MDBInputGroup>
-                    <MDBInput value={search} onChange={(e) => {
-                      setSearch(e.target.value);
-                    }} placeholder="Search" />
-                    <button className="search-btn"
-                      onClick={getCompanyDetail}
-                    >
-                      <MDBIcon icon='search' />
+                    <MDBInput
+                      value={search}
+                      onChange={(e) => {
+                        setSearch(e.target.value);
+                      }}
+                      placeholder="Search"
+                    />
+                    <button className="search-btn" onClick={getCompanyDetail}>
+                      <MDBIcon icon="search" />
                     </button>
-                  </MDBInputGroup></div>
+                  </MDBInputGroup>
+                </div>
                 <div class="active-trip-outer">
                   <div className="trips-head d-flex justify-content-between">
                     {/* <div className="box-shd d-flex justify-content-between">
@@ -431,110 +444,133 @@ const AllCompanyDetails = () => {
                         </Link>
                       </div>
                     </div> */}
-
                   </div>
                   {loading ? (
                     <AppLoader />
                   ) : (
                     <>
-                      {data.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
-                        <CTableHead>
-                          <CTableRow>
-                            {/* <CTableHeaderCell className="text-center">
+                      {data.length > 0 ? (
+                        <CTable
+                          align="middle"
+                          className="mb-0"
+                          hover
+                          responsive
+                        >
+                          <CTableHead>
+                            <CTableRow>
+                              {/* <CTableHeaderCell className="text-center">
  <CIcon icon={cilPeople} />
  </CTableHeaderCell> */}
-                            <CTableHeaderCell className="text-center">
-                              S. No.
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Company ID
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Name
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Email
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Phone
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Status
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
-                              Action
-                            </CTableHeaderCell>
-                          </CTableRow>
-                        </CTableHead>
-                        <CTableBody>
-                          {data?.map((item, index) => (
-                            <CTableRow
-                              className="text-center"
-                              v-for="item in tableItems"
-                              key={item._id}
-                            >
-                              <CTableDataCell>
-                                <div>{firstIndex + index + 1}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item?.company_id}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>
-                                  {item.first_name + " " + item.last_name}
-                                </div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item.email}</div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{item.phone}</div>
-                              </CTableDataCell>
+                              <CTableHeaderCell className="text-center">
+                                S. No.
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Company ID
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Name
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Email
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Phone
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Status
+                              </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">
+                                Action
+                              </CTableHeaderCell>
+                              
+                            </CTableRow>
+                          </CTableHead>
+                          <CTableBody>
+                            {data?.map((item, index) => (
+                              <CTableRow
+                                className="text-center"
+                                v-for="item in tableItems"
+                                key={item._id}
+                              >
+                                <CTableDataCell>
+                                  <div>{firstIndex + index + 1}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item?.company_id}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>
+                                    {item.first_name + " " + item.last_name}
+                                  </div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.email}</div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>{item.phone}</div>
+                                </CTableDataCell>
 
-                              <CTableDataCell>
-                                <Switch
-                                  checkedIcon={false}
-                                  uncheckedIcon={false}
-                                  height={18}
-                                  width={35}
-                                  onChange={() => {
-                                    handleStatusChange(item);
-                                  }}
-                                  checked={item.status}
-                                />
-                              </CTableDataCell>
-                              <CTableDataCell className="text-center company-list-icons">
-                                <CButton
-                                  id="edit_company_btn"
-                                  onClick={() => setEditVisible(!editVisible)}
-                                >
-                                  {/* <div style={{cursor:"pointer"}} 
+                                <CTableDataCell>
+                                  <Switch
+                                    checkedIcon={false}
+                                    uncheckedIcon={false}
+                                    height={18}
+                                    width={35}
+                                    onChange={() => {
+                                      handleStatusChange(item);
+                                    }}
+                                    checked={item.status}
+                                  />
+                                </CTableDataCell>
+                                <CTableDataCell className="text-center company-list-icons">
+                                  <CButton
+                                    id="edit_company_btn"
+                                    onClick={() => setEditVisible(!editVisible)}
+                                  >
+                                    {/* <div style={{cursor:"pointer"}} 
  onClick={()=>navigate(`/taxi/edit-company/${item._id}`)}
  ></div> */}
-                                  <img
-                                    src={editiconimg}
-                                    alt="edit"
-                                    onClick={() => handleEdit(item._id)}
-                                  />{" "}
-                                </CButton>
+                                    <img
+                                      src={editiconimg}
+                                      alt="edit"
+                                      onClick={() => handleEdit(item._id)}
+                                    />
+                                  </CButton>
 
-                                {/* <div style={{cursor:"pointer"}} onClick={()=>{
+                                  {/* <div style={{cursor:"pointer"}} onClick={()=>{
  deleteCompanyHandler(item._id);
  }}> </div> */}
-                                <CButton
-                                  id="delete_company_btn"
-                                  onClick={() => {
-                                    setDeleteVisible(!deleteVisible);
-                                    setSelectedCompany(item);
-                                  }}
-                                >
-                                  <img src={deleteiconimg} alt="delet" />
-                                </CButton>
-                              </CTableDataCell>
-                            </CTableRow>
-                          ))}
-                        </CTableBody>
-                      </CTable> : <EmptyData />}
+                                  <CButton
+                                    id="delete_company_btn"
+                                    onClick={() => {
+                                      setDeleteVisible(!deleteVisible);
+                                      setSelectedCompany(item);
+                                    }}
+                                  >
+                                    <img src={deleteiconimg} alt="delet" />
+                                  </CButton>
+                                  {/* <button> */}
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="25"
+                                      height="25"
+                                      fill="currentColor"
+                                      className="bi bi-credit-card-fill mx-2 mt-1"
+                                      viewBox="0 0 16 16"
+                                      onClick={handleShow}
+                                    >
+                                      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
+                                    </svg>
+                                  {/* </button> */}
+                                </CTableDataCell>
+                               
+                              </CTableRow>
+                            ))}
+                          </CTableBody>
+                        </CTable>
+                      ) : (
+                        <EmptyData />
+                      )}
                     </>
                   )}
 
@@ -618,7 +654,8 @@ const AllCompanyDetails = () => {
                   {/* enddeletecompanypopup */}
 
                   {/* EditCompanyPopup */}
-                  <CModal className="edit_company_popup"
+                  <CModal
+                    className="edit_company_popup"
                     alignment="center"
                     visible={editVisible}
                     onClose={() => setEditVisible(false)}
@@ -631,7 +668,11 @@ const AllCompanyDetails = () => {
                         <CCol xs={12}>
                           <CCard className="mb-4 edit_company_popup">
                             <CCardBody>
-                              <form noValidate onSubmit={formik.handleSubmit} className="row g-3">
+                              <form
+                                noValidate
+                                onSubmit={formik.handleSubmit}
+                                className="row g-3"
+                              >
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputcname">
                                     Company Name
@@ -659,15 +700,16 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.company_name &&
-                                    formik.touched.company_name ? (
+                                  formik.touched.company_name ? (
                                     <div className="text-danger">
                                       {formik.errors.company_name}
                                     </div>
                                   ) : null}
                                 </CCol>
-                                <CCol xs={6}
+                                <CCol
+                                  xs={6}
                                   onBlur={() => {
-                                    setTouched(true)
+                                    setTouched(true);
                                   }}
                                 >
                                   <CFormLabel htmlFor="inputtripfrom">
@@ -675,20 +717,16 @@ const AllCompanyDetails = () => {
                                   </CFormLabel>
                                   <PlacesAutocomplete
                                     value={address}
-
                                     onChange={(data) => {
-
-                                      console.log(data, " from place holder")
+                                      console.log(data, " from place holder");
                                       setAddress(data);
                                       if (data.length < 1) {
-                                        setAddressError(true)
+                                        setAddressError(true);
                                       } else {
-                                        setAddressError(false)
+                                        setAddressError(false);
                                       }
                                     }}
                                     onSelect={handleSelectAddress}
-
-
                                   >
                                     {({
                                       getInputProps,
@@ -699,7 +737,7 @@ const AllCompanyDetails = () => {
                                       <div>
                                         <CFormInput
                                           onBlur={() => {
-                                            console.log("Blur run")
+                                            console.log("Blur run");
                                           }}
                                           id="inputtripfrom"
                                           {...getInputProps({
@@ -709,22 +747,19 @@ const AllCompanyDetails = () => {
                                             "form-control bg-transparent",
                                             {
                                               "is-invalid":
-                                                touched &&
-                                                addressError
+                                                touched && addressError,
                                             },
                                             {
                                               "is-valid":
-                                                touched &&
-                                                !addressError
+                                                touched && !addressError,
                                             }
                                           )}
-
                                         />
-                                        {addressError && touched &&
+                                        {addressError && touched && (
                                           <div className="text-danger">
                                             Address is Required
                                           </div>
-                                        }
+                                        )}
                                         <div className="suugestion-div">
                                           <div className="suggestion-inner">
                                             {loading && <div>Loading...</div>}
@@ -745,8 +780,6 @@ const AllCompanyDetails = () => {
                                       </div>
                                     )}
                                   </PlacesAutocomplete>
-
-
                                 </CCol>
                                 <CCol md={6}>
                                   <CFormLabel htmlFor="inputpcode">
@@ -774,7 +807,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.post_code &&
-                                    formik.touched.post_code ? (
+                                  formik.touched.post_code ? (
                                     <div className="text-danger">
                                       {formik.errors.post_code}
                                     </div>
@@ -806,7 +839,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.house_number &&
-                                    formik.touched.house_number ? (
+                                  formik.touched.house_number ? (
                                     <div className="text-danger">
                                       {formik.errors.house_number}
                                     </div>
@@ -820,22 +853,18 @@ const AllCompanyDetails = () => {
                                   <CFormInput
                                     aria-label="taxi company"
                                     value={inputData.description}
-                                    {...formik.getFieldProps(
-                                      "description"
-                                    )}
+                                    {...formik.getFieldProps("description")}
                                     maxLength="50"
                                     className={clsx(
                                       "form-control bg-transparent",
                                       {
                                         "is-invalid":
-                                          formik.touched
-                                            .description &&
+                                          formik.touched.description &&
                                           formik.errors.description,
                                       },
                                       {
                                         "is-valid":
-                                          formik.touched
-                                            .description &&
+                                          formik.touched.description &&
                                           !formik.errors.description,
                                       }
                                     )}
@@ -843,7 +872,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.description &&
-                                    formik.touched.description ? (
+                                  formik.touched.description ? (
                                     <div className="text-danger">
                                       {formik.errors.description}
                                     </div>
@@ -876,7 +905,8 @@ const AllCompanyDetails = () => {
                                     name="commision"
                                     autoComplete="off"
                                   />
-                                  {formik.errors.commision && formik.touched.commision ? (
+                                  {formik.errors.commision &&
+                                  formik.touched.commision ? (
                                     <div className="text-danger">
                                       {formik.errors.commision}
                                     </div>
@@ -908,7 +938,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.affiliated_with &&
-                                    formik.touched.affiliated_with ? (
+                                  formik.touched.affiliated_with ? (
                                     <div className="text-danger">
                                       {formik.errors.affiliated_with}
                                     </div>
@@ -940,7 +970,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.phone &&
-                                    formik.touched.phone ? (
+                                  formik.touched.phone ? (
                                     <div className="text-danger">
                                       {formik.errors.phone}
                                     </div>
@@ -972,7 +1002,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.website &&
-                                    formik.touched.website ? (
+                                  formik.touched.website ? (
                                     <div className="text-danger">
                                       {formik.errors.website}
                                     </div>
@@ -987,7 +1017,6 @@ const AllCompanyDetails = () => {
                                     maxLength="50"
                                     value={inputData.tx_quality_mark}
                                     {...formik.getFieldProps("tx_quality_mark")}
-
                                     className={clsx(
                                       "form-control bg-transparent",
                                       {
@@ -1005,7 +1034,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.tx_quality_mark &&
-                                    formik.touched.tx_quality_mark ? (
+                                  formik.touched.tx_quality_mark ? (
                                     <div className="text-danger">
                                       {formik.errors.tx_quality_mark}
                                     </div>
@@ -1021,7 +1050,6 @@ const AllCompanyDetails = () => {
                                       maxLength="50"
                                       value={inputData.first_name}
                                       {...formik.getFieldProps("first_name")}
-
                                       className={clsx(
                                         "form-control bg-transparent",
                                         {
@@ -1039,7 +1067,7 @@ const AllCompanyDetails = () => {
                                       autoComplete="off"
                                     />
                                     {formik.errors.first_name &&
-                                      formik.touched.first_name ? (
+                                    formik.touched.first_name ? (
                                       <div className="text-danger">
                                         {formik.errors.first_name}
                                       </div>
@@ -1054,7 +1082,6 @@ const AllCompanyDetails = () => {
                                       maxLength="50"
                                       value={inputData.last_name}
                                       {...formik.getFieldProps("last_name")}
-
                                       className={clsx(
                                         "form-control bg-transparent",
                                         {
@@ -1072,7 +1099,7 @@ const AllCompanyDetails = () => {
                                       autoComplete="off"
                                     />
                                     {formik.errors.last_name &&
-                                      formik.touched.last_name ? (
+                                    formik.touched.last_name ? (
                                       <div className="text-danger">
                                         {formik.errors.last_name}
                                       </div>
@@ -1106,7 +1133,7 @@ const AllCompanyDetails = () => {
                                     autoComplete="off"
                                   />
                                   {formik.errors.p_number &&
-                                    formik.touched.p_number ? (
+                                  formik.touched.p_number ? (
                                     <div className="text-danger">
                                       {formik.errors.p_number}
                                     </div>
@@ -1136,7 +1163,8 @@ const AllCompanyDetails = () => {
                                     name="email"
                                     autoComplete="off"
                                   />
-                                  {formik.errors.email && formik.touched.email ? (
+                                  {formik.errors.email &&
+                                  formik.touched.email ? (
                                     <div className="text-danger">
                                       {formik.errors.email}
                                     </div>
@@ -1190,6 +1218,41 @@ const AllCompanyDetails = () => {
           </div>
         </div>
       </div>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title class="balance-heading">Total Balance 200</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CFormLabel htmlFor="inputcname">
+            Pay Commision<span class="asterisk-mark">*</span>
+          </CFormLabel>
+          <CFormInput
+            aria-label="vehicle fare"
+            {...formik.getFieldProps("company_name")}
+            className={clsx(
+              "form-control bg-transparent",
+              {
+                "is-invalid":
+                  formik.touched.company_name && formik.errors.company_name,
+              },
+              {
+                "is-valid":
+                  formik.touched.company_name && !formik.errors.company_name,
+              }
+            )}
+            name="company_name"
+            autoComplete="off"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button> */}
+          <button className="pay-btn" onClick={handleClose}>
+            Pay
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

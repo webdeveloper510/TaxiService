@@ -63,6 +63,7 @@ import EditBookingForm from '../components/Login/EditBookingForm';
 import CancelPaymentPage from '../components/Driver/Cancel';
 import SuccessPaymentPage from '../components/Driver/Success';
 import ViewTripLocation from '../components/Taxi/Trips/ViewTrip';
+import SuperPayment from '../components/SuperAdmin/payment/payment';
 
 
 const PrivateRoute = () => {
@@ -130,6 +131,7 @@ const PrivateRoute = () => {
             <Route path="/super-admin/all-companies" element={<SecureSuperRoleRoute><AllCompanyDetails /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/edit-company-details" element={<SecureSuperRoleRoute><EditCompanyDetails /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/trips/recent-trips" element={<SecureSuperRoleRoute><SuperRecentTrips /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/payment" element={<SuperPayment />} />
             <Route path="/taxi/fare/listoffares" element={<SecureTaxiRoleRoute><ListOfFares /></SecureTaxiRoleRoute>} />
             <Route path="/super-admin/driver/addnewdriver" element={<SecureSuperRoleRoute><AddNewDriver /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/driver/listofdrivers" element={<SecureSuperRoleRoute><ListOfDrivers role="super" /></SecureSuperRoleRoute>} />
