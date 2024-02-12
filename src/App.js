@@ -48,10 +48,11 @@ function App() {
             setAppLoaded(true);
           })
   }
+  
   useEffect(()=>{
     onLoadApp()
   },[token,refreshUser])
-
+  
   
   return (
     <userContext.Provider value={{user,setUser,appLoaded, refreshUserData}}>

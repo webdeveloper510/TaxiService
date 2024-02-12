@@ -38,6 +38,7 @@ import {
   editCompanyDetail,
   getCompany,
   getCompanydetailId,
+  payCommission,
 } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import SuperAdminSideBar from "../Sidebar/SideBar";
@@ -48,6 +49,7 @@ import Modal from "react-bootstrap/Modal";
 // import toggel from "react-toggle/style.css"
 
 const AllCompanyDetails = () => {
+  const [amount, setAmount] = useState("");
   const [address, setAddress] = useState("");
   const [touched, setTouched] = useState(false);
   const [addressError, setAddressError] = useState(true);
@@ -84,7 +86,7 @@ const AllCompanyDetails = () => {
   const [company, setCompany] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const [selectedPayee, setSelectedPayee] = useState(null);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageLimit, setPageLimit] = React.useState(3);
   const [maxPage, setMaxPage] = React.useState(3);
@@ -192,7 +194,10 @@ const AllCompanyDetails = () => {
   };
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (company) =>{
+     setShow(true);
+     setSelectedPayee(company)
+    };
 
   const initialValues = {
     _id: "",
@@ -402,6 +407,37 @@ const AllCompanyDetails = () => {
         });
       });
   }
+
+  const handlePay = async()=>{
+    const result = await payCommission({
+      company_id: selectedPayee._id,
+      amount
+    })
+    if(result?.code === 200 ){
+      toast.success(`${result?.message}`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      // const newCompany = [...company];
+      // newCompany.forEach(item=>{
+      //   if(item._id == company._id){
+      //     item.totalBalance -= amount;
+      //   }
+      // })
+      // setCompany(newCompany);
+      getCompanyDetail();
+      
+    }else{
+      toast.warning(`${result?.message}`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    }
+    handleClose()
+    setSelectedPayee(null)
+    setAmount("");
+
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -557,7 +593,7 @@ const AllCompanyDetails = () => {
                                       fill="currentColor"
                                       className="bi bi-credit-card-fill mx-2 mt-1"
                                       viewBox="0 0 16 16"
-                                      onClick={handleShow}
+                                      onClick={()=>handleShow(item)}
                                     >
                                       <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
                                     </svg>
@@ -1220,15 +1256,17 @@ const AllCompanyDetails = () => {
       </div>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title class="balance-heading">Total Balance 200</Modal.Title>
+          <Modal.Title class="balance-heading">Total Balance: {selectedPayee?.totalBalance}€</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CFormLabel htmlFor="inputcname">
-            Pay Commision<span class="asterisk-mark">*</span>
+            Pay Commission €<span class="asterisk-mark">*</span>
           </CFormLabel>
           <CFormInput
+          type="number"
             aria-label="vehicle fare"
-            {...formik.getFieldProps("company_name")}
+            value={amount}
+            onChange={e=>setAmount(e.target.value)}
             className={clsx(
               "form-control bg-transparent",
               {
@@ -1248,7 +1286,11 @@ const AllCompanyDetails = () => {
           {/* <Button variant="secondary" onClick={handleClose}>
             Close
           </Button> */}
-          <button className="pay-btn" onClick={handleClose}>
+          <button className="pay-btn" onClick={()=>{
+            handlePay()
+            
+          }
+          }>
             Pay
           </button>
         </Modal.Footer>

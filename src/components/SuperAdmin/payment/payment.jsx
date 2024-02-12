@@ -11,7 +11,7 @@ import {
   CButton,
 } from "@coreui/react";
 import locationimg from "../../../assets/images/location.png";
-import { getRecentTrip, getTrip } from "../../../utils/api";
+import { getRecentTrip, getTransaction, getTrip } from "../../../utils/api";
 import moment from "moment";
 import SuperAdminSideBar from "../Sidebar/SideBar";
 import EmptyData from "../../EmptyData";
@@ -30,18 +30,12 @@ import {
   MDBCardImage,
 } from "mdb-react-ui-kit";
 import trips from "../../../assets/images/bookedtrips.png";
+import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 
-const SuperPayment = () => {
-  let [query, setQuery] = useSearchParams();
-  const status = query.get("filter");
-  const [filterData, setFilterData] = useState([]);
-  // const [selectedValue, setSelectedValue] = useState("All"); // Initial selected valu
 
-  const handleSelect = (eventKey) => {
-    setSelectedType(eventKey); // Update the selected value when an item is selected
-  };
-  const [selectedType, setSelectedType] = useState(status || "All");
-  const [pendinTrip, setPendingTrip] = useState([]);
+const SuperPayment = ({type, role}) => {
+  
+  const [trans, setTrans] = useState([]);
   const [loader, setLoader] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageLimit, setPageLimit] = React.useState(3);
@@ -50,10 +44,15 @@ const SuperPayment = () => {
   const recordPage = 10;
   const lastIndex = currentPage * recordPage;
   const firstIndex = lastIndex - recordPage;
-  const data = filterData?.slice(firstIndex, lastIndex);
-  const nPage = Math.ceil(filterData?.length / recordPage);
+  const data = trans?.slice(firstIndex, lastIndex);
+  const nPage = Math.ceil(trans?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
-
+  const [earning, setEarning] = useState({
+    "totalEarning": 0,
+    "totalEarningLastSevenDays": 0,
+    "totalEarningFromMonth": 0,
+    "totalEarningFromYear": 0
+  })
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -70,14 +69,7 @@ const SuperPayment = () => {
       return null;
     }
   });
-  const [search, setSearch] = useState("");
-  useEffect(() => {
-    if (!selectedType || selectedType === "All") setFilterData(pendinTrip);
-    else {
-      console.log("selectedType in else: ", selectedType);
-      setFilterData(pendinTrip.filter((i) => i.trip_status == selectedType));
-    }
-  }, [selectedType]);
+
   const handlePrePage = () => {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
@@ -108,50 +100,88 @@ const SuperPayment = () => {
   }
   useEffect(() => {
     setLoader(true);
-    getRecentTrip(true, search)
+    getTransaction(role=="super"?"SUPER_ADMIN":"COMPANY")
       .then((res) => {
-        if (res?.code == 200 && res?.result) {
-          setPendingTrip(res?.result);
-
-          if (!selectedType || selectedType === "All")
-            setFilterData(res?.result);
-          else {
-            console.log("selectedType in else: ", selectedType);
-            setFilterData(
-              res?.result.filter((i) => i.trip_status == selectedType)
-            );
+        if (res?.code == 200) {
+          setEarning(res)
+          console.log("🚀 ~ .then ~ res?.result:", res?.result)
+          if(type == 'transaction'){
+            setTrans(res?.allDriverTrans || [])
+          }else{
+            setTrans(res?.allSuperTrans || [])
           }
+
         }
       })
       .finally(() => {
         setLoader(false);
       });
-  }, [search]);
+    
+    
+  }, [type]);
 
   return (
     <>
       <div className="container-fluidd">
         <div className="col-md-12">
           <div>
-            <SuperAdminSideBar />
+            {role=="taxi"?  <SuperSideBar/> : <SuperAdminSideBar />}
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Payment</h1>
-                <MDBRow>
-                    <MDBCol sm='6' className="booked-trips all_same">
+                <h1 class="heading-for-every-page">
+                  {type == "transaction"? "Transactions" : "Payment" }
+                  </h1>
+               {type=="transaction" &&  <MDBRow>
+                    <MDBCol sm='6' className="booked-trips all_same my-3">
                 <MDBCard>
-                  <MDBCardBody className="d-flex booked-trips-card">
+                  <MDBCardBody className="d-flex booked-trips-card ">
                     <MDBCol sm="4" className="booked-trip-icon">
                       <MDBCardImage position="top" alt="..." src={trips} />
                     </MDBCol>
                     <MDBCol sm="8">
                       <MDBCardText>
                         <div>
-                          <h5>Booked Trips</h5>
-                          <span>{data?.bookedTrips}</span>
+                          <h5>Total Earning</h5>
+                          <span>{earning?.totalEarning} €</span>
                           <hr></hr>
-                          <p>60% increase in 20 days</p>
+                        </div>
+                      </MDBCardText>
+                    </MDBCol>
+                  </MDBCardBody>
+                </MDBCard>
+                </MDBCol>
+                <MDBCol sm='6' className="booked-trips all_same my-3">
+                <MDBCard>
+                  <MDBCardBody className="d-flex total-earinings">
+                    <MDBCol sm="4" className="booked-trip-icon">
+                      <MDBCardImage position="top" alt="..." src={trips} />
+                    </MDBCol>
+                    <MDBCol sm="8">
+                      <MDBCardText>
+                        <div>
+                          <h5>Last Seven Days Earning</h5>
+                          <span>{earning.totalEarningLastSevenDays} €</span>
+                          <hr></hr>
+                        </div>
+                      </MDBCardText>
+                    </MDBCol>
+                  </MDBCardBody>
+                </MDBCard>
+                </MDBCol>
+                <MDBCol sm='6' className="booked-trips all_same">
+                <MDBCard>
+                  <MDBCardBody className="d-flex total-earinings">
+                    <MDBCol sm="4" className="booked-trip-icon">
+                      <MDBCardImage position="top" alt="..." src={trips} />
+                    </MDBCol>
+                    <MDBCol sm="8">
+                      <MDBCardText>
+                        <div>
+                          <h5>Current month Earning</h5>
+                          <span>{earning?.totalEarningFromMonth} €</span>
+                          <hr></hr>
+                          
                         </div>
                       </MDBCardText>
                     </MDBCol>
@@ -167,10 +197,10 @@ const SuperPayment = () => {
                     <MDBCol sm="8">
                       <MDBCardText>
                         <div>
-                          <h5>Booked Trips</h5>
-                          <span>{data?.bookedTrips}</span>
+                          <h5>Current Year Earning</h5>
+                          <span>{earning?.totalEarningFromYear} €</span>
                           <hr></hr>
-                          <p>60% increase in 20 days</p>
+                       
                         </div>
                       </MDBCardText>
                     </MDBCol>
@@ -178,7 +208,7 @@ const SuperPayment = () => {
                 </MDBCard>
                 </MDBCol>
                 </MDBRow>
-
+}
                 <div class="filter-outer">
                   {/* <div className="serach-left" id="recent-trip-search">
                     <MDBInputGroup>
@@ -226,16 +256,17 @@ const SuperPayment = () => {
                               S. No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Trip ID
+                            {type=="transaction"? "Trip ID": "Transaction Id"} 
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Driver Name
+                            {type=="transaction"? "Driver Name": "Company Name"} 
+                              
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Comission
+                            {type=="transaction"? "Commission": "Amount"}  
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Date
+                              Date And Time
                             </CTableHeaderCell>
                             {/* <CTableHeaderCell className="text-center">
                             Comment
@@ -249,21 +280,6 @@ const SuperPayment = () => {
                         </CTableHead>
                         <CTableBody>
                           {data?.map((item, index) => {
-                            const status = item.trip_status;
-                            let background = "#067A88";
-                            if (status === "Active")
-                              background =
-                                "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%) ";
-                            else if (status === "Accepted")
-                              background =
-                                "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)";
-                            else if (status === "Booked")
-                              background =
-                                "linear-gradient(90deg, #FF5370 0%, #FF869A 100%)";
-                            else if (status === "Completed")
-                              background =
-                                "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)";
-                            else if (status === "Canceled") background = "red";
 
                             return (
                               <CTableRow
@@ -275,25 +291,19 @@ const SuperPayment = () => {
                                   <div>{firstIndex + index + 1}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.series_id}</div>
+                                  <div>{type=="transaction"?item?.trip?.trip_id: item?.companyData?.company_id}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{item.company_name}</div>
+                                  <div>{type=="transaction" ? item?.from?.first_name + " " + item?.from?.last_name : item?.companyData?.company_name}</div>
                                 </CTableDataCell>
                                 <CTableDataCell>
                                   <div>
-                                    {item.trip_from?.address?.length < 20
-                                      ? item.trip_from?.address
-                                      : item.trip_from?.address?.slice(0, 18) +
-                                        "..."}
+                                    {item?.amount} €
                                   </div>
                                 </CTableDataCell>
                                 <CTableDataCell>
                                   <div>
-                                    {item.trip_to?.address?.length < 20
-                                      ? item.trip_to?.address
-                                      : item.trip_to?.address?.slice(0, 18) +
-                                        "..."}
+                                    {moment(item.createdAt).format("MMM Do YYYY h:mm a")}
                                   </div>
                                 </CTableDataCell>
                                 {/* <CTableDataCell>

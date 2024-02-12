@@ -727,3 +727,31 @@ export const activeDrivers = async(id) => {
   });
 };
 
+export const getTransaction = async(role) => {
+  return await Axios.get(`admin/transactions?role=${role}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get Trip");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};
+export const payCommission = async(data) => {
+  return await Axios.post(`admin/payCompany`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "get Trip");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("GET_TRIP", error);
+  });
+};

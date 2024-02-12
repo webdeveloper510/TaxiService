@@ -124,14 +124,29 @@ const PrivateRoute = () => {
 
             <Route path="/taxi/vehicle/listofvehicles" element={<SecureTaxiRoleRoute><LisOfVehicles role="taxi" /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/vehicle/vehicle-details/:vehicleId" element={<SecureTaxiRoleRoute><ViewSingleVehicle role="taxi" /></SecureTaxiRoleRoute>} />
-
+            <Route path="/taxi/payment" element={
+            <SecureTaxiRoleRoute>
+            <SuperPayment type="payment" role={"taxi"}/>
+            </SecureTaxiRoleRoute>
+            } />
+            <Route path="/taxi/transaction" element={
+                <SecureTaxiRoleRoute>
+            <SuperPayment type={"transaction"} role={"taxi"} />
+            </SecureTaxiRoleRoute>
+            } />
             <Route path="/taxi/fare/addfare" element={<SecureTaxiRoleRoute><AddFare /></SecureTaxiRoleRoute>} />
             <Route path="/super-admin/dashboard" element={<SecureSuperRoleRoute><SuperDashboard /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/add-company" element={<SecureSuperRoleRoute><AddSuperCompany /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/all-companies" element={<SecureSuperRoleRoute><AllCompanyDetails /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/edit-company-details" element={<SecureSuperRoleRoute><EditCompanyDetails /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/trips/recent-trips" element={<SecureSuperRoleRoute><SuperRecentTrips /></SecureSuperRoleRoute>} />
-            <Route path="/super-admin/payment" element={<SuperPayment />} />
+            <Route path="/super-admin/payment" element={<SecureSuperRoleRoute><SuperPayment type="payment" role={"super"} /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/transaction" element={
+                <SecureSuperRoleRoute>
+            <SuperPayment type={"transaction"} role={"super"}/>
+            </SecureSuperRoleRoute>
+            } />
+
             <Route path="/taxi/fare/listoffares" element={<SecureTaxiRoleRoute><ListOfFares /></SecureTaxiRoleRoute>} />
             <Route path="/super-admin/driver/addnewdriver" element={<SecureSuperRoleRoute><AddNewDriver /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/driver/listofdrivers" element={<SecureSuperRoleRoute><ListOfDrivers role="super" /></SecureSuperRoleRoute>} />
