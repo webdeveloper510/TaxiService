@@ -256,7 +256,7 @@ const SuperPayment = ({type, role}) => {
                               S. No.
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                            {type=="transaction"? "Trip ID": "Transaction Id"} 
+                            {type=="transaction"? "Trip ID": "Company ID"} 
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
                             {type=="transaction"? "Driver Name": "Company Name"} 
