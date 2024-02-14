@@ -223,6 +223,7 @@ const PendingTrip = () => {
                               <CTableHeaderCell className="text-center">
                                 Action
                               </CTableHeaderCell>
+                              <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                             </CTableRow>
                           </CTableHead>
 
@@ -296,6 +297,13 @@ const PendingTrip = () => {
                                       </CButton>
                                     </div>
                                   </CTableDataCell>
+                                  <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                                 </CTableRow>
                               ))
                               : ""}

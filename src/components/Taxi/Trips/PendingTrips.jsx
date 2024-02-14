@@ -330,6 +330,7 @@ const SuperPendingTrip = () => {
                             <CTableHeaderCell className="text-center">
                               Action
                             </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                           </CTableRow>
                         </CTableHead>
 
@@ -410,6 +411,13 @@ const SuperPendingTrip = () => {
                                     </div>
                                   </div>
                                 </CTableDataCell>
+                                <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                               </CTableRow>
                             ))
                             : ""}

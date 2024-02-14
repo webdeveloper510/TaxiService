@@ -21,6 +21,7 @@ import SuperSideBar from "../SiderNavBar/Sidebar";
 import EmptyData from "../../EmptyData";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import AppLoader from "../../AppLoader";
+import { Link } from "react-router-dom";
 
 const SuperBookedTrips = () => {
   const [bookingTrip, setBookingTrip] = useState([]);
@@ -174,6 +175,7 @@ const SuperBookedTrips = () => {
                             {/* <CTableHeaderCell className="text-center">
                               Action
                             </CTableHeaderCell> */}
+                             <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -226,6 +228,13 @@ const SuperBookedTrips = () => {
                                     <img src={deleteiconimg} alt="img" />
                                   </div>
                                 </CTableDataCell> */}
+                                <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
 
                               </CTableRow>
                             ))

@@ -168,6 +168,7 @@ const SuperActiveTrip = () => {
                                 <CTableHeaderCell className="text-center">
                                   View Route
                                 </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                               </CTableRow>
                             </CTableHead>
                             <CTableBody>
@@ -215,6 +216,13 @@ const SuperActiveTrip = () => {
                                           <img src={locationimg} alt="img" />
                                         </Link>
                                       </CTableDataCell>
+                                      <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                                     </CTableRow>
                                   </>
                                 ))

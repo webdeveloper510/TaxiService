@@ -21,6 +21,7 @@ import moment from "moment";
 import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
+import { Link } from "react-router-dom";
 
 
 const RequestAcceptTrip = () => {
@@ -161,7 +162,7 @@ const RequestAcceptTrip = () => {
                             <CTableHeaderCell className="text-center">
                               Date & Time
                             </CTableHeaderCell>
-                            
+                            <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -203,7 +204,13 @@ const RequestAcceptTrip = () => {
                                         )}
                                       </div>
                                     </CTableDataCell>
-                                   
+                                    <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                                   </CTableRow>
                                 </>
                               ))

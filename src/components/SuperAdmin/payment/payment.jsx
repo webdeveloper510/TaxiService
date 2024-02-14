@@ -143,7 +143,7 @@ const SuperPayment = ({type, role}) => {
                       <MDBCardText>
                         <div>
                           <h5>Total Earning</h5>
-                          <span>{earning?.totalEarning} €</span>
+                          <span>{(Math.round(earning?.totalEarning* 100) / 100).toFixed(2)} €</span>
                           <hr></hr>
                         </div>
                       </MDBCardText>
@@ -161,7 +161,8 @@ const SuperPayment = ({type, role}) => {
                       <MDBCardText>
                         <div>
                           <h5>Last Seven Days Earning</h5>
-                          <span>{earning.totalEarningLastSevenDays} €</span>
+                          <span>{
+                          (Math.round(earning?.totalEarningLastSevenDays* 100) / 100).toFixed(2)} €</span>
                           <hr></hr>
                         </div>
                       </MDBCardText>
@@ -179,7 +180,7 @@ const SuperPayment = ({type, role}) => {
                       <MDBCardText>
                         <div>
                           <h5>Current month Earning</h5>
-                          <span>{earning?.totalEarningFromMonth} €</span>
+                          <span>{(Math.round(earning?.totalEarningFromMonth* 100) / 100).toFixed(2)} €</span>
                           <hr></hr>
                           
                         </div>
@@ -198,7 +199,8 @@ const SuperPayment = ({type, role}) => {
                       <MDBCardText>
                         <div>
                           <h5>Current Year Earning</h5>
-                          <span>{earning?.totalEarningFromYear} €</span>
+                          <span>{
+                          (Math.round(earning?.totalEarningFromYear* 100) / 100).toFixed(2)} €</span>
                           <hr></hr>
                        
                         </div>
@@ -298,7 +300,9 @@ const SuperPayment = ({type, role}) => {
                                 </CTableDataCell>
                                 <CTableDataCell>
                                   <div>
-                                    {item?.amount} €
+                                    {
+                                    (Math.round(item?.amount * 100) / 100).toFixed(2)
+                                    } €
                                   </div>
                                 </CTableDataCell>
                                 <CTableDataCell>
