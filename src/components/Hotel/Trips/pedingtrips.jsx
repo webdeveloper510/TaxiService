@@ -224,6 +224,7 @@ const PendingTrip = () => {
                                 Action
                               </CTableHeaderCell>
                               <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
+                              
                             </CTableRow>
                           </CTableHead>
 

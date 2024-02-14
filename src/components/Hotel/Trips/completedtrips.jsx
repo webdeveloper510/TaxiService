@@ -22,6 +22,7 @@ import { PulseLoader } from "react-spinners";
 import EmptyData from "../../EmptyData";
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import AppLoader from "../../AppLoader";
+import { Link } from "react-router-dom";
 const CompletedTrip = () => {
   const [completeTrip, setCompleteTrip] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -168,6 +169,7 @@ const CompletedTrip = () => {
                                 <CTableHeaderCell className="text-center">
                                   Distance
                                 </CTableHeaderCell>
+                                <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell>
                                 {/* <CTableHeaderCell className="text-center">Fare</CTableHeaderCell> */}
                                 {/* <CTableHeaderCell className="text-center">
                               View Route
@@ -231,6 +233,13 @@ const CompletedTrip = () => {
                                         ) * 0.00062137
                                       ).toFixed(2)} Miles`}</div>
                                     </CTableDataCell>
+                                    <CTableDataCell>
+                        <div className="view_details_btn">
+                        <Link to={`/trips/view-trip-details/${item._id}`}>
+                          View Details
+                          </Link>
+                          </div>
+                      </CTableDataCell>   
                                     {/* <CTableDataCell>
                   <div>{item.fare}</div>
                 </CTableDataCell>               */}
