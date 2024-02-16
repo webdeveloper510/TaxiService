@@ -768,7 +768,7 @@ const SuperRequestTrip = () => {
                               >
                                 <option value={"Cash"} selected>Cash</option>
                                 {/* <option value="Fixed">Cash</option> */}
-                                <option value='Hotel Account'>Hotel Account</option>
+                                {/* <option value='Hotel Account'>Hotel Account</option> */}
 
 
                               </CFormSelect>

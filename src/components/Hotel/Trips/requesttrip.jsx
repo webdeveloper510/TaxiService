@@ -784,7 +784,7 @@ const RequestNewTrip = () => {
                                 <option value="" disabled selected>Select a Pay Option</option>
                                 <option value={"Cash"} >Cash</option>
                                 {/* <option value="Fixed">Cash</option> */}
-                                <option value='Hotel Account'>Hotel Account</option>
+                                {/* <option value='Hotel Account'>Hotel Account</option> */}
 
 
                               </CFormSelect>
