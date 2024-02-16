@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     MDBCard,
     MDBCardBody,
@@ -8,9 +8,27 @@ import {
   
   } from 'mdb-react-ui-kit';
 import earningimg from "../../../assets/images/earnings.png"
+import { getTransaction } from "../../../utils/api";
 
 const EarningStats=()=> {
-   
+  const [loader, setLoader] = useState(false);
+  const [earning, setEarning] = useState({
+    "totalEarning": 0,
+    "totalEarningLastSevenDays": 0,
+    "totalEarningFromMonth": 0,
+    "totalEarningFromYear": 0
+  })
+  useEffect(() => {
+    getTransaction("COMPANY")
+      .then((res) => {
+        if (res?.code == 200) {
+          setEarning(res)
+        }
+      })
+    
+    
+  }, []);
+  
       return (
        <>
        <br/>
@@ -23,9 +41,9 @@ const EarningStats=()=> {
             <MDBCardText>
               <div>
                 <h5>Total Earnings</h5>
-            <span>0</span>
+            <span>{earning.totalEarning} €</span>
             <hr></hr>
-            <p>60% increase in 20 days</p>
+            {/* <p>60% increase in 20 days</p> */}
             </div>
             </MDBCardText>
             </MDBCol>
