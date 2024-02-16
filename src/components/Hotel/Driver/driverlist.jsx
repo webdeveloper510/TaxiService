@@ -130,7 +130,7 @@ const DriverList = () => {
                       {data?.length ?  data.map((item, index) => 
                       {
                         let status = "Offline";
-                        if (item.status) {
+                        if (item.status && item.is_login) {
                           status = "Online"
                           if (!item.is_available) {
                             status = "In a ride"

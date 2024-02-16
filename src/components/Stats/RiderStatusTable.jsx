@@ -75,7 +75,7 @@ const RiderStatusTable=()=> {
                   {driver?.length > 0 ?
                   driver.slice(0,5)?.map((item, index) => {
                     let status = "Ofline";
-                    if(item.status){
+                    if(item.status && item.is_login){
                       status = "Online"
                       if(!item.is_available){
                         status = "In a ride"

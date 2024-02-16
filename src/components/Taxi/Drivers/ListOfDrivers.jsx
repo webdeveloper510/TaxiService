@@ -181,7 +181,7 @@ const [selectedId, setSelectedId ] = useState(null);
                           {data?.length > 0
                             ? data.map((item, index) => {
                               let status = "Offline";
-                              if (item.status) {
+                              if (item.status && item.is_login) {
                                 status = "Online"
                                 if (!item.is_available) {
                                   status = "In a ride"

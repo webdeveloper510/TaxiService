@@ -20,7 +20,7 @@ import {
 } from "@coreui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { getCompany, getDriver, getVehicle, getVehicleType } from "../../../utils/api";
+import { getCompany, getDriver, getFare, getVehicle, getVehicleType } from "../../../utils/api";
 import { addTrip } from "../../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -32,8 +32,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { ClipLoader } from "react-spinners";
+import * as geolib from "geolib";
 
 const SuperRequestTrip = () => {
+  const [fares, setFares] = useState(null);
+  const [selectedFare, setSelectedFare] = useState(null);
 
   const [age, setAge] = useState('Select Vehicle Type');
 
@@ -106,6 +109,28 @@ const SuperRequestTrip = () => {
     email: false,
     address: false,
   }])
+  const priceCalculator = () => {
+
+    let distance = null;
+    if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
+      distance = (geolib.getDistance(
+        {
+          latitude: inputData?.trip_from?.lat,
+          longitude: inputData?.trip_from?.log
+        },
+        {
+          latitude: inputData?.trip_to?.lat,
+          longitude: inputData?.trip_to?.log,
+        }
+      ) / 1000
+      ).toFixed(2);
+    }
+    if (distance && selectedFare) {
+      return distance * selectedFare?.vehicle_fare_per_km;
+    } else {
+      return 0
+    }
+  }
   const formValidation = (passengers) => {
     const data = [...passengers];
     var re = /\S+@\S+\.\S+/;
@@ -234,6 +259,12 @@ const SuperRequestTrip = () => {
         setVehicle(res.result);
       }
     });
+    getFare().then((res) => {
+      console.log(res?.result, "fares");
+      if (res?.code === 200) {
+        setFares(res?.result);
+      }
+    });
     getCompany({ role: "HOTEL", name: "" })
       .then((res) => {
         console.log(res?.result, "customer");
@@ -286,7 +317,7 @@ const SuperRequestTrip = () => {
   const [formLoader, setFormLoader] = useState(false);
  
   const adddata = () => {
-
+    console.log("inputData.commission_value",inputData.commission_value)
     let data = inputData;
     let valid = true;
     const passError = passengerError.map(() => {
@@ -300,7 +331,7 @@ const SuperRequestTrip = () => {
     setPassengerError(passError);
     let newErrors = { ...errors };
     const errorRes = formValidation(passengers);
-    console.log("data beafore vehicle", newErrors);
+    console.log("data beafore vehicle", newErrors,inputData.commission_value);
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
@@ -327,6 +358,7 @@ const SuperRequestTrip = () => {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
     }
+    
     if (data.customer.length < 1) {
       valid = false;
       newErrors.customer = "Please select valid customer";
@@ -343,9 +375,18 @@ const SuperRequestTrip = () => {
       valid = false;
       newErrors.commission_value = "Please enter commission value";
     }
+    
+    if (parseFloat(inputData.commission_value) <= 0) {
+      valid = false;
+      newErrors.commission_value = "Value should be greater than 0"
+    }
     if (inputData.commission_type == "Percentage" && parseFloat(inputData.commission_value) > 100) {
       valid = false;
       newErrors.commission_value = "Value should be less than equal 100"
+    }
+    if (inputData.commission_type == "Fixed" && parseFloat(price)>0 && parseFloat(inputData.commission_value) > parseFloat(price)) {
+      valid = false;
+      newErrors.commission_value = "Value should be less than trip price"
     }
     if (!valid) {
       setErrors(newErrors);
@@ -374,6 +415,11 @@ const SuperRequestTrip = () => {
       }
       delete data.commission_value;
       delete data.commission_type
+      if(data?.price && data.price <= 0) {
+        data.price = priceCalculator()
+        console.log("🚀 ~ adddata ~ data.price:", data.price)
+      }
+
       addTrip(data).then((res) => {
         setFormLoader(true)
         console.log("response---->>>>", res);
@@ -441,6 +487,14 @@ const SuperRequestTrip = () => {
       setPrice(event.target.value);
     }
   };
+  const setFareOnVehicleType = (vehicle_type) => {
+    fares.forEach((fare) => {
+      if (fare.vehicle_type == vehicle_type) {
+        setSelectedFare(fare);
+        console.log("selectecd fare is", fare)
+      }
+    })
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -474,6 +528,7 @@ const SuperRequestTrip = () => {
                                 name="vehicle"
                                 onChange={(data) => {
                                   console.log(data.target.value);
+                                  setFareOnVehicleType(data.target.value);
                                   setInputData({
                                     ...inputData,
                                     vehicle: data.target.value,

@@ -193,7 +193,7 @@ const AllCompanyDetails = () => {
     setDeleteVisible(false);
   };
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setShow(false);setAmount("")};
   const handleShow = (company) =>{
      setShow(true);
      setSelectedPayee(company)

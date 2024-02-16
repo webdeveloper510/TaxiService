@@ -79,11 +79,16 @@ const ViewSingleTrip = () => {
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
-              {loading ? <AppLoader /> : <div className="body flex-grow-1 px-3" style={{ paddingBottom: "20px" }}>
+              {loading ? <AppLoader /> : <div className="body flex-grow-1 px-3" style={{ 
+                paddingBottom: "20px",
+                cursor: "pointer"
+                     }}>
                 <h1 class="heading-for-every-page">
-                  <Link to="/" className="view_detail">
+                  <div onClick={()=>{
+                    navigate(-1)
+                  }} className="view_detail">
                     <img src={backtovehicle} alt="edit" /> View Trip Details
-                  </Link>
+                  </div>
                 </h1>
 
                 <div class="active-trip-outer">
