@@ -97,7 +97,7 @@ const RequestNewTrip = () => {
     pick_up_date: new Date(),
     passenger_detail: [],
     comment: "",
-    pay_option: "",
+    pay_option: "Cash",
 
   });
   const priceCalculator = () => {
@@ -354,6 +354,11 @@ const RequestNewTrip = () => {
       valid = false;
       newErrors.trip_to = "Please select valid trip to address";
     }
+    if(data.trip_from.address === data.trip_to.address || (
+      data.trip_from.lat == data.trip_to.lat && data.trip_from.log == data.trip_to.log)){
+        valid = false;
+      newErrors.trip_to = "Please select different trip to address";
+      }
     if (data.vehicle?.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
@@ -385,6 +390,7 @@ const RequestNewTrip = () => {
       data.vehicle_type = data.vehicle
       delete data.vehicle
       data.pickup_date_time = data.pick_up_date;
+      data.price =  parseFloat(price)
       delete data.pick_up_date;
       addTrip(data).then((res) => {
         console.log("response---->>>>", res);
@@ -781,8 +787,8 @@ const RequestNewTrip = () => {
                                   }
                                 }}
                               >
-                                <option value="" disabled selected>Select a Pay Option</option>
-                                <option value={"Cash"} >Cash</option>
+                                {/* <option value="" disabled selected>Select a Pay Option</option> */}
+                                <option value={"Cash"} selected >Cash</option>
                                 {/* <option value="Fixed">Cash</option> */}
                                 {/* <option value='Hotel Account'>Hotel Account</option> */}
 
