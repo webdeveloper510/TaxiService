@@ -55,7 +55,7 @@ const AllDashboardStats=()=> {
       <Link to={"/taxi/trips/pendingtrips"}>< UsersStats count={count} /></Link>
       </MDBCol>
       <MDBCol sm='6' className="totalEarnings all_same_stats">
-       < EarningStats/>
+      <Link to={"/taxi/transaction"}>< EarningStats/> </Link>
       </MDBCol>
     </MDBRow>
 

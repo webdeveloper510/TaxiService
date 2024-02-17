@@ -128,9 +128,9 @@ const SuperPayment = ({type, role}) => {
             {role=="taxi"?  <SuperSideBar/> : <SuperAdminSideBar />}
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
-              <div className="body flex-grow-1 px-3">
+              {!loader ? <div className="body flex-grow-1 px-3">
                 <h1 class="heading-for-every-page">
-                  {type == "transaction"? "Transactions" : "Payment" }
+                  {type == "transaction"? "Earnings" : "Payment" }
                   </h1>
                {type=="transaction" &&  <MDBRow>
                     <MDBCol sm='6' className="booked-trips all_same my-3">
@@ -390,7 +390,7 @@ const SuperPayment = ({type, role}) => {
                     )}
                   </div>
                 )}
-              </div>
+              </div>: <AppLoader/>}
             </div>
           </div>
         </div>

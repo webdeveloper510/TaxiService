@@ -270,8 +270,8 @@ const SuperRequestTrip = () => {
         console.log(res?.result, "customer");
 
         if (res?.code === 200) {
-          const values = res?.result
-          if (values) setCustomer(res?.result);
+          const values = res?.result.filter(item => item.status);
+          if (values) setCustomer(values);
 
 
         } else {

@@ -49,7 +49,8 @@ const SuperStats = () => {
                       <Link to={"/super-admin/trips/recent-trips?filter=Completed"}>< NewUsers data={data} /></Link>
                     </MDBCol>
                     <MDBCol sm='6' className="totalEarnings all_same">
-                      < TotalEarnings />
+                    <Link to={"/super-admin/transaction"}>< TotalEarnings /></Link>
+                      
                     </MDBCol>
                   </MDBRow>
 
