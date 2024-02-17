@@ -37,6 +37,7 @@ const EditpendingTrip = ({ role }) => {
   const pendingId = useParams();
   console.log("pending id", pendingId.id);
   const navigate = useNavigate();
+  const [price, setPrice] = useState("")
 
   const [pickupDate, setpickupDate] = useState(new Date());
   const [passengers, setPassengers] = useState([]);
@@ -251,6 +252,7 @@ const EditpendingTrip = ({ role }) => {
         console.log("pending trips id", res);
         if (res?.code == 200) {
           const value = res.result;
+          setPrice(value?.price || "0")
           setTripFrom(value.trip_from.address)
           setTrimTo(value.trip_to.address)
           setInputData({
@@ -330,6 +332,13 @@ const EditpendingTrip = ({ role }) => {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
+    if (price <=0 ) {
+      valid = false;
+      toast.warning(`Price should be greater than 0`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    }
     if (!valid) {
       setErrors(newErrors);
       return console.log(errors);
@@ -338,6 +347,7 @@ const EditpendingTrip = ({ role }) => {
     console.log("data beafore api", data);
     if (errorRes) {
       data.vehicle_type = data.vehicle;
+      data.price = price
       delete data.vehicle;
       data.pickup_date_time = data.pick_up_date;
       delete data.pick_up_date;
@@ -382,7 +392,13 @@ const EditpendingTrip = ({ role }) => {
     setInputs([...arr]);
     formValidation(inputs)
   };
+  const handlePriceChange = (event) => {
+    const inputValueRegex = /^\d*\.?\d{0,2}$/; // Regular expression to allow up to 2 decimal places
 
+    if (inputValueRegex.test(event.target.value) || event.target.value === '') {
+      setPrice(event.target.value);
+    }
+  };
   return (
     <>
       <div className="container-fluidd">
@@ -654,6 +670,19 @@ const EditpendingTrip = ({ role }) => {
  <option default></option>
  </CFormSelect> */}
                               {/* <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} /> */}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputfixedprice">
+                                Price
+                              </CFormLabel>
+                              <CFormInput id="inputfixedprice" name="fixed_price"
+                                type="number"
+                                step="0.01"
+                                value={price}
+                                onChange={(e) => handlePriceChange(e)}
+                              />
+
+
                             </CCol>
                           </CForm>
                         </CCardBody>
