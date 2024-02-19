@@ -3,6 +3,17 @@ const API_URL = process.env.REACT_APP_API_URL;
 Axios.defaults.baseURL = API_URL;
 let token = localStorage.getItem("token");
 
+// Axios.interceptors.response.use((response) => {
+//   if(response.status === 401) {
+//        alert("You are not authorized");
+//   }
+//   return response;
+// }, (error) => {
+//   if (error.response && error.response.data) {
+//       return Promise.reject(error.response.data);
+//   }
+//   return Promise.reject(error.message);
+// });
 export const userLogin = async (data) => {
   const response = await Axios.post(`/admin/login`, data, {
     headers: {

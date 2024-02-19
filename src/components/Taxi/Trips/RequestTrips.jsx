@@ -20,25 +20,32 @@ import {
 } from "@coreui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { getCompany, getDriver, getFare, getVehicle, getVehicleType } from "../../../utils/api";
+import {
+  getCompany,
+  getDriver,
+  getFare,
+  getVehicle,
+  getVehicleType,
+} from "../../../utils/api";
 import { addTrip } from "../../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ClipLoader } from "react-spinners";
 import * as geolib from "geolib";
 
 const SuperRequestTrip = () => {
+  const [refreshPrice, setRefreshPrice] = useState(false);
   const [fares, setFares] = useState(null);
   const [selectedFare, setSelectedFare] = useState(null);
 
-  const [age, setAge] = useState('Select Vehicle Type');
+  const [age, setAge] = useState("Select Vehicle Type");
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -50,7 +57,7 @@ const SuperRequestTrip = () => {
       newDate.setHours(hour);
       return newDate;
     } else {
-      throw new Error('Invalid Date object');
+      throw new Error("Invalid Date object");
     }
   }
 
@@ -61,7 +68,7 @@ const SuperRequestTrip = () => {
       newDate.setMinutes(minute);
       return newDate;
     } else {
-      throw new Error('Invalid Date object');
+      throw new Error("Invalid Date object");
     }
   }
   const navigate = useNavigate();
@@ -73,19 +80,18 @@ const SuperRequestTrip = () => {
       SetCurrentTime({
         hour: today.getHours(),
         minute: today.getMinutes() + 1,
-      })
+      });
     } else {
       SetCurrentTime({
         hour: 0,
-        minute: 0
-      })
+        minute: 0,
+      });
     }
-  }, [pickupDate])
+  }, [pickupDate]);
   const [currentTime, SetCurrentTime] = useState({
-   
-      hour: (new Date()).getHours(),
-      minute: (new Date()).getMinutes() + 1,
-  })
+    hour: new Date().getHours(),
+    minute: new Date().getMinutes() + 1,
+  });
   const [passengers, setPassengers] = useState([
     // { name: "", email: "", phone: "", address: "" },
   ]);
@@ -102,39 +108,45 @@ const SuperRequestTrip = () => {
     comment: "",
     pay_option: "Cash",
   });
-  const [price, setPrice] = useState("")
-  const [passengerError, setPassengerError] = useState([{
-    name: false,
-    phone: false,
-    email: false,
-    address: false,
-  }])
+  const [price, setPrice] = useState("");
+  const [passengerError, setPassengerError] = useState([
+    {
+      name: false,
+      phone: false,
+      email: false,
+      address: false,
+    },
+  ]);
   const priceCalculator = () => {
-
     let distance = null;
     if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
-      distance = (geolib.getDistance(
-        {
-          latitude: inputData?.trip_from?.lat,
-          longitude: inputData?.trip_from?.log
-        },
-        {
-          latitude: inputData?.trip_to?.lat,
-          longitude: inputData?.trip_to?.log,
-        }
-      ) / 1000
+      distance = (
+        geolib.getDistance(
+          {
+            latitude: inputData?.trip_from?.lat,
+            longitude: inputData?.trip_from?.log,
+          },
+          {
+            latitude: inputData?.trip_to?.lat,
+            longitude: inputData?.trip_to?.log,
+          }
+        ) / 1000
       ).toFixed(2);
     }
     if (distance && selectedFare) {
-      return distance * selectedFare?.vehicle_fare_per_km;
+      const latestPrice = distance * selectedFare?.vehicle_fare_per_km;
+      console.log("🚀 ~ priceCalculator ~ latestPrice:", latestPrice)
+      setPrice(latestPrice.toString());
+      // return latestPrice;
     } else {
-      return 0
+      setPrice("0");
+      // return 0;
     }
-  }
+  };
   const formValidation = (passengers) => {
     const data = [...passengers];
     var re = /\S+@\S+\.\S+/;
-    const phoneRegex = /^[0-9]*$/
+    const phoneRegex = /^[0-9]*$/;
     let valid = true;
     for (let index = 0; index < data.length; index++) {
       // const element = data[index];
@@ -146,7 +158,7 @@ const SuperRequestTrip = () => {
         data[index].nameCheck = "Name should not be a number";
         data[index].nameLengthCheck = "";
         valid = false;
-    } else if (data[index].name.length < 3) {
+      } else if (data[index].name.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -224,68 +236,78 @@ const SuperRequestTrip = () => {
     pay_option: null,
   });
 
-
-
   const addPassenger = () => {
     setPassengers([
       ...passengers,
       { name: "", email: "", phone: "", address: "" },
     ]);
-    setPassengerError([...passengerError, {
-      name: false,
-      phone: false,
-      email: false,
-      address: false,
-    }])
+    setPassengerError([
+      ...passengerError,
+      {
+        name: false,
+        phone: false,
+        email: false,
+        address: false,
+      },
+    ]);
   };
   const handleBlur = (index, key) => {
-    const newPassengersError = [...passengerError]
+    const newPassengersError = [...passengerError];
     newPassengersError[index][key] = true;
     setPassengerError(newPassengersError);
-    console.log(passengerError)
+    console.log(passengerError);
   };
   const removePassenger = (index) => {
-    console.log(index,"index for reamovel")
+    console.log(index, "index for reamovel");
     const updatedPassengers = passengers.filter((_, i) => i !== index);
     setPassengers(updatedPassengers);
     const errorArray = passengerError.filter((_, i) => i !== index);
-    setPassengerError(errorArray)
+    setPassengerError(errorArray);
   };
-  const [customer, setCustomer] = useState([])
+  const [customer, setCustomer] = useState([]);
   useEffect(() => {
+    let vehicleFromApi = [];
+    let fareFromApi = [];
+    const newVehicle = [];
     getVehicleType().then((res) => {
       console.log(res.result, "vehicleType");
       if (res?.code === 200) {
-        setVehicle(res.result);
+        // setVehicle(res.result);
+        vehicleFromApi = res.result;
       }
+      getFare().then((res) => {
+        console.log(res?.result, "fares");
+        if (res?.code === 200) {
+          setFares(res?.result);
+          fareFromApi = res.result;
+        }
+        
+        vehicleFromApi.forEach((item) => {
+          console.log("res2.result", fareFromApi);
+          fareFromApi.forEach((fare) => {
+            if (fare.vehicle_type == item.name) {
+              newVehicle.push(item);
+              setVehicle(newVehicle);
+            }
+          });
+        });
+      });
     });
-    getFare().then((res) => {
-      console.log(res?.result, "fares");
-      if (res?.code === 200) {
-        setFares(res?.result);
-      }
-    });
+    
+    
     getCompany({ role: "HOTEL", name: "" })
       .then((res) => {
         console.log(res?.result, "customer");
 
         if (res?.code === 200) {
-          const values = res?.result.filter(item => item.status);
+          const values = res?.result.filter((item) => item.status);
           if (values) setCustomer(values);
-
-
         } else {
-
         }
       })
-      .catch((err) => {
-
-      });
-
+      .catch((err) => {});
   }, []);
-
-  
-
+  useEffect(priceCalculator, [refreshPrice])
   const inputHandler = (e) => {
     if (e.target.value.length < 1) {
       setErrors({ ...errors, [e.target.name]: true });
@@ -315,9 +337,9 @@ const SuperRequestTrip = () => {
     // }
   };
   const [formLoader, setFormLoader] = useState(false);
- 
+
   const adddata = () => {
-    console.log("inputData.commission_value",inputData.commission_value)
+    console.log("inputData.commission_value", inputData.commission_value);
     let data = inputData;
     let valid = true;
     const passError = passengerError.map(() => {
@@ -326,12 +348,12 @@ const SuperRequestTrip = () => {
         phone: true,
         email: true,
         address: true,
-      }
+      };
     });
     setPassengerError(passError);
     let newErrors = { ...errors };
     const errorRes = formValidation(passengers);
-    console.log("data beafore vehicle", newErrors,inputData.commission_value);
+    console.log("data beafore vehicle", newErrors, inputData.commission_value);
     if (
       !data.trip_from.lat ||
       !data.trip_from.log ||
@@ -349,21 +371,24 @@ const SuperRequestTrip = () => {
       valid = false;
       newErrors.trip_to = "Please enter valid trip to address";
     }
-    if(data.trip_from.address === data.trip_to.address || (
-      data.trip_from.lat == data.trip_to.lat && data.trip_from.log == data.trip_to.log)){
-        valid = false;
+    if (
+      data.trip_from.address === data.trip_to.address ||
+      (data.trip_from.lat == data.trip_to.lat &&
+        data.trip_from.log == data.trip_to.log)
+    ) {
+      valid = false;
       newErrors.trip_to = "Please select different trip to address";
-      }
+    }
     if (data.vehicle.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
     }
-    
+
     if (data.customer.length < 1) {
       valid = false;
       newErrors.customer = "Please select valid customer";
     }
-    if (data.comment.length > 20 ) {
+    if (data.comment.length > 20) {
       valid = false;
       newErrors.comment = "Max 20 character allowed";
     }
@@ -375,18 +400,25 @@ const SuperRequestTrip = () => {
       valid = false;
       newErrors.commission_value = "Please enter commission value";
     }
-    
+
     if (parseFloat(inputData.commission_value) <= 0) {
       valid = false;
-      newErrors.commission_value = "Value should be greater than 0"
+      newErrors.commission_value = "Value should be greater than 0";
     }
-    if (inputData.commission_type == "Percentage" && parseFloat(inputData.commission_value) > 100) {
+    if (
+      inputData.commission_type == "Percentage" &&
+      parseFloat(inputData.commission_value) > 100
+    ) {
       valid = false;
-      newErrors.commission_value = "Value should be less than equal 100"
+      newErrors.commission_value = "Value should be less than equal 100";
     }
-    if (inputData.commission_type == "Fixed" && parseFloat(price)>0 && parseFloat(inputData.commission_value) > parseFloat(price)) {
+    if (
+      inputData.commission_type == "Fixed" &&
+      parseFloat(price) > 0 &&
+      parseFloat(inputData.commission_value) > parseFloat(price)
+    ) {
       valid = false;
-      newErrors.commission_value = "Value should be less than trip price"
+      newErrors.commission_value = "Value should be less than trip price";
     }
     if (!valid) {
       setErrors(newErrors);
@@ -400,42 +432,41 @@ const SuperRequestTrip = () => {
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
     if (errorRes) {
-      data.vehicle_type = data.vehicle
-      delete data.vehicle
+      data.vehicle_type = data.vehicle;
+      delete data.vehicle;
       data.pickup_date_time = data.pick_up_date;
       delete data.pick_up_date;
       data.created_by = data.customer;
       delete data.customer;
       if (price.length > 0) {
-        data.price = parseFloat(price)
+        data.price = parseFloat(price);
       }
       data.commission = {
         commission_type: data.commission_type,
-        commission_value: data.commission_value
-      }
+        commission_value: data.commission_value,
+      };
       delete data.commission_value;
-      delete data.commission_type
-      if(data?.price && data.price <= 0) {
-        data.price = priceCalculator()
-        console.log("🚀 ~ adddata ~ data.price:", data.price)
-      }
+      delete data.commission_type;
+      
 
-      addTrip(data).then((res) => {
-        setFormLoader(true)
-        console.log("response---->>>>", res);
-        if (res.data.code === 200) {
-          toast.success(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-          navigate("/taxi/trips/pendingtrips");
-        } else {
-          toast.warning(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-        }
-      }).finally(() => setFormLoader(false));
+      addTrip(data)
+        .then((res) => {
+          setFormLoader(true);
+          console.log("response---->>>>", res);
+          if (res.data.code === 200) {
+            toast.success(`${res.data.message}`, {
+              position: "top-right",
+              autoClose: 1000,
+            });
+            navigate("/taxi/trips/pendingtrips");
+          } else {
+            toast.warning(`${res.data.message}`, {
+              position: "top-right",
+              autoClose: 1000,
+            });
+          }
+        })
+        .finally(() => setFormLoader(false));
     } else {
       toast.warning("Please Enter Passenger Detail", {
         position: "top-right",
@@ -460,6 +491,7 @@ const SuperRequestTrip = () => {
       setInputData(newInputData);
       setTripFrom(selectedAddress);
       setTripFromCoordinates(latLng);
+      setRefreshPrice(!refreshPrice)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -476,6 +508,7 @@ const SuperRequestTrip = () => {
       setInputData(newInputData);
       setTrimTo(selectedAddress);
       setTripToCoordinates(latLng);
+      setRefreshPrice(!refreshPrice)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -483,7 +516,7 @@ const SuperRequestTrip = () => {
   const handlePriceChange = (event) => {
     const inputValueRegex = /^\d*\.?\d{0,2}$/; // Regular expression to allow up to 2 decimal places
 
-    if (inputValueRegex.test(event.target.value) || event.target.value === '') {
+    if (inputValueRegex.test(event.target.value) || event.target.value === "") {
       setPrice(event.target.value);
     }
   };
@@ -491,10 +524,10 @@ const SuperRequestTrip = () => {
     fares.forEach((fare) => {
       if (fare.vehicle_type == vehicle_type) {
         setSelectedFare(fare);
-        console.log("selectecd fare is", fare)
+        console.log("selectecd fare is", fare);
       }
-    })
-  }
+    });
+  };
   return (
     <>
       <div className="container-fluidd">
@@ -513,26 +546,25 @@ const SuperRequestTrip = () => {
                   <CRow>
                     <CCol xs={12}>
                       <CCard className="mb-4">
-
                         <CCardBody>
                           <CForm className="row g-3">
-
-
-
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Vehicle Type <span class="asterisk-mark">*</span>
+                                Vehicle Type
+                                <span class="asterisk-mark">*</span>
                               </CFormLabel>
 
                               <CFormSelect
                                 name="vehicle"
                                 onChange={(data) => {
-                                  console.log(data.target.value);
+                                  console.log("🚀 ~ SuperRequestTrip ~ data:", data)
+                                  
                                   setFareOnVehicleType(data.target.value);
                                   setInputData({
                                     ...inputData,
                                     vehicle: data.target.value,
                                   });
+                                  setRefreshPrice(!refreshPrice)
                                   if (data.target.value < 1) {
                                     setErrors({
                                       ...errors,
@@ -588,7 +620,9 @@ const SuperRequestTrip = () => {
                                 {customer?.map((e, i) => {
                                   return (
                                     <>
-                                      <option value={e._id}>{e.company_name}</option>
+                                      <option value={e._id}>
+                                        {e.company_name}
+                                      </option>
                                     </>
                                   );
                                 })}
@@ -605,7 +639,8 @@ const SuperRequestTrip = () => {
 
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputpickupdate">
-                                Pickup Date and Time <span class="asterisk-mark">*</span>
+                                Pickup Date and Time{" "}
+                                <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <br />
                               <DatePicker
@@ -613,13 +648,22 @@ const SuperRequestTrip = () => {
                                 className="form-control"
                                 showTimeSelect
                                 timeIntervals={5}
-                                minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
-                                maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
+                                minTime={customSetHours(
+                                  customSetMinutes(
+                                    new Date(),
+                                    currentTime.minute
+                                  ),
+                                  currentTime.hour
+                                )}
+                                maxTime={customSetHours(
+                                  customSetMinutes(new Date(), 59),
+                                  23
+                                )}
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 onChange={(data) => {
                                   console.log(data);
-                                  setpickupDate(data)
+                                  setpickupDate(data);
                                   setInputData({
                                     ...inputData,
                                     pick_up_date: data,
@@ -665,6 +709,7 @@ const SuperRequestTrip = () => {
                                 onChange={(data) => {
                                   console.log(data);
                                   setTripFrom(data);
+                                 
                                   if (data < 1) {
                                     setErrors({
                                       ...errors,
@@ -729,7 +774,7 @@ const SuperRequestTrip = () => {
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripto">
                                 Trip To <span class="asterisk-mark">*</span>
-                              </CFormLabel> 
+                              </CFormLabel>
                               {/* <CFormInput id="inputtripto" name="trip_to" onChange={inputHandler} /> */}
                               <PlacesAutocomplete
                                 value={tripTo}
@@ -795,14 +840,14 @@ const SuperRequestTrip = () => {
                               <CFormLabel htmlFor="inputfixedprice">
                                 Fixed Price € (Optional)
                               </CFormLabel>
-                              <CFormInput id="inputfixedprice" name="fixed_price"
+                              <CFormInput
+                                id="inputfixedprice"
+                                name="fixed_price"
                                 type="number"
                                 step="0.01"
                                 value={price}
                                 onChange={(e) => handlePriceChange(e)}
                               />
-
-
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
@@ -819,20 +864,20 @@ const SuperRequestTrip = () => {
                                   if (data.target.value < 1) {
                                     setErrors({
                                       ...errors,
-                                      pay_option: "Please select commission type",
+                                      pay_option:
+                                        "Please select commission type",
                                     });
                                   } else {
                                     setErrors({ ...errors, pay_option: null });
                                   }
                                 }}
                               >
-                                <option value={"Cash"} selected>Cash</option>
+                                <option value={"Cash"} selected>
+                                  Cash
+                                </option>
                                 {/* <option value="Fixed">Cash</option> */}
                                 {/* <option value='Hotel Account'>Hotel Account</option> */}
-
-
                               </CFormSelect>
-
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
@@ -846,7 +891,7 @@ const SuperRequestTrip = () => {
                                       ...errors,
                                       comment: "Max 20 characters allowed",
                                     });
-                                    return
+                                    return;
                                   } else {
                                     setErrors({ ...errors, comment: null });
                                   }
@@ -854,7 +899,6 @@ const SuperRequestTrip = () => {
                                     ...inputData,
                                     comment: e.target.value,
                                   });
-                                 
                                 }}
                               />
                               {errors.comment && (
@@ -865,58 +909,67 @@ const SuperRequestTrip = () => {
                                   {errors.comment}
                                 </span>
                               )}
-
                             </CCol>
                             <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
-                                Commission Type <span class="asterisk-mark">*</span>
+                                Commission Type{" "}
+                                <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormSelect
                                 name="commission_type"
                                 onChange={(data) => {
                                   setInputData((prev) => {
                                     const newValue = prev;
-                                    newValue.commission_type = data.target.value;
+                                    newValue.commission_type =
+                                      data.target.value;
                                     newValue.commission_value = "";
                                     return newValue;
                                   });
                                   if (data.target.value < 1) {
                                     setErrors({
                                       ...errors,
-                                      commission_type: "Please select commission type",
+                                      commission_type:
+                                        "Please select commission type",
                                     });
                                   } else {
-                                    setErrors({ ...errors, commission_type: null });
+                                    setErrors({
+                                      ...errors,
+                                      commission_type: null,
+                                    });
                                   }
                                 }}
                               >
-                                <option value={"Fixed"} selected>Fixed</option>
+                                <option value={"Fixed"} selected>
+                                  Fixed
+                                </option>
                                 {/* <option value="Fixed">Cash</option> */}
-                                <option value='Percentage'>Percentage</option>
-
-
+                                <option value="Percentage">Percentage</option>
                               </CFormSelect>
-
                             </CCol>
                             <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
-                                Commission Value <span class="asterisk-mark">*</span>
+                                Commission Value{" "}
+                                <span class="asterisk-mark">*</span>
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
                                 type="number"
                                 value={inputData.commission_value}
                                 onChange={(e) => {
-                                  if (inputData.commission_type == "Percentage") {
+                                  if (
+                                    inputData.commission_type == "Percentage"
+                                  ) {
                                     if (e.target.value > 100) {
                                       setErrors({
-                                        ...errors, commission_value: "Value should be smaller than 100"
-                                      })
+                                        ...errors,
+                                        commission_value:
+                                          "Value should be smaller than 100",
+                                      });
                                       setInputData({
                                         ...inputData,
                                         commission_value: e.target.value,
                                       });
-                                      return
+                                      return;
                                     }
                                   }
                                   setInputData({
@@ -924,8 +977,9 @@ const SuperRequestTrip = () => {
                                     commission_value: e.target.value,
                                   });
                                   setErrors({
-                                    ...errors, commission_value: null
-                                  })
+                                    ...errors,
+                                    commission_value: null,
+                                  });
                                 }}
                               />
                               {errors.commission_value && (
@@ -962,9 +1016,7 @@ const SuperRequestTrip = () => {
                           <CCardBody>
                             <CForm className="row g-3">
                               <CCol md={6}>
-                                <CFormLabel htmlFor="inputname"
-
-                                >
+                                <CFormLabel htmlFor="inputname">
                                   Name<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
@@ -975,19 +1027,19 @@ const SuperRequestTrip = () => {
                                     addOnChangeHandler(e, index);
                                   }}
                                   onBlur={() => {
-                                    handleBlur(index, "name")
+                                    handleBlur(index, "name");
                                   }}
                                 />
-                                {passengerError[index].name && <div style={{ color: "red" }}>
-                                  {passenger.nameCheck}
-                                  <br />
-                                  {passenger.nameLengthCheck}
-                                </div>}
+                                {passengerError[index].name && (
+                                  <div style={{ color: "red" }}>
+                                    {passenger.nameCheck}
+                                    <br />
+                                    {passenger.nameLengthCheck}
+                                  </div>
+                                )}
                               </CCol>
                               <CCol xs={6}>
-                                <CFormLabel htmlFor="inputphnno"
-
-                                >
+                                <CFormLabel htmlFor="inputphnno">
                                   Phone<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
@@ -999,20 +1051,21 @@ const SuperRequestTrip = () => {
                                     addOnChangeHandler(e, index);
                                   }}
                                   onBlur={() => {
-                                    handleBlur(index, "phone")
+                                    handleBlur(index, "phone");
                                   }}
                                 />
-                                {passengerError[index].phone && <div style={{ color: "red" }}>
-                                  {passenger.phoneCheck}
-                                  <br />
-                                  {passenger.phoneLengthCheck}
-                                </div>}
+                                {passengerError[index].phone && (
+                                  <div style={{ color: "red" }}>
+                                    {passenger.phoneCheck}
+                                    <br />
+                                    {passenger.phoneLengthCheck}
+                                  </div>
+                                )}
                               </CCol>
                               <CCol xs={6}>
-                                <CFormLabel htmlFor="inputtemailadd"
-
-                                >
-                                  Email Address<span class="asterisk-mark">*</span>
+                                <CFormLabel htmlFor="inputtemailadd">
+                                  Email Address
+                                  <span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
                                   id="inputemailadd"
@@ -1022,19 +1075,19 @@ const SuperRequestTrip = () => {
                                     addOnChangeHandler(e, index);
                                   }}
                                   onBlur={() => {
-                                    handleBlur(index, "email")
+                                    handleBlur(index, "email");
                                   }}
                                 />
-                                {passengerError[index].email && <div style={{ color: "red" }}>
-                                  {passenger.emailCheck}
-                                  <br />
-                                  {passenger.emailFormat}
-                                </div>}
+                                {passengerError[index].email && (
+                                  <div style={{ color: "red" }}>
+                                    {passenger.emailCheck}
+                                    <br />
+                                    {passenger.emailFormat}
+                                  </div>
+                                )}
                               </CCol>
                               <CCol xs={6}>
-                                <CFormLabel htmlFor="inputaddress"
-
-                                >
+                                <CFormLabel htmlFor="inputaddress">
                                   Address<span class="asterisk-mark">*</span>
                                 </CFormLabel>
                                 <CFormInput
@@ -1045,14 +1098,16 @@ const SuperRequestTrip = () => {
                                     addOnChangeHandler(e, index);
                                   }}
                                   onBlur={() => {
-                                    handleBlur(index, "address")
+                                    handleBlur(index, "address");
                                   }}
                                 />
-                                {passengerError[index].address && <div style={{ color: "red" }}>
-                                  {passenger.addressCheck}
-                                  <br />
-                                  {passenger.addressLengthCheck}
-                                </div>}
+                                {passengerError[index].address && (
+                                  <div style={{ color: "red" }}>
+                                    {passenger.addressCheck}
+                                    <br />
+                                    {passenger.addressLengthCheck}
+                                  </div>
+                                )}
                               </CCol>
                             </CForm>
                           </CCardBody>
@@ -1079,19 +1134,22 @@ const SuperRequestTrip = () => {
                       className="d-flex justify-content-center"
                       style={{ marginTop: "40px" }}
                     >
-                      <CButton type="submit" className="submit-btn"
+                      <CButton
+                        type="submit"
+                        className="submit-btn"
                         onClick={() => {
-                          adddata()
+                          adddata();
                         }}
                       >
-
                         {formLoader ? <ClipLoader color="#000000" /> : "Submit"}
                       </CButton>
-                      <CButton type="button"
+                      <CButton
+                        type="button"
                         onClick={() => {
                           navigate("/taxi/trips/pendingtrips");
                         }}
-                        className="cancel-btn">
+                        className="cancel-btn"
+                      >
                         Cancel
                       </CButton>
                     </div>

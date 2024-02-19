@@ -39,7 +39,7 @@ const EarningStats=()=> {
           </MDBCol>
           <MDBCol sm='8'>
             <MDBCardText>
-              <div>
+              <div style={{textDecoration:"none"}}>
                 <h5>Total Earnings</h5>
             <span>{earning.totalEarning} €</span>
             <hr></hr>

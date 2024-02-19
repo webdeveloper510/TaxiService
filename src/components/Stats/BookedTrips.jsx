@@ -27,7 +27,7 @@ const BookedTrips = (data) => {
                 <h5>Booked Trips</h5>
                 <span>{data?.bookedTrips || 0}</span>
                 <hr></hr>
-                <p>60% increase in 20 days</p>
+                {/* <p>60% increase in 20 days</p> */}
               </div>
             </MDBCardText>
           </MDBCol>

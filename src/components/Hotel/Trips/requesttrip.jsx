@@ -270,15 +270,29 @@ const RequestNewTrip = () => {
     getVehicleType().then((res) => {
       console.log(res.result, "vehicleType");
       if (res?.code === 200) {
-        setVehicle(res.result);
+        const vehicleFromApi = res.result;
+        setVehicle(vehicleFromApi);
+        getFare().then((res) => {
+          console.log(res?.result, "fares");
+          if (res?.code === 200) {
+            const fareFromApi = res?.result;
+            setFares(fareFromApi);
+
+            const newVehicle = [];
+            vehicleFromApi.forEach((item)=>{
+              console.log("res2.result",fareFromApi)
+              fareFromApi.forEach(fare => {
+                if(fare.vehicle_type == item.name){
+                  newVehicle.push(item);
+                }
+              })
+            })
+            setVehicle(newVehicle);
+          }
+        });
       }
     });
-    getFare().then((res) => {
-      console.log(res?.result, "fares");
-      if (res?.code === 200) {
-        setFares(res?.result);
-      }
-    });
+    
 
   }, []);
 

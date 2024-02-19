@@ -38,9 +38,9 @@ const TotalEarnings=()=> {
           </MDBCol>
           <MDBCol sm='8'>
             <MDBCardText>
-              <div>
-                <h5>Total Earnings</h5>
-                <span>{earning.totalEarning} €</span>
+              <div style={{textDecoration:"none"}}>
+                <h5 style={{textDecoration:"none"}}>Total Earnings</h5>
+                <span style={{textDecoration:"none"}}>{earning.totalEarning} €</span>
             <hr></hr>
             {/* <p>60% increase in 20 days</p> */}
             </div>

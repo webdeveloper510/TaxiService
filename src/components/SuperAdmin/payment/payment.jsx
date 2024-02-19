@@ -141,9 +141,9 @@ const SuperPayment = ({type, role}) => {
                     </MDBCol>
                     <MDBCol sm="8">
                       <MDBCardText>
-                        <div>
-                          <h5>Total Earning</h5>
-                          <span>{(Math.round(earning?.totalEarning* 100) / 100).toFixed(2)} €</span>
+                        <div style={{textDecoration:"none"}}>
+                          <h5 style={{textDecoration:"none"}}>Total Earning</h5>
+                          <span style={{textDecoration:"none"}}>{(Math.round(earning?.totalEarning* 100) / 100).toFixed(2)} €</span>
                           <hr></hr>
                         </div>
                       </MDBCardText>

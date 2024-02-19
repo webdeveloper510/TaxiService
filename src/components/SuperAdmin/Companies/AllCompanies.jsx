@@ -409,6 +409,13 @@ const AllCompanyDetails = () => {
   }
 
   const handlePay = async()=>{
+    if(amount <= 0 ){
+      toast.warning(`Amount should be greater than 0`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      return;
+    }
     const result = await payCommission({
       company_id: selectedPayee._id,
       amount

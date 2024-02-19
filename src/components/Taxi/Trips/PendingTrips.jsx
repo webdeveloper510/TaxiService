@@ -139,7 +139,7 @@ const SuperPendingTrip = () => {
             .then((res) => {
               console.log(res.result, "pending trip driver");
               if (res?.code === 200) {
-                setDriver(res.result);
+                setDriver(res.result.filter(driver => driver.status && driver.is_login));
               }
             })
             .catch((err) => {

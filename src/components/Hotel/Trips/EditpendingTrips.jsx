@@ -270,6 +270,8 @@ const EditpendingTrip = ({ role }) => {
             },
             pick_up_date: new Date(value.pickup_date_time),
             passenger_detail: [],
+            commission_type: value?.commission?.commission_type,
+            commission_value: value?.commission?.commission_value
           });
           handlepickupDateChange(new Date(value.pickup_date_time))
           setLoading(false)
@@ -339,6 +341,25 @@ const EditpendingTrip = ({ role }) => {
         autoClose: 1000,
       });
     }
+    if (parseFloat(inputData.commission_value) <= 0 || inputData.commission_value.length == 0) {
+      valid = false;
+      newErrors.commission_value = "Value should be greater than 0";
+    }
+    if (
+      inputData.commission_type == "Percentage" &&
+      parseFloat(inputData.commission_value) > 100
+    ) {
+      valid = false;
+      newErrors.commission_value = "Value should be less than equal 100";
+    }
+    if (
+      inputData.commission_type == "Fixed" &&
+      parseFloat(price) > 0 &&
+      parseFloat(inputData.commission_value) > parseFloat(price)
+    ) {
+      valid = false;
+      newErrors.commission_value = "Value should be less than trip price";
+    }
     if (!valid) {
       setErrors(newErrors);
       return console.log(errors);
@@ -351,6 +372,10 @@ const EditpendingTrip = ({ role }) => {
       delete data.vehicle;
       data.pickup_date_time = data.pick_up_date;
       delete data.pick_up_date;
+      data.commission = {
+        commission_type: data.commission_type,
+        commission_value: data.commission_value,
+      };
       tripsUpdate(id, data).then((res) => {
         console.log("response---->>>>", res);
         if (res.data.code === 200) {
@@ -683,6 +708,76 @@ const EditpendingTrip = ({ role }) => {
                               />
 
 
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputvehicletype">
+                                Commission Type <span class="asterisk-mark">*</span>
+                              </CFormLabel>
+                              <CFormSelect
+                                name="commission_type"
+                                onChange={(data) => {
+                                  setInputData((prev) => {
+                                    const newValue = prev;
+                                    newValue.commission_type = data.target.value;
+                                    newValue.commission_value = "";
+                                    return newValue;
+                                  });
+                                  if (data.target.value < 1) {
+                                    setErrors({
+                                      ...errors,
+                                      commission_type: "Please select commission type",
+                                    });
+                                  } else {
+                                    setErrors({ ...errors, commission_type: null });
+                                  }
+                                }}
+                              >
+                                <option value={"Fixed"} selected>Fixed</option>
+                                {/* <option value="Fixed">Cash</option> */}
+                                <option value='Percentage'>Percentage</option>
+
+
+                              </CFormSelect>
+
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Commission Value <span class="asterisk-mark">*</span>
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                type="number"
+                                value={inputData.commission_value}
+                                onChange={(e) => {
+                                  if (inputData.commission_type == "Percentage") {
+                                    if (e.target.value > 100) {
+                                      setErrors({
+                                        ...errors, commission_value: "Value should be smaller than 100"
+                                      })
+                                      setInputData({
+                                        ...inputData,
+                                        commission_value: e.target.value,
+                                      });
+                                      return
+                                    }
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    commission_value: e.target.value,
+                                  });
+                                  setErrors({
+                                    ...errors, commission_value: null
+                                  })
+                                }}
+                              />
+                              {errors.commission_value && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.commission_value}
+                                </span>
+                              )}
                             </CCol>
                           </CForm>
                         </CCardBody>
