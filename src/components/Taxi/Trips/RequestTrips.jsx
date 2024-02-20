@@ -134,7 +134,7 @@ const SuperRequestTrip = () => {
       ).toFixed(2);
     }
     if (distance && selectedFare) {
-      const latestPrice = distance * selectedFare?.vehicle_fare_per_km;
+      const latestPrice = (distance * selectedFare?.vehicle_fare_per_km).toFixed(2);
       console.log("🚀 ~ priceCalculator ~ latestPrice:", latestPrice)
       setPrice(latestPrice.toString());
       // return latestPrice;

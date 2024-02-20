@@ -167,14 +167,27 @@ const BookingStaffForm = () => {
       console.log(res.result, "vehicleType");
       if (res?.code === 200) {
         setVehicle(res.result);
+        const vehicleFromApi = res.result;
+        getFareById(booking.id).then((res) => {
+          console.log(res?.result, "fares");
+          if (res?.code === 200) {
+            const fareFromApi = res?.result;
+            setFares(res?.result);
+            const newVehicle = [];
+            vehicleFromApi.forEach((item)=>{
+              console.log("res2.result",fareFromApi)
+              fareFromApi.forEach(fare => {
+                if(fare.vehicle_type == item.name){
+                  newVehicle.push(item);
+                }
+              })
+            })
+            setVehicle(newVehicle);
+          }
+        });
       }
     });
-    getFareById(booking.id).then((res) => {
-      console.log(res?.result, "fares");
-      if (res?.code === 200) {
-        setFares(res?.result);
-      }
-    });
+    
   }, []);
 
   const formValidation = (inputs) => {
@@ -422,7 +435,8 @@ const BookingStaffForm = () => {
                                   <CFormSelect
                                     name="vehicle"
                                     onChange={(data) => {
-                                      console.log(data.target.value);
+                                      console.log("🚀 ~ BookingStaffForm ~ data:", data)
+                                      
                                       setFareOnVehicleType(data.target.value);
                                       setInputData({
                                         ...inputData,
@@ -464,8 +478,9 @@ const BookingStaffForm = () => {
                               </CFormLabel>
                               <br />
                               <DatePicker
-                                selected={pickupDate}
+                                selected={new Date(pickupDate)}
                                 className="form-control"
+                                
                                 showTimeSelect
                                 timeIntervals={5}
                                 // minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
@@ -474,7 +489,8 @@ const BookingStaffForm = () => {
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 onChange={(data) => {
-                                  console.log(data);
+                                  console.log("🚀 ~ BookingStaffForm ~ data:", data)
+                                  
                                   setpickupDate(data)
                                   setInputData({
                                     ...inputData,

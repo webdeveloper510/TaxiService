@@ -51,7 +51,8 @@ const SuperPayment = ({type, role}) => {
     "totalEarning": 0,
     "totalEarningLastSevenDays": 0,
     "totalEarningFromMonth": 0,
-    "totalEarningFromYear": 0
+    "totalEarningFromYear": 0,
+    "totalBalance": 0,
   })
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
@@ -203,6 +204,46 @@ const SuperPayment = ({type, role}) => {
                           (Math.round(earning?.totalEarningFromYear* 100) / 100).toFixed(2)} €</span>
                           <hr></hr>
                        
+                        </div>
+                      </MDBCardText>
+                    </MDBCol>
+                  </MDBCardBody>
+                </MDBCard>
+                </MDBCol>
+                </MDBRow>
+}              
+{type!="transaction" && role=="taxi" &&  <MDBRow>
+                    <MDBCol sm='6' className="booked-trips all_same my-3">
+                <MDBCard>
+                  <MDBCardBody className="d-flex booked-trips-card ">
+                    <MDBCol sm="4" className="booked-trip-icon">
+                      <MDBCardImage position="top" alt="..." src={trips} />
+                    </MDBCol>
+                    <MDBCol sm="8">
+                      <MDBCardText>
+                        <div style={{textDecoration:"none"}}>
+                          <h5 style={{textDecoration:"none"}}>Total Balance</h5>
+                          <span style={{textDecoration:"none"}}>{(Math.round(earning?.totalBalance* 100) / 100).toFixed(2)} €</span>
+                          <hr></hr>
+                        </div>
+                      </MDBCardText>
+                    </MDBCol>
+                  </MDBCardBody>
+                </MDBCard>
+                </MDBCol>
+                <MDBCol sm='6' className="booked-trips all_same my-3">
+                <MDBCard>
+                  <MDBCardBody className="d-flex total-earinings">
+                    <MDBCol sm="4" className="booked-trip-icon">
+                      <MDBCardImage position="top" alt="..." src={trips} />
+                    </MDBCol>
+                    <MDBCol sm="8">
+                      <MDBCardText>
+                        <div>
+                          <h5>Total Money received</h5>
+                          <span>{
+                          (Math.round(trans.reduce((acc,curr)=>{return acc+curr?.amount},0)* 100) / 100).toFixed(2)} €</span>
+                          <hr></hr>
                         </div>
                       </MDBCardText>
                     </MDBCol>

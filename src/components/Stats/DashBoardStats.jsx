@@ -57,8 +57,8 @@ const DashboardStats = () => {
                         < BookedTrips data={data} />
                       </Link>
                     </MDBCol>
-                    <MDBCol sm='6' className="pendingtrips all_same">
-                      <Link to={"/trips/pendingtrips"}>
+                    <MDBCol  sm='6' className="pendingtrips all_same">
+                      <Link style={{textDecoration:"none"}} to={"/trips/pendingtrips"}>
                         <PendingTrips data={data} />
                       </Link>
                     </MDBCol>

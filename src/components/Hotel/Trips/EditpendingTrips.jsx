@@ -20,18 +20,23 @@ import {
   CFormSelect,
   CRow,
 } from "@coreui/react";
+import * as geolib from "geolib";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import backtovehicle from "../../../assets/images/left-arrow.png";
-import { getTripById, getVehicleType, tripsUpdate } from "../../../utils/api";
+import { getFare, getTripById, getVehicleType, tripsUpdate } from "../../../utils/api";
 import AppLoader from "../../AppLoader";
 import { toast } from "react-toastify";
 import { SuperBar } from "../../SuperAdmin/Sidebar/AppSideNavBar";
 import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 
 const EditpendingTrip = ({ role }) => {
+  const [fares, setFares] = useState(null);
+
+  const [selectedFare, setSelectedFare] = useState(null);
+  const [refreshPrice, setRefreshPrice] = useState(false);
   const [selectedFrom, setSelectedFrom] = useState(true);
   const [selectedTo, setSelectedTo] = useState(true);
   const pendingId = useParams();
@@ -86,6 +91,31 @@ const EditpendingTrip = ({ role }) => {
   const [tripTo, setTrimTo] = useState("");
   const [tripToCoordinates, setTripToCoordinates] = useState(null);
   const [loading, setLoading] = useState(false);
+  const priceCalculator = () => {
+
+    let distance = null;
+    if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
+      distance = (geolib.getDistance(
+        {
+          latitude: inputData?.trip_from?.lat,
+          longitude: inputData?.trip_from?.log
+        },
+        {
+          latitude: inputData?.trip_to?.lat,
+          longitude: inputData?.trip_to?.log,
+        }
+      ) / 1000
+      ).toFixed(2);
+    }
+    console.log("distance is from priceCalculator", distance);
+    console.log("🚀 ~ priceCalculator ~ selectedFare:", selectedFare)
+    if (distance) {
+      setPrice((distance * selectedFare?.vehicle_fare_per_km).toFixed(2))
+    } else {
+      setPrice("0")
+    }
+  }
+  useEffect(priceCalculator, [refreshPrice])
   const handleSelectTripFrom = async (selectedAddress) => {
     try {
       const results = await geocodeByAddress(selectedAddress);
@@ -99,6 +129,7 @@ const EditpendingTrip = ({ role }) => {
       setTripFrom(selectedAddress);
       setTripFromCoordinates(latLng);
       setSelectedFrom(true);
+      setRefreshPrice(!refreshPrice)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -116,6 +147,7 @@ const EditpendingTrip = ({ role }) => {
       setTrimTo(selectedAddress);
       setTripToCoordinates(latLng);
       setSelectedTo(true)
+      setRefreshPrice(!refreshPrice)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -159,7 +191,26 @@ const EditpendingTrip = ({ role }) => {
     getVehicleType().then((res) => {
       console.log(res.result, "vehicleType");
       if (res?.code === 200) {
-        setVehicle(res.result);
+        const vehicleFromApi = res.result;
+        // setVehicle(res.result);
+        getFare().then((res) => {
+          console.log(res?.result, "fares");
+          if (res?.code === 200) {
+            const fareFromApi = res?.result;
+            setFares(fareFromApi);
+
+            const newVehicle = [];
+            vehicleFromApi.forEach((item)=>{
+              console.log("res2.result",fareFromApi)
+              fareFromApi.forEach(fare => {
+                if(fare.vehicle_type == item.name){
+                  newVehicle.push(item);
+                }
+              })
+            })
+            setVehicle(newVehicle);
+          }
+        });
       }
     });
   }, []);
@@ -424,6 +475,16 @@ const EditpendingTrip = ({ role }) => {
       setPrice(event.target.value);
     }
   };
+  const setFareOnVehicleType = (vehicle_type) => {
+    // console.log("🚀 ~ setFareOnVehicleType ~ vehicle_type:", vehicle_type)
+
+    fares.forEach((fare) => {
+      if (fare.vehicle_type == vehicle_type) {
+        setSelectedFare(fare);
+        console.log("selectecd fare is", fare)
+      }
+    })
+  }
   return (
     <>
       <div className="container-fluidd">
@@ -475,10 +536,13 @@ const EditpendingTrip = ({ role }) => {
                                 value={inputData.vehicle}
                                 onChange={(data) => {
                                   console.log(data.target.value);
+                                  setFareOnVehicleType(data.target.value);
                                   setInputData({
                                     ...inputData,
                                     vehicle: data.target.value,
                                   });
+                                  setRefreshPrice(!refreshPrice)
+
                                   if (data.target.value < 1) {
                                     setErrors({
                                       ...errors,

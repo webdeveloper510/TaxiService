@@ -49,6 +49,7 @@ import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
+import EmptyData from "../../EmptyData";
 // import toggel from "react-toggle/style.css"
 const tableExample = [
   {
@@ -555,7 +556,8 @@ const CompanyDetails = () => {
                   {loading ? (
                     <AppLoader />
                   ) : (
-                    <CTable align="middle" className="mb-0" hover responsive>
+                  <>
+                    {data.length == 0 ? <EmptyData/> : <CTable align="middle" className="mb-0" hover responsive>
                       <CTableHead>
                         <CTableRow>
                           {/* <CTableHeaderCell className="text-center">
@@ -659,7 +661,8 @@ const CompanyDetails = () => {
                           </CTableRow>
                         ))}
                       </CTableBody>
-                    </CTable>
+                    </CTable>}
+                    </>
                   )}
 
                   {data?.length > 0 ? (
