@@ -36,7 +36,7 @@ const BookingStaffForm = () => {
   const navigate = useNavigate();
   const [refreshPrice, setRefreshPrice] = useState(false);
   const [price, setPrice] = useState(0)
-  const [pickupDate, setpickupDate] = useState(new Date());
+  const [pickupDate, setpickupDate] = useState(Date.now());
   const [passengers, setPassengers] = useState([]);
   const [vehicle, setVehicle] = useState();
   const [currentTime, SetCurrentTime] = useState({
@@ -484,17 +484,17 @@ const BookingStaffForm = () => {
                                 showTimeSelect
                                 timeIntervals={5}
                                 // minTime={customSetHours(customSetMinutes(new Date(), currentTime.minute), currentTime.hour)}
-                                minTime={pickupDate.setHours(0,0,0,0) == (new Date()).setHours(0,0,0,0) ? new Date() : (new Date()).setHours(0,0,0,0)}
+                                minTime={(new Date(pickupDate)).setHours(0,0,0,0) == (new Date()).setHours(0,0,0,0) ? new Date() : (new Date()).setHours(0,0,0,0)}
                                 maxTime={customSetHours(customSetMinutes(new Date(), 59), 23)}
                                 dateFormat="MM/dd/yyyy hh:mm a"
                                 minDate={new Date()}
                                 onChange={(data) => {
                                   console.log("🚀 ~ BookingStaffForm ~ data:", data)
                                   
-                                  setpickupDate(data)
+                                  setpickupDate(new Date(data))
                                   setInputData({
                                     ...inputData,
-                                    pick_up_date: data,
+                                    pick_up_date: new Date(data),
                                   });
                                   if (data < 1 || !isValidDate(data)) {
                                     setErrors({
