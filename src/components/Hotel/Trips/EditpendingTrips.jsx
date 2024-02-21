@@ -330,8 +330,8 @@ const EditpendingTrip = ({ role }) => {
                 console.log(res?.result, "fares");
                 if (res?.code === 200) {
                   const fareFromApi = res?.result;
-                  setFares(fareFromApi);
-                  setFareOnVehicleType(inputData.vehicle)
+                  
+                  
                   const newVehicle = [];
                   vehicleFromApi.forEach((item)=>{
                     console.log("res2.result",fareFromApi)
@@ -342,6 +342,7 @@ const EditpendingTrip = ({ role }) => {
                     })
                   })
                   setVehicle(newVehicle);
+                  setFares(fareFromApi,()=>{setFareOnVehicleType(inputData.vehicle)});
                   setLoading(false)
                 }
               });
