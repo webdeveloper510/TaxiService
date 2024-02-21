@@ -30,7 +30,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import userContext from "../../../utils/context";
-import { isValidDate } from "../../../utils/helpingFunction";
+import { distanceBetweenTwoPoints, isValidDate } from "../../../utils/helpingFunction";
 
 
 const RequestNewTrip = () => {
@@ -100,22 +100,30 @@ const RequestNewTrip = () => {
     pay_option: "Cash",
 
   });
-  const priceCalculator = () => {
+  const priceCalculator = async() => {
 
     let distance = null;
-    if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
-      distance = (geolib.getDistance(
-        {
-          latitude: inputData?.trip_from?.lat,
-          longitude: inputData?.trip_from?.log
-        },
-        {
-          latitude: inputData?.trip_to?.lat,
-          longitude: inputData?.trip_to?.log,
-        }
-      ) / 1000
-      ).toFixed(2);
-    }
+    // if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
+    //   distance = (geolib.getDistance(
+    //     {
+    //       latitude: inputData?.trip_from?.lat,
+    //       longitude: inputData?.trip_from?.log
+    //     },
+    //     {
+    //       latitude: inputData?.trip_to?.lat,
+    //       longitude: inputData?.trip_to?.log,
+    //     }
+    //   ) / 1000
+    //   ).toFixed(2);
+    // }
+    distance = await distanceBetweenTwoPoints({
+      lat: inputData?.trip_from?.lat,
+      lng: inputData?.trip_from?.log,
+    },
+    {
+      lat: inputData?.trip_to?.lat,
+      lng: inputData?.trip_to?.log,
+    })
     console.log("distance is from priceCalculator", distance);
     if (distance && selectedFare) {
       setPrice((distance * selectedFare?.vehicle_fare_per_km).toFixed(2))
@@ -124,7 +132,7 @@ const RequestNewTrip = () => {
     }
   }
 
-  useEffect(priceCalculator, [refreshPrice])
+  useEffect(()=>{priceCalculator()}, [refreshPrice])
   const [passengerError, setPassengerError] = useState([])
   const [formValid, setFormValid] = useState(true);
   useEffect(() => {

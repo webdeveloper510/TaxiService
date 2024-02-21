@@ -39,6 +39,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ClipLoader } from "react-spinners";
 import * as geolib from "geolib";
+import { distanceBetweenTwoPoints } from "../../../utils/helpingFunction";
 
 const SuperRequestTrip = () => {
   const [refreshPrice, setRefreshPrice] = useState(false);
@@ -117,30 +118,39 @@ const SuperRequestTrip = () => {
       address: false,
     },
   ]);
-  const priceCalculator = () => {
+  const priceCalculator = async() => {
     let distance = null;
     if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
-      distance = (
-        geolib.getDistance(
-          {
-            latitude: inputData?.trip_from?.lat,
-            longitude: inputData?.trip_from?.log,
-          },
-          {
-            latitude: inputData?.trip_to?.lat,
-            longitude: inputData?.trip_to?.log,
-          }
-        ) / 1000
-      ).toFixed(2);
+      // distance = (
+      //   geolib.getDistance(
+      //     {
+      //       latitude: inputData?.trip_from?.lat,
+      //       longitude: inputData?.trip_from?.log,
+      //     },
+      //     {
+      //       latitude: inputData?.trip_to?.lat,
+      //       longitude: inputData?.trip_to?.log,
+      //     }
+      //   ) / 1000
+      // ).toFixed(2);
+      distance = await distanceBetweenTwoPoints({
+        lat: inputData?.trip_from?.lat,
+        lng: inputData?.trip_from?.log,
+      },
+      {
+        lat: inputData?.trip_to?.lat,
+        lng: inputData?.trip_to?.log,
+      })
+      console.log("🚀 ~ priceCalculator ~ distance:", distance)
     }
     if (distance && selectedFare) {
       const latestPrice = (distance * selectedFare?.vehicle_fare_per_km).toFixed(2);
       console.log("🚀 ~ priceCalculator ~ latestPrice:", latestPrice)
       setPrice(latestPrice.toString());
-      // return latestPrice;
+      
     } else {
       setPrice("0");
-      // return 0;
+      
     }
   };
   const formValidation = (passengers) => {
@@ -307,7 +317,7 @@ const SuperRequestTrip = () => {
       })
       .catch((err) => {});
   }, []);
-  useEffect(priceCalculator, [refreshPrice])
+  useEffect(()=>{priceCalculator()}, [refreshPrice])
   const inputHandler = (e) => {
     if (e.target.value.length < 1) {
       setErrors({ ...errors, [e.target.name]: true });
