@@ -105,11 +105,11 @@ const ViewSingleTrip = () => {
 
                           <form noValidate className="row g-3 view_single_trip_form">
 
-                            <CCol md={5} className="single-trip-map">
+                            {/* <CCol md={5} className="single-trip-map">
 
                               <SuperMap />
-                              {/* <img className="vehicle_img" src={} alt="Car photo"/> */}
-                            </CCol>
+                              
+                            </CCol> */}
 
                             <CCol className="vehicle_info_right" md={7}>
                               <div class="trip-details">
