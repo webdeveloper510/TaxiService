@@ -276,6 +276,9 @@ const BookingStaffForm = () => {
         console.log("company id", res);
         if (res?.code == 200) {
           setHotel(res?.result)
+          if(!res.result.status){
+            navigate("/")
+          }
         }
         else {
           setExpired(true)
