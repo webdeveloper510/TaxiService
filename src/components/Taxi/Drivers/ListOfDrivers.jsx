@@ -172,6 +172,9 @@ const [selectedId, setSelectedId ] = useState(null);
                             <CTableHeaderCell className="text-center">
                               Status
                             </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              Document
+                            </CTableHeaderCell>
                             {role=="super" && <CTableHeaderCell className="text-center">
                               Action
                             </CTableHeaderCell>}
@@ -233,6 +236,23 @@ const [selectedId, setSelectedId ] = useState(null);
                                         margin: '0 auto',
                                       }}                                    
                                     >{status}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div 
+                                    
+                                      style={{
+                                        background:"linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)",
+                                        padding: "8px",
+                                        borderRadius: "10px",
+                                        fontWeight: "normal",
+                                        color: '#fff',
+                                        width: '100px',
+                                        margin: '0 auto',
+                                      }}                                    
+                                    >
+                                      <a target="_blank"
+                                    href={item?.driver_documents || ""} style={{textDecoration:"none",color:"inherit",fontWeight: "normal"}}>View</a>
+                                      </div>
                                   </CTableDataCell>
                                   {role == "super" && <CTableDataCell className="d-flex action-icons driver-icons">
                                     <div style={{
