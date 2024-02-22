@@ -325,6 +325,9 @@ const SuperPendingTrip = () => {
                               Comment
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
+                              Commission
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
                               Time
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
@@ -364,6 +367,11 @@ const SuperPendingTrip = () => {
                                 <CTableDataCell>
                                   <div>
                                     {item?.comment}
+                                  </div>
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                  <div>
+                                    {item?.commission?.commission_value}{item?.commission?.commission_type != "Fixed" ? "%":""}
                                   </div>
                                 </CTableDataCell>
                                 <CTableDataCell>

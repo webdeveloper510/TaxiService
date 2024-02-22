@@ -32,22 +32,23 @@ import { toast } from "react-toastify";
 import { SuperBar } from "../../SuperAdmin/Sidebar/AppSideNavBar";
 import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 import { distanceBetweenTwoPoints } from "../../../utils/helpingFunction";
+import { flushSync } from "react-dom";
 
 const EditpendingTrip = ({ role }) => {
-  const [fares, setFares] = useState(null);
+  const [fares, setFares] = useState([]);
 
   const [selectedFare, setSelectedFare] = useState(null);
   const [refreshPrice, setRefreshPrice] = useState(false);
   const [selectedFrom, setSelectedFrom] = useState(true);
   const [selectedTo, setSelectedTo] = useState(true);
   const pendingId = useParams();
-  console.log("pending id", pendingId.id);
+  
   const navigate = useNavigate();
   const [price, setPrice] = useState("")
 
   const [pickupDate, setpickupDate] = useState(new Date());
   const [passengers, setPassengers] = useState([]);
-  const [vehicle, setVehicle] = useState();
+  const [vehicle, setVehicle] = useState([]);
   const [currentTime, SetCurrentTime] = useState({
     hour: {
       hour: new Date().getHours(),
@@ -85,7 +86,6 @@ const EditpendingTrip = ({ role }) => {
     pay_option: null,
   });
   const [inputs, setInputs] = useState([
-    { name: "", email: "", phone: "", address: "" },
   ]);
   const [tripFrom, setTripFrom] = useState("");
   const [tripFromCoordinates, setTripFromCoordinates] = useState(null);
@@ -115,7 +115,7 @@ const EditpendingTrip = ({ role }) => {
     {
       lat: inputData?.trip_to?.lat,
       lng: inputData?.trip_to?.log,
-    })
+    }) || distance
     console.log("distance is from priceCalculator", distance);
     console.log("🚀 ~ priceCalculator ~ selectedFare:", selectedFare)
     if (distance) {
@@ -125,6 +125,10 @@ const EditpendingTrip = ({ role }) => {
     }
   }
   useEffect(()=>{priceCalculator()}, [refreshPrice])
+  useEffect(()=>{
+    console.log("🚀 ~ EditpendingTrip ~ selectedFare:", selectedFare)
+  }, [selectedFare])
+  
   const handleSelectTripFrom = async (selectedAddress) => {
     try {
       const results = await geocodeByAddress(selectedAddress);
@@ -283,90 +287,90 @@ const EditpendingTrip = ({ role }) => {
 
   const geteditid = () => {
     setLoading(true)
-    getTripById(pendingId.id)
-      .then((res) => {
-        console.log("pending trips id", res);
-        if (res?.code == 200) {
-          const value = res.result;
-          setPrice(value?.price || "0")
-          setTripFrom(value.trip_from.address)
-          setTrimTo(value.trip_to.address)
-          setInputData({
-            id: value._id,
-            vehicle: value.vehicle_type,
-            trip_from: {
-              address: value.trip_from.address,
-              lat: value.trip_from.lat,
-              log: value.trip_from.log,
-            },
-            trip_to: {
-              address: value.trip_to.address,
-              lat: value.trip_to.lat,
-              log: value.trip_to.log,
-            },
-            pick_up_date: new Date(value.pickup_date_time),
-            passenger_detail: [],
-            commission_type: value?.commission?.commission_type,
-            commission_value: value?.commission?.commission_value
-          });
-          handlepickupDateChange(new Date(value.pickup_date_time))
-          
-          let passenger_detail = value.passenger_detail;
-          let add_on = [];
-          for (let value of passenger_detail)
-            add_on.push({
-              name: value.name,
-              email: value.email,
-              phone: value.phone,
-              address: value.address,
-            });
-          setInputs(add_on);
-          getVehicleType().then((res) => {
-            console.log(res.result, "vehicleType");
-            if (res?.code === 200) {
-              const vehicleFromApi = res.result;
-              // setVehicle(res.result);
-              getFare().then((res) => {
-                console.log(res?.result, "fares");
-                if (res?.code === 200) {
-                  const fareFromApi = res?.result;
-                  
-                  
-                  const newVehicle = [];
-                  vehicleFromApi.forEach((item)=>{
-                    console.log("res2.result",fareFromApi)
-                    fareFromApi.forEach(fare => {
-                      if(fare.vehicle_type == item.name){
-                        newVehicle.push(item);
-                      }
-                    })
-                  })
-                  setVehicle(newVehicle);
-                  setFares(fareFromApi,()=>{setFareOnVehicleType(inputData.vehicle)});
-                  setLoading(false)
+    getVehicleType().then((res) => {
+      console.log(res.result, "vehicleType");
+      if (res?.code === 200) {
+        const vehicleFromApi = res.result;
+        // setVehicle(res.result);
+        getFare().then((res) => {
+          console.log(res?.result, "fares");
+          if (res?.code === 200) {
+            const fareFromApi = res?.result;
+            
+            
+            const newVehicle = [];
+            vehicleFromApi.forEach((item)=>{
+              console.log("res2.result",fareFromApi)
+              fareFromApi.forEach(fare => {
+                if(fare.vehicle_type == item.name){
+                  newVehicle.push(item);
                 }
-              }).catch((error) => {
-                console.log(error);
-                setLoading(false)
-              }).finally(() => {
-                setLoading(false)
-              });
-            }
-          }).catch((error) => {
-            console.log(error);
-            setLoading(false)
-          }).finally(() => {
-            setLoading(false)
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+              })
+            })
+            setVehicle(newVehicle);
+            setFares(fareFromApi);
+            getTripById(pendingId.id)
+            .then((res) => {
+              console.log("pending trips id", res);
+              if (res?.code == 200) {
+                const value = res.result;
+                setPrice(value?.price || "0")
+                setTripFrom(value.trip_from.address)
+                setTrimTo(value.trip_to.address)
+                setInputData({
+                  id: value._id,
+                  vehicle: value.vehicle_type,
+                  trip_from: {
+                    address: value.trip_from.address,
+                    lat: value.trip_from.lat,
+                    log: value.trip_from.log,
+                  },
+                  trip_to: {
+                    address: value.trip_to.address,
+                    lat: value.trip_to.lat,
+                    log: value.trip_to.log,
+                  },
+                  pick_up_date: new Date(value.pickup_date_time),
+                  passenger_detail: [],
+                  commission_type: value?.commission?.commission_type,
+                  commission_value: value?.commission?.commission_value
+                });
+                handlepickupDateChange(new Date(value.pickup_date_time))
+                
+                let passenger_detail = value.passenger_detail;
+                let add_on = [];
+                for (let value of passenger_detail){
+                  add_on.push({
+                    name: value.name,
+                    email: value.email,
+                    phone: value.phone,
+                    address: value.address,
+                  });
+                }
+                setInputs(add_on);
+                
+                
+              }
+            })
+           
+          }
+        })
+      }
+    }).finally(() => {
+      setTimeout(() => {
+        // setFareOnVehicleType(inputData.vehicle_type)
         setLoading(false)
-      }).finally(() => {
-        setLoading(false)
-      });
+      },1500);
+    });
+   
   };
+
+  useEffect(()=>{
+    if(inputData.vehicle !==""){
+      setFareOnVehicleType(inputData.vehicle)
+    }
+  },[inputData.vehicle])
+
   const handleBlur = (index, key) => {
     const newPassengersError = [...passengerError]
     newPassengersError[index][key] = true;
@@ -400,11 +404,15 @@ const EditpendingTrip = ({ role }) => {
       newErrors.trip_to = "Please enter valid trip to address";
     }
     if (
-      data.trip_from.address === data.trip_to.address ||
+      data.trip_from.address == data.trip_to.address ||
       (data.trip_from.lat == data.trip_to.lat &&
         data.trip_from.log == data.trip_to.log)
     ) {
       valid = false;
+      toast.warning(`Please select different trip to address`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
       newErrors.trip_to = "Please select different trip to address";
     }
     if (data.vehicle?.length < 1) {
@@ -422,21 +430,21 @@ const EditpendingTrip = ({ role }) => {
         autoClose: 1000,
       });
     }
-    if (parseFloat(inputData.commission_value) <= 0 || inputData.commission_value.length == 0) {
+    if (role != "hotel" && (parseFloat(inputData.commission_value) <= 0 || inputData.commission_value.length == 0)) {
       valid = false;
       newErrors.commission_value = "Value should be greater than 0";
     }
-    if (
-      inputData.commission_type == "Percentage" &&
-      parseFloat(inputData.commission_value) > 100
+    if (role != "hotel" &&
+      (inputData.commission_type == "Percentage" &&
+      parseFloat(inputData.commission_value) > 100)
     ) {
       valid = false;
       newErrors.commission_value = "Value should be less than equal 100";
     }
-    if (
-      inputData.commission_type == "Fixed" &&
+    if ( role != "hotel" && 
+      (inputData.commission_type == "Fixed" &&
       parseFloat(price) > 0 &&
-      parseFloat(inputData.commission_value) > parseFloat(price)
+      parseFloat(inputData.commission_value) > parseFloat(price))
     ) {
       valid = false;
       newErrors.commission_value = "Value should be less than trip price";
@@ -485,7 +493,6 @@ const EditpendingTrip = ({ role }) => {
     geteditid();
   }, []);
 
-  console.log("passengerssssssssssss", inputData);
   const back = () => {
     navigate(`${role == "hotel" ? "" : "/taxi"}/trips/pendingtrips`);
   }
@@ -506,9 +513,10 @@ const EditpendingTrip = ({ role }) => {
     }
   };
   const setFareOnVehicleType = (vehicle_type) => {
-    // console.log("🚀 ~ setFareOnVehicleType ~ vehicle_type:", vehicle_type)
+    console.log("🚀 ~ setFareOnVehicleType ~ setFareOnVehicleType:", "Run from function setFareOnVehicleType",fares,vehicle_type);
 
     fares.forEach((fare) => {
+      console.log("🚀 ~ fares.forEach ~ fares:", fares)
       if (fare.vehicle_type == vehicle_type) {
         setSelectedFare(fare);
         console.log("selectecd fare is", fare)
@@ -566,7 +574,7 @@ const EditpendingTrip = ({ role }) => {
                                 value={inputData.vehicle}
                                 onChange={(data) => {
                                   console.log(data.target.value);
-                                  setFareOnVehicleType(data.target.value);
+                                  // setFareOnVehicleType(data.target.value);
                                   setInputData({
                                     ...inputData,
                                     vehicle: data.target.value,
@@ -586,9 +594,9 @@ const EditpendingTrip = ({ role }) => {
                                 {/* <option selected>{inputData.vehicle}</option> */}
                                 {vehicle?.map((e, i) => {
                                   return (
-                                    <>
-                                      <option value={e.name}>{e.name}</option>
-                                    </>
+                                   
+                                      <option key={i} value={e.name}>{e.name}</option>
+                                    
                                   );
                                 })}
                               </CFormSelect>
@@ -687,9 +695,9 @@ const EditpendingTrip = ({ role }) => {
                                         {loading && <div>Loading...</div>}
                                         {suggestions
                                           .slice(0, 3)
-                                          .map((suggestion) => (
+                                          .map((suggestion,i) => (
                                             <div
-                                              key={suggestion.id}
+                                              key={i}
                                               {...getSuggestionItemProps(
                                                 suggestion
                                               )}
@@ -757,9 +765,9 @@ const EditpendingTrip = ({ role }) => {
                                         {loading && <div>Loading...</div>}
                                         {suggestions
                                           .slice(0, 3)
-                                          .map((suggestion) => (
+                                          .map((suggestion, i) => (
                                             <div
-                                              key={suggestion.id}
+                                              key={i}
                                               {...getSuggestionItemProps(
                                                 suggestion
                                               )}
@@ -797,13 +805,14 @@ const EditpendingTrip = ({ role }) => {
                               <CFormInput id="inputfixedprice" name="fixed_price"
                                 type="number"
                                 step="0.01"
+                                disabled={role == "hotel"}
                                 value={price}
                                 onChange={(e) => handlePriceChange(e)}
                               />
 
 
                             </CCol>
-                            <CCol md={6}>
+                            {role != "hotel" && <CCol md={6}>
                               <CFormLabel htmlFor="inputvehicletype">
                                 Commission Type <span class="asterisk-mark">*</span>
                               </CFormLabel>
@@ -833,8 +842,8 @@ const EditpendingTrip = ({ role }) => {
 
                               </CFormSelect>
 
-                            </CCol>
-                            <CCol xs={6}>
+                            </CCol>}
+                           {role != "hotel" &&  <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
                                 Commission Value <span class="asterisk-mark">*</span>
                               </CFormLabel>
@@ -872,7 +881,7 @@ const EditpendingTrip = ({ role }) => {
                                   {errors.commission_value}
                                 </span>
                               )}
-                            </CCol>
+                            </CCol>}
                           </CForm>
                         </CCardBody>
                       </CCard>
