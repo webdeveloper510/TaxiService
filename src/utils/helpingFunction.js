@@ -25,7 +25,7 @@ export async function distanceBetweenTwoPoints(origin, destination){
     (response, status) => {
       
       if (status === 'OK' && response.rows.length > 0) {
-        const resultDistance = response.rows[0].elements[0].distance.value;
+        const resultDistance = response?.rows[0]?.elements[0]?.distance?.value;
         console.log("🚀 ~ distanceBetweenTwoPoints ~ resultDistance:", resultDistance)
         totalDistance = resultDistance/1000
       }

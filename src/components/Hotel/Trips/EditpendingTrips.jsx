@@ -399,6 +399,14 @@ const EditpendingTrip = ({ role }) => {
       valid = false;
       newErrors.trip_to = "Please enter valid trip to address";
     }
+    if (
+      data.trip_from.address === data.trip_to.address ||
+      (data.trip_from.lat == data.trip_to.lat &&
+        data.trip_from.log == data.trip_to.log)
+    ) {
+      valid = false;
+      newErrors.trip_to = "Please select different trip to address";
+    }
     if (data.vehicle?.length < 1) {
       valid = false;
       newErrors.vehicle = "Please select valid vehicle";
