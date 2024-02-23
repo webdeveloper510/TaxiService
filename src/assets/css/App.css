@@ -816,3 +816,7 @@ img.map-img {
 .MuiDataGrid-columnHeaderTitle.css-t89xny-MuiDataGrid-columnHeaderTitle {
   font-weight: 800;
 }
+
+.group-btns{
+  display: flex;
+}

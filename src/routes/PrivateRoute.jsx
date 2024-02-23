@@ -64,6 +64,7 @@ import CancelPaymentPage from '../components/Driver/Cancel';
 import SuccessPaymentPage from '../components/Driver/Success';
 import ViewTripLocation from '../components/Taxi/Trips/ViewTrip';
 import SuperPayment from '../components/SuperAdmin/payment/payment';
+import Register from '../components/Login/register';
 
 
 const PrivateRoute = () => {
@@ -86,6 +87,7 @@ const PrivateRoute = () => {
 
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+            <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
             <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
             <Route path="/new-password" element={<GuestRoute><NewPassword /></GuestRoute>} />
             <Route path="/enter-otp" element={<GuestRoute><EnterOtp /></GuestRoute>} />
