@@ -101,16 +101,7 @@ function Register() {
               position: "top-right",
               autoClose: 1000,
             });
-            localStorage.setItem("token", response.data.jwtToken);
-            if (response.data.result.role === "COMPANY") {
-              navigate("/taxi/dashboard");
-            } else if (response.data.result.role === "SUPER_ADMIN") {
-              navigate("/super-admin/dashboard");
-            } else if (response.data.result.role === "DRIVER") {
-              return navigate("/past-trips");
-            } else {
-              navigate("/dashboard");
-            }
+              navigate("/");
           } else {
             toast.warning(response?.data?.message, {
               position: "top-right",

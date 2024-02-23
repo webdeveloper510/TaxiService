@@ -26,6 +26,8 @@ function SecureDriverRoute({ children }) {
           return navigate("/dashboard")
   
         }
+        if(!user?.isDocUploaded) return navigate("/complete-documentation");
+        if(!user?.isVerified) return navigate("/driver-verification");
   
       }
     }

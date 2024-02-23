@@ -16,37 +16,41 @@ import { addDriver, editDriver } from "../../utils/api";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { countryList } from "../../utils/saticData";
+import userContext from "../../utils/context";
 function Address() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const [doc, setDoc] = useState("");
+  const { user, setUser, appLoaded } = useContext(userContext);
   const initialValues = {
-    FirstName: "",
-    LastName: "",
+    // FirstName: "",
+    // LastName: "",
     Address1: "",
     Address2: "",
     Country: "Netherlands",
     City: "",
     Zip: "",
-    Email: "",
-    MobileNo: "",
-    Gender: "",
+    // Email: "",
+    // MobileNo: "",
+    // Gender: "",
     file: "",
     doc,
   };
-
+  useEffect(()=>{
+    if(user?.isDocUploaded) navigate("/past-trips")
+  },[])
   const validationSchema = Yup.object().shape({
-    FirstName: Yup.string()
-      .trim()
-      .max(20, "First Name must be at most 20 characters")
-      .matches(/^[^\d]+$/, "First Name is not valid")
-      .required("First Name is required"),
-    LastName: Yup.string()
-      .trim()
-      .max(20, "Last Name must be at most 20 characters")
-      .matches(/^[^\d]+$/, "Last Name is not valid")
-      .required("Last Name  is required"),
+    // FirstName: Yup.string()
+    //   .trim()
+    //   .max(20, "First Name must be at most 20 characters")
+    //   .matches(/^[^\d]+$/, "First Name is not valid")
+    //   .required("First Name is required"),
+    // LastName: Yup.string()
+    //   .trim()
+    //   .max(20, "Last Name must be at most 20 characters")
+    //   .matches(/^[^\d]+$/, "Last Name is not valid")
+    //   .required("Last Name  is required"),
     Address1: Yup.string()
       .trim()
       .max(20, "Address must be at most 20 characters")
@@ -58,12 +62,12 @@ function Address() {
     Country: Yup.string().trim().required("Country is required"),
     City: Yup.string().trim().required("City is required"),
     Zip: Yup.string().trim().required("Zip is required"),
-    Email: Yup.string().trim().email().required("Email  is required"),
-    MobileNo: Yup.string()
-      .trim()
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .required("Mobile Number is required"),
-    Gender: Yup.string().trim().required("Gender is required"),
+    // Email: Yup.string().trim().email().required("Email  is required"),
+    // MobileNo: Yup.string()
+    //   .trim()
+    //   .matches(/^[0-9]+$/, "Must be only digits")
+    //   .required("Mobile Number is required"),
+    // Gender: Yup.string().trim().required("Gender is required"),
     file: Yup.mixed().required("Driver's Photo is required"),
     doc: Yup.mixed().required("Driver's Document is required"),
   });
@@ -104,20 +108,21 @@ function Address() {
 
       const formData = new FormData();
 
-      formData.append("first_name", values.FirstName);
-      formData.append("last_name", values.LastName);
+      // formData.append("first_name", values.FirstName);
+      // formData.append("last_name", values.LastName);
       formData.append("address_1", values.Address1);
       formData.append("address_2", values.Address2);
       formData.append("city", values.City);
       formData.append("country", values.Country);
       formData.append("zip_code", values.Zip);
-      formData.append("email", values.Email);
-      formData.append("phone", values.MobileNo);
-      formData.append("gender", values.Gender);
+      // formData.append("email", values.Email);
+      // formData.append("phone", values.MobileNo);
+      // formData.append("gender", values.Gender);
       formData.append("driver_image", values.file);
       formData.append("driver_documents", values.doc);
+      formData.append("isDocUploaded","true")
       setSubmitLoader(true);
-      editDriver(formData)
+      editDriver(formData, user._id)
         .then((res) => {
           console.log("response from add driver --->>>>", res);
           if (res?.data?.code === 200) {
@@ -125,7 +130,7 @@ function Address() {
               position: "top-right",
               autoClose: 1000,
             });
-            navigate("/super-admin/driver/listofdrivers");
+            navigate("/past-trips");
           } else {
             toast.warning(`${res?.data?.message || "There is some problem"}`, {
               position: "top-right",
