@@ -65,6 +65,7 @@ import SuccessPaymentPage from '../components/Driver/Success';
 import ViewTripLocation from '../components/Taxi/Trips/ViewTrip';
 import SuperPayment from '../components/SuperAdmin/payment/payment';
 import Register from '../components/Login/register';
+import Alldetail from '../components/Login/alldetail';
 
 
 const PrivateRoute = () => {
@@ -77,6 +78,7 @@ const PrivateRoute = () => {
             <Route path="/edit-driver-data" element={<SecureDriverRoute><EditdriverData /></SecureDriverRoute>} />
             <Route path="/change-password" element={<SecureDriverRoute><Changepass /></SecureDriverRoute>} />
             <Route path="/past-trips" element={<SecureDriverRoute><PastTrips type="past" /></SecureDriverRoute>} />
+            <Route path="/complete-documention" element={<GuestRoute><Alldetail /></GuestRoute>} />
             <Route path="/trips-payment" element={<SecureDriverRoute><PastTrips type="payment" /></SecureDriverRoute>} />
             
             <Route path="/trips/view-trip-details/:id" element={<ViewSingleTrip />} />

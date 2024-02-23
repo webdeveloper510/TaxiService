@@ -820,3 +820,15 @@ img.map-img {
 .group-btns{
   display: flex;
 }
+
+.go433304200:before {
+  content: "✓";
+  color: white;
+  background-color: #fdc101 !important;
+}
+
+.go3842760039:before {
+    content: "•";
+    color: white;
+    background-color: #fdc101 !important;
+}
