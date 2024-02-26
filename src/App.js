@@ -25,8 +25,8 @@ function App() {
     console.log('token: from local storage' + token);
     if(!token){
       setLoading(false)
-      // return navigate("/")
-      return
+      return navigate("/")
+      // return
        
     }
     console.log("path founder running on react app =====>>>>>,", user)

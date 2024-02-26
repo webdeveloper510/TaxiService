@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   CTable,
   CTableBody,
@@ -15,23 +15,31 @@ import {
   CCard,
   CCardBody
 } from '@coreui/react'
+import filterImg from '../../../assets/images/filter-icon.png'
+
 import AppHeader from "../../TopBar/AppHeader";
 import editiconimg from "../../../assets/images/editicon.png";
 import deleteiconimg from "../../../assets/images/deleteicon.png";
 import PulseLoader from "react-spinners/PulseLoader";
 import deletepopup from '../../../assets/images/deletepopup.png'
-import { deleteCompany, deleteDriver, getDriver } from "../../../utils/api";
+import { deleteCompany, deleteDriver, favoriteDriverApi, getDriver, verifyDriverApi } from "../../../utils/api";
 import SuperSideBar from "../SiderNavBar/Sidebar";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import EmptyData from "../../EmptyData";
 import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 import AppLoader from "../../AppLoader";
+import Dropdown from 'react-bootstrap/Dropdown';
+import userContext from "../../../utils/context";
 
-const ListOfDrivers = ({role}) => {
+const ListOfDrivers = ({ role }) => {
+  const [selectedType, setSelectedType] = useState("Verified Drivers");
+  const { user, setUser, appLoaded } = useContext(userContext);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const [verify, setVerify] = useState(false);
   const navigate = useNavigate();
-const [selectedId, setSelectedId ] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [allDriver, setAllDriver] = useState([])
   const [driver, setDriver] = useState([]);
   const [loader, setLoader] = useState(false);
   // const image = process.env.REACT_APP_IMAGE_URL1
@@ -97,7 +105,10 @@ const [selectedId, setSelectedId ] = useState(null);
     getDriver(role).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
-        setDriver(res.result);
+        setAllDriver(res.result);
+        setDriver(res.result.filter(driver => {
+          return driver.isVerified && driver.isDocUploaded
+        }));
       }
       setLoader(false);
     });
@@ -124,31 +135,140 @@ const [selectedId, setSelectedId ] = useState(null);
     } catch (error) {
       console.log(error);
       setDeleteVisible(false);
-    } 
+    }
   };
+  const favoriteDriverHandler = async (id) => {
+    try {
+      console.log(id, "driver deleted id");
+      const favoriteData = await favoriteDriverApi(id);
 
+      if (favoriteData.code === 200) {
+        toast.success(`${favoriteData.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+        let fv = [...user?.favoriteDrivers];
+        console.log("🚀 ~ favoriteDriverHandler ~ fv:before", fv)
+        if(!fv?.includes(id)){
+          fv = [...fv, id];
+        }else{
+          fv = fv.filter(item=>item != id);
+        }
+        console.log("🚀 ~ favoriteDriverHandler ~ fv after:", fv)
+        const newUser = {...user};
+        newUser.favoriteDrivers = fv;
+        setUser(newUser);
+      } else {
+        toast.warning(`${favoriteData.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+      setDeleteVisible(false);
+    } catch (error) {
+      console.log(error);
+      setDeleteVisible(false);
+    }
+  };
+  
+  const verifyDriverHandler = async (id) => {
+    try {
+      const verifyData = await verifyDriverApi(id);
+      if (verifyData.code === 200) {
+        toast.success(`${verifyData.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+        const newData = driver.filter((d) => d._id != id);
+        setDriver(newData);
+        const newAllData = [...allDriver]
+        newAllData.forEach((d) => {
+          if (d._id != id) {
+            d.isVerified = true;
+          }
+
+        });
+        console.log("🚀 ~ newAllData ~ newAllData:", newAllData)
+        setAllDriver(newAllData);
+      } else {
+        toast.warning(`${verifyData.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+      setVerify(false)
+    } catch (error) {
+      console.log(error);
+      toast.warning(`${error.message}`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      setVerify(false)
+    }
+  };
+  const handleSelect = (eventKey) => {
+    setSelectedType(eventKey); // Update the selected value when an item is selected
+  };
+  useEffect(() => {
+    if (selectedType == "Verified Drivers") {
+      setDriver(allDriver.filter(driver => {
+        return driver.isVerified && driver.isDocUploaded
+      }));
+    } else if (selectedType == "Unverified Drivers") {
+      setDriver(allDriver.filter(driver => {
+        return !driver.isVerified && driver.isDocUploaded
+      }));
+    } else {
+      setDriver(allDriver.filter(driver => {
+        return !driver.isVerified && !driver.isDocUploaded
+      }));
+    }
+  }, [selectedType]);
   return (
     <>
       <div className="container-fluidd">
         <div className="col-md-12">
           <div>
-           {
-            role == 'super'?<SuperAdminSideBar/> : <SuperSideBar />
+            {
+              role == 'super' ? <SuperAdminSideBar /> : <SuperSideBar />
 
-           } 
+            }
 
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
               <AppHeader />
               <div className="body flex-grow-1 px-3">
-                <h1 class="heading-for-every-page">Driver's List</h1>
+                <div className="d-flex justify-content-between">
+                  <h1 class="heading-for-every-page">Driver's List</h1>
+                  {
+                    role == 'super' && <Dropdown onSelect={handleSelect}>
+                      <Dropdown.Toggle id="dropdown-basic">
+                        <img src={filterImg} />
+                        {selectedType}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        {["Verified Drivers", "Unverified Drivers", "Register Drivers"].map((item, i) => {
+                          return <Dropdown.Item key={i} eventKey={item}
+                            onClick={() => {
+                              setSelectedType(item)
+                            }}
+                          >{item}</Dropdown.Item>
+                        })}
+                      </Dropdown.Menu>
+                    </Dropdown>}
+                </div>
+                <div className="filter-right">
+
+
+                </div>
                 <div class="active-trip-outer">
                   {loader ? (
                     <>
-                     <AppLoader/>
+                      <AppLoader />
                     </>
                   ) : (
                     <>
-                     { data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
+                      {data?.length > 0 ? <CTable align="middle" className="mb-0" hover responsive>
                         <CTableHead>
                           <CTableRow>
                             <CTableHeaderCell className="text-center">
@@ -169,15 +289,19 @@ const [selectedId, setSelectedId ] = useState(null);
                             {/* <CTableHeaderCell className="text-center">
                               Trips
                             </CTableHeaderCell> */}
-                            <CTableHeaderCell className="text-center">
+                            {selectedType == "Verified Drivers" && <CTableHeaderCell className="text-center">
                               Status
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            </CTableHeaderCell>}
+                            {(selectedType == "Verified Drivers" || selectedType == "Unverified Drivers") && <CTableHeaderCell className="text-center">
                               Document
-                            </CTableHeaderCell>
-                            {role=="super" && <CTableHeaderCell className="text-center">
+                            </CTableHeaderCell>}
+                            {role == "super" && <CTableHeaderCell className="text-center">
                               Action
                             </CTableHeaderCell>}
+                            {role != "super" && <CTableHeaderCell className="text-center">
+                              Favorite
+                            </CTableHeaderCell>}
+
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -190,7 +314,7 @@ const [selectedId, setSelectedId ] = useState(null);
                                   status = "In a ride"
                                 }
                               }
-                              console.log(item._id, " ", status)
+                            
                               let background = "linear-gradient(90deg, #FF5370 0%, #FF869A 100%)"
                               if (status == "Online") background = "linear-gradient(90deg, #05D41F 0%, rgba(38, 228, 15, 0.9) 100%)"
                               else if (status == "In a ride") background = "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)"
@@ -224,8 +348,8 @@ const [selectedId, setSelectedId ] = useState(null);
                                   {/* <CTableDataCell>
                                   <div>Delhi to Chd</div>
                                 </CTableDataCell> */}
-                                  <CTableDataCell>
-                                    <div 
+                                  {selectedType == "Verified Drivers" && <CTableDataCell>
+                                    <div
                                       style={{
                                         background,
                                         padding: "8px",
@@ -234,26 +358,26 @@ const [selectedId, setSelectedId ] = useState(null);
                                         color: '#fff',
                                         width: '100px',
                                         margin: '0 auto',
-                                      }}                                    
+                                      }}
                                     >{status}</div>
-                                  </CTableDataCell>
-                                  <CTableDataCell>
-                                    <div 
-                                    
+                                  </CTableDataCell>}
+                                  {(selectedType == "Verified Drivers" || selectedType == "Unverified Drivers") && <CTableDataCell>
+                                    <div
+
                                       style={{
-                                        background:"linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)",
+                                        background: "linear-gradient(90deg, #FF6A00 0%, #FFA625 100%)",
                                         padding: "8px",
                                         borderRadius: "10px",
                                         fontWeight: "normal",
                                         color: '#fff',
                                         width: '100px',
                                         margin: '0 auto',
-                                      }}                                    
+                                      }}
                                     >
                                       <a target="_blank"
-                                    href={item?.driver_documents || ""} style={{textDecoration:"none",color:"inherit",fontWeight: "normal"}}>View</a>
-                                      </div>
-                                  </CTableDataCell>
+                                        href={item?.driver_documents || ""} style={{ textDecoration: "none", color: "inherit", fontWeight: "normal" }}>View</a>
+                                    </div>
+                                  </CTableDataCell>}
                                   {role == "super" && <CTableDataCell className="d-flex action-icons driver-icons">
                                     <div style={{
                                       cursor: "pointer"
@@ -266,20 +390,42 @@ const [selectedId, setSelectedId ] = useState(null);
                                       }
                                     ><img src={editiconimg} /></div>
 
-                
+
                                     <CButton id="delete_driver_btn" onClick={() => {
                                       setDeleteVisible(!deleteVisible)
-                                    setSelectedId(item._id)
-                                  }
-                                    
+                                      setSelectedId(item._id)
+                                    }
+
                                     }><img src={deleteiconimg} /></CButton>
+                                    <button className="mx-2" onClick={() => {
+                                      setVerify(true)
+                                      setSelectedId(item._id)
+                                    }}><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-patch-check-fill verify-icon" viewBox="0 0 16 16">
+                                        <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708" />
+                                      </svg></button>
+                                  </CTableDataCell>}
+                                  {role != "super" && <CTableDataCell className="d-flex action-icons driver-icons">
+
+                                    <CButton id="delete_driver_btn" onClick={() => {
+                                      favoriteDriverHandler(item._id)
+                                    }
+
+                                    }>
+                                      {!user.favoriteDrivers.includes(item._id) ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-star" viewBox="0 0 16 16">
+  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+</svg> :
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                      </svg>}
+                                    </CButton>
+
                                   </CTableDataCell>}
                                 </CTableRow>
                               )
                             }) : ""}
                         </CTableBody>
 
-                      </CTable>: <EmptyData/>}
+                      </CTable> : <EmptyData />}
                       {
                         data?.length > 0 ?
                           <div
@@ -340,11 +486,11 @@ const [selectedId, setSelectedId ] = useState(null);
 
 
                               <CButton className="delete_popup"
-onClick={()=>{
-  deleteDriverHandler(selectedId)
-}}
+                                onClick={() => {
+                                  deleteDriverHandler(selectedId)
+                                }}
                               >Delete</CButton>
-                              <CButton onClick={()=>setDeleteVisible(false)} className="cancel_popup">
+                              <CButton onClick={() => setDeleteVisible(false)} className="cancel_popup">
                                 Cancel</CButton>
                             </div>
                           </CCard>
@@ -356,6 +502,44 @@ onClick={()=>{
 
                   </CModal>
 
+
+                  <CModal alignment="center" visible={verify} onClose={() => setVerify(false)}>
+                    <CModalBody>
+                      <CRow>
+
+                        <CCol xs={12}>
+                          <CCard className="mb-4 delete_vehicle_popup">
+                            <CCardBody>
+                              {/* <img src={deletepopup} alt="danger" /> */}
+                              <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-patch-check-fill verify-icon2" viewBox="0 0 16 16">
+                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708" />
+                              </svg>
+                              <h2>Are you Sure</h2>
+                              <p>You want to verify this Driver ?</p>
+
+                            </CCardBody>
+                            <div className="delete_vehicle_popup_outer">
+
+
+                              <CButton className="delete_popup"
+                                onClick={() => {
+
+                                  verifyDriverHandler(selectedId)
+                                }}
+                              >verify</CButton>
+                              <CButton onClick={() => {
+                                setVerify(false)
+                              }} className="cancel_popup" >
+                                Cancel</CButton>
+                            </div>
+                          </CCard>
+                        </CCol>
+                      </CRow>
+                    </CModalBody>
+
+
+
+                  </CModal>
 
 
                   {/* enddeletedriverpopup */}

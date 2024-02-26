@@ -309,6 +309,34 @@ export const deleteDriver = async(id) => {
     console.log("DELETE_DRIVER", error);
   });
 };
+export const verifyDriverApi = async(id) => {
+  return await Axios.post(`admin/updateVerification/${id}`,{},{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "verify driver");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("VERIFY_DRIVER", error);
+  });
+};
+export const favoriteDriverApi = async(id) => {
+  return await Axios.post(`admin/favoriteDriver/${id}`,{},{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "favorite driver");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("FAVORITE_DRIVER", error);
+  });
+};
 export const deleteFare = async(id) => {
   return await Axios.delete(`admin/delete_fare/${id}`,{
     headers: {

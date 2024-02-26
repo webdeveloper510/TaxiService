@@ -1,14 +1,16 @@
 
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router';
+import userContext from '../../utils/context';
 
 export default function DriverVerification() {
-   // const { user, setUser, appLoaded } = useContext(userContext);
-//     // const navigate = useNavigate()
-//     // useEffect(() =>{
-//     //     if(user.isVerified = true){
-//     //         navigate("/past-trip");
-//     //     }
-//     // },[])
+   const { user, setUser, appLoaded } = useContext(userContext);
+    const navigate = useNavigate()
+    useEffect(() =>{
+        if(user?.isVerified == true){
+            navigate("/past-trip");
+        }
+    },[])
 
   return (
     <div style={{
