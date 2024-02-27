@@ -388,16 +388,14 @@ const SuperPendingTrip = () => {
                                     alignItems: "center",
                                   }} className="pending-icons-outer">
                                     <div>
+                                      <Link to={`/taxi/allocate-driver/${item._id}`}>
                                       <CButton id="allocate_driver"
                                         className="allocate_accept_driver"
-                                        onClick={() => {
-                                          setVisible(!visible);
-                                          setSelectedId(item?._id);
-                                          setSelectedVehicleType(item?.vehicle_type)
-                                        }}
+                                        
                                       >
                                         <img src={accepticonimg} alt="images" />
                                       </CButton>
+                                      </Link>
                                     </div>
                                     <div
                                       onClick={() => { setSelectedId(item._id); setDelvisible(true) }}

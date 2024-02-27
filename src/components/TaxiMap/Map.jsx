@@ -47,6 +47,16 @@ const SuperMap=()=> {
   // if (loadError) {
   //   return <div>Error loading maps</div>;
   // }
+  const handleMapClick = (event) => {
+    console.log("🚀 ~ handleMapClick ~ event:", event)
+    // Check if the click event occurred on a marker
+    if (!event.latLng) {
+      setSelectedMarker(null);
+    }
+    if(event.placeId){
+      event.stop()
+    }
+  };
       return (
        <>
        <div className="container-fluidd">
@@ -61,6 +71,7 @@ const SuperMap=()=> {
           mapContainerStyle={mapContainerStyle}
           center={center}
           zoom={10}
+          onClick={handleMapClick}
 
         > 
         {
@@ -69,6 +80,7 @@ const SuperMap=()=> {
             position={{ lat: driver.lat, lng: driver.lng }}
             icon={customMarker}
             onClick={() => handleMarkerClick(driver)}
+            label={driver.first_name + ' ' + driver.last_name}
           />
           ))
         }

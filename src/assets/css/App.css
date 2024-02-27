@@ -832,3 +832,9 @@ img.map-img {
     color: white;
     background-color: #fdc101 !important;
 }
+.document-heading{
+  color: #212529;
+    white-space: nowrap;
+}
+
+

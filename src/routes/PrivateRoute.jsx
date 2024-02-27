@@ -67,6 +67,7 @@ import SuperPayment from '../components/SuperAdmin/payment/payment';
 import Register from '../components/Login/register';
 import Alldetail from '../components/Login/alldetail';
 import DriverVerification from '../components/Login/Verify';
+import AllocateDriver from '../components/Taxi/Trips/allocateDriver';
 
 const PrivateRoute = () => {
 
@@ -120,6 +121,7 @@ const PrivateRoute = () => {
             <Route path="/taxi/trips/bookedtrips" element={<SecureTaxiRoleRoute><SuperBookedTrips /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/activetrips" element={<SecureTaxiRoleRoute><SuperActiveTrip /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/pendingtrips" element={<SecureTaxiRoleRoute><SuperPendingTrip /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/allocate-driver/:id" element={<SecureTaxiRoleRoute><AllocateDriver /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/booking/edit" element={<SecureTaxiRoleRoute><EditBookingForm /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/editpendingtrips/:id" element={<SecureTaxiRoleRoute><EditpendingTrip role={"taxi"} /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/cancelledtrips" element={<SecureTaxiRoleRoute><SuperCancelledTrip /></SecureTaxiRoleRoute>} />
