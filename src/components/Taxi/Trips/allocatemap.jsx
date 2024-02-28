@@ -8,11 +8,14 @@ import { useNavigate, useParams } from "react-router";
 import AppLoader from "../../AppLoader";
 import carLogo from "../../../assets/images/about-car.png";
 import { toast } from "react-toastify";
+import Switch from "react-switch";
 const Allocatemap=()=> {
     const [trip, setTrip] = useState(null);
     const [directions, setDirections] = useState(null);
     const [loading, setLoading] = useState(false);
     const { user, setUser, appLoaded } = useContext(userContext);
+    const [favorite, setFavorite] = useState(false);
+
     const navigate = useNavigate();
     const id = useParams().id;
     useEffect(() => {
@@ -61,7 +64,7 @@ const Allocatemap=()=> {
       strokeWeight: 5,
     },
   };
- 
+  const [allDriver, setAllDriver] = useState([]);
   const center = useMemo(() => ({ lat: 52.370216, lng: 4.895168 }), []);
   const [driverLocation, setDriverLocation] = useState([]);
   function locationUpdater(){
@@ -74,15 +77,26 @@ const Allocatemap=()=> {
         return item;
         })
         // console.log("active driver data =======>>>>>>>>",activeDriversData)
-        setDriverLocation(activeDriversData);
+        setAllDriver(activeDriversData);
+        if(favorite){
+          const favDriver = activeDriversData.filter(driver=>user.favoriteDrivers.includes(driver._id))
+          setDriverLocation(favDriver);
+        }else setDriverLocation(activeDriversData);
       }
     }) 
   }
   useEffect(()=>{
-    const timeoutKey = setInterval(()=>{locationUpdater()},5000);
-    return ()=>{
-      clearInterval(timeoutKey);
-    }
+    if(favorite){
+      const favDriver = allDriver.filter(driver=>user.favoriteDrivers.includes(driver._id))
+      setDriverLocation(favDriver);
+    }else setDriverLocation(allDriver);
+  },[favorite])
+  useEffect(()=>{
+    locationUpdater()
+    // const timeoutKey = setInterval(()=>{locationUpdater()},5000);
+    // return ()=>{
+    //   clearInterval(timeoutKey);
+    // }
   },[])
   const mapContainerStyle = {
     width: '80vw',
@@ -111,14 +125,13 @@ const Allocatemap=()=> {
   const handleMarkerClick = (marker) => {
     if(marker.is_available)    setSelectedMarker(marker);
   };
-  
+
   const handleALLocate = () => {
     const data = {
         driver_name: selectedMarker._id,
         // vehicle: selectVehicle,
         status: "Accepted",
-      };
-      
+      };      
       allocateDriver(data, id).then((res) => {
         if (res?.data?.code === 200) {
           toast.success(`${res.data.message}`, {
@@ -134,8 +147,10 @@ const Allocatemap=()=> {
         }
       });
   };
+  function handleStatusChange() {
+    setFavorite(!favorite);
+  }
   const handleMapClick = (event) => {
-    console.log("🚀 ~ handleMapClick ~ event:", event)
     // Check if the click event occurred on a marker
     if (!event.latLng) {
       setSelectedMarker(null);
@@ -149,18 +164,26 @@ const Allocatemap=()=> {
   }
       return (
        <>
-       <div className="container-fluidd">
-      
+       <div className="container-fluidd">      
         <div className="col-md-12">
         <div className="row">
-            <div className="col-md-12">
-             
-          
+            <div className="col-md-12 text-end">
+              <p>Show Favorite Driver Only</p>
+            <Switch
+                                checkedIcon={false}
+                                uncheckedIcon={false}
+                                height={18}
+                                width={35}
+                                onChange={() => {
+                                  handleStatusChange();
+                                }}
+                                checked={favorite}
+                              />
         <GoogleMap
-          // mapContainerClassName="map-container"
+          
           mapContainerStyle={mapContainerStyle}
           center={center}
-        //   center={{ lat: directionsServiceOptions?.origin?.lat || 0, lng: directionsServiceOptions?.origin?.lng || 0 }}
+       
           zoom={10}
           onClick={handleMapClick}
 
@@ -171,18 +194,14 @@ const Allocatemap=()=> {
             position={{ lat: driver.lat, lng: driver.lng }}
             icon={generateIcon(driver)}
             onClick={() => handleMarkerClick(driver)}
-            // label={driver.first_name + ' ' + driver.last_name}
+          
             label={{
                 text: driver.first_name + ' ' + driver.last_name,
                 color: 'black',  fontSize: '18px', fontWeight: 'bold',background: '#3498db !important', borderRadius: '5px !important',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) !important',padding: '8px !important', }}
           />
           ))
         }
-          {/* <Marker
-            position={{ lat: 18.52043, lng: 74.856743 }}
-            icon={customMarker}
-            onClick={() => handleMarkerClick({ lat: 18.52043, lng: 74.856743 })}
-          /> */}
+         
           {selectedMarker && (
                     <InfoWindow 
                       position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
@@ -206,48 +225,11 @@ const Allocatemap=()=> {
 
 
 {trip && (
-                                //   <DirectionsService
-                                //     options={directionsServiceOptions}
-                                //     callback={(result, status) => {
-                                //       if (status === "OK") {
-                                //         return (
-                                //           <DirectionsRenderer
-                                //             options={{
-                                //               ...directionsRendererOptions,
-                                //               directions: result,
-                                //             }}
-                                //           />
-                                //         );
-                                //       } else {
-                                //         console.log(
-                                //           `Error rendering directions ${status}`
-                                //         );
-                                //       }
-                                //     }}
-                                //   />
-                                //   <Polyline
-                                //     path={[
-                                //       {
-                                //         lat: trip?.trip_from?.lat,
-                                //         lng: trip?.trip_from?.log,
-                                //       },
-                                //       {
-                                //         lat: trip?.trip_to?.lat,
-                                //         lng: trip?.trip_to?.log,
-                                //       },
-                                //     ]}
-                                //     strokeColor="#0000FF"
-                                //     strokeOpacity={0.8}
-                                //     strokeWeight={2}
-                                //   />
                                 <DirectionsService
                                   options={directionsServiceOptions}
                                   callback={(result, status) => {
                                     if (status === "OK") {
-                                      console.log(
-                                        "data from direction",
-                                        result
-                                      );
+                                      
                                       if (!directions) setDirections(result);
                                     } else {
                                       console.error(
@@ -264,9 +246,7 @@ const Allocatemap=()=> {
                                 />
                               )}
         </GoogleMap>
-
-            </div>
-          
+            </div>          
        </div>
        </div>
        </div>

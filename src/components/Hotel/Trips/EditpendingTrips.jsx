@@ -73,6 +73,11 @@ const EditpendingTrip = ({ role }) => {
     commission_value: "",
     comment: "",
     pay_option: "Cash",
+    passengerCount: "1",
+    name: "",
+      phone: "",
+      email: "",
+      address: "",
   });
   const [errors, setErrors] = useState({
     vehicle: null,
@@ -84,6 +89,11 @@ const EditpendingTrip = ({ role }) => {
     commission_value: null,
     comment: null,
     pay_option: null,
+    passengerCount: null,
+    name: null,
+      phone: null,
+      email: null,
+      address: null,
   });
   const [inputs, setInputs] = useState([
   ]);
@@ -882,6 +892,163 @@ const EditpendingTrip = ({ role }) => {
                                 </span>
                               )}
                             </CCol>}
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Passenger Count
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                onChange={(e) => {
+                                  if (e.target.value.length > 20) {
+                                    setErrors({
+                                      ...errors,
+                                      passengerCount: "Max 20 characters allowed",
+                                    });
+                                    return;
+                                  } else {
+                                    setErrors({ ...errors, passengerCount: null });
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    passengerCount: e.target.value,
+                                  });
+                                }}
+                              />
+                              {errors.passengerCount && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.passengerCount}
+                                </span>
+                              )}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Passenger Name
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                onChange={(e) => {
+                                  if (e.target.value.length > 20) {
+                                    setErrors({
+                                      ...errors,
+                                      name: "Max 20 characters allowed",
+                                    });
+                                    return;
+                                  } else {
+                                    setErrors({ ...errors, name: null });
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    name: e.target.value,
+                                  });
+                                }}
+                              />
+                              {errors.name && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.name}
+                                </span>
+                              )}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Passenger Address
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                onChange={(e) => {
+                                  if (e.target.value.length > 50) {
+                                    setErrors({
+                                      ...errors,
+                                      address: "Max 50 characters allowed",
+                                    });
+                                    return;
+                                  } else {
+                                    setErrors({ ...errors, address: null });
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    address: e.target.value,
+                                  });
+                                }}
+                              />
+                              {errors.address && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.address}
+                                </span>
+                              )}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Passenger Email
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                type="email"
+                                onChange={(e) => {
+                                  if (e.target.value.length > 20) {
+                                    setErrors({
+                                      ...errors,
+                                      email: "Max 20 characters allowed",
+                                    });
+                                    return;
+                                  } else {
+                                    setErrors({ ...errors, email: null });
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    email: e.target.value,
+                                  });
+                                }}
+                              />
+                              {errors.email && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.email}
+                                </span>
+                              )}
+                            </CCol>
+                            <CCol xs={6}>
+                              <CFormLabel htmlFor="inputtripfrom">
+                                Passenger Phone
+                              </CFormLabel>
+                              <CFormInput
+                                id="inputtripfrom"
+                                type="number"
+                                onChange={(e) => {
+                                  if (e.target.value.length > 16) {
+                                    setErrors({
+                                      ...errors,
+                                      phone: "Max 16 characters allowed",
+                                    });
+                                    return;
+                                  } else {
+                                    setErrors({ ...errors, phone: null });
+                                  }
+                                  setInputData({
+                                    ...inputData,
+                                    phone: e.target.value,
+                                  });
+                                }}
+                              />
+                              {errors.phone && (
+                                <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  {errors.phone}
+                                </span>
+                              )}
+                            </CCol>
                           </CForm>
                         </CCardBody>
                       </CCard>

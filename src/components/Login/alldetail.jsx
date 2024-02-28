@@ -112,24 +112,17 @@ function Address() {
     onSubmit: async (values) => {
       console.log("values", values);
 
-      const formData = new FormData();
-
-      // formData.append("first_name", values.FirstName);
-      // formData.append("last_name", values.LastName);
+      const formData = new FormData();      
       formData.append("address_1", values.Address1);
       formData.append("address_2", values.Address2);
       formData.append("city", values.City);
       formData.append("country", values.Country);
       formData.append("zip_code", values.Zip);
-      // formData.append("email", values.Email);
-      // formData.append("phone", values.MobileNo);
-      // formData.append("gender", values.Gender);
       formData.append("driver_image", values.file);
       formData.append("driver_documents", values.doc);
       formData.append("companyName", values.companyName);
       formData.append("kvk", values.kvk);
       formData.append("bankNumber", values.bankNumber);
-
       formData.append("isDocUploaded","true")
       setSubmitLoader(true);
       editDriver(formData, user._id)
