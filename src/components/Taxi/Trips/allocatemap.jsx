@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { GoogleMap, Marker, useLoadScript, InfoWindow, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 // import { activeDrivers } from "../../utils/api";
 import { NavItem } from "react-bootstrap";
-import { activeDrivers, getTripById } from "../../../utils/api";
+import { activeDrivers, allocateDriver, getTripById } from "../../../utils/api";
 import userContext from "../../../utils/context";
 import { useNavigate, useParams } from "react-router";
 import AppLoader from "../../AppLoader";
+import carLogo from "../../../assets/images/about-car.png";
+import { toast } from "react-toastify";
 const Allocatemap=()=> {
     const [trip, setTrip] = useState(null);
     const [directions, setDirections] = useState(null);
@@ -107,10 +109,31 @@ const Allocatemap=()=> {
   }
   const [selectedMarker, setSelectedMarker] = useState(null);
   const handleMarkerClick = (marker) => {
-    setSelectedMarker(marker);
+    if(marker.is_available)    setSelectedMarker(marker);
   };
   
-
+  const handleALLocate = () => {
+    const data = {
+        driver_name: selectedMarker._id,
+        // vehicle: selectVehicle,
+        status: "Accepted",
+      };
+      
+      allocateDriver(data, id).then((res) => {
+        if (res?.data?.code === 200) {
+          toast.success(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+          navigate("/taxi/trips/pendingtrips")
+        } else {
+          toast.warning(`${res.data.message}`, {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
+      });
+  };
   const handleMapClick = (event) => {
     console.log("🚀 ~ handleMapClick ~ event:", event)
     // Check if the click event occurred on a marker
@@ -161,16 +184,22 @@ const Allocatemap=()=> {
             onClick={() => handleMarkerClick({ lat: 18.52043, lng: 74.856743 })}
           /> */}
           {selectedMarker && (
-                    <InfoWindow
+                    <InfoWindow 
                       position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
                       onCloseClick={() => setSelectedMarker(null)}
                     >
-                      <div>
-                        <h2>Driver Details</h2>
-                        <p>{selectedMarker.first_name + ' ' + selectedMarker.last_name}</p>
-                        <p>Latitude: {selectedMarker.lat}</p>
-                        <p>Longitude: {selectedMarker.lng}</p>
-                        {/* Add more details as needed */}
+                      <div style={{width:"250px", height:"200px"}}>
+                        
+                        <div className="text-center">
+                        <h3 className="vichle-name">Driver Details</h3>
+                        <img src={carLogo} alt="car logo" width="100px" height="100px" />
+                        </div>
+                        <h5 className="driver-name">Driver Name : {selectedMarker.first_name + ' ' + selectedMarker.last_name}</h5>
+                        <h4 className="vichle-name">Vehicle Name : Bike</h4>
+                        <h4 className="vichle-name">Vichke Type : test</h4>
+                       <div class="text-center">
+                       <button className="approve-butn" onClick={handleALLocate}>Approve</button>
+                       </div>
                       </div>
                     </InfoWindow>
                   )}

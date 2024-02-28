@@ -837,4 +837,6 @@ img.map-img {
     white-space: nowrap;
 }
 
-
+.gm-style-iw-d {
+  height: 300px !important;
+}
