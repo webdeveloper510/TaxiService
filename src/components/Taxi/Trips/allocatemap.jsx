@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { GoogleMap, Marker, useLoadScript, InfoWindow, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
+import { GoogleMap, Marker, InfoWindow, DirectionsService, DirectionsRenderer, Rectangle } from "@react-google-maps/api";
 // import { activeDrivers } from "../../utils/api";
 import { NavItem } from "react-bootstrap";
 import { activeDrivers, allocateDriver, getTripById } from "../../../utils/api";
@@ -9,54 +9,56 @@ import AppLoader from "../../AppLoader";
 import carLogo from "../../../assets/images/about-car.png";
 import { toast } from "react-toastify";
 import Switch from "react-switch";
-const Allocatemap=()=> {
-    const [trip, setTrip] = useState(null);
-    const [directions, setDirections] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const { user, setUser, appLoaded } = useContext(userContext);
-    const [favorite, setFavorite] = useState(false);
 
-    const navigate = useNavigate();
-    const id = useParams().id;
-    useEffect(() => {
-      updaterLocation();
-    }, []);
-    function updaterLocation() {
-        setLoading(true);
-        getTripById(id)
-          .then((res) => {
-            console.log("page data for trip", res);
-            if (res.code === 200) {
-              console.log(
-                "trip details =========>>>>>> from location",
-                res.result
-              );
-              setTrip(res.result);
-              setDirectionsServiceOptions({
-                origin: {
-                  lat: res.result?.trip_from?.lat,
-                  lng: res.result?.trip_from?.log,
-                },
-                destination: {
-                  lat: res.result?.trip_to?.lat,
-                  lng: res.result?.trip_to?.log,
-                },
-                travelMode: "DRIVING",
-              });
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-          .finally(() => {
-            setLoading(false);
+
+const Allocatemap = () => {
+  const [trip, setTrip] = useState(null);
+  const [directions, setDirections] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { user, setUser, appLoaded } = useContext(userContext);
+  const [favorite, setFavorite] = useState(false);
+
+  const navigate = useNavigate();
+  const id = useParams().id;
+  useEffect(() => {
+    updaterLocation();
+  }, []);
+  function updaterLocation() {
+    setLoading(true);
+    getTripById(id)
+      .then((res) => {
+        console.log("page data for trip", res);
+        if (res.code === 200) {
+          console.log(
+            "trip details =========>>>>>> from location",
+            res.result
+          );
+          setTrip(res.result);
+          setDirectionsServiceOptions({
+            origin: {
+              lat: res.result?.trip_from?.lat,
+              lng: res.result?.trip_from?.log,
+            },
+            destination: {
+              lat: res.result?.trip_to?.lat,
+              lng: res.result?.trip_to?.log,
+            },
+            travelMode: "DRIVING",
           });
-      
-    }
-    const [directionsServiceOptions, setDirectionsServiceOptions] =
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+  }
+  const [directionsServiceOptions, setDirectionsServiceOptions] =
     useState(null);
- 
-  
+
+
   const directionsRendererOptions = {
     polylineOptions: {
       strokeColor: "blue",
@@ -67,37 +69,37 @@ const Allocatemap=()=> {
   const [allDriver, setAllDriver] = useState([]);
   const center = useMemo(() => ({ lat: 52.370216, lng: 4.895168 }), []);
   const [driverLocation, setDriverLocation] = useState([]);
-  function locationUpdater(){
-    activeDrivers().then(res=>{
-      if(res.code === 200){
-        console.log("active driver data =======>>>>>>>>",res.result)
-        const activeDriversData = res.result.map(item=>{
+  function locationUpdater() {
+    activeDrivers().then(res => {
+      if (res.code === 200) {
+        console.log("active driver data =======>>>>>>>>", res.result)
+        const activeDriversData = res.result.map(item => {
           item.lat = item?.location?.coordinates[1];
           item.lng = item?.location?.coordinates[0];
-        return item;
+          return item;
         })
         // console.log("active driver data =======>>>>>>>>",activeDriversData)
         setAllDriver(activeDriversData);
-        if(favorite){
-          const favDriver = activeDriversData.filter(driver=>user.favoriteDrivers.includes(driver._id))
+        if (favorite) {
+          const favDriver = activeDriversData.filter(driver => user.favoriteDrivers.includes(driver._id))
           setDriverLocation(favDriver);
-        }else setDriverLocation(activeDriversData);
+        } else setDriverLocation(activeDriversData);
       }
-    }) 
+    })
   }
-  useEffect(()=>{
-    if(favorite){
-      const favDriver = allDriver.filter(driver=>user.favoriteDrivers.includes(driver._id))
+  useEffect(() => {
+    if (favorite) {
+      const favDriver = allDriver.filter(driver => user.favoriteDrivers.includes(driver._id))
       setDriverLocation(favDriver);
-    }else setDriverLocation(allDriver);
-  },[favorite])
-  useEffect(()=>{
+    } else setDriverLocation(allDriver);
+  }, [favorite])
+  useEffect(() => {
     locationUpdater()
     // const timeoutKey = setInterval(()=>{locationUpdater()},5000);
     // return ()=>{
     //   clearInterval(timeoutKey);
     // }
-  },[])
+  }, [])
   const mapContainerStyle = {
     width: '80vw',
     height: '80vh',
@@ -119,148 +121,183 @@ const Allocatemap=()=> {
     rotation: 0,
     scale: 1,
   };
-  const generateIcon = (driver)=>{
+  const generateIcon = (driver) => {
     return {
-        path: "M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805",
-        fillColor: driver.is_available ? "yellow": "red",
-        fillOpacity: 2,
-        strokeWeight: 1,
-        rotation: 0,
-        scale: 1,
-      };
+      path: "M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805",
+      fillColor: driver.is_available ? "yellow" : "red",
+      fillOpacity: 2,
+      strokeWeight: 1,
+      rotation: 0,
+      scale: 1,
+    };
   }
+
   const [selectedMarker, setSelectedMarker] = useState(null);
   const handleMarkerClick = (marker) => {
-    if(marker.is_available) setSelectedMarker(marker);
+    // if(marker.is_available) 
+    setSelectedMarker(marker);
   };
 
   const handleALLocate = () => {
     const data = {
-        driver_name: selectedMarker._id,
-        // vehicle: selectVehicle,
-        status: "Accepted",
-      };      
-      allocateDriver(data, id).then((res) => {
-        if (res?.data?.code === 200) {
-          toast.success(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-          navigate("/taxi/trips/pendingtrips")
-        } else {
-          toast.warning(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-        }
-      });
+      driver_name: selectedMarker._id,
+      // vehicle: selectVehicle,
+      status: "Accepted",
+    };
+    allocateDriver(data, id).then((res) => {
+      if (res?.data?.code === 200) {
+        toast.success(`${res.data.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+        navigate("/taxi/trips/pendingtrips")
+      } else {
+        toast.warning(`${res.data.message}`, {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+    });
   };
   function handleStatusChange() {
     setFavorite(!favorite);
   }
   const handleMapClick = (event) => {
     // Check if the click event occurred on a marker
-    if (!event.latLng) {
-      setSelectedMarker(null);
-    }
-    if(event.placeId){
+    setSelectedMarker(null)
+    // if (!event.latLng) {
+    //   setSelectedMarker(null);
+    // }
+    if (event.placeId) {
       event.stop()
     }
   };
   if (loading) {
     return <AppLoader />;
   }
-      return (
-       <>
-       <div className="container-fluidd">      
+  return (
+    <>
+      <div className="container-fluidd">
         <div className="col-md-12">
-        <div className="row">
+          <div className="row">
             <div className="col-md-12 text-end">
               <p>Show Favorite Driver Only</p>
-            <Switch
-                                checkedIcon={false}
-                                uncheckedIcon={false}
-                                height={18}
-                                width={35}
-                                onChange={() => {
-                                  handleStatusChange();
-                                }}
-                                checked={favorite}
-                              />
-        <GoogleMap
-          
-          mapContainerStyle={mapContainerStyle}
-          center={center}
-       
-          zoom={10}
-          onClick={handleMapClick}
-          options={{
-            streetViewControl: false
-          }}
-        > 
-        {
-          driverLocation.map(driver=>(
-            <Marker
-            position={{ lat: driver.lat, lng: driver.lng }}
-            icon={generateIcon(driver)}
-            onClick={() => handleMarkerClick(driver)}
-            label={{
-                text: driver.first_name + ' ' + driver.last_name,
-                color: 'black',  fontSize: '18px', fontWeight: 'bold',backgroundColor: '#3498db !important', borderRadius: '5px !important',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) !important',padding: '8px !important', }}
-          />
-          ))
-        }
-         
-          {selectedMarker && (
-                    <InfoWindow 
-                      position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
-                      onCloseClick={() => setSelectedMarker(null)}
+              <Switch
+                checkedIcon={false}
+                uncheckedIcon={false}
+                height={18}
+                width={35}
+                onChange={() => {
+                  handleStatusChange();
+                }}
+                checked={favorite}
+              />
+              <GoogleMap
+
+                mapContainerStyle={mapContainerStyle}
+                center={center}
+
+                zoom={10}
+                onClick={handleMapClick}
+                options={{
+                  streetViewControl: false
+                }}
+              >
+                {
+                  driverLocation.map(driver => (
+                    <Marker
+                      position={{ lat: driver.lat, lng: driver.lng }}
+                      icon={generateIcon(driver)}
+                      onClick={() => handleMarkerClick(driver)}
+                    // label={{
+                    //     text: driver.first_name + ' ' + driver.last_name,
+                    //     color: 'black',  fontSize: '18px', fontWeight: 'bold',backgroundColor: '#3498db !important', borderRadius: '5px !important',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) !important',padding: '8px !important', }}
+                    />
+                  ))
+                }
+
+
+                {selectedMarker && (
+                  <InfoWindow
+                  style={{
+                    zIndex:"1000000 !important"
+                  }}
+                    position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+                    onCloseClick={() => setSelectedMarker(null)}
+                    options={{
+                      disableAutoPan: false,
+                      pixelOffset: { width: 0},
+                      zIndex: 100,
+                      
+                    }}
+                  >
+                    <div style={{ width: "250px", height: "200px", zIndex: "1000000" }}>
+
+                      <div className="text-center">
+                        <h5 className="vichle-name">Driver Details</h5>
+                        <img src={selectedMarker?.defaultVehicle?.vehicle_photo} style={{borderRadius:"100px"}} alt="car logo" width="80px" height="80px" />
+                      </div>
+                      <h5 className="driver-name text-center">Driver Name : {selectedMarker.first_name + ' ' + selectedMarker.last_name}</h5>
+                      <h6 className="vichle-name text-center" style={{fontSize:"10px !important", fontWeight:"500"}}>Vehicle Name :{`${selectedMarker?.defaultVehicle?.vehicle_make} ${selectedMarker.defaultVehicle.vehicle_model}`}</h6>
+                      {/* <h6 className="vichle-name text-center" style={{fontSize:"10px !important", fontWeight:"500"}}>Vichke Type :{selectedMarker?.defaultVehicle?.vehicle_type}</h6> */}
+                      <div class="text-center">
+                        <button className="approve-butn" onClick={handleALLocate}>Approve</button>
+                      </div>
+                    </div>
+                  </InfoWindow>
+                )}
+
+                {
+                  driverLocation.map(driver => (
+                    (driver._id != selectedMarker?._id) ?
+                    <InfoWindow
+                    
+                      position={{ lat: driver.lat, lng: driver.lng }}
+                     
+
                     >
-                      <div style={{width:"250px", height:"200px"}}>
-                        
-                        <div className="text-center">
-                        <h3 className="vichle-name">Driver Details</h3>
-                        <img src={selectedMarker?.defaultVehicle?.vehicle_photo} alt="car logo" width="100px" height="100px" />
-                        </div>
-                        <h5 className="driver-name">Driver Name : {selectedMarker.first_name + ' ' + selectedMarker.last_name}</h5>
-                        <h4 className="vichle-name">Vehicle Name :{`${selectedMarker?.defaultVehicle?.vehicle_make} ${selectedMarker.defaultVehicle.vehicle_model}`}</h4>
-                        <h4 className="vichle-name">Vichke Type :{selectedMarker?.defaultVehicle?.vehicle_type}</h4>
-                       <div class="text-center">
-                       <button className="approve-butn" onClick={handleALLocate}>Approve</button>
-                       </div>
+                      <div style={{ backgroundColor: "white" }}>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: "black" }}>
+                          {driver?.defaultVehicle?.vehicle_type}:{driver?.defaultVehicle?.seating_capacity}
+
+                        </span>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: "black" }}>
+                          {' ' +driver.first_name + ' ' + driver.last_name}
+                        </span>
                       </div>
                     </InfoWindow>
-                  )}
+                    : <></>
+                  ))
+                }
+               
+                {trip && (
+                  <DirectionsService
+                    options={directionsServiceOptions}
+                    callback={(result, status) => {
+                      if (status === "OK") {
 
+                        if (!directions) setDirections(result);
+                      } else {
+                        console.error(
+                          `Error rendering directions ${status}`
+                        );
+                      }
+                    }}
+                  />
+                )}
+                {directions && (
+                  <DirectionsRenderer
+                    options={directionsRendererOptions}
+                    directions={directions}
+                  />
+                )}
+              </GoogleMap>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-{trip && (
-                                <DirectionsService
-                                  options={directionsServiceOptions}
-                                  callback={(result, status) => {
-                                    if (status === "OK") {
-                                      
-                                      if (!directions) setDirections(result);
-                                    } else {
-                                      console.error(
-                                        `Error rendering directions ${status}`
-                                      );
-                                    }
-                                  }}
-                                />
-                              )}
-                              {directions && (
-                                <DirectionsRenderer
-                                  options={directionsRendererOptions}
-                                  directions={directions}
-                                />
-                              )}
-        </GoogleMap>
-            </div>          
-       </div>
-       </div>
-       </div>
-       </>
-      );
-    };
-  
-   export default Allocatemap; 
+export default Allocatemap; 
