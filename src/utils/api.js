@@ -1,19 +1,36 @@
 import Axios from "axios";
+// import { useNavigate } from "react-router";
+// const navigate = useNavigate()
 const API_URL = process.env.REACT_APP_API_URL;
 Axios.defaults.baseURL = API_URL;
 let token = localStorage.getItem("token");
 
-// Axios.interceptors.response.use((response) => {
-//   if(response.status === 401) {
-//        alert("You are not authorized");
-//   }
-//   return response;
-// }, (error) => {
-//   if (error.response && error.response.data) {
-//       return Promise.reject(error.response.data);
-//   }
-//   return Promise.reject(error.message);
-// });
+
+// Add a request interceptor
+Axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+
+// Add a response interceptor
+Axios.interceptors.response.use(function (response) {
+  console.log("🚀 ~ response getting from interseptor:", response)
+  if(response.data.code == 409){
+    localStorage.clear()
+    token = null;
+    window.href = "/login"
+  }
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  return Promise.reject(error);
+});
 export const userLogin = async (data) => {
   const response = await Axios.post(`/admin/login`, data, {
     headers: {
