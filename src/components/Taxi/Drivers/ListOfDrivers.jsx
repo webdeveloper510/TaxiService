@@ -31,6 +31,7 @@ import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
 import AppLoader from "../../AppLoader";
 import Dropdown from 'react-bootstrap/Dropdown';
 import userContext from "../../../utils/context";
+import { MDBInput, MDBInputGroup } from "mdb-react-ui-kit";
 
 const ListOfDrivers = ({ role }) => {
   const [selectedType, setSelectedType] = useState("Verified Drivers");
@@ -99,10 +100,10 @@ const ListOfDrivers = ({ role }) => {
   if (data.length > maxPage) {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
-
+  const [search, setSearch] = useState("")
   useEffect(() => {
     setLoader(true);
-    getDriver(role).then((res) => {
+    getDriver(role,search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setAllDriver(res.result);
@@ -112,7 +113,7 @@ const ListOfDrivers = ({ role }) => {
       }
       setLoader(false);
     });
-  }, []);
+  }, [search]);
   const deleteDriverHandler = async (id) => {
     try {
       console.log(id, "driver deleted id");
@@ -209,6 +210,7 @@ const ListOfDrivers = ({ role }) => {
   const handleSelect = (eventKey) => {
     setSelectedType(eventKey); // Update the selected value when an item is selected
   };
+  
   useEffect(() => {
     if (selectedType == "Verified Drivers") {
       setDriver(allDriver.filter(driver => {
@@ -239,6 +241,11 @@ const ListOfDrivers = ({ role }) => {
               <div className="body flex-grow-1 px-3">
                 <div className="d-flex justify-content-between">
                   <h1 class="heading-for-every-page">Driver's List</h1>
+                  <div className="serach-left" id="recent-trip-search">
+                    <MDBInputGroup>
+                      <MDBInput placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+
+                    </MDBInputGroup></div>
                   {
                     role == 'super' && <Dropdown onSelect={handleSelect}>
                       <Dropdown.Toggle id="dropdown-basic">

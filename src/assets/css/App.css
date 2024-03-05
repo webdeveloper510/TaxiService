@@ -843,6 +843,10 @@ img.map-img {
 button.gm-ui-hover-effect {
   display: none !important;
 }
+.driver-register{
+  font-size: 30px !important;
+  margin-bottom: 20px;
+}
 
 /* .gm-style .gm-style-iw-tc::after {
   background: #000 !important;

@@ -30,29 +30,34 @@ function Register() {
   const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     fname: Yup.string()
-      .min(3, "Minimum 3 symbols")
-      .max(50, "Maximum 50 symbols")
+      .min(3, "Minimum 3 characters ")
+      .max(50, "Maximum 50 characters ")
+      .trim("White space is not allowed")
       .required("First name is required"),
     email: Yup.string()
       .email("Wrong email format")
-      .min(3, "Minimum 3 symbols")
-      .max(50, "Maximum 50 symbols")
+      .trim("White space is not allowed")
+      .min(3, "Minimum 3 characters ")
+      .max(50, "Maximum 50 characters ")
       .required("Email is required"),
     lname: Yup.string()
-      .min(3, "Minimum 3 symbols")
-      .max(50, "Maximum 50 symbols")
+      .min(3, "Minimum 3 characters ")
+      .trim("White space is not allowed")
+      .max(50, "Maximum 50 characters ")
       .required("Last name is required"),
     phoneNo: Yup.string()
       // .min(7, "Phone number must be greater than 7")
       // .max(16, "Phone number not be greater than 17")
-      .required("Email Address or Phone Number is required"),
+      .trim("White space is not allowed")
+      .required("Phone Number is required"),
     password: Yup.string()
       .min(6, "Password must be 6 characters long")
+      .max(20, "Maximum 20 characters ")
+      .trim("White space is not allowed")
       .required("Password is required"),
     confirmpass: Yup.string()
-      .min(3, "Minimum 3 symbols")
-      .max(50, "Maximum 50 symbols")
       .required("Password confirmation is required")
+      .max(20, "Maximum 20 characters ")
       .oneOf(
         [Yup.ref("password")],
         "Password and Confirm Password didn't match"
@@ -187,6 +192,7 @@ function Register() {
         fluid
         className="p-0 ps-0 pe-0 my-0 h-custom custom-login-form"
       >
+      
         <MDBRow>
           <MDBCol col="4" md="8">
             <div className="svg-outer"></div>
@@ -198,10 +204,11 @@ function Register() {
                 </div>
 
                 <MDBRow>
+                <h5 className="driver-register">Driver Register</h5>
                   <MDBCol col="12" md="6">
                     <div className="mb-4">
                       <label htmlFor="fname" className="form-label">
-                        First Name
+                        First Name <span class="asterisk-mark">*</span>
                       </label>
                       <MDBInput
                         id="fname"
@@ -235,7 +242,7 @@ function Register() {
                   <MDBCol col="12" md="6">
                     <div className="mb-4">
                       <label htmlFor="lname" className="form-label">
-                        Last Name
+                        Last Name <span class="asterisk-mark">*</span>
                       </label>
                       <MDBInput
                         id="lname"
@@ -268,7 +275,7 @@ function Register() {
                   <MDBCol col="12" md="6">
                     <div className="mb-4">
                       <label htmlFor="emailAddress" className="form-label">
-                        Email Address
+                        Email Address <span class="asterisk-mark">*</span>
                       </label>
                       <MDBInput
                         id="emailAddress"
@@ -301,11 +308,11 @@ function Register() {
                   <MDBCol col="12" md="6">
                     <div className="mb-4">
                       <label htmlFor="phoneNumber" className="form-label">
-                        Phone Number
-                      </label>
+                        Phone Number <span class="asterisk-mark">*</span>
+                      </label> 
                       <MDBInput
                         id="phoneNumber"
-                        type="text"
+                        type="number"
                         size="lg"
                         value={formik.phoneNo}
                         {...formik.getFieldProps("phoneNo")}
@@ -335,7 +342,7 @@ function Register() {
                   <MDBCol col="12" md="6">
                     <div className="mb-4" id="pwd_field">
                       <label htmlFor="password" className="form-label">
-                        Password
+                        Password <span class="asterisk-mark">*</span>
                       </label>
                       <MDBInput
                         id="password"
@@ -381,7 +388,7 @@ function Register() {
                   <MDBCol col="12" md="6">
                     <div className="mb-4" id="pwd_field">
                       <label htmlFor="confirmpass" className="form-label">
-                        Confirm Password
+                        Confirm Password <span class="asterisk-mark">*</span>
                       </label>
                       <MDBInput
                         id="confirmpass"
@@ -423,10 +430,10 @@ function Register() {
                       </span>
                     </div>
                   </MDBCol>
-                  <MDBCol col="12" md="6">
-                    <CFormLabel htmlFor="inputgender">Gender</CFormLabel>
-                    <fieldset className="row mb-12">
-                      <MDBCol sm={12}>
+                  <MDBCol col="12" md="12" >
+                    <CFormLabel htmlFor="inputgender">Gender <span class="asterisk-mark">*</span></CFormLabel>
+                    <fieldset className="row mb-12 text-start">
+                      <MDBCol sm={12} lg={12}>
                         <CFormCheck
                           inline
                           type="radio"
@@ -447,8 +454,23 @@ function Register() {
                           onChange={handleGenderChange} // Add the onChange event handler
                           checked={selectedGender === "Female"} // Set the checked state if Female is selected
                         />
+                      <CFormCheck
+                          inline
+                          type="radio"
+                          name="gridRadios"
+                          id="gridRadios3"
+                          value="Other"
+                          label="Other"
+                          onChange={handleGenderChange} // Add the onChange event handler
+                          checked={selectedGender === "Other"} // Set the checked state if Male is selected
+                        />
                       </MDBCol>
                     </fieldset>
+                    {formik.errors.gender && formik.touched.gender ? (
+                        <div className="text-danger text-start">
+                          {formik.errors.gender}
+                        </div>
+                      ) : null}
                   </MDBCol>
                 </MDBRow>
                 <div className="d-flex justify-content-between mb-4 login-remember-forgot"></div>

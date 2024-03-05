@@ -32,6 +32,9 @@ function Address() {
     Country: "Netherlands",
     City: "",
     Zip: "",
+    companyName:"",
+    bankNumber:"",
+    kvk: "",
     // Email: "",
     // MobileNo: "",
     // Gender: "",
@@ -48,11 +51,11 @@ function Address() {
       .matches(/^[^\d]+$/, "Company Name is not valid")
       .required("Company Name is required"),
     kvk: Yup.string()
-      .trim()
-      .max(20, "kvk must be at most 20 characters")
-      .matches(/^[^\d]+$/, "kvk is not valid")
-      .required("kvk  is required"),
-      bankNumber: Yup.string()
+    .trim()
+    .max(20, "KVK Number must be at most 20 characters")
+    // .matches(/^[0-9]+$/, "Must be only digits")
+    .required("KVK Number is required"),
+    bankNumber: Yup.string()
       .trim()
       .max(20, "Bank Number must be at most 20 characters")
       .matches(/^[0-9]+$/, "Must be only digits")
@@ -67,7 +70,9 @@ function Address() {
       .required("Street Address 2  is required"),
     Country: Yup.string().trim().required("Country is required"),
     City: Yup.string().trim().required("City is required"),
-    Zip: Yup.string().trim().required("Zip is required"),
+    Zip: Yup.string().trim()
+    .max(6, "ZIP Code must be at most 6 characters")
+    .required("Zip is required"),
     // Email: Yup.string().trim().email().required("Email  is required"),
     // MobileNo: Yup.string()
     //   .trim()
@@ -244,7 +249,7 @@ function Address() {
                           autoComplete="off"
                         />
                         {formik.errors.Address1 && formik.touched.Address1 ? (
-                          <div className="text-danger">
+                          <div className="text-danger text-start">
                             {formik.errors.Address1}
                           </div>
                         ) : null}
@@ -324,7 +329,7 @@ function Address() {
                           City
                         </label>
                         <CFormInput
-                          id="inputCity"
+                         
                           {...formik.getFieldProps("City")}
                           maxLength="50"
                           className={clsx(
@@ -342,17 +347,17 @@ function Address() {
                           autoComplete="off"
                         />
                         {formik.errors.City && formik.touched.City ? (
-                          <div className="text-danger">{formik.errors.City}</div>
+                          <div className="text-danger text-start">{formik.errors.City}</div>
                         ) : null}
                       </div>
                     </MDBCol>
                     <MDBCol col="12" md="6">
                       <div className="mb-4">
-                        <label htmlFor="inputCity" className="form-label">
+                        <label className="form-label">
                           Company Name
                         </label>
                         <CFormInput
-                          id="inputCity"
+                          
                           {...formik.getFieldProps("companyName")}
                           maxLength="50"
                           className={clsx(
@@ -370,17 +375,17 @@ function Address() {
                           autoComplete="off"
                         />
                         {formik.errors.companyName && formik.touched.companyName ? (
-                          <div className="text-danger">{formik.errors.companyName}</div>
+                          <div className="text-danger text-start">{formik.errors.companyName}</div>
                         ) : null}
                       </div>
                     </MDBCol>
                     <MDBCol col="12" md="6">
                       <div className="mb-4">
-                        <label htmlFor="inputCity" className="form-label">
+                        <label  className="form-label">
                           KVK Number
                         </label>
                         <CFormInput
-                          id="inputCity"
+                          
                           {...formik.getFieldProps("kvk")}
                           maxLength="50"
                           className={clsx(
@@ -398,17 +403,16 @@ function Address() {
                           autoComplete="off"
                         />
                         {formik.errors.kvk && formik.touched.kvk ? (
-                          <div className="text-danger">{formik.errors.kvk}</div>
+                          <div className="text-danger text-start">{formik.errors.kvk}</div>
                         ) : null}
                       </div>
                     </MDBCol>
                     <MDBCol col="12" md="6">
                       <div className="mb-4">
-                        <label htmlFor="inputCity" className="form-label">
+                        <label className="form-label">
                           Bank Number
                         </label>
                         <CFormInput
-                          id="inputCity"
                           {...formik.getFieldProps("bankNumber")}
                           maxLength="50"
                           className={clsx(
@@ -426,11 +430,11 @@ function Address() {
                           autoComplete="off"
                         />
                         {formik.errors.bankNumber && formik.touched.bankNumber ? (
-                          <div className="text-danger">{formik.errors.bankNumber}</div>
+                          <div className="text-danger text-start">{formik.errors.bankNumber}</div>
                         ) : null}
                       </div>
                     </MDBCol>
-                    <MDBCol col="12" md="12">
+                    <MDBCol col="12" md="6">
                       <div className="mb-4" id="pwd_field">
                         <label htmlFor="inputzip" className="form-label">
                           Zip
@@ -454,7 +458,7 @@ function Address() {
                           autoComplete="off"
                         />
                         {formik.errors.Zip && formik.touched.Zip ? (
-                          <div className="text-danger">{formik.errors.Zip}</div>
+                          <div className="text-danger text-start">{formik.errors.Zip}</div>
                         ) : null}
                       </div>
                     </MDBCol>
@@ -523,11 +527,7 @@ function Address() {
                             autoComplete="off"
                           />
   
-                          {!image && formik.errors.file && formik.touched.file ? (
-                            <div className="text-danger">
-                              {formik.errors.file}
-                            </div>
-                          ) : null}
+                         
                           <label
                             htmlFor="formFile"
                             className="custom-file-upload"
@@ -547,6 +547,11 @@ function Address() {
                               <span>Drop Image Here ...</span>
                             </div>
                           </label>
+                          {!image && formik.errors.file && formik.touched.file ? (
+                            <div className="text-danger text-start">
+                              {formik.errors.file}
+                            </div>
+                          ) : null}
                         </>
                       )}
                     </CCol>
@@ -604,16 +609,18 @@ function Address() {
                             name="doc"
                             autoComplete="off"
                           />
-                          {formik.errors.doc && formik.touched.doc ? (
-                            <div className="text-danger">{formik.errors.doc}</div>
-                          ) : null}
+                        
                           <label
                             htmlFor="formFile"
                             className="custom-file-upload"
                           >
                             <div className="files-outer">
                               <img
-                                className="upload-icon"
+                              style={{
+                                objectFit: "contain",
+                                height: "100%",
+                              }}
+                              className="upload-icon"
                                 src={uploadfileImg}
                                 alt="img"
                               />
@@ -622,6 +629,9 @@ function Address() {
                               <span>Drop Document Here ...</span>
                             </div>
                           </label>
+                          {formik.errors.doc && formik.touched.doc ? (
+                            <div className="text-danger text-start">{formik.errors.doc}</div>
+                          ) : null}
                         </>
                       )}
                     </CCol>
