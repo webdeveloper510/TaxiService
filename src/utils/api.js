@@ -17,7 +17,7 @@ Axios.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 Axios.interceptors.response.use(function (response) {
-  console.log("🚀 ~ response getting from interseptor:", response)
+  console.log("🚀 ~ response getting from interceptors :", response)
   if(response.data.code == 409){
     localStorage.clear()
     token = null;

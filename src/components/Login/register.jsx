@@ -94,14 +94,16 @@ function Register() {
         phone : values.phoneNo
       })
         .then((response) => {
-          console.log("response---->>>>", response);
+         console.log("🚀 ~ .then ~ response:", response)
+         
           if (response.data.code === 200) {
             setUser(response.data.result);
+            localStorage.setItem("token", response.data.jwtToken)
             toast.success(`${response.data.message}`, {
               position: "top-right",
               autoClose: 1000,
             });
-              navigate("/");
+              navigate("/complete-documentation");
           } else {
             toast.warning(response?.data?.message, {
               position: "top-right",
