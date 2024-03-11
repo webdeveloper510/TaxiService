@@ -352,7 +352,7 @@ const Allocatemap = () => {
                     onClick={(e) => handleMarkerClick(driver,e)}
                     ><span style={{
                       fontWeight:"bold",
-                    }}>{driver.first_name + " " + driver.last_name}</span>
+                    }}>{driver.nickName || "NA"}</span>
                     </div>
                      </div>
                    

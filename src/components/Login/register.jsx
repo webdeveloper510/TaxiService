@@ -34,6 +34,11 @@ function Register() {
       .max(50, "Maximum 50 characters ")
       .trim("White space is not allowed")
       .required("First name is required"),
+      nickName: Yup.string()
+      .min(3, "Minimum 3 characters ")
+      .max(10, "Maximum 10 characters ")
+      .trim("White space is not allowed")
+      .required("Nick name is required"),
     email: Yup.string()
       .email("Wrong email format")
       .trim("White space is not allowed")
@@ -69,6 +74,7 @@ function Register() {
     phoneNo: "",
     password: "",
     fname: "",
+    nickName: "",
     confirmpass: "",
     gender: "",
     email: "",
@@ -96,7 +102,8 @@ function Register() {
         first_name: values.fname,
         last_name : values.lname,
         gender : values.gender,
-        phone : values.phoneNo
+        phone : values.phoneNo,
+        nickName: values.nickName,
       })
         .then((response) => {
          console.log("🚀 ~ .then ~ response:", response)
@@ -268,6 +275,39 @@ function Register() {
                       {formik.errors.lname && formik.touched.lname ? (
                         <div className="text-danger text-start">
                           {formik.errors.lname}
+                        </div>
+                      ) : null}
+                    </div>
+                  </MDBCol>
+                  <MDBCol col="12" md="6">
+                    <div className="mb-4">
+                      <label htmlFor="nickName" className="form-label">
+                        Nick Name <span class="asterisk-mark">*</span>
+                      </label>
+                      <MDBInput
+                        id="nickName"
+                        type="text"
+                        size="lg"
+                        value={formik.nickName}
+                        {...formik.getFieldProps("nickName")}
+                        maxLength="50"
+                        className={clsx(
+                          "form-control bg-transparent",
+                          {
+                            "is-invalid":
+                              formik.touched.nickName && formik.errors.nickName,
+                          },
+                          {
+                            "is-valid":
+                              formik.touched.nickName && !formik.errors.nickName,
+                          }
+                        )}
+                        name="nickName"
+                        autoComplete="off"
+                      />
+                      {formik.errors.nickName && formik.touched.nickName ? (
+                        <div className="text-danger text-start">
+                          {formik.errors.nickName}
                         </div>
                       ) : null}
                     </div>
