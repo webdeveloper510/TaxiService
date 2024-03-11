@@ -144,11 +144,20 @@ const Allocatemap = () => {
   }
 
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const handleMarkerClick = (marker) => {
-    // if(marker.is_available) 
-    setSelectedMarker(marker);
-  };
+  const handleMarkerClick = (marker,e) => {
 
+    // if(marker.is_available) 
+    
+    if(!selectedMarker)setSelectedMarker(marker);
+    else setSelectedMarker(null);
+    e.stopPropagation();
+  };
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(()=>{
+    console.log("🚀 ~ Allocatemap ~ selectedMarker:", selectedMarker)
+    
+  },[selectedMarker])
   const handleALLocate = () => {
     const data = {
       driver_name: selectedMarker._id,
@@ -175,7 +184,8 @@ const Allocatemap = () => {
   }
   const handleMapClick = (event) => {
     // Check if the click event occurred on a marker
-    setSelectedMarker(null)
+    setSelectedMarker(null);
+    setRefresh(refresh);
     // if (!event.latLng) {
     //   setSelectedMarker(null);
     // }
@@ -214,7 +224,7 @@ const Allocatemap = () => {
                   streetViewControl: false
                 }}
               >
-                {
+                {/* {
                   driverLocation.map(driver => (
                     <Marker
                       position={{ lat: driver.lat, lng: driver.lng }}
@@ -228,12 +238,9 @@ const Allocatemap = () => {
                       }}
                       onClick={() => handleMarkerClick(driver)}
                       
-                    // label={{
-                    //     text: driver.first_name + ' ' + driver.last_name,
-                    //     color: 'black',  fontSize: '18px', fontWeight: 'bold',backgroundColor: '#3498db !important', borderRadius: '5px !important',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) !important',padding: '8px !important', }}
                     />
                   ))
-                }
+                } */}
 
 
                 {selectedMarker && (
@@ -268,25 +275,80 @@ const Allocatemap = () => {
 
                 {
                   driverLocation.map(driver => (
-                    (driver._id != selectedMarker?._id) ?
-                    <InfoWindow
-                    style={{
-                      backgroundColor: "red"
-                    }}
+                   
+                    <OverlayView
+                    mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
                       position={{ lat: driver.lat, lng: driver.lng }}
+                      getPixelPositionOffset={(width, height) => {
+                       
+                        
+                        return ({
+                          x: -49,
+                          y: -59,
+                        })
+                      }}
+                    
                      
 
                     >
-                      <div style={{ backgroundColor: "red" }}>
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: "black" }}>
-                          {driver?.defaultVehicle?.vehicle_type}:{driver?.defaultVehicle?.seating_capacity}
+                     <div style={{
+                      height: "100px",
+                      width: "100px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyItems: "center",
+                      alignItems: "center",
+                     }}>
+                     <div style={{ 
+                        backgroundColor:driver.is_available ? "green" : "red",
+                        height:"60px",
+                        width: "60px",
+                        marginBottom:"5px",
+                        textAlign:"center",
+                        color: "white",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyItems: "center",
+                        alignItems: "center",
+                        overflow:"hidden",
+                        paddingTop: "10px",
+                        paddingRight: "2px",
+                        paddingLeft: "2px",
+                        // border: "4px solid white",
+                        // borderRadius: "4px",
+                        clipPath: "polygon(0% 0%, 100% 0%, 100% 69%, 75% 75%, 48% 100%, 24% 75%, 0 69%)"
+                        }}>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: "white" }}>
+                          {driver?.defaultVehicle?.vehicle_type}
+                          
 
                         </span>
                         
-                      </div>
+                    </div>
+                    <div style={
+                     {
+                      width: '100%',
+                      height: '35px',
+                      backgroundColor: 'black',
+                      opacity: 0.8,
+                      textAlign: 'center',
+                      color: 'white',
+                      display: "flex",
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      overflow:"hidden",
+                      padding: "2px"
+                    }
+                    }
+                    onClick={(e) => handleMarkerClick(driver,e)}
+                    ><span style={{
+                      fontWeight:"bold",
+                    }}>{driver.first_name + " " + driver.last_name}</span>
+                    </div>
+                     </div>
                    
-                    </InfoWindow>
-                    : <></>
+                    </OverlayView>
+                    
                   ))
                 }
                 
