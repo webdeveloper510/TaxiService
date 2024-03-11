@@ -291,7 +291,10 @@ const ListOfDrivers = ({ role }) => {
                               Email
                             </CTableHeaderCell>
                             <CTableHeaderCell className="text-center">
-                              Address
+                              Vehicle
+                            </CTableHeaderCell>
+                            <CTableHeaderCell className="text-center">
+                              License Plate
                             </CTableHeaderCell>
                             {/* <CTableHeaderCell className="text-center">
                               Trips
@@ -337,7 +340,7 @@ const ListOfDrivers = ({ role }) => {
                                   </CTableDataCell>
 
                                   <CTableDataCell>
-                                    <div>{item.first_name}</div>
+                                    <div>{item.first_name+ " " + item.last_name}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
                                     <div>{item.phone}</div>
@@ -346,7 +349,10 @@ const ListOfDrivers = ({ role }) => {
                                     <div>{item.email}</div>
                                   </CTableDataCell>
                                   <CTableDataCell>
-                                    <div>{item.address_1}</div>
+                                    <div>{item?.defaultVehicle?.vehicle_model || "Not Selected"}</div>
+                                  </CTableDataCell>
+                                  <CTableDataCell>
+                                    <div>{item?.defaultVehicle?.vehicle_number || "Not Selected"}</div>
                                   </CTableDataCell>
                                   {/* <CTableDataCell>
                             <div>{item.joiningdate}</div>
