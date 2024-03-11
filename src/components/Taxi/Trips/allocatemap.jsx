@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { GoogleMap, Marker, InfoWindow, DirectionsService, DirectionsRenderer, Rectangle } from "@react-google-maps/api";
+import { GoogleMap, Marker, InfoWindow, DirectionsService, DirectionsRenderer, Rectangle, OverlayView } from "@react-google-maps/api";
 // import { activeDrivers } from "../../utils/api";
 import { NavItem } from "react-bootstrap";
 import { activeDrivers, allocateDriver, getTripById } from "../../../utils/api";
@@ -121,14 +121,25 @@ const Allocatemap = () => {
     rotation: 0,
     scale: 1,
   };
+  const customMarker3 = {
+    path: "M 0,0 0,30 40,30 40,0 Z", // Simple rectangle
+    fillColor: "#000000", // Black fill
+    fillOpacity: 0.5, // Semi-transparent
+    strokeWeight: 1,
+    scale: 1,
+    // labelOrigin: "center",
+    labelOrigin: new google.maps.Point(20, 15), // Center of the rectangle
+  };
   const generateIcon = (driver) => {
     return {
-      path: "M29.395,0H17.636c-3.117,0-5.643,3.467-5.643,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759   c3.116,0,5.644-2.527,5.644-5.644V6.584C35.037,3.467,32.511,0,29.395,0z M34.05,14.188v11.665l-2.729,0.351v-4.806L34.05,14.188z    M32.618,10.773c-1.016,3.9-2.219,8.51-2.219,8.51H16.631l-2.222-8.51C14.41,10.773,23.293,7.755,32.618,10.773z M15.741,21.713   v4.492l-2.73-0.349V14.502L15.741,21.713z M13.011,37.938V27.579l2.73,0.343v8.196L13.011,37.938z M14.568,40.882l2.218-3.336   h13.771l2.219,3.336H14.568z M31.321,35.805v-7.872l2.729-0.355v10.048L31.321,35.805",
+     
+      path: "M 0,0 0,30 160,30 160,0 Z", // Simple rectangle
       fillColor: driver.is_available ? "yellow" : "red",
-      fillOpacity: 2,
-      strokeWeight: 1,
-      rotation: 0,
-      scale: 1,
+    fillOpacity: 0.5, // Semi-transparent
+    strokeWeight: 1,
+    scale: 1,
+    labelOrigin: new google.maps.Point(70, 15),
+   
     };
   }
 
@@ -207,8 +218,16 @@ const Allocatemap = () => {
                   driverLocation.map(driver => (
                     <Marker
                       position={{ lat: driver.lat, lng: driver.lng }}
-                      icon={generateIcon(driver)}
+                      // icon={generateIcon(driver)}
+                      icon = {generateIcon(driver)}
+                      label = {{
+                        text: driver.first_name + ' ' + driver.last_name, // Text label
+                        color: "black", // White text
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                      }}
                       onClick={() => handleMarkerClick(driver)}
+                      
                     // label={{
                     //     text: driver.first_name + ' ' + driver.last_name,
                     //     color: 'black',  fontSize: '18px', fontWeight: 'bold',backgroundColor: '#3498db !important', borderRadius: '5px !important',boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1) !important',padding: '8px !important', }}
@@ -251,25 +270,26 @@ const Allocatemap = () => {
                   driverLocation.map(driver => (
                     (driver._id != selectedMarker?._id) ?
                     <InfoWindow
-                    
+                    style={{
+                      backgroundColor: "red"
+                    }}
                       position={{ lat: driver.lat, lng: driver.lng }}
                      
 
                     >
-                      <div style={{ backgroundColor: "white" }}>
+                      <div style={{ backgroundColor: "red" }}>
                         <span style={{ fontSize: '16px', fontWeight: 'bold', color: "black" }}>
                           {driver?.defaultVehicle?.vehicle_type}:{driver?.defaultVehicle?.seating_capacity}
 
                         </span>
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: "black" }}>
-                          {' ' +driver.first_name + ' ' + driver.last_name}
-                        </span>
+                        
                       </div>
+                   
                     </InfoWindow>
                     : <></>
                   ))
                 }
-               
+                
                 {trip && (
                   <DirectionsService
                     options={directionsServiceOptions}
