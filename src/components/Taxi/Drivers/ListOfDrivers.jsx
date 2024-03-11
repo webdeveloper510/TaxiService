@@ -290,12 +290,12 @@ const ListOfDrivers = ({ role }) => {
                             <CTableHeaderCell className="text-center">
                               Email
                             </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            {selectedType == "Verified Drivers" && <CTableHeaderCell className="text-center">
                               Vehicle
-                            </CTableHeaderCell>
-                            <CTableHeaderCell className="text-center">
+                            </CTableHeaderCell>}
+                            {selectedType == "Verified Drivers" && <CTableHeaderCell className="text-center">
                               License Plate
-                            </CTableHeaderCell>
+                            </CTableHeaderCell>}
                             {/* <CTableHeaderCell className="text-center">
                               Trips
                             </CTableHeaderCell> */}
@@ -348,12 +348,12 @@ const ListOfDrivers = ({ role }) => {
                                   <CTableDataCell>
                                     <div>{item.email}</div>
                                   </CTableDataCell>
-                                  <CTableDataCell>
+                                  {selectedType == "Verified Drivers" &&<CTableDataCell>
                                     <div>{item?.defaultVehicle?.vehicle_model || "Not Selected"}</div>
-                                  </CTableDataCell>
-                                  <CTableDataCell>
+                                  </CTableDataCell>}
+                                  {selectedType == "Verified Drivers" &&<CTableDataCell>
                                     <div>{item?.defaultVehicle?.vehicle_number || "Not Selected"}</div>
-                                  </CTableDataCell>
+                                  </CTableDataCell>}
                                   {/* <CTableDataCell>
                             <div>{item.joiningdate}</div>
                           </CTableDataCell> */}
