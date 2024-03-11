@@ -299,7 +299,9 @@ const Allocatemap = () => {
                       justifyItems: "center",
                       alignItems: "center",
                      }}>
-                     <div style={{ 
+                     <div 
+                     
+                     style={{ 
                         backgroundColor:driver.is_available ? "green" : "red",
                         height:"60px",
                         width: "60px",
@@ -316,10 +318,17 @@ const Allocatemap = () => {
                         paddingLeft: "2px",
                         // border: "4px solid white",
                         // borderRadius: "4px",
+
                         clipPath: "polygon(0% 0%, 100% 0%, 100% 69%, 75% 75%, 48% 100%, 24% 75%, 0 69%)"
-                        }}>
+                        }}
+                        onClick={(e) => handleMarkerClick(driver,e)}
+                        >
                         <span style={{ fontSize: '16px', fontWeight: 'bold', color: "white" }}>
                           {driver?.defaultVehicle?.vehicle_type}
+                          -
+                          {
+                            driver?.defaultVehicle?.seating_capacity
+                          }
                           
 
                         </span>
