@@ -148,7 +148,7 @@ const Allocatemap = () => {
 
     // if(marker.is_available) 
     
-    if(!selectedMarker)setSelectedMarker(marker);
+    if(!selectedMarker || selectedMarker._id != marker._id )setSelectedMarker(marker);
     else setSelectedMarker(null);
     e.stopPropagation();
   };
@@ -283,8 +283,8 @@ const Allocatemap = () => {
                        
                         
                         return ({
-                          x: -49,
-                          y: -59,
+                          x: -40,
+                          y: -35,
                         })
                       }}
                     
@@ -292,8 +292,8 @@ const Allocatemap = () => {
 
                     >
                      <div style={{
-                      height: "100px",
-                      width: "100px",
+                      height: "80px",
+                      width: "80px",
                       display: "flex",
                       flexDirection: "column",
                       justifyItems: "center",
@@ -303,8 +303,8 @@ const Allocatemap = () => {
                      
                      style={{ 
                         backgroundColor:driver.is_available ? "green" : "red",
-                        height:"60px",
-                        width: "60px",
+                        height:"45px",
+                        width: "45px",
                         marginBottom:"5px",
                         textAlign:"center",
                         color: "white",
@@ -313,9 +313,9 @@ const Allocatemap = () => {
                         justifyItems: "center",
                         alignItems: "center",
                         overflow:"hidden",
-                        paddingTop: "10px",
-                        paddingRight: "2px",
-                        paddingLeft: "2px",
+                        paddingTop: "8px",
+                        paddingRight: "1px",
+                        paddingLeft: "1px",
                         // border: "4px solid white",
                         // borderRadius: "4px",
 
@@ -323,7 +323,7 @@ const Allocatemap = () => {
                         }}
                         onClick={(e) => handleMarkerClick(driver,e)}
                         >
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: "white" }}>
+                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: "white" }}>
                           {driver?.defaultVehicle?.vehicle_type}
                           -
                           {
@@ -337,7 +337,7 @@ const Allocatemap = () => {
                     <div style={
                      {
                       width: '100%',
-                      height: '35px',
+                      height: '30px',
                       backgroundColor: 'black',
                       opacity: 0.8,
                       textAlign: 'center',
@@ -346,13 +346,13 @@ const Allocatemap = () => {
                       justifyContent: 'center',
                       alignItems: 'center',
                       overflow:"hidden",
-                      padding: "2px"
+                      padding: "1px"
                     }
                     }
                     onClick={(e) => handleMarkerClick(driver,e)}
                     ><span style={{
                       fontWeight:"bold",
-                    }}>{driver.nickName || "NA"}</span>
+                    }}>{driver.nickName || driver.first_name}</span>
                     </div>
                      </div>
                    

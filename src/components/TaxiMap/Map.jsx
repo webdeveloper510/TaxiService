@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript, InfoWindow, OverlayView } from "@react-google-maps/api";
 import { activeDrivers } from "../../utils/api";
 import { NavItem } from "react-bootstrap";
 const SuperMap=()=> {
@@ -40,20 +40,22 @@ const SuperMap=()=> {
     scale: 1,
   };
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const handleMarkerClick = (marker) => {
-    setSelectedMarker(marker);
+  const handleMarkerClick = (marker,e) => {
+    if(!selectedMarker || selectedMarker._id != marker._id)setSelectedMarker(marker);
+    else setSelectedMarker(null);
+    e.stopPropagation();
   };
   const center = useMemo(() => ({ lat: 52.370216, lng: 4.895168 }), []);
   // if (loadError) {
   //   return <div>Error loading maps</div>;
   // }
   const handleMapClick = (event) => {
-    console.log("🚀 ~ handleMapClick ~ event:", event)
-    // Check if the click event occurred on a marker
-    if (!event.latLng) {
-      setSelectedMarker(null);
-    }
-    if(event.placeId){
+    setSelectedMarker(null);
+    // setRefresh(refresh);
+    // if (!event.latLng) {
+    //   setSelectedMarker(null);
+    // }
+    if (event.placeId) {
       event.stop()
     }
   };
@@ -74,35 +76,127 @@ const SuperMap=()=> {
           onClick={handleMapClick}
 
         > 
-        {
-          driverLocation.map(driver=>(
-            <Marker
-            position={{ lat: driver.lat, lng: driver.lng }}
-            icon={customMarker}
-            onClick={() => handleMarkerClick(driver)}
-            label={driver.first_name + ' ' + driver.last_name}
-          />
-          ))
-        }
+       {
+                  driverLocation.map(driver => (
+                   
+                    <OverlayView
+                    mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+                      position={{ lat: driver.lat, lng: driver.lng }}
+                      getPixelPositionOffset={(width, height) => {
+                       
+                        
+                        return ({
+                          x: -40,
+                          y: -35,
+                        })
+                      }}
+                    
+                     
+
+                    >
+                     <div style={{
+                      height: "80px",
+                      width: "80px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyItems: "center",
+                      alignItems: "center",
+                     }}>
+                     <div 
+                     
+                     style={{ 
+                        backgroundColor:driver.is_available ? "green" : "red",
+                        height:"45px",
+                        width: "45px",
+                        marginBottom:"5px",
+                        textAlign:"center",
+                        color: "white",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyItems: "center",
+                        alignItems: "center",
+                        overflow:"hidden",
+                        paddingTop: "8px",
+                        paddingRight: "1px",
+                        paddingLeft: "1px",
+                        // border: "4px solid white",
+                        // borderRadius: "4px",
+
+                        clipPath: "polygon(0% 0%, 100% 0%, 100% 69%, 75% 75%, 48% 100%, 24% 75%, 0 69%)"
+                        }}
+                        onClick={(e) => handleMarkerClick(driver,e)}
+                        >
+                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: "white" }}>
+                          {driver?.defaultVehicle?.vehicle_type}
+                          -
+                          {
+                            driver?.defaultVehicle?.seating_capacity
+                          }
+                          
+
+                        </span>
+                        
+                    </div>
+                    <div style={
+                     {
+                      width: '100%',
+                      height: '30px',
+                      backgroundColor: 'black',
+                      opacity: 0.8,
+                      textAlign: 'center',
+                      color: 'white',
+                      display: "flex",
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      overflow:"hidden",
+                      padding: "1px"
+                    }
+                    }
+                    onClick={(e) => handleMarkerClick(driver,e)}
+                    ><span style={{
+                      fontWeight:"bold",
+                    }}>{driver.nickName || driver.first_name}</span>
+                    </div>
+                     </div>
+                   
+                    </OverlayView>
+                    
+                  ))
+                }
           {/* <Marker
             position={{ lat: 18.52043, lng: 74.856743 }}
             icon={customMarker}
             onClick={() => handleMarkerClick({ lat: 18.52043, lng: 74.856743 })}
           /> */}
-          {selectedMarker && (
-                    <InfoWindow
-                      position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
-                      onCloseClick={() => setSelectedMarker(null)}
-                    >
-                      <div>
-                        <h2>Driver Details</h2>
-                        <p>{selectedMarker.first_name + ' ' + selectedMarker.last_name}</p>
-                        <p>Latitude: {selectedMarker.lat}</p>
-                        <p>Longitude: {selectedMarker.lng}</p>
-                        {/* Add more details as needed */}
+           {selectedMarker && (
+                  <InfoWindow
+                  style={{
+                    zIndex:"1000000 !important"
+                  }}
+                    position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+                    onCloseClick={() => setSelectedMarker(null)}
+                    options={{
+                      disableAutoPan: false,
+                      pixelOffset: { width: 0},
+                      zIndex: 100,
+                      
+                    }}
+                  >
+                    <div style={{ width: "250px", height: "200px", zIndex: "1000000" }}>
+
+                      <div className="text-center">
+                        <h5 className="vichle-name">Driver Details</h5>
+                        <img src={selectedMarker?.defaultVehicle?.vehicle_photo} style={{borderRadius:"100px"}} alt="car logo" width="80px" height="80px" />
                       </div>
-                    </InfoWindow>
-                  )}
+                      <h5 className="driver-name text-center">Driver Name : {selectedMarker.first_name + ' ' + selectedMarker.last_name}</h5>
+                      <h6 className="vichle-name text-center" style={{fontSize:"10px !important", fontWeight:"500"}}>Vehicle Name :{`${selectedMarker?.defaultVehicle?.vehicle_make} ${selectedMarker.defaultVehicle.vehicle_model}`}</h6>
+                      {/* <h6 className="vichle-name text-center" style={{fontSize:"10px !important", fontWeight:"500"}}>Vichke Type :{selectedMarker?.defaultVehicle?.vehicle_type}</h6> */}
+                      <div class="text-center">
+                       
+                      </div>
+                    </div>
+                  </InfoWindow>
+                )}
         </GoogleMap>
 
             </div>
