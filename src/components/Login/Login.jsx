@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 //import 'bootstrap/dist/js/bootstrap.bundle.min';
 //import 'mdb-react-ui-kit';
 import loginImg from "../../assets/images/login-img.png";
@@ -24,6 +26,85 @@ import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import { ClipLoader } from "react-spinners";
 function Login() {
+  const navigate = useNavigate();
+  const loginSchema = Yup.object().shape({
+    phoneNo: Yup.string()
+      .min(7, "Phone number must be greater then 7")
+      .max(16, "Phone number not be greater then 17")
+      .required("Phone Number is required"),
+    password: Yup.string()
+      .min(6, "Password must be 6 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol")
+      .required("Password is required"),
+  });
+
+  const initialValues = {
+    phoneNo: "",
+    password: "",
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: loginSchema,
+    onSubmit: async (values) => {
+      console.log("values", values);
+      userLogin({
+        email : values.phoneNo,
+        password : values.password
+      }).then((response)=>{
+        console.log("response---->>>>", response)
+        // navige to dashboard if user role is super admin
+        if(response.data.code === 200 && response.data.result.role === "SUPER_ADMIN"){
+          navigate("/dashboard")
+        }
+      }).catch((error)=>{
+        console.log(error)
+      })
+    },
+  });
+
+  const handleMobile =(event,max)=>{
+    
+    const pattern = /^[0-9]+$/;
+    if (event.key === 'Backspace' || event.key === 'Enter' || event.key === 'Tab' || event.key === 'Shift' || event.key === 'ArrowLeft' || event.key === "ArrowRight") {
+     
+      formik.setFieldValue(event.target.name, event.target.value)
+      formik.setFieldTouched(event.target.name, true)
+    } else {
+
+      let value = event.target.value.toString()
+      if (value.length > max) {
+        event.stopPropagation()
+        event.preventDefault()
+      } else {
+        if (!pattern.test(event.key)) {
+          event.preventDefault();
+          event.stopPropagation()
+        } else {
+          formik.setFieldValue(event.target.name, event.target.value)
+          formik.setFieldTouched(event.target.name, true)
+        }
+      }
+    }
+  }
+
+  return (
+    <div
+      className="container-login"
+      style={{
+        backgroundImage: `url(${loginbg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "100%",
+      }}
+    >
+      <MDBContainer
+        fluid
+        className="p-0 ps-0 pe-0 my-0 h-custom custom-login-form"
+      >
   const { user, setUser } = useContext(userContext)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -265,6 +346,8 @@ function Login() {
 
                 <div className="text-center text-md-start mt-4 pt-2">
                   {/* <MDBBtn className="custom-login mb-0 px-5">
+                <div className="text-center text-md-start mt-4 pt-2">
+                  {/* <MDBBtn className="custom-login mb-0 px-5">
                 Login
               </MDBBtn> */}
                   <button className="custom-login btn btn-primary" type="submit">
@@ -277,11 +360,16 @@ function Login() {
           </MDBCol>
 
           <MDBCol col="10" md="4">
+          <MDBCol col="10" md="4">
             <img src={loginImg} className="img-fluid-login " alt="login" />
           </MDBCol>
         </MDBRow>
       </MDBContainer>
     </div>
+  );
+}
+
+export default Login;
   );
 }
 
