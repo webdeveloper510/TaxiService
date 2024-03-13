@@ -24,6 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: sudo rm -r node_modules
+    - run: npm i -f
     - run: echo "${{secrets.PROD_ENV}}" >.env
     - run: npm run build
