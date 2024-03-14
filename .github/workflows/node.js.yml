@@ -25,11 +25,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: |
-          if [ -d "node_modules" ]; then
-            echo "Deleting node_modules directory"
-            sudo rm -r node_modules
+          if [ -f "package-lock.json" ]; then
+          echo "Deleting package-lock.json file"
+          sudo rm -r package-lock.json
           else
-            echo "node_modules directory not found"
+          echo "package-lock.json file not found"
           fi
     - run: npm i -f
     - run: echo "${{secrets.PROD_ENV}}" >.env
