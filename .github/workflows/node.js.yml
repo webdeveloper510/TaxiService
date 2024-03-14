@@ -32,11 +32,11 @@ jobs:
             echo "node_modules directory not found"
           fi
     - run: |
-          if [ -d "package-lock.json" ]; then
-            echo "Deleting package-lock.json directory"
-            sudo rm -r package-lock.json
+          if [ -f "package-lock.json" ]; then
+          echo "Deleting package-lock.json file"
+          sudo rm -r package-lock.json
           else
-            echo "package-lock.json directory not found"
+          echo "package-lock.json file not found"
           fi
     - run: npm i -f
     - run: echo "${{secrets.PROD_ENV}}" >.env
