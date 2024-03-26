@@ -9,7 +9,10 @@ import { getProfile } from './utils/api';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AppLoader from './components/AppLoader';
 import PrivateRoute from './routes/PrivateRoute';
+import socket from './utils/socket';
 function App() {
+  
+  const socketContext = createContext();
   const [appLoaded, setAppLoaded] = useState(false)
   const [user, setUser] = useState(null);
   const [loading , setLoading] = useState(false);
@@ -48,19 +51,36 @@ function App() {
             setAppLoaded(true);
           })
   }
-  
+
   useEffect(()=>{
     onLoadApp()
   },[token,refreshUser])
-  
+
+  useEffect(()=>{
+    socket.connect();
+    console.log("Connected start")
+    socket.on("connection",()=>{
+      console.log("Connected socket");
+
+    })
+    socket.on("connect",()=>{
+      console.log("Connected socket successfully");
+
+    })
+    return ()=>{
+      socket.disconnect();
+    }
+  },[])
   
   return (
+    <socketContext.Provider value={{socket}}>
     <userContext.Provider value={{user,setUser,appLoaded, refreshUserData}}>
     {loading?<AppLoader/>:<div className="App">
       <PrivateRoute/>
       <ToastContainer />
     </div>}
     </userContext.Provider>
+    </socketContext.Provider>
   );
 }
 
