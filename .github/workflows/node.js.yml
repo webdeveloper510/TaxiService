@@ -41,3 +41,10 @@ jobs:
     - run: npm i -f
     - run: echo "${{secrets.PROD_ENV}}" >.env
     - run: npm run build
+    - run: |
+          if [ -d "node_modules" ]; then
+            echo "Deleting node_modules directory"
+            sudo rm -r node_modules
+          else
+            echo "node_modules directory not found"
+          fi
