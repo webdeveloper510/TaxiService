@@ -37,6 +37,7 @@ function App() {
             console.log(res, 'profile data')
             if (res?.code === 200) {
               setUser(res.result)
+              socket.emit("addUser",{token})
             }else{
               console.log("remove token from wrong app")
               localStorage.clear();
@@ -58,11 +59,13 @@ function App() {
 
   useEffect(()=>{
     socket.connect();
-    console.log("Connected start")
     socket.on("connection",()=>{
-      console.log("Connected socket");
-
+      console.log("Connected socket")
     })
+    socket.on("userConnection",(data)=>{
+      console.log("userConnection socket",data)
+    })
+    
     socket.on("connect",()=>{
       console.log("Connected socket successfully");
 
@@ -71,7 +74,7 @@ function App() {
       socket.disconnect();
     }
   },[])
-  
+
   return (
     <socketContext.Provider value={{socket}}>
     <userContext.Provider value={{user,setUser,appLoaded, refreshUserData}}>
