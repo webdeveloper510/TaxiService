@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import './assets/css/App.css';
 import Routerpage from '../src/routes/router';
 import './scss/style.scss'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import userContext from './utils/context';
 import { getProfile } from './utils/api';
@@ -10,9 +10,9 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import AppLoader from './components/AppLoader';
 import PrivateRoute from './routes/PrivateRoute';
 import socket from './utils/socket';
+export const socketContext = createContext();
 function App() {
   
-  const socketContext = createContext();
   const [appLoaded, setAppLoaded] = useState(false)
   const [user, setUser] = useState(null);
   const [loading , setLoading] = useState(false);
@@ -65,7 +65,12 @@ function App() {
     socket.on("userConnection",(data)=>{
       console.log("userConnection socket",data)
     })
-    
+    socket.on("tripCancelledBYDriver",({trip})=>{
+      toast.warning(`${trip.trip_id} Trip is cancelled by driver`, {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+    })
     socket.on("connect",()=>{
       console.log("Connected socket successfully");
 

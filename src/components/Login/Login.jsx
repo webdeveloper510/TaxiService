@@ -23,7 +23,9 @@ import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import { ClipLoader } from "react-spinners";
+import { socketContext } from "../../App";
 function Login() {
+  const {socket} = useContext(socketContext)
   const { user, setUser } = useContext(userContext)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -68,20 +70,21 @@ function Login() {
             autoClose: 1000,
           });
           localStorage.setItem("token", response.data.jwtToken)
+          const token = response.data.result.token;
           if (response.data.result.role === "COMPANY") {
-
+            socket.emit("addUser",{token})
             navigate("/taxi/dashboard")
 
 
           } else if (response.data.result.role === "SUPER_ADMIN") {
-
+            socket.emit("addUser",{token})
             navigate("/super-admin/dashboard")
 
 
           } else if (response.data.result.role === "DRIVER") {
             return navigate("/past-trips");
           } else {
-
+            socket.emit("addUser",{token})
             navigate("/dashboard")
 
           }
