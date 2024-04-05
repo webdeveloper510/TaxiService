@@ -68,6 +68,7 @@ import Register from '../components/Login/register';
 import Alldetail from '../components/Login/alldetail';
 import DriverVerification from '../components/Login/Verify';
 import AllocateDriver from '../components/Taxi/Trips/allocateDriver';
+import DriverRegister from '../components/Taxi/driverRegister/register';
 
 const PrivateRoute = () => {
 
@@ -117,6 +118,7 @@ const PrivateRoute = () => {
             <Route path="/taxi-feedback" element={<SecureTaxiRoleRoute><Feedback role="taxi"/></SecureTaxiRoleRoute>} />
             <Route path="/taxi/companydetails" element={<SecureTaxiRoleRoute><CompanyDetails /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/add-company" element={<SecureTaxiRoleRoute><AddCompany /></SecureTaxiRoleRoute>} />
+            <Route path="/taxi/driver-register" element={<SecureTaxiRoleRoute><DriverRegister /></SecureTaxiRoleRoute>} />
 
             <Route path="/taxi/trips/bookedtrips" element={<SecureTaxiRoleRoute><SuperBookedTrips /></SecureTaxiRoleRoute>} />
             <Route path="/taxi/trips/activetrips" element={<SecureTaxiRoleRoute><SuperActiveTrip /></SecureTaxiRoleRoute>} />
