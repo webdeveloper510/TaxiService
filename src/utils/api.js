@@ -811,3 +811,60 @@ export const payCommission = async(data) => {
     console.log("GET_TRIP", error);
   });
 };
+
+export const convertDriver = async (data) => {
+  return await Axios.post(`admin/convertDriver`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "convert driver");
+      if(res.data.code === 200) {
+        localStorage.setItem("token", res.data.jwtToken);
+      token = localStorage.getItem(res.data.jwtToken);
+      }
+      return res;
+    })
+    .catch((error) => {
+      console.log("convert_DRIVER", error);
+    });
+};
+
+export const switchDriver = async (data) => {
+  return await Axios.post(`admin/switchDriver`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "switchDriver");
+      if(res.data.code === 200) {
+        localStorage.setItem("token", res.data.jwtToken);
+      token = localStorage.getItem(res.data.jwtToken);
+      }
+      return res;
+    })
+    .catch((error) => {
+      console.log("switchDriver", error);
+    });
+};
+
+export const switchCompany = async (data) => {
+  return await Axios.post(`admin/switchCompany`, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+      console.log(res, "switchCompany");
+      if(res.data.code === 200) {
+        // localStorage.setItem("token", res.data.jwtToken);
+      // token = localStorage.getItem(res.data.jwtToken);
+      }
+      return res;
+    })
+    .catch((error) => {
+      console.log("switchCompany", error);
+    });
+};

@@ -23,7 +23,7 @@ import { MDBContainer, MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { addDriver, editDriver } from "../../../utils/api";
+import { addDriver, convertDriver, editDriver } from "../../../utils/api";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { countryList } from "../../../utils/saticData";
@@ -37,19 +37,15 @@ function DriverRegister() {
   const [doc, setDoc] = useState("");
   const { user, setUser, appLoaded } = useContext(userContext);
   const initialValues = {
-    // FirstName: "",
-    // LastName: "",
+    nickName: "",
     Address1: "",
     Address2: "",
     Country: "Netherlands",
     City: "",
     Zip: "",
-    companyName: "",
+    // companyName: "",
     bankNumber: "",
     kvk: "",
-    // Email: "",
-    // MobileNo: "",
-    // Gender: "",
     file: "",
     doc,
     gender: "",
@@ -58,11 +54,7 @@ function DriverRegister() {
     if (user?.isDocUploaded) navigate("/past-trips");
   }, []);
   const validationSchema = Yup.object().shape({
-    companyName: Yup.string()
-      .trim()
-      .max(20, "Company Name must be at most 20 characters")
-      .matches(/^[^\d]+$/, "Company Name is not valid")
-      .required("Company Name is required"),
+   
     kvk: Yup.string()
       .trim()
       .max(20, "KVK Number must be at most 20 characters")
@@ -87,7 +79,7 @@ function DriverRegister() {
       .trim()
       .max(6, "ZIP Code must be at most 6 characters")
       .required("Zip is required"),
-    // Email: Yup.string().trim().email().required("Email  is required"),
+    nickName: Yup.string().trim().required("Email  is required"),
     // MobileNo: Yup.string()
     //   .trim()
     //   .matches(/^[0-9]+$/, "Must be only digits")
@@ -147,21 +139,24 @@ function DriverRegister() {
       formData.append("zip_code", values.Zip);
       formData.append("driver_image", values.file);
       formData.append("driver_documents", values.doc);
-      formData.append("companyName", values.companyName);
+      // formData.append("companyName", values.companyName);
       formData.append("kvk", values.kvk);
       formData.append("bankNumber", values.bankNumber);
       formData.append("isDocUploaded", "true");
       formData.append("gender", values.gender);
+      formData.append("nickName", values.nickName);
       setSubmitLoader(true);
-      editDriver(formData, user._id)
+      convertDriver(formData)
         .then((res) => {
           console.log("response from add driver --->>>>", res);
           if (res?.data?.code === 200) {
-            toast.success(`${res.data.message}`, {
+            toast.success(`Driver profile created`, {
               position: "top-right",
               autoClose: 1000,
             });
-            navigate("/driver-verification");
+            setUser(res.data.result);
+            
+            navigate("/");
           } else {
             toast.warning(`${res?.data?.message || "There is some problem"}`, {
               position: "top-right",
@@ -393,32 +388,36 @@ function DriverRegister() {
                                 </MDBCol>
                                 <MDBCol col="12" md="6">
                                   <div className="mb-4">
-                                    <label className="form-label">
-                                      Company Name
+                                    <label
+                                      htmlFor="inputAddress"
+                                      className="form-label"
+                                    >
+                                      Nick Name
                                     </label>
                                     <CFormInput
-                                      {...formik.getFieldProps("companyName")}
+                                      id="inputAddress"
+                                      {...formik.getFieldProps("nickName")}
                                       maxLength="50"
                                       className={clsx(
                                         "form-control bg-transparent",
                                         {
                                           "is-invalid":
-                                            formik.touched.companyName &&
-                                            formik.errors.companyName,
+                                            formik.touched.nickName &&
+                                            formik.errors.nickName,
                                         },
                                         {
                                           "is-valid":
-                                            formik.touched.companyName &&
-                                            !formik.errors.companyName,
+                                            formik.touched.nickName &&
+                                            !formik.errors.nickName,
                                         }
                                       )}
-                                      name="companyName"
+                                      name="nickName"
                                       autoComplete="off"
                                     />
-                                    {formik.errors.companyName &&
-                                    formik.touched.companyName ? (
+                                    {formik.errors.nickName &&
+                                    formik.touched.nickName ? (
                                       <div className="text-danger text-start">
-                                        {formik.errors.companyName}
+                                        {formik.errors.nickName}
                                       </div>
                                     ) : null}
                                   </div>
@@ -567,6 +566,7 @@ function DriverRegister() {
                                     </div>
                                   ) : null}
                                 </MDBCol>
+                               
 
                                 <CCol
                                   md={6}
