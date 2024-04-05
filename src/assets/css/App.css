@@ -419,6 +419,18 @@ button.custom-login.btn.btn-primary {
   font-size: 22px;
   font-family: 'larken_demoregular';
 }
+button.custom-login-driver.btn.btn-primary {
+  background: #FDC101;
+  border: none;
+  text-transform: uppercase;
+  margin: 0 auto;
+  text-align: end;
+  padding: 8px 20px;
+  border-radius: 20px;
+  color: #000;
+  font-size: 22px;
+  font-family: 'larken_demoregular';
+}
 .custom-login-form label {
   text-transform: capitalize;
   text-align: left !important;
@@ -453,6 +465,7 @@ p.lead {
   width: 50%;
   margin: 0 auto;
 }
+
 img.login-imgg {
   width: 50%;
 }
