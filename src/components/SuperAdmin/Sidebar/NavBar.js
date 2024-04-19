@@ -126,11 +126,11 @@ const _NavBar = [
     ></path>
   </svg></div>,
     items: [
-      {
-        component: CNavItem,
-        name: 'Add New Driver',
-        to: '/super-admin/driver/addnewdriver',
-      }, 
+      // {
+      //   component: CNavItem,
+      //   name: 'Add New Driver',
+      //   to: '/super-admin/driver/addnewdriver',
+      // }, 
       {
         component: CNavItem,
         name: 'All Drivers',
