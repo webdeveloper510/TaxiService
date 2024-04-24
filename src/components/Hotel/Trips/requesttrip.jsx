@@ -596,6 +596,12 @@ const RequestNewTrip = () => {
                                   );
                                 })}
                               </CFormSelect>
+                              {vehicle?.length == 0 &&  <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  Company should first add vehicle fare price before requsting a trip.
+                                </span>}
                               {errors.vehicle && (
                                 <span
                                   style={{ color: "red" }}

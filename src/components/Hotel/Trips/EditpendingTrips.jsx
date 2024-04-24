@@ -42,7 +42,7 @@ const EditpendingTrip = ({ role }) => {
   const [selectedFrom, setSelectedFrom] = useState(true);
   const [selectedTo, setSelectedTo] = useState(true);
   const pendingId = useParams();
-  
+
   const navigate = useNavigate();
   const [price, setPrice] = useState("")
 
@@ -75,9 +75,9 @@ const EditpendingTrip = ({ role }) => {
     pay_option: "Cash",
     passengerCount: "1",
     name: "",
-      phone: "",
-      email: "",
-      address: "",
+    phone: "",
+    email: "",
+    address: "",
   });
   const [errors, setErrors] = useState({
     vehicle: null,
@@ -91,9 +91,9 @@ const EditpendingTrip = ({ role }) => {
     pay_option: null,
     passengerCount: null,
     name: null,
-      phone: null,
-      email: null,
-      address: null,
+    phone: null,
+    email: null,
+    address: null,
   });
   const [inputs, setInputs] = useState([
   ]);
@@ -102,7 +102,7 @@ const EditpendingTrip = ({ role }) => {
   const [tripTo, setTrimTo] = useState("");
   const [tripToCoordinates, setTripToCoordinates] = useState(null);
   const [loading, setLoading] = useState(false);
-  const priceCalculator = async() => {
+  const priceCalculator = async () => {
 
     let distance = null;
     // if (inputData?.trip_from?.log && inputData?.trip_to?.log) {
@@ -122,10 +122,10 @@ const EditpendingTrip = ({ role }) => {
       lat: inputData?.trip_from?.lat,
       lng: inputData?.trip_from?.log,
     },
-    {
-      lat: inputData?.trip_to?.lat,
-      lng: inputData?.trip_to?.log,
-    }) || distance
+      {
+        lat: inputData?.trip_to?.lat,
+        lng: inputData?.trip_to?.log,
+      }) || distance
     console.log("distance is from priceCalculator", distance);
     console.log("🚀 ~ priceCalculator ~ selectedFare:", selectedFare)
     if (distance) {
@@ -134,11 +134,11 @@ const EditpendingTrip = ({ role }) => {
       setPrice("0")
     }
   }
-  useEffect(()=>{priceCalculator()}, [refreshPrice])
-  useEffect(()=>{
+  useEffect(() => { priceCalculator() }, [refreshPrice])
+  useEffect(() => {
     console.log("🚀 ~ EditpendingTrip ~ selectedFare:", selectedFare)
   }, [selectedFare])
-  
+
   const handleSelectTripFrom = async (selectedAddress) => {
     try {
       const results = await geocodeByAddress(selectedAddress);
@@ -211,7 +211,7 @@ const EditpendingTrip = ({ role }) => {
     setInputs(updatedPassengers);
   };
   // useEffect(() => {
-    
+
   // }, []);
   const formValidation = (inputs) => {
     const data = [...inputs];
@@ -228,7 +228,7 @@ const EditpendingTrip = ({ role }) => {
         data[index].nameCheck = "Name should not be a number";
         data[index].nameLengthCheck = "";
         valid = false;
-    } else if (data[index].name?.length < 3) {
+      } else if (data[index].name?.length < 3) {
         data[index].nameLengthCheck = "Please enter valid name";
         data[index].nameCheck = "";
         valid = false;
@@ -306,13 +306,13 @@ const EditpendingTrip = ({ role }) => {
           console.log(res?.result, "fares");
           if (res?.code === 200) {
             const fareFromApi = res?.result;
-            
-            
+
+
             const newVehicle = [];
-            vehicleFromApi.forEach((item)=>{
-              console.log("res2.result",fareFromApi)
+            vehicleFromApi.forEach((item) => {
+              console.log("res2.result", fareFromApi)
               fareFromApi.forEach(fare => {
-                if(fare.vehicle_type == item.name){
+                if (fare.vehicle_type == item.name) {
                   newVehicle.push(item);
                 }
               })
@@ -320,49 +320,54 @@ const EditpendingTrip = ({ role }) => {
             setVehicle(newVehicle);
             setFares(fareFromApi);
             getTripById(pendingId.id)
-            .then((res) => {
-              console.log("pending trips id", res);
-              if (res?.code == 200) {
-                const value = res.result;
-                setPrice(value?.price || "0")
-                setTripFrom(value.trip_from.address)
-                setTrimTo(value.trip_to.address)
-                setInputData({
-                  id: value._id,
-                  vehicle: value.vehicle_type,
-                  trip_from: {
-                    address: value.trip_from.address,
-                    lat: value.trip_from.lat,
-                    log: value.trip_from.log,
-                  },
-                  trip_to: {
-                    address: value.trip_to.address,
-                    lat: value.trip_to.lat,
-                    log: value.trip_to.log,
-                  },
-                  pick_up_date: new Date(value.pickup_date_time),
-                  passenger_detail: [],
-                  commission_type: value?.commission?.commission_type,
-                  commission_value: value?.commission?.commission_value
-                });
-                handlepickupDateChange(new Date(value.pickup_date_time))
-                
-                let passenger_detail = value.passenger_detail;
-                let add_on = [];
-                for (let value of passenger_detail){
-                  add_on.push({
-                    name: value.name,
-                    email: value.email,
-                    phone: value.phone,
-                    address: value.address,
+              .then((res) => {
+                console.log("pending trips id", res);
+                if (res?.code == 200) {
+                  const value = res.result;
+                  setPrice(value?.price || "0")
+                  setTripFrom(value.trip_from.address)
+                  setTrimTo(value.trip_to.address)
+                  setInputData({
+                    id: value._id,
+                    vehicle: value.vehicle_type,
+                    trip_from: {
+                      address: value.trip_from.address,
+                      lat: value.trip_from.lat,
+                      log: value.trip_from.log,
+                    },
+                    trip_to: {
+                      address: value.trip_to.address,
+                      lat: value.trip_to.lat,
+                      log: value.trip_to.log,
+                    },
+                    pick_up_date: new Date(value.pickup_date_time),
+                    passenger_detail: [],
+                    commission_type: value?.commission?.commission_type,
+                    commission_value: value?.commission?.commission_value,
+                    passengerCount: value?.passengerCount,
+                    name: value?.customerDetails?.name,
+                    phone: value?.customerDetails?.phone,
+                    email: value?.customerDetails?.email,
+                    address: value?.customerDetails?.address,
                   });
+                  handlepickupDateChange(new Date(value.pickup_date_time))
+
+                  let passenger_detail = value.passenger_detail;
+                  let add_on = [];
+                  for (let value of passenger_detail) {
+                    add_on.push({
+                      name: value.name,
+                      email: value.email,
+                      phone: value.phone,
+                      address: value.address,
+                    });
+                  }
+                  setInputs(add_on);
+
+
                 }
-                setInputs(add_on);
-                
-                
-              }
-            })
-           
+              })
+
           }
         })
       }
@@ -370,16 +375,16 @@ const EditpendingTrip = ({ role }) => {
       setTimeout(() => {
         // setFareOnVehicleType(inputData.vehicle_type)
         setLoading(false)
-      },1500);
+      }, 1500);
     });
-   
+
   };
 
-  useEffect(()=>{
-    if(inputData.vehicle !==""){
+  useEffect(() => {
+    if (inputData.vehicle !== "") {
       setFareOnVehicleType(inputData.vehicle)
     }
-  },[inputData.vehicle])
+  }, [inputData.vehicle])
 
   const handleBlur = (index, key) => {
     const newPassengersError = [...passengerError]
@@ -433,7 +438,7 @@ const EditpendingTrip = ({ role }) => {
       valid = false;
       newErrors.pick_up_date = "Please select valid pick-up date";
     }
-    if (price <=0 ) {
+    if (price <= 0) {
       valid = false;
       toast.warning(`Price should be greater than 0`, {
         position: "top-right",
@@ -446,15 +451,15 @@ const EditpendingTrip = ({ role }) => {
     }
     if (role != "hotel" &&
       (inputData.commission_type == "Percentage" &&
-      parseFloat(inputData.commission_value) > 100)
+        parseFloat(inputData.commission_value) > 100)
     ) {
       valid = false;
       newErrors.commission_value = "Value should be less than equal 100";
     }
-    if ( role != "hotel" && 
+    if (role != "hotel" &&
       (inputData.commission_type == "Fixed" &&
-      parseFloat(price) > 0 &&
-      parseFloat(inputData.commission_value) > parseFloat(price))
+        parseFloat(price) > 0 &&
+        parseFloat(inputData.commission_value) > parseFloat(price))
     ) {
       valid = false;
       newErrors.commission_value = "Value should be less than trip price";
@@ -523,7 +528,7 @@ const EditpendingTrip = ({ role }) => {
     }
   };
   const setFareOnVehicleType = (vehicle_type) => {
-    console.log("🚀 ~ setFareOnVehicleType ~ setFareOnVehicleType:", "Run from function setFareOnVehicleType",fares,vehicle_type);
+    console.log("🚀 ~ setFareOnVehicleType ~ setFareOnVehicleType:", "Run from function setFareOnVehicleType", fares, vehicle_type);
 
     fares.forEach((fare) => {
       console.log("🚀 ~ fares.forEach ~ fares:", fares)
@@ -604,9 +609,9 @@ const EditpendingTrip = ({ role }) => {
                                 {/* <option selected>{inputData.vehicle}</option> */}
                                 {vehicle?.map((e, i) => {
                                   return (
-                                   
-                                      <option key={i} value={e.name}>{e.name}</option>
-                                    
+
+                                    <option key={i} value={e.name}>{e.name}</option>
+
                                   );
                                 })}
                               </CFormSelect>
@@ -645,7 +650,7 @@ const EditpendingTrip = ({ role }) => {
                                 minDate={new Date()}
                                 onChange={(data) => {
                                   console.log("🚀 ~ EditpendingTrip ~ data:", data)
-                                  
+
                                   setpickupDate(data);
                                   setInputData({
                                     ...inputData,
@@ -677,13 +682,13 @@ const EditpendingTrip = ({ role }) => {
                                   setSelectedFrom(false);
                                   console.log(data);
                                   setTripFrom(data);
-                                  
-                                    setErrors({
-                                      ...errors,
-                                      trip_from:
-                                        "Please add valid trip from address",
-                                    });
-                                  
+
+                                  setErrors({
+                                    ...errors,
+                                    trip_from:
+                                      "Please add valid trip from address",
+                                  });
+
                                 }}
                                 onSelect={handleSelectTripFrom}
                               >
@@ -705,7 +710,7 @@ const EditpendingTrip = ({ role }) => {
                                         {loading && <div>Loading...</div>}
                                         {suggestions
                                           .slice(0, 3)
-                                          .map((suggestion,i) => (
+                                          .map((suggestion, i) => (
                                             <div
                                               key={i}
                                               {...getSuggestionItemProps(
@@ -747,13 +752,13 @@ const EditpendingTrip = ({ role }) => {
                                   console.log(data);
                                   setSelectedTo(false);
                                   setTrimTo(data);
-                                  
-                                    setErrors({
-                                      ...errors,
-                                      trip_to:
-                                        "Please add valid trip to address",
-                                    });
-                                  
+
+                                  setErrors({
+                                    ...errors,
+                                    trip_to:
+                                      "Please add valid trip to address",
+                                  });
+
                                 }}
                                 onSelect={handleSelectTripTo}
                               >
@@ -828,6 +833,7 @@ const EditpendingTrip = ({ role }) => {
                               </CFormLabel>
                               <CFormSelect
                                 name="commission_type"
+                                value={inputData.commission_type}
                                 onChange={(data) => {
                                   setInputData((prev) => {
                                     const newValue = prev;
@@ -853,7 +859,7 @@ const EditpendingTrip = ({ role }) => {
                               </CFormSelect>
 
                             </CCol>}
-                           {role != "hotel" &&  <CCol xs={6}>
+                            {role != "hotel" && <CCol xs={6}>
                               <CFormLabel htmlFor="inputtripfrom">
                                 Commission Value <span class="asterisk-mark">*</span>
                               </CFormLabel>
@@ -898,6 +904,8 @@ const EditpendingTrip = ({ role }) => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                value={inputData.passengerCount}
+                                type="number"
                                 onChange={(e) => {
                                   if (e.target.value.length > 20) {
                                     setErrors({
@@ -929,6 +937,7 @@ const EditpendingTrip = ({ role }) => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                value={inputData.name}
                                 onChange={(e) => {
                                   if (e.target.value.length > 20) {
                                     setErrors({
@@ -960,6 +969,7 @@ const EditpendingTrip = ({ role }) => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                value={inputData.address}
                                 onChange={(e) => {
                                   if (e.target.value.length > 50) {
                                     setErrors({
@@ -991,6 +1001,7 @@ const EditpendingTrip = ({ role }) => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                value={inputData.email}
                                 type="email"
                                 onChange={(e) => {
                                   if (e.target.value.length > 20) {
@@ -1023,6 +1034,7 @@ const EditpendingTrip = ({ role }) => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                value={inputData.phone}
                                 type="number"
                                 onChange={(e) => {
                                   if (e.target.value.length > 16) {
@@ -1079,102 +1091,102 @@ const EditpendingTrip = ({ role }) => {
                               )}
                             </CCardHeader>
                             <CCardBody>
-                            <CForm className="row g-3">
-                              <CCol md={6}>
-                                <CFormLabel htmlFor="inputname"
+                              <CForm className="row g-3">
+                                <CCol md={6}>
+                                  <CFormLabel htmlFor="inputname"
 
-                                >
-                                  Name<span class="asterisk-mark">*</span>
-                                </CFormLabel>
-                                <CFormInput
-                                  aria-label="name"
-                                  name="name"
-                                  value={passenger.name || ""}
-                                  onChange={(e) => {
-                                    addOnChangeHandler(e, index);
-                                  }}
-                                  onBlur={() => {
-                                    handleBlur(index, "name")
-                                  }}
-                                />
-                                {passengerError[index].name && <div style={{ color: "red" }}>
-                                  {passenger.nameCheck}
-                                  <br />
-                                  {passenger.nameLengthCheck}
-                                </div>}
-                              </CCol>
-                              <CCol xs={6}>
-                                <CFormLabel htmlFor="inputphnno"
+                                  >
+                                    Name<span class="asterisk-mark">*</span>
+                                  </CFormLabel>
+                                  <CFormInput
+                                    aria-label="name"
+                                    name="name"
+                                    value={passenger.name || ""}
+                                    onChange={(e) => {
+                                      addOnChangeHandler(e, index);
+                                    }}
+                                    onBlur={() => {
+                                      handleBlur(index, "name")
+                                    }}
+                                  />
+                                  {passengerError[index].name && <div style={{ color: "red" }}>
+                                    {passenger.nameCheck}
+                                    <br />
+                                    {passenger.nameLengthCheck}
+                                  </div>}
+                                </CCol>
+                                <CCol xs={6}>
+                                  <CFormLabel htmlFor="inputphnno"
 
-                                >
-                                  Phone<span class="asterisk-mark">*</span>
-                                </CFormLabel>
-                                <CFormInput
-                                  id="inputphnno"
-                                  name="phone"
-                                  type="number"
-                                  value={passenger.phone || ""}
-                                  onChange={(e) => {
-                                    addOnChangeHandler(e, index);
-                                  }}
-                                  onBlur={() => {
-                                    handleBlur(index, "phone")
-                                  }}
-                                />
-                                {passengerError[index].phone && <div style={{ color: "red" }}>
-                                  {passenger.phoneCheck}
-                                  <br />
-                                  {passenger.phoneLengthCheck}
-                                </div>}
-                              </CCol>
-                              <CCol xs={6}>
-                                <CFormLabel htmlFor="inputtemailadd"
+                                  >
+                                    Phone<span class="asterisk-mark">*</span>
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="inputphnno"
+                                    name="phone"
+                                    type="number"
+                                    value={passenger.phone || ""}
+                                    onChange={(e) => {
+                                      addOnChangeHandler(e, index);
+                                    }}
+                                    onBlur={() => {
+                                      handleBlur(index, "phone")
+                                    }}
+                                  />
+                                  {passengerError[index].phone && <div style={{ color: "red" }}>
+                                    {passenger.phoneCheck}
+                                    <br />
+                                    {passenger.phoneLengthCheck}
+                                  </div>}
+                                </CCol>
+                                <CCol xs={6}>
+                                  <CFormLabel htmlFor="inputtemailadd"
 
-                                >
-                                  Email Address<span class="asterisk-mark">*</span>
-                                </CFormLabel>
-                                <CFormInput
-                                  id="inputemailadd"
-                                  name="email"
-                                  value={passenger.email || ""}
-                                  onChange={(e) => {
-                                    addOnChangeHandler(e, index);
+                                  >
+                                    Email Address<span class="asterisk-mark">*</span>
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="inputemailadd"
+                                    name="email"
+                                    value={passenger.email || ""}
+                                    onChange={(e) => {
+                                      addOnChangeHandler(e, index);
 
-                                  }}
-                                  onBlur={() => {
-                                    handleBlur(index, "email")
-                                  }}
-                                />
-                                {passengerError[index].email && <div style={{ color: "red" }}>
-                                  {passenger.emailCheck}
-                                  <br />
-                                  {passenger.emailFormat}
-                                </div>}
-                              </CCol>
-                              <CCol xs={6}>
-                                <CFormLabel htmlFor="inputaddress"
+                                    }}
+                                    onBlur={() => {
+                                      handleBlur(index, "email")
+                                    }}
+                                  />
+                                  {passengerError[index].email && <div style={{ color: "red" }}>
+                                    {passenger.emailCheck}
+                                    <br />
+                                    {passenger.emailFormat}
+                                  </div>}
+                                </CCol>
+                                <CCol xs={6}>
+                                  <CFormLabel htmlFor="inputaddress"
 
-                                >
-                                  Address<span class="asterisk-mark">*</span>
-                                </CFormLabel>
-                                <CFormInput
-                                  id="inputaddress"
-                                  name="address"
-                                  value={passenger.address || ""}
-                                  onChange={(e) => {
-                                    addOnChangeHandler(e, index);
-                                  }}
-                                  onBlur={() => {
-                                    handleBlur(index, "address")
-                                  }}
-                                />
-                                {passengerError[index].address && <div style={{ color: "red" }}>
-                                  {passenger.addressCheck}
-                                  <br />
-                                  {passenger.addressLengthCheck}
-                                </div>}
-                              </CCol>
-                            </CForm>
+                                  >
+                                    Address<span class="asterisk-mark">*</span>
+                                  </CFormLabel>
+                                  <CFormInput
+                                    id="inputaddress"
+                                    name="address"
+                                    value={passenger.address || ""}
+                                    onChange={(e) => {
+                                      addOnChangeHandler(e, index);
+                                    }}
+                                    onBlur={() => {
+                                      handleBlur(index, "address")
+                                    }}
+                                  />
+                                  {passengerError[index].address && <div style={{ color: "red" }}>
+                                    {passenger.addressCheck}
+                                    <br />
+                                    {passenger.addressLengthCheck}
+                                  </div>}
+                                </CCol>
+                              </CForm>
                             </CCardBody>
                           </CCard>
                         </CCol>

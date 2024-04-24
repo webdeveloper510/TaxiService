@@ -158,12 +158,15 @@ const Allocatemap = () => {
     console.log("🚀 ~ Allocatemap ~ selectedMarker:", selectedMarker)
     
   },[selectedMarker])
-  const handleALLocate = () => {
+  const handleALLocate = (self) => {
     const data = {
-      driver_name: selectedMarker._id,
+      driver_name: selectedMarker?._id,
       // vehicle: selectVehicle,
       status: "Accepted",
     };
+    if(self){
+      data.driver_name = user.driverId
+    }
     allocateDriver(data, id).then((res) => {
       if (res?.data?.code === 200) {
         toast.success(`${res.data.message}`, {
@@ -199,10 +202,9 @@ const Allocatemap = () => {
   return (
     <>
       <div className="container-fluidd">
-        <div className="col-md-12">
           <div className="row">
-            <div className="col-md-12 text-end">
-              <p>Show Favorite Driver Only</p>
+            <div className="col-md-12 px-5">
+             <div className="text-end me-3"> <p>Show Favorite Driver Only</p>
               <Switch
                 checkedIcon={false}
                 uncheckedIcon={false}
@@ -213,6 +215,10 @@ const Allocatemap = () => {
                 }}
                 checked={favorite}
               />
+              
+              </div>
+              {user.driverId && <button className="view_details_btn my-3" onClick={()=>{handleALLocate(true)}}>Alocate Self</button>} 
+                             
               <GoogleMap
 
                 mapContainerStyle={mapContainerStyle}
@@ -385,7 +391,6 @@ const Allocatemap = () => {
               </GoogleMap>
             </div>
           </div>
-        </div>
       </div>
     </>
   );

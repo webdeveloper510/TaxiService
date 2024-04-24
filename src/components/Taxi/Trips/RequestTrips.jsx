@@ -96,7 +96,7 @@ const SuperRequestTrip = () => {
   const [passengers, setPassengers] = useState([
     // { name: "", email: "", phone: "", address: "" },
   ]);
-  const [vehicle, setVehicle] = useState();
+  const [vehicle, setVehicle] = useState(null);
   const [inputData, setInputData] = useState({
     vehicle: "",
     customer: "",
@@ -448,7 +448,12 @@ const SuperRequestTrip = () => {
       });
       return console.log(errors);
     }
-
+    data.customerDetails = {
+      name: inputData.name,
+      address: inputData.address,
+      email: inputData.email,
+      phone: inputData.phone,
+    }
     data.passenger_detail = passengers;
     console.log("data beafore api", data);
     if (errorRes) {
@@ -603,7 +608,14 @@ const SuperRequestTrip = () => {
                                     </>
                                   );
                                 })}
+                               
                               </CFormSelect>
+                              {vehicle?.length == 0 &&  <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  You should first add vehicle fare price before requsting a trip.
+                                </span>}
                               {errors.vehicle && (
                                 <span
                                   style={{ color: "red" }}
@@ -1017,6 +1029,7 @@ const SuperRequestTrip = () => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                type="number"
                                 onChange={(e) => {
                                   if (e.target.value.length > 20) {
                                     setErrors({
@@ -1296,13 +1309,13 @@ const SuperRequestTrip = () => {
                         className="d-flex justify-content-end"
                         style={{ marginTop: "40px" }}
                       >
-                        <CButton
+                        {/* <CButton
                           type="button"
                           onClick={addPassenger}
                           className="add_passenger_btn"
                         >
                           + Add Passenger
-                        </CButton>
+                        </CButton> */}
                       </div>
                     </CCol>
                   </CRow>

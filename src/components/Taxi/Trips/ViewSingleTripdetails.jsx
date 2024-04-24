@@ -111,7 +111,7 @@ const ViewSingleTrip = () => {
                               
                             </CCol> */}
 
-                            <CCol className="vehicle_info_right" md={7}>
+                            <CCol className="vehicle_info_right" >
                               <div class="trip-details">
                                 <CFormLabel htmlFor="inputvehiclenum"><img src={checkedImg} />Trip ID :</CFormLabel>
                                 <span className="vehicle_info">{trip?.trip_id}</span> <br /></div>
@@ -150,9 +150,13 @@ const ViewSingleTrip = () => {
                               <div class="trip-details">
                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Email :</CFormLabel>
                                 <span className="vehicle_info">{trip?.email}</span><br /></div>
-                              <div class="trip-details">
+                                <div class="trip-details">
                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Phone :</CFormLabel>
                                 <span className="vehicle_info">{trip?.phone}</span><br /></div>
+                                <div class="trip-details">
+                                <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Payment Status :</CFormLabel>
+                                <span className="vehicle_info">{trip?.is_paid?"Paid":"Unpaid"}</span><br /></div>
+                                
 
                             </CCol>
 

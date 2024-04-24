@@ -1008,7 +1008,7 @@ const CompanyDetails = () => {
                                 </CCol>
                                 <CCol xs={12} className="change_your_pwd_txt">
                                   <CButton className="change_pwd_btn_customer"
-                                    onClick={() => handlePwdChange()} >Reset your Password</CButton>
+                                    onClick={() => handlePwdChange()} >Reset customer’s password.</CButton>
                                 </CCol>
 
                                 <CCol md={12}>

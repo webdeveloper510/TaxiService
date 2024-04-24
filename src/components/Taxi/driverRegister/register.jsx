@@ -79,7 +79,7 @@ function DriverRegister() {
       .trim()
       .max(6, "ZIP Code must be at most 6 characters")
       .required("Zip is required"),
-    nickName: Yup.string().trim().required("Email  is required"),
+    nickName: Yup.string().trim().required("Nick Name is required"),
     // MobileNo: Yup.string()
     //   .trim()
     //   .matches(/^[0-9]+$/, "Must be only digits")

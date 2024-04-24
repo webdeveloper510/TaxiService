@@ -31,6 +31,7 @@ import AppLoader from "../../AppLoader";
 import backtovehicle from '../../../assets/images/left-arrow.png'
 import { ClipLoader } from "react-spinners";
 import SuperAdminSideBar from "../../SuperAdmin/Sidebar/SideBar";
+import { countryList } from "../../../utils/saticData";
 function EditDriver() {
     const navigate = useNavigate();
     const { driverId } = useParams();
@@ -62,6 +63,9 @@ function EditDriver() {
       MobileNo: result.phone,
       Gender: result.gender,
       file: result.profile_image,
+      kvk: result.kvk,
+      nickName: result.nickName,
+      bankNumber:result.bankNumber,
     })
     setLoading(false)
         } else {
@@ -92,6 +96,9 @@ function EditDriver() {
       Email: "",
       MobileNo: "",
       Gender: "",
+      kvk: "",
+      nickName: "",
+      bankNumber:""
     };
   
   
@@ -106,6 +113,9 @@ function EditDriver() {
       Email: Yup.string().trim().required("Email is required"),
       MobileNo: Yup.string().trim().required("Mobile Number is required"),
       Gender: Yup.string().trim().required("Gender is required"),
+      kvk:Yup.string().trim().required("KVK Number is required"),
+      nickName:Yup.string().trim().required("Nick Name is required"),
+      bankNumber:Yup.string().trim().required("Account Number is required"),
     });
   
     const uploadFile = (e) => {
@@ -309,11 +319,9 @@ function EditDriver() {
                                   name="Country"
                                   autoComplete="off" >
                                   <option default>Select Country</option>
-                                  <option>India</option>
-                                  <option>USA</option>
-                                  <option>UK</option>
-                                  <option>USA</option>
-                                  <option>AUS</option>
+                                  {countryList.map((item,i)=>{
+                                    return <option key={i} value={item}>{item}</option>
+                                  })}
                                 </CFormSelect>
   
                                 {formik.errors.Country && formik.touched.Country ? (
@@ -403,6 +411,69 @@ function EditDriver() {
                                   autoComplete="off" />
                                 {formik.errors.MobileNo && formik.touched.MobileNo ? (
                                   <div className="text-danger">{formik.errors.MobileNo}</div>
+                                ) : null}
+                              </CCol>
+                              <CCol md={6}>
+                                <CFormLabel htmlFor="inputmobile">KVK Number</CFormLabel>
+                                <CFormInput type="number" id="inputmobile" {...formik.getFieldProps("kvk")}
+                                  maxLength="50"
+                                  className={clsx(
+                                    "form-control bg-transparent",
+                                    {
+                                      "is-invalid":
+                                        formik.touched.kvk && formik.errors.kvk,
+                                    },
+                                    {
+                                      "is-valid":
+                                        formik.touched.kvk && !formik.errors.kvk,
+                                    }
+                                  )}
+                                  name="kvk"
+                                  autoComplete="off" />
+                                {formik.errors.kvk && formik.touched.kvk ? (
+                                  <div className="text-danger">{formik.errors.kvk}</div>
+                                ) : null}
+                              </CCol>
+                              <CCol md={6}>
+                                <CFormLabel htmlFor="inputmobile">Nick Name</CFormLabel>
+                                <CFormInput  id="inputmobile" {...formik.getFieldProps("nickName")}
+                                  maxLength="50"
+                                  className={clsx(
+                                    "form-control bg-transparent",
+                                    {
+                                      "is-invalid":
+                                        formik.touched.nickName && formik.errors.nickName,
+                                    },
+                                    {
+                                      "is-valid":
+                                        formik.touched.nickName && !formik.errors.nickName,
+                                    }
+                                  )}
+                                  name="nickName"
+                                  autoComplete="off" />
+                                {formik.errors.nickName && formik.touched.nickName ? (
+                                  <div className="text-danger">{formik.errors.nickName}</div>
+                                ) : null}
+                              </CCol>
+                              <CCol md={6}>
+                                <CFormLabel htmlFor="inputmobile">Account Number</CFormLabel>
+                                <CFormInput type="number" id="inputmobile" {...formik.getFieldProps("bankNumber")}
+                                  maxLength="50"
+                                  className={clsx(
+                                    "form-control bg-transparent",
+                                    {
+                                      "is-invalid":
+                                        formik.touched.bankNumber && formik.errors.bankNumber,
+                                    },
+                                    {
+                                      "is-valid":
+                                        formik.touched.bankNumber && !formik.errors.bankNumber,
+                                    }
+                                  )}
+                                  name="bankNumber"
+                                  autoComplete="off" />
+                                {formik.errors.bankNumber && formik.touched.bankNumber ? (
+                                  <div className="text-danger">{formik.errors.bankNumber}</div>
                                 ) : null}
                               </CCol>
                               <CCol md={6}>

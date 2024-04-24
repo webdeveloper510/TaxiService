@@ -87,7 +87,8 @@ function EditProfile() {
       .required("Last Name is required").trim(),
     companyName: Yup.string()
     .required("Last Name is required").trim(),
-    phone: Yup.string().min(6).max(16).trim().required()
+    phone: Yup.string().min(6).max(16).trim().required(),
+    email: Yup.string().min(6).max(16).trim().required()
   });
 
   const initialValues = {
@@ -99,6 +100,7 @@ function EditProfile() {
     lastName: user?.last_name || "",
     companyName: user?.company_detail?.company_name || "",
     phone: user?.phone || "",
+    email: user?.email || ""
   };
   const handleToggle = () => {
     if (!passVissible) {
@@ -349,6 +351,30 @@ function EditProfile() {
                               />
                               {formikProfile.errors.phone && formikProfile.touched.phone ? (
                                 <div className="text-danger text-start">{formikProfile.errors.phone}</div>
+                              ) : null}
+                            </CCol>
+                            <CCol md={6}>
+                              <CFormLabel htmlFor="inputlastname">Email</CFormLabel>
+                              <CFormInput aria-label="Last name"
+                              disabled
+                                {...formikProfile.getFieldProps("email")}
+                                maxLength="50"
+                                className={clsx(
+                                  "form-control bg-transparent input_pwd",
+                                  {
+                                    "is-invalid":
+                                      formikProfile.touched.email && formikProfile.errors.email,
+                                  },
+                                  {
+                                    "is-valid":
+                                      formikProfile.touched.email && !formikProfile.errors.email,
+                                  }
+                                )}
+                                name="email"
+                                autoComplete="off"
+                              />
+                              {formikProfile.errors.email && formikProfile.touched.email ? (
+                                <div className="text-danger text-start">{formikProfile.errors.email}</div>
                               ) : null}
                             </CCol>
                             {/* <CCol md={6}>
