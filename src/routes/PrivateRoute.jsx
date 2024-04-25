@@ -69,6 +69,7 @@ import Alldetail from '../components/Login/alldetail';
 import DriverVerification from '../components/Login/Verify';
 import AllocateDriver from '../components/Taxi/Trips/allocateDriver';
 import DriverRegister from '../components/Taxi/driverRegister/register';
+import DriverVehicle from '../components/SuperAdmin/Vehicle/Vehicle';
 
 const PrivateRoute = () => {
 
@@ -162,6 +163,7 @@ const PrivateRoute = () => {
             <Route path="/taxi/fare/listoffares" element={<SecureTaxiRoleRoute><ListOfFares /></SecureTaxiRoleRoute>} />
             <Route path="/super-admin/driver/addnewdriver" element={<SecureSuperRoleRoute><AddNewDriver /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/driver/listofdrivers" element={<SecureSuperRoleRoute><ListOfDrivers role="super" /></SecureSuperRoleRoute>} />
+            <Route path="/super-admin/driver/driver-vehicle/:id" element={<SecureSuperRoleRoute><DriverVehicle role="super" /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/driver/editdriver/:driverId" element={<SecureSuperRoleRoute><EditDriver /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/vehicle/viewallvehicle" element={<SecureSuperRoleRoute><LisOfVehicles role="super" /></SecureSuperRoleRoute>} />
             <Route path="/super-admin/vehicle/vehicle-details/:vehicleId" element={<SecureSuperRoleRoute><ViewSingleVehicle role="super" /></SecureSuperRoleRoute>} />

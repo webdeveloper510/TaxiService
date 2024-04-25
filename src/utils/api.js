@@ -79,6 +79,22 @@ export const getVehicle = async () => {
     });
 };
 
+export const getDriverVehicle = async (id) => {
+  console.log("🚀 ~ getDriverVehicle ~ id:", id)
+  return await Axios.get(`/admin/get_vehicles_by_driverid/${id}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  })
+    .then((res) => {
+
+      return res.data;
+    })
+    .catch((error) => {
+      console.log("GET_VEHICLE", error);
+    });
+};
+
 export const getVehicleByType = async (type) => {
   return await Axios.get(`admin/get_vehicles_with_type/${type}`, {
     headers: {
@@ -340,6 +356,22 @@ export const verifyDriverApi = async(id) => {
     console.log("VERIFY_DRIVER", error);
   });
 };
+
+export const rejectDriverApi = async(id) => {
+  return await Axios.post(`admin/rejectVerification/${id}`,{},{
+    headers: {
+      "x-access-token": token,
+    },
+  }) 
+  .then((res) => {
+    console.log(res.data, "verify driver");
+    return res.data;
+  })
+  .catch((error) => {
+    console.log("VERIFY_DRIVER", error);
+  });
+};
+
 export const favoriteDriverApi = async(id) => {
   return await Axios.post(`admin/favoriteDriver/${id}`,{},{
     headers: {
