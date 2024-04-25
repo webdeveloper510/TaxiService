@@ -152,9 +152,9 @@ const EditVehicle = () => {
 
   const navigate = useNavigate();
   
-  // const back = () => {
-  //   navigate("/super-admin/vehicle/viewallvehicle");
-  // };
+  const back = () => {
+    navigate(-1);
+  };
 
   const handlevehicleInsuranceDateChange = (date) => {
     setInsuranceDate(date);
@@ -200,7 +200,7 @@ const EditVehicle = () => {
             autoClose: 1000,
           });
           navigate(-1)
-          back();
+         
         } else {
           toast.warning(`${res?.data?.message}`, {
             position: "top-right",
