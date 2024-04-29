@@ -873,9 +873,11 @@ export const switchDriver = async (data) => {
       console.log(res, "switchDriver");
       if(res.data.code === 200) {
         localStorage.setItem("token", res.data.jwtToken);
-      token = localStorage.getItem(res.data.jwtToken);
+      token = res.data.jwtToken
+      
+      return res
       }
-      return res;
+      return Promise.reject();
     })
     .catch((error) => {
       console.log("switchDriver", error);
@@ -891,10 +893,13 @@ export const switchCompany = async (data) => {
     .then((res) => {
       console.log(res, "switchCompany");
       if(res.data.code === 200) {
-        // localStorage.setItem("token", res.data.jwtToken);
-      // token = localStorage.getItem(res.data.jwtToken);
-      }
+        localStorage.setItem("token", res.data.jwtToken);
+      token = res.data.jwtToken
+      
       return res;
+      }
+      return Promise.reject()
+      
     })
     .catch((error) => {
       console.log("switchCompany", error);
