@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { GoogleMap, Marker, InfoWindow, DirectionsService, DirectionsRenderer, Rectangle, OverlayView } from "@react-google-maps/api";
 // import { activeDrivers } from "../../utils/api";
 import { NavItem } from "react-bootstrap";
-import { activeDrivers, allocateDriver, getTripById } from "../../../utils/api";
+import { activeDrivers, allocateDriver, getDriverById, getTripById } from "../../../utils/api";
 import userContext from "../../../utils/context";
 import { useNavigate, useParams } from "react-router";
 import AppLoader from "../../AppLoader";
@@ -17,7 +17,7 @@ const Allocatemap = () => {
   const [loading, setLoading] = useState(false);
   const { user, setUser, appLoaded } = useContext(userContext);
   const [favorite, setFavorite] = useState(false);
-
+  const [driver,setDriver] = useState(null);
   const navigate = useNavigate();
   const id = useParams().id;
   useEffect(() => {
@@ -45,6 +45,16 @@ const Allocatemap = () => {
             },
             travelMode: "DRIVING",
           });
+        }
+        if(user.driverId){
+          getDriverById(user.driverId).then(res => {
+            console.log(res?.result, 'driver Data')
+            if (res?.code === 200) {
+              const { result } = res;
+              setDriver(res?.result)
+            } 
+    
+          })
         }
       })
       .catch((err) => {
@@ -217,7 +227,7 @@ const Allocatemap = () => {
               />
               
               </div>
-              {user.driverId && <button className="view_details_btn my-3" onClick={()=>{handleALLocate(true)}}>Alocate Self</button>} 
+              {(user?.driverId && driver?.isVerified && driver?.isDocUploaded && driver?.defaultVehicle) && <button className="view_details_btn my-3" onClick={()=>{handleALLocate(true)}}>Alocate Self</button>} 
                              
               <GoogleMap
 

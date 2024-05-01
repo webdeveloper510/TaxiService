@@ -110,21 +110,44 @@ const ListOfDrivers = ({ role }) => {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
   const [search, setSearch] = useState("");
-  useEffect(() => {
+  const searchDriver = async()=>{
     setLoader(true);
     getDriver(role, search).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setAllDriver(res.result);
-        setDriver(
-          res.result.filter((driver) => {
-            return driver.isVerified && driver.isDocUploaded;
-          })
-        );
+        // setDriver(
+        //   res.result.filter((driver) => {
+        //     return driver.isVerified && driver.isDocUploaded;
+        //   })
+        // );
+        if (selectedType == "Verified Drivers") {
+          setDriver(
+            res.result.filter((driver) => {
+              return driver.isVerified && driver.isDocUploaded;
+            })
+          );
+        } else if (selectedType == "Unverified Drivers") {
+          setDriver(
+            res.result.filter((driver) => {
+              return !driver.isVerified && driver.isDocUploaded;
+            })
+          );
+        } else {
+          setDriver(
+            res.result.filter((driver) => {
+              return !driver.isVerified && !driver.isDocUploaded;
+            })
+          );
+        }
       }
+      
+      setLoader(false);
+    }).finally(()=>{
       setLoader(false);
     });
-  }, [search]);
+  }
+  
   const deleteDriverHandler = async (id) => {
     try {
       console.log(id, "driver deleted id");
@@ -191,23 +214,24 @@ const ListOfDrivers = ({ role }) => {
           position: "top-right",
           autoClose: 1000,
         });
-        const newData = driver.filter((d) => d._id != id);
-        setDriver(newData);
-        const newAllData = [...allDriver];
-        newAllData.forEach((d) => {
-          if (d._id != id) {
-            d.isVerified = true;
-          }
-        });
-        console.log("🚀 ~ newAllData ~ newAllData:", newAllData);
-        setAllDriver(newAllData);
+        // const newData = driver.filter((d) => d._id != id);
+        // setDriver(newData);
+        // const newAllData = [...allDriver];
+        // newAllData.forEach((d) => {
+        //   if (d._id != id) {
+        //     d.isVerified = true;
+        //   }
+        // });
+        // console.log("🚀 ~ newAllData ~ newAllData:", newAllData);
+        // setAllDriver(newAllData);
+        searchDriver()
       } else {
         toast.warning(`${verifyData.message}`, {
           position: "top-right",
           autoClose: 1000,
         });
       }
-      setReject(false);
+      setVerify(false);
     } catch (error) {
       console.log(error);
       toast.warning(`${error.message}`, {
@@ -227,16 +251,17 @@ const ListOfDrivers = ({ role }) => {
           position: "top-right",
           autoClose: 1000,
         });
-        const newData = driver.filter((d) => d._id != id);
-        setDriver(newData);
-        const newAllData = [...allDriver];
-        newAllData.forEach((d) => {
-          if (d._id != id) {
-            d.isVerified = true;
-          }
-        });
-        console.log("🚀 ~ newAllData ~ newAllData:", newAllData);
-        setAllDriver(newAllData);
+        // const newData = driver.filter((d) => d._id != id);
+        // setDriver(newData);
+        // const newAllData = [...allDriver];
+        // newAllData.forEach((d) => {
+        //   if (d._id != id) {
+        //     d.isDocUploaded = false;
+        //   }
+        // });
+        // console.log("🚀 ~ newAllData ~ newAllData:", newAllData);
+        // setAllDriver(newAllData);
+        searchDriver()
       } else {
         toast.warning(`${verifyData.message}`, {
           position: "top-right",
@@ -258,26 +283,14 @@ const ListOfDrivers = ({ role }) => {
   };
 
   useEffect(() => {
-    if (selectedType == "Verified Drivers") {
-      setDriver(
-        allDriver.filter((driver) => {
-          return driver.isVerified && driver.isDocUploaded;
-        })
-      );
-    } else if (selectedType == "Unverified Drivers") {
-      setDriver(
-        allDriver.filter((driver) => {
-          return !driver.isVerified && driver.isDocUploaded;
-        })
-      );
-    } else {
-      setDriver(
-        allDriver.filter((driver) => {
-          return !driver.isVerified && !driver.isDocUploaded;
-        })
-      );
-    }
-  }, [selectedType]);
+    const getData = setTimeout(() => {
+      searchDriver()
+    }, 2000)
+
+    return () => clearTimeout(getData)
+    
+    
+  }, [selectedType,search]);
   return (
     <>
       <div className="container-fluidd">
