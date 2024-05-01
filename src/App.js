@@ -58,10 +58,12 @@ function App() {
   },[token,refreshUser])
 
   useEffect(()=>{
+    console.log("socket code is start",user)
     socket.connect();
     socket.on("connection",()=>{
       console.log("Connected socket")
     })
+    if(user) socket.emit("addUser",{token:localStorage.getItem('token')})
     socket.on("userConnection",(data)=>{
       console.log("userConnection socket",data)
     })
@@ -78,7 +80,7 @@ function App() {
     return ()=>{
       socket.disconnect();
     }
-  },[])
+  },[user])
 
   return (
     <socketContext.Provider value={{socket}}>
