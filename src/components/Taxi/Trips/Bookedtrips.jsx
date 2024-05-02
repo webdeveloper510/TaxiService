@@ -31,6 +31,11 @@ const SuperBookedTrips = () => {
   const [pageLimit, setPageLimit] = React.useState(3);
   const [maxPage, setMaxPage] = React.useState(3);
   const [minPage, setMinPage] = React.useState(0);
+  const [dateFilter, setDateFilter] = useState("all"); // State to store selected date filter
+
+  const handleDateFilterChange = (event) => {
+    setDateFilter(event.target.value);
+  };
   const recordPage = 10;
   const lastIndex = currentPage * recordPage;
   const firstIndex = lastIndex - recordPage;
@@ -87,14 +92,14 @@ const SuperBookedTrips = () => {
 
   useEffect(() => {
     setLoader(true);
-    getTrip("Booked",search).then((res) => {
+    getTrip("Booked",search,dateFilter).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setBookingTrip(res.result);
       }
       setLoader(false);
     });
-  }, [search]);
+  }, [search,dateFilter]);
 
   return (
     <>
@@ -130,6 +135,26 @@ const SuperBookedTrips = () => {
                       </div>
                     </div>
                   </div> */}
+                   <div className="filter-right">
+        <select
+  value={dateFilter}
+  onChange={handleDateFilterChange}
+  style={{
+    backgroundColor: '#fff2cf',
+    color: 'black', // You can change the color to match your design
+    border: '1px solid #ccc', // You may adjust the border color and width
+    borderRadius: '5px', // You can adjust the border radius as needed
+    padding: '5px', // You can adjust the padding as needed
+    fontWeight: "bold"
+  }}
+>
+  <option value="all">All</option>
+  <option value="this_week">This Week</option>
+  <option value="this_month">This Month</option>
+  <option value="this_year">This Year</option>
+</select>
+
+        </div>
                   {loader ? (
                     <>
                      <AppLoader/>

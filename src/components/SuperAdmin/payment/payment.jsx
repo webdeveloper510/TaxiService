@@ -10,18 +10,14 @@ import {
   CTableRow,
   CButton,
 } from "@coreui/react";
-import locationimg from "../../../assets/images/location.png";
-import { getRecentTrip, getTransaction, getTrip } from "../../../utils/api";
+import { getTransaction } from "../../../utils/api";
 import moment from "moment";
 import SuperAdminSideBar from "../Sidebar/SideBar";
 import EmptyData from "../../EmptyData";
 import AppLoader from "../../AppLoader";
-import Dropdown from "react-bootstrap/Dropdown";
-import filterImg from "../../../assets/images/filter-icon.png";
-import { tripEnum } from "../../../utils/saticData";
-import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBRow } from "mdb-react-ui-kit";
-import { useParams } from "react-router";
-import { Link, useSearchParams } from "react-router-dom";
+
+import { MDBRow } from "mdb-react-ui-kit";
+
 import {
   MDBCard,
   MDBCardBody,
@@ -36,6 +32,7 @@ import SuperSideBar from "../../Taxi/SiderNavBar/Sidebar";
 const SuperPayment = ({type, role}) => {
   
   const [trans, setTrans] = useState([]);
+  const [allTrans, setAllTrans] = useState([]);
   const [loader, setLoader] = useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageLimit, setPageLimit] = React.useState(3);
@@ -54,6 +51,11 @@ const SuperPayment = ({type, role}) => {
     "totalEarningFromYear": 0,
     "totalBalance": 0,
   })
+  const [dateFilter, setDateFilter] = useState("all"); // State to store selected date filter
+
+  const handleDateFilterChange = (event) => {
+    setDateFilter(event.target.value);
+  };
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -108,8 +110,10 @@ const SuperPayment = ({type, role}) => {
           console.log("🚀 ~ .then ~ res?.result:", res?.result)
           if(type == 'transaction'){
             setTrans(res?.allDriverTrans || [])
+            setAllTrans(res?.allDriverTrans || [])
           }else{
             setTrans(res?.allSuperTrans || [])
+            setAllTrans(res?.allSuperTrans || [])
           }
 
         }
@@ -120,7 +124,50 @@ const SuperPayment = ({type, role}) => {
     
     
   }, [type]);
+  const filterByDate = (startDate, endDate) => {
+    // Filter transactions based on date range
+    const filteredData = allTrans.filter(item => {
+      const createdAt = moment(item.createdAt);
+      return createdAt.isBetween(startDate, endDate, 'days', '[]');
+    });
+    return filteredData;
+  };
 
+  const handleFilterThisWeek = () => {
+    const startDate = moment().startOf('week');
+    const endDate = moment().endOf('week');
+    const filteredData = filterByDate(startDate, endDate);
+    setTrans(filteredData);
+  };
+
+  const handleFilterThisMonth = () => {
+    const startDate = moment().startOf('month');
+    const endDate = moment().endOf('month');
+    const filteredData = filterByDate(startDate, endDate);
+    setTrans(filteredData);
+  };
+
+  const handleFilterThisYear = () => {
+    const startDate = moment().startOf('year');
+    const endDate = moment().endOf('year');
+    const filteredData = filterByDate(startDate, endDate);
+    setTrans(filteredData);
+  };
+  const filterDataByDate = () => {
+    switch (dateFilter) {
+      case "this_week":
+        return handleFilterThisWeek();
+      case "this_month":
+        return handleFilterThisMonth();
+      case "this_year":
+        return handleFilterThisYear();
+      default:
+        return setTrans(allTrans)
+    }
+  };
+useEffect(()=>{
+  filterDataByDate()
+},[dateFilter])
   return (
     <>
       <div className="container-fluidd">
@@ -253,28 +300,9 @@ const SuperPayment = ({type, role}) => {
                 </MDBRow>
 }
                 <div class="filter-outer">
-                  {/* <div className="serach-left" id="recent-trip-search">
-                    <MDBInputGroup>
-                      <MDBInput placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-
-                    </MDBInputGroup></div> */}
+                
                   <div className="filter-right">
-                    {/* <Dropdown onSelect={handleSelect}>
-                      <Dropdown.Toggle id="dropdown-basic">
-                        <img src={filterImg} />
-                        {selectedType}
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        {tripEnum.map((item, i) => {
-                          return <Dropdown.Item key={i} eventKey={item}
-                            onClick={() => {
-                              setSelectedType(item)
-                            }}
-                          >{item}</Dropdown.Item>
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown> */}
+                   
                   </div>
                 </div>
                 {loader ? (
@@ -282,6 +310,28 @@ const SuperPayment = ({type, role}) => {
                 ) : (
                   <div class="active-trip-outer">
                     <div className="trips-head d-flex justify-content-between"></div>
+                    <div className="filter-outer">
+        <div className="filter-right">
+        <select
+  value={dateFilter}
+  onChange={handleDateFilterChange}
+  style={{
+    backgroundColor: '#fff2cf',
+    color: 'black', // You can change the color to match your design
+    border: '1px solid #ccc', // You may adjust the border color and width
+    borderRadius: '5px', // You can adjust the border radius as needed
+    padding: '5px', // You can adjust the padding as needed
+    fontWeight: "bold"
+  }}
+>
+  <option value="all">All</option>
+  <option value="this_week">This Week</option>
+  <option value="this_month">This Month</option>
+  <option value="this_year">This Year</option>
+</select>
+
+        </div>
+      </div>
 
                     {data?.length > 0 ? (
                       <CTable
@@ -292,9 +342,7 @@ const SuperPayment = ({type, role}) => {
                       >
                         <CTableHead>
                           <CTableRow>
-                            {/* <CTableHeaderCell className="text-center">
-                <CIcon icon={cilPeople} />
-              </CTableHeaderCell> */}
+                           
                             <CTableHeaderCell className="text-center">
                               S. No.
                             </CTableHeaderCell>
@@ -311,14 +359,7 @@ const SuperPayment = ({type, role}) => {
                             <CTableHeaderCell className="text-center">
                               Date And Time
                             </CTableHeaderCell>
-                            {/* <CTableHeaderCell className="text-center">
-                            Comment
-                          </CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">Time</CTableHeaderCell> */}
-                            {/* <CTableHeaderCell className="text-center">Vehicle Type</CTableHeaderCell> */}
-                            {/* <CTableHeaderCell className="text-center">Status</CTableHeaderCell>
-                          <CTableHeaderCell className="text-center">View Ride</CTableHeaderCell> */}
+                           
                           </CTableRow>
                         </CTableHead>
                         <CTableBody>
@@ -351,41 +392,7 @@ const SuperPayment = ({type, role}) => {
                                     {moment(item.createdAt).format("MMM Do YYYY h:mm a")}
                                   </div>
                                 </CTableDataCell>
-                                {/* <CTableDataCell>
-                                <div>
-                                  {item?.comment}
-                                </div>
-                              </CTableDataCell>
-                              <CTableDataCell>
-                                <div>{moment(item.pickup_date_time).format("MMM Do YYYY")}</div>
-                              </CTableDataCell> */}
-                                {/* <CTableDataCell>
-                                <div>{moment(item.pickup_date_time).format("h:mm a")}</div>
-                              </CTableDataCell> */}
-                                {/* <CTableDataCell>
-                  <div>{item.vehicle_type}</div>
-                </CTableDataCell>                    */}
-                                {/* <CTableDataCell className="text-center location-icons">
-                                <span style={{
-                                  background,
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  padding: "8px",
-                                  borderRadius: "8px",
-                                  fontWeight: "normal",
-                                  color: "#fff",
-                                  width: '100px',
-                                  margin: '0 auto',
-                                }}>{status}</span>
-                              </CTableDataCell> */}
-                                {/* <CTableDataCell>
-                                <div className="view_details_btn">
-                                  <Link to={`/trips/view-trip-details/${item._id}`}>
-                                    View Details
-                                  </Link>
-                                </div>
-                              </CTableDataCell> */}
+                              
                               </CTableRow>
                             );
                           })}

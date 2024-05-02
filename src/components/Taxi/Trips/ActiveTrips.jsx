@@ -31,6 +31,11 @@ const SuperActiveTrip = () => {
   const [pageLimit, setPageLimit] = React.useState(3);
   const [maxPage, setMaxPage] = React.useState(3);
   const [minPage, setMinPage] = React.useState(0);
+  const [dateFilter, setDateFilter] = useState("all"); // State to store selected date filter
+
+  const handleDateFilterChange = (event) => {
+    setDateFilter(event.target.value);
+  };
   const recordPage = 10;
   const lastIndex = currentPage * recordPage;
   const firstIndex = lastIndex - recordPage;
@@ -86,14 +91,14 @@ const SuperActiveTrip = () => {
   const [search, setSearch] = useState("")
   useEffect(() => {
     setLoader(true);
-    getTrip("Active", search).then((res) => {
+    getTrip("Active", search,dateFilter).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setActiveTrip(res.result);
       }
       setLoader(false);
     });
-  }, [search]);
+  }, [search,dateFilter]);
 
   return (
     <>
@@ -114,6 +119,26 @@ const SuperActiveTrip = () => {
                     </MDBInputGroup>
                   </div></div>
                 <div className="active-trip-outer">
+                <div className="filter-right">
+        <select
+  value={dateFilter}
+  onChange={handleDateFilterChange}
+  style={{
+    backgroundColor: '#fff2cf',
+    color: 'black', // You can change the color to match your design
+    border: '1px solid #ccc', // You may adjust the border color and width
+    borderRadius: '5px', // You can adjust the border radius as needed
+    padding: '5px', // You can adjust the padding as needed
+    fontWeight: "bold"
+  }}
+>
+  <option value="all">All</option>
+  <option value="this_week">This Week</option>
+  <option value="this_month">This Month</option>
+  <option value="this_year">This Year</option>
+</select>
+
+        </div>
                   {/* <div className="trips-head d-flex justify-content-between">
                     <div className="box-shd d-flex justify-content-between">
                       <div className="left-trip-content">

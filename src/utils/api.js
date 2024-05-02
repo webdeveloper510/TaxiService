@@ -203,8 +203,8 @@ export const getFareById = async (id) => {
 };
 
 
-export const getTrip = async(data,search) => {
-  return await Axios.post(`admin/get_trip/${data}`, {comment:search || ""}, {
+export const getTrip = async(data,search,dateFilter) => {
+  return await Axios.post(`admin/get_trip/${data}`, {comment:search || "",dateFilter}, {
     headers: {
       "x-access-token": token,
     },

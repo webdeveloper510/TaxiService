@@ -25,13 +25,16 @@ import { Link, useSearchParams } from "react-router-dom";
 
 
 const SuperRecentTrips = () => {
+  const [dateFilter, setDateFilter] = useState("all");
   let [query, setQuery] = useSearchParams();
   const status = query.get("filter");
   const [filterData, setFilterData] = useState([]);
+  const [allFilterData, setAllFilterData] = useState([]);
   // const [selectedValue, setSelectedValue] = useState("All"); // Initial selected valu
 
   const handleSelect = (eventKey) => {
     setSelectedType(eventKey); // Update the selected value when an item is selected
+    setDateFilter("all")
   };
   const [selectedType, setSelectedType] = useState(status || "All");
   const [pendinTrip, setPendingTrip] = useState([])
@@ -46,7 +49,9 @@ const SuperRecentTrips = () => {
   const data = filterData?.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(filterData?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
-
+  const handleDateFilterChange = (event) => {
+    setDateFilter(event.target.value);
+  };
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -101,11 +106,12 @@ const SuperRecentTrips = () => {
   }
   useEffect(() => {
     setLoader(true)
+    setDateFilter("all")
     getRecentTrip(true, search).then(res => {
 
       if (res?.code == 200 && res?.result) {
         setPendingTrip(res?.result)
-      
+        setAllFilterData(res.result)
         if (!selectedType || selectedType === "All") setFilterData(res?.result);
         else {
           console.log("selectedType in else: ", selectedType)
@@ -114,7 +120,50 @@ const SuperRecentTrips = () => {
       }
     }).finally(() => { setLoader(false) })
   }, [search])
- 
+  const filterByDate = (startDate, endDate) => {
+    // Filter transactions based on date range
+    const filteredData = allFilterData.filter(item => {
+      const createdAt = moment(item.createdAt);
+      return createdAt.isBetween(startDate, endDate, 'days', '[]');
+    });
+    return filteredData;
+  };
+
+  const handleFilterThisWeek = () => {
+    const startDate = moment().startOf('week');
+    const endDate = moment().endOf('week');
+    const filteredData = filterByDate(startDate, endDate);
+    setFilterData(filteredData);
+  };
+
+  const handleFilterThisMonth = () => {
+    const startDate = moment().startOf('month');
+    const endDate = moment().endOf('month');
+    const filteredData = filterByDate(startDate, endDate);
+    setFilterData(filteredData);
+  };
+
+  const handleFilterThisYear = () => {
+    const startDate = moment().startOf('year');
+    const endDate = moment().endOf('year');
+    const filteredData = filterByDate(startDate, endDate);
+    setFilterData(filteredData);
+  };
+  const filterDataByDate = () => {
+    switch (dateFilter) {
+      case "this_week":
+        return handleFilterThisWeek();
+      case "this_month":
+        return handleFilterThisMonth();
+      case "this_year":
+        return handleFilterThisYear();
+      default:
+        return setFilterData(allFilterData)
+    }
+  };
+useEffect(()=>{
+  filterDataByDate()
+},[dateFilter])
   return (
     <>
 
@@ -164,7 +213,26 @@ const SuperRecentTrips = () => {
                     <div className="trips-head d-flex justify-content-between">
 
                     </div>
+                    <div className="filter-right">
+        <select
+  value={dateFilter}
+  onChange={handleDateFilterChange}
+  style={{
+    backgroundColor: '#fff2cf',
+    color: 'black', // You can change the color to match your design
+    border: '1px solid #ccc', // You may adjust the border color and width
+    borderRadius: '5px', // You can adjust the border radius as needed
+    padding: '5px', // You can adjust the padding as needed
+    fontWeight: "bold"
+  }}
+>
+  <option value="all">All</option>
+  <option value="this_week">This Week</option>
+  <option value="this_month">This Month</option>
+  <option value="this_year">This Year</option>
+</select>
 
+        </div>
 
                     {data?.length > 0 ? <CTable align="middle" className="mb-0 table-container" hover responsive>
 

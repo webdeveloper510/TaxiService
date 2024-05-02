@@ -39,7 +39,11 @@ const RequestAcceptTrip = () => {
   const data = activeTrip?.slice(firstIndex, lastIndex);
   const nPage = Math.ceil(activeTrip?.length / recordPage);
   const number = [...Array(nPage + 1).keys()].slice(1);
+  const [dateFilter, setDateFilter] = useState("all"); // State to store selected date filter
 
+  const handleDateFilterChange = (event) => {
+    setDateFilter(event.target.value);
+  };
   const pageNumber = number.map((num, i) => {
     if (num < maxPage + 1 && num > minPage) {
       return (
@@ -88,14 +92,14 @@ const RequestAcceptTrip = () => {
   const [search,setSearch] = useState("")
   useEffect(() => {
     setLoader(true);
-    getTrip("Accepted",search).then((res) => {
+    getTrip("Accepted",search,dateFilter).then((res) => {
       console.log(res.result, "vehicle");
       if (res?.code === 200) {
         setActiveTrip(res.result);
       }
       setLoader(false);
     });
-  }, [search]);
+  }, [search,dateFilter]);
 
   return (
     <>
@@ -128,6 +132,26 @@ const RequestAcceptTrip = () => {
                       </div>
                     </div>
                   </div> */}
+                   <div className="filter-right">
+        <select
+  value={dateFilter}
+  onChange={handleDateFilterChange}
+  style={{
+    backgroundColor: '#fff2cf',
+    color: 'black', // You can change the color to match your design
+    border: '1px solid #ccc', // You may adjust the border color and width
+    borderRadius: '5px', // You can adjust the border radius as needed
+    padding: '5px', // You can adjust the padding as needed
+    fontWeight: "bold"
+  }}
+>
+  <option value="all">All</option>
+  <option value="this_week">This Week</option>
+  <option value="this_month">This Month</option>
+  <option value="this_year">This Year</option>
+</select>
+
+        </div>
                   {loader ? (
                     <AppLoader/>
                   ) : (
