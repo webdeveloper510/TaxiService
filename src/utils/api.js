@@ -464,7 +464,7 @@ export const getDriverById = async(id) => {
 export const editDriver = async (data,id) => {
   return await Axios.put(`admin/update_driver/${id}`, data, {
     headers: {
-      "x-access-token": token,
+      "x-access-token": localStorage.getItem("token"),
     },
   })
     .then((res) => {
