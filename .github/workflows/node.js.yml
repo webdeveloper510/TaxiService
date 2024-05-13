@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: sudo apt-get update && sudo apt-get install -y nodejs npm
+    # - run: sudo apt-get update && sudo apt-get install -y nodejs npm
     - run: |
         if [ -f "package-lock.json" ]; then
           echo "Deleting package-lock.json file"
@@ -29,3 +29,6 @@ jobs:
         else
           echo "node_modules directory not found"
         fi
+    - name: Copy build files to /var/www/taxiBuild
+      run: |
+        sudo cp -r dist/* /var/www/taxiBuild/
