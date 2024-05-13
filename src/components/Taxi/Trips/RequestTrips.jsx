@@ -42,6 +42,7 @@ import * as geolib from "geolib";
 import { distanceBetweenTwoPoints } from "../../../utils/helpingFunction";
 
 const SuperRequestTrip = () => {
+  const [selectedHotelAddress, setSelectedHotelAddress] = useState(null);
   const [refreshPrice, setRefreshPrice] = useState(false);
   const [fares, setFares] = useState(null);
   const [selectedFare, setSelectedFare] = useState(null);
@@ -638,6 +639,13 @@ const SuperRequestTrip = () => {
                                     ...inputData,
                                     customer: data.target.value,
                                   });
+                                  const customerById = customer.find(item=>item._id === data.target.value);
+                                  if(customerById && customerById?.hotel_location){
+                                    console.log("🚀 ~ SuperRequestTrip ~ customerById:", customerById,customerById?.hotel_location?.address)
+                                    setTripFrom(customerById?.hotel_location?.address)
+                                    setInputData({...inputData,trip_from:customerById?.hotel_location})
+                                    setRefreshPrice(!refreshPrice)
+                                  }
                                   if (data.target.value < 1) {
                                     setErrors({
                                       ...errors,
