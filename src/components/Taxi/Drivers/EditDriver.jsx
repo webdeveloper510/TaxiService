@@ -106,7 +106,7 @@ function EditDriver() {
       FirstName: Yup.string().trim().required("First Name is required"),
       LastName: Yup.string().trim().required("Last Name is required"),
       Address1: Yup.string().trim().required("Street Address 1  is required"),
-      Address2: Yup.string().trim().required("Street Address 2  is required"),
+      Address2: Yup.string().trim(),
       Country: Yup.string().trim().required("Country is required"),
       City: Yup.string().trim().required("City is required"),
       Zip: Yup.string().trim().required("Zip is required"),
