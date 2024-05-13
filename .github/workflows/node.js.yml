@@ -31,4 +31,4 @@ jobs:
         fi
     - name: Copy build files to /var/www/taxiBuild
       run: |
-        sudo cp -r dist/* /var/www/taxiBuild/
+        sudo cp -r build/* /var/www/taxiBuild/
