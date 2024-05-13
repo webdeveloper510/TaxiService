@@ -38,7 +38,7 @@ const Footer=()=> {
             <p>Lorem ipsum dolor sit amet, <br/>
                consectetur adipiscing elit, sed do <br/>
                eiusmod tempor incididunt ut labore<br/> et dolore magna aliqua.</p>
-               <img src ={ footerlogo} />
+               <img src ={ footerlogo} width="20%"/>
          </div>
           
           <div className="contact-footer">

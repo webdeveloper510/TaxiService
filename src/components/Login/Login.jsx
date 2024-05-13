@@ -169,7 +169,7 @@ function Login() {
             </div>
             <form onSubmit={formik.handleSubmit} noValidate>
               <div className="login-left-content">
-                <img src={loginLogo} className="login-  " alt="Logo" />
+                <img src={loginLogo} className="login-" alt="Logo" width="100%" />
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   {/* <p className="lead me-3">LOG IN</p> */}
                 </div>
