@@ -68,7 +68,7 @@ function App() {
       console.log("userConnection socket",data)
     })
     socket.on("tripCancelledBYDriver",({trip})=>{
-      toast.warning(`${trip.trip_id} Trip is cancelled by driver`, {
+      toast.warning(`Trip has been canceled.Trip ID is ${trip.trip_id} `, {
         position: 'top-right',
         autoClose: 1000,
       });
