@@ -174,7 +174,9 @@ const Allocatemap = () => {
       // vehicle: selectVehicle,
       status: "Accepted",
     };
+    console.log("🚀 ~ handleALLocate ~ data:", data)
     if(self){
+      console.log("🚀 ~ handleALLocate ~ self:", self)
       data.driver_name = user.driverId
     }
     allocateDriver(data, id).then((res) => {
@@ -283,7 +285,7 @@ const Allocatemap = () => {
                       <h6 className="vichle-name text-center" style={{fontSize:"10px !important", fontWeight:"500"}}>Vehicle Name :{`${selectedMarker?.defaultVehicle?.vehicle_make} ${selectedMarker.defaultVehicle.vehicle_model}`}</h6>
                       {/* <h6 className="vichle-name text-center" style={{fontSize:"10px !important", fontWeight:"500"}}>Vichke Type :{selectedMarker?.defaultVehicle?.vehicle_type}</h6> */}
                       <div class="text-center">
-                        <button className="approve-butn" onClick={handleALLocate}>Approve</button>
+                        <button className="approve-butn" onClick={()=>{handleALLocate()}}>Approve</button>
                       </div>
                     </div>
                   </InfoWindow>
