@@ -616,7 +616,7 @@ const SuperRequestTrip = () => {
                                   style={{ color: "red" }}
                                   className="text-danger"
                                 >
-                                  You should first add vehicle fare price before requsting a trip.
+                                  You should first add vehicle fare price before requesting a trip.
                                 </span>}
                               {errors.vehicle && (
                                 <span
@@ -659,7 +659,8 @@ const SuperRequestTrip = () => {
                                 }}
                               >
                                 <option default>Select Customer</option>
-                                {customer?.map((e, i) => {
+                              
+                                { customer?.map((e, i) => {
                                   return (
                                     <>
                                       <option value={e._id}>
@@ -668,7 +669,14 @@ const SuperRequestTrip = () => {
                                     </>
                                   );
                                 })}
+                                
                               </CFormSelect>
+                              {customer?.length == 0 &&  <span
+                                  style={{ color: "red" }}
+                                  className="text-danger"
+                                >
+                                  You should first add customer before requesting a trip.
+                                </span>}
                               {errors.customer && (
                                 <span
                                   style={{ color: "red" }}
@@ -1040,6 +1048,7 @@ const SuperRequestTrip = () => {
                               <CFormInput
                                 id="inputtripfrom"
                                 type="number"
+                                value={inputData.passengerCount}
                                 onChange={(e) => {
                                   if (e.target.value.length > 20) {
                                     setErrors({

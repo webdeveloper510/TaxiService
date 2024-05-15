@@ -281,15 +281,8 @@ const ListOfDrivers = ({ role }) => {
   const handleSelect = (eventKey) => {
     setSelectedType(eventKey); // Update the selected value when an item is selected
   };
-
   useEffect(() => {
-    const getData = setTimeout(() => {
-      searchDriver()
-    }, 2000)
-
-    return () => clearTimeout(getData)
-    
-    
+      searchDriver();
   }, [selectedType,search]);
   return (
     <>

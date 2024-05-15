@@ -143,10 +143,11 @@ const ViewSingleTrip = () => {
                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Commission Type :</CFormLabel>
                                 <span className="vehicle_info">{trip?.commission?.commission_type}</span><br /></div>
                               <div class="trip-details">
-                                <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Commission Value :</CFormLabel>
+                                <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Commission Value (in €):</CFormLabel>
                                 <span className="vehicle_info">{
+                                  trip?.commission?.commission_type =="Percentage" ?((trip?.commission?.commission_value * trip?.price) / 100).toFixed(2) :
                                 (Math.round(trip?.commission?.commission_value * 100) / 100).toFixed(2) 
-                                }</span><br /></div>
+                                } </span><br /></div>
                               <div class="trip-details">
                                 <CFormLabel htmlFor="inputpassenger"><img src={checkedImg} />Email :</CFormLabel>
                                 <span className="vehicle_info">{trip?.email}</span><br /></div>
