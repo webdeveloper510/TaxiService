@@ -169,7 +169,9 @@ function Login() {
             </div>
             <form onSubmit={formik.handleSubmit} noValidate>
               <div className="login-left-content">
-                <img src={loginLogo} className="login-" alt="Logo" width="100%" />
+                <img src={loginLogo} className="login-"  data-src="actual-image.jpg"
+                loading="lazy"
+                alt="" width="100%" />
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   {/* <p className="lead me-3">LOG IN</p> */}
                 </div>
@@ -280,7 +282,9 @@ function Login() {
           </MDBCol>
 
           <MDBCol col="10" md="4">
-            <img src={loginImg} className="img-fluid-login " alt="login" />
+            <img src={loginImg} className="img-fluid-login "  data-src="actual-image.jpg"
+                loading="lazy"
+                alt="" />
           </MDBCol>
         </MDBRow>
       </MDBContainer>
