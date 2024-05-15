@@ -489,7 +489,7 @@ const RequestNewTrip = () => {
     }
   };
   const copy = () => {
-    const textToCopy = `https://taxi-service-demo.vercel.app/booking-staff-form/${user._id}`
+    const textToCopy = `${process.env.REACT_APP_FRONTEND_URL || "https://idispatch.nl"}/booking-staff-form/${user._id}`
     const textarea = document.createElement('textarea');
     textarea.value = textToCopy;
     document.body.appendChild(textarea);

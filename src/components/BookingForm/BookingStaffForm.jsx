@@ -275,7 +275,16 @@ const BookingStaffForm = () => {
       .then((res) => {
         console.log("company id", res);
         if (res?.code == 200) {
+          if(!res.result.status){
+            throw new Error("hotel status is blocked")
+          }
           setHotel(res?.result)
+          console.log("hotel location ++++++>>>>>>>",res.result.hotel_location)
+          const newInputData = {...inputData};
+          newInputData.trip_from = res?.result?.hotel_location;
+          console.log("🚀 ~ .then ~ newInputData:", newInputData)
+          setInputData(newInputData)
+          setTripFrom(res?.result?.hotel_location.address)
           if(!res.result.status){
             navigate("/")
           }

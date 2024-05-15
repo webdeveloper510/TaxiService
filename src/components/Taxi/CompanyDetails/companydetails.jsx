@@ -492,7 +492,7 @@ const CompanyDetails = () => {
     }
   }
   const copy = (hotelId) => {
-    const textToCopy = `${process.env?.REACT_FRONTEND_URL || "https://idispatch.nl"}/booking-staff-form/${hotelId}`
+    const textToCopy = `${process.env?.REACT_APP_FRONTEND_URL || "https://idispatch.nl"}/booking-staff-form/${hotelId}`
     const textarea = document.createElement('textarea');
     textarea.value = textToCopy;
     document.body.appendChild(textarea);
