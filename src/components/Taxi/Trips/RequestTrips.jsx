@@ -362,6 +362,7 @@ const SuperRequestTrip = () => {
   const adddata = () => {
     console.log("inputData.commission_value", inputData.commission_value);
     let data = inputData;
+    console.log("🚀 ~ adddata ~ data:", data)
     let valid = true;
     const passError = passengerError.map(() => {
       return {
@@ -635,15 +636,16 @@ const SuperRequestTrip = () => {
                                 name="vehicle"
                                 onChange={(data) => {
                                   console.log(data.target.value);
-                                  setInputData({
-                                    ...inputData,
-                                    customer: data.target.value,
-                                  });
+                                  
                                   const customerById = customer.find(item=>item._id === data.target.value);
                                   if(customerById && customerById?.hotel_location){
                                     console.log("🚀 ~ SuperRequestTrip ~ customerById:", customerById,customerById?.hotel_location?.address)
                                     setTripFrom(customerById?.hotel_location?.address)
-                                    setInputData({...inputData,trip_from:customerById?.hotel_location})
+                                    setInputData({
+                                      ...inputData,
+                                      customer: data.target.value,
+                                      trip_from:customerById?.hotel_location
+                                    });
                                     setRefreshPrice(!refreshPrice)
                                   }
                                   if (data.target.value < 1) {
@@ -915,8 +917,8 @@ const SuperRequestTrip = () => {
                                 <option value={"Cash"} selected>
                                   Cash
                                 </option>
-                                {/* <option value="Fixed">Cash</option> */}
-                                {/* <option value='Hotel Account'>Hotel Account</option> */}
+                                <option value="Card">Card</option>
+                                <option value='Hotel Account'>Hotel Account</option>
                               </CFormSelect>
                             </CCol>
                             <CCol xs={6}>
