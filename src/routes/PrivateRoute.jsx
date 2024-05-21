@@ -76,6 +76,7 @@ const PrivateRoute = () => {
 
     return (
         <Routes>
+            <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
              <Route path="/payment/cancel/:id" element={<SecureDriverRoute><CancelPaymentPage/></SecureDriverRoute>} />
              <Route path="/payment/success/:id" element={<SecureDriverRoute><SuccessPaymentPage/></SecureDriverRoute>} />
             <Route path="/edit-driver-data" element={<SecureDriverRoute><EditdriverData /></SecureDriverRoute>} />
@@ -92,7 +93,7 @@ const PrivateRoute = () => {
             <Route path="/trips/view-trip-location/:id" element={<ViewTripLocation />} />
             <Route path="/driverRoute" element={<DriverRoute />} />
             <Route path="/booking-form/:id" element={<BookingForm />} />
-            <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
+            
 
             <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
             <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />

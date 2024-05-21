@@ -40,6 +40,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ClipLoader } from "react-spinners";
 import * as geolib from "geolib";
 import { distanceBetweenTwoPoints } from "../../../utils/helpingFunction";
+import { loadStripe } from "@stripe/stripe-js";
+import AppLoader from "../../AppLoader";
 
 const SuperRequestTrip = () => {
   const [selectedHotelAddress, setSelectedHotelAddress] = useState(null);
@@ -97,7 +99,7 @@ const SuperRequestTrip = () => {
   const [passengers, setPassengers] = useState([
     // { name: "", email: "", phone: "", address: "" },
   ]);
-  const [vehicle, setVehicle] = useState(null);
+  const [vehicle, setVehicle] = useState([]);
   const [inputData, setInputData] = useState({
     vehicle: "",
     customer: "",
@@ -286,7 +288,10 @@ const SuperRequestTrip = () => {
     setPassengerError(errorArray);
   };
   const [customer, setCustomer] = useState([]);
+  const [loadedData, setLoadedData] = useState(false)
+  const [loading,setLoading] = useState(false) ;
   useEffect(() => {
+    setLoading(true)
     let vehicleFromApi = [];
     let fareFromApi = [];
     const newVehicle = [];
@@ -312,21 +317,25 @@ const SuperRequestTrip = () => {
             }
           });
         });
+        getCompany({ role: "HOTEL", name: "" })
+        .then((res) => {
+          console.log(res?.result, "customer");
+  
+          if (res?.code === 200) {
+            const values = res?.result.filter((item) => item.status);
+            if (values) setCustomer(values);
+          } else {
+          }
+        })
+        .catch((err) => {}).finally(()=>{
+          setLoadedData(true)
+          setLoading(false)
+        });
       });
     });
     
     
-    getCompany({ role: "HOTEL", name: "" })
-      .then((res) => {
-        console.log(res?.result, "customer");
-
-        if (res?.code === 200) {
-          const values = res?.result.filter((item) => item.status);
-          if (values) setCustomer(values);
-        } else {
-        }
-      })
-      .catch((err) => {});
+   
   }, []);
   useEffect(()=>{priceCalculator()}, [refreshPrice])
   const inputHandler = (e) => {
@@ -569,7 +578,7 @@ const SuperRequestTrip = () => {
                 style={{ paddingBottom: "20px" }}
               >
                 <h1 class="heading-for-every-page">Request Trip</h1>
-                <div class="active-trip-outer">
+               {loading? <AppLoader/> :<div class="active-trip-outer">
                   <CRow>
                     <CCol xs={12}>
                       <CCard className="mb-4">
@@ -612,7 +621,7 @@ const SuperRequestTrip = () => {
                                 })}
                                
                               </CFormSelect>
-                              {vehicle?.length == 0 &&  <span
+                              {vehicle.length == 0 &&  <span
                                   style={{ color: "red" }}
                                   className="text-danger"
                                 >
@@ -671,7 +680,7 @@ const SuperRequestTrip = () => {
                                 })}
                                 
                               </CFormSelect>
-                              {customer?.length == 0 &&  <span
+                              {loadedData && customer?.length == 0 &&   <span
                                   style={{ color: "red" }}
                                   className="text-danger"
                                 >
@@ -1363,7 +1372,7 @@ const SuperRequestTrip = () => {
                       </CButton>
                     </div>
                   </CCol>
-                </div>
+                </div>}
               </div>
             </div>
           </div>

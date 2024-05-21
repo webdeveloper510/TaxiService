@@ -28,8 +28,8 @@ function App() {
     console.log('token: from local storage' + token);
     if(!token){
       setLoading(false)
-      return navigate("/")
-      // return
+      // return navigate("/")
+      return
        
     }
     console.log("path founder running on react app =====>>>>>,", user)
@@ -41,12 +41,12 @@ function App() {
             }else{
               console.log("remove token from wrong app")
               localStorage.clear();
-              navigate("/")
+              // navigate("/")
             }
           }).catch((err)=>{
             console.log("remove token from catch app")
             localStorage.clear();
-            navigate("/")
+            // navigate("/")
           }).finally(()=>{
             setLoading(false);
             setAppLoaded(true);

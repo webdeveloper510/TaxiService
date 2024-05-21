@@ -876,6 +876,8 @@ const RequestNewTrip = () => {
                               </CFormLabel>
                               <CFormInput
                                 id="inputtripfrom"
+                                type="number"
+                                value={inputData.passengerCount}
                                 onChange={(e) => {
                                   if (e.target.value.length > 20) {
                                     setErrors({

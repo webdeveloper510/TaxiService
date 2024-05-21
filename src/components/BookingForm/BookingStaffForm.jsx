@@ -66,7 +66,7 @@ const BookingStaffForm = () => {
       setPrice(0)
     }
   }
-  const [selectedFrom, setSelectedFrom] = useState(false);
+  const [selectedFrom, setSelectedFrom] = useState(true);
   const [selectedTo, setSelectedTo] = useState(false);
   const [inputData, setInputData] = useState({
     vehicle: "",
