@@ -70,12 +70,14 @@ import DriverVerification from '../components/Login/Verify';
 import AllocateDriver from '../components/Taxi/Trips/allocateDriver';
 import DriverRegister from '../components/Taxi/driverRegister/register';
 import DriverVehicle from '../components/SuperAdmin/Vehicle/Vehicle';
+import PrivacyPolicy from '../components/Privacy';
 
 const PrivateRoute = () => {
 
 
     return (
         <Routes>
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/booking-staff-form/:id" element={<BookingStaffForm />} />
              <Route path="/payment/cancel/:id" element={<SecureDriverRoute><CancelPaymentPage/></SecureDriverRoute>} />
              <Route path="/payment/success/:id" element={<SecureDriverRoute><SuccessPaymentPage/></SecureDriverRoute>} />
