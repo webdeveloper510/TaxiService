@@ -240,10 +240,13 @@ function EditBookingForm() {
 
                             <CCol md={12} className="edit_profile_btn">
                               <div className="d-flex justify-content-center" style={{ marginTop: "40px" }}>
-                                <CButton type="submit" className="submiit-btn">Update</CButton>
-                                <CButton type="button" className="canceel-btn"
+                                <CButton type="submit" className="submiit-btn">
+                                  {loading?
+                                  <ClipLoader/>:<span>Update</span>}
+                                </CButton>
+                                {!loading && <CButton type="button" className="canceel-btn"
                                 onClick={back}
-                                >Cancel</CButton>
+                                >Cancel</CButton>}
                               </div>
                             </CCol>
                           </form>

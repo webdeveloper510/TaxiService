@@ -16,7 +16,7 @@ import { MDBContainer, MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { addDriver, editDriver } from "../../utils/api";
+import { addDriver, editDriver, switchCompany } from "../../utils/api";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { countryList } from "../../utils/saticData";
@@ -36,14 +36,37 @@ export default function DriverVerification() {
       navigate('/')
     }
   
-
+ 
   return (
     <>
       <header>
       
       <div class="p-2">
-    <div className="text-start"><button class="login-btn" onClick={()=>handleLogout()}>Log Out</button></div>
+    <div style={{
+      display:"flex",
+      flexDirection:"row",
+      alignItems:"center"
+    }}><button className="login-btn" onClick={()=>handleLogout()}>Log Out</button>
+    {user?.isCompany && (
+          <button 
+          className="login-btn"
+          onClick={async()=>{
+           try {
+            const result = await switchCompany()
+            setUser(result.data.result)
+            navigate("/")
+           } catch (error) {
+            console.log("🚀 ~ error:", error)
+            
+           }
+            
+          }}>
     
+
+           Switch Back
+          </button>
+        )}
+    </div>
      </div>
     </header>
     <div

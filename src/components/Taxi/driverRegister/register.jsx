@@ -62,8 +62,8 @@ function DriverRegister() {
       .required("KVK Number is required"),
     bankNumber: Yup.string()
       .trim()
+      .min(6, "Bank Number must be at least 6 characters")
       .max(20, "Bank Number must be at most 20 characters")
-      .matches(/^[0-9]+$/, "Must be only digits")
       .required("Bank Number is required"),
     Address1: Yup.string()
       .trim()
@@ -71,8 +71,7 @@ function DriverRegister() {
       .required("Street Address 1  is required"),
     Address2: Yup.string()
       .trim()
-      .max(20, "Address must be at most 20 characters")
-      .required("Street Address 2  is required"),
+      .max(20, "Address must be at most 20 characters"),
     Country: Yup.string().trim().required("Country is required"),
     City: Yup.string().trim().required("City is required"),
     Zip: Yup.string()

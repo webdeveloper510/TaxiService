@@ -88,7 +88,7 @@ function EditProfile() {
     companyName: Yup.string()
     .required("Last Name is required").trim(),
     phone: Yup.string().min(6).max(16).trim().required(),
-    email: Yup.string().min(6).max(16).trim().required()
+    email: Yup.string().trim().required()
   });
 
   const initialValues = {
