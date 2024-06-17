@@ -157,12 +157,7 @@ const ListOfDrivers = ({ role }) => {
       const deleteData = await deleteDriver(id);
       console.log(deleteData, "delete driver data");
       if (deleteData.code === 200) {
-        if(selectedDriver.isCompany){
-          await editCompanyDetail(selectedDriver.created_by,{
-            isDriver: false,
-            driverId: null
-          });
-        }
+       
         toast.success(`${deleteData.message}`, {
           position: "top-right",
           autoClose: 1000,
