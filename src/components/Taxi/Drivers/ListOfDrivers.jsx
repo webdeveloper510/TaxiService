@@ -25,6 +25,7 @@ import deletepopup from "../../../assets/images/deletepopup.png";
 import {
   deleteCompany,
   deleteDriver,
+  editCompanyDetail,
   favoriteDriverApi,
   getDriver,
   rejectDriverApi,
@@ -148,12 +149,20 @@ const ListOfDrivers = ({ role }) => {
     });
   }
   
-  const deleteDriverHandler = async (id) => {
+  const deleteDriverHandler = async (selectedDriver) => {
     try {
+      console.log("🚀 ~ deleteDriverHandler ~ driver:", selectedDriver)
+      const id = selectedDriver._id
       console.log(id, "driver deleted id");
       const deleteData = await deleteDriver(id);
       console.log(deleteData, "delete driver data");
       if (deleteData.code === 200) {
+        if(selectedDriver.isCompany){
+          await editCompanyDetail(selectedDriver.created_by,{
+            isDriver: false,
+            driverId: null
+          });
+        }
         toast.success(`${deleteData.message}`, {
           position: "top-right",
           autoClose: 1000,
@@ -542,7 +551,7 @@ const ListOfDrivers = ({ role }) => {
                                             id="delete_driver_btn"
                                             onClick={() => {
                                               setDeleteVisible(!deleteVisible);
-                                              setSelectedId(item._id);
+                                              setSelectedId(item);
                                             }}
                                           >
                                             <img src={deleteiconimg} />
