@@ -28,7 +28,7 @@ function App() {
     console.log('token: from local storage' + token);
     if(!token){
       setLoading(false)
-      // return navigate("/")
+      return navigate("/")
       return
        
     }
@@ -80,7 +80,7 @@ function App() {
     return ()=>{
       socket.disconnect();
     }
-  },[user])
+  },[user,token])
 
   return (
     <socketContext.Provider value={{socket}}>
