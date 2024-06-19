@@ -887,7 +887,7 @@ export const switchDriver = async (data) => {
 export const switchCompany = async (data) => {
   return await Axios.post(`admin/switchCompany`, data, {
     headers: {
-      "x-access-token": token,
+      "x-access-token": localStorage.getItem("token"),
     },
   })
     .then((res) => {
