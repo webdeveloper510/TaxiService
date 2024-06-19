@@ -196,7 +196,7 @@ const Allocatemap = () => {
   };
   const getDriverColor =  (avb,totalTrip)=>{
     let color = "red";
-    if(avg) color = "green";
+    if(avb) color = "green";
     if(totalTrip >0) color = "orange"
   }
   function handleStatusChange() {
