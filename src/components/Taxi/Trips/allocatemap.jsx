@@ -194,6 +194,11 @@ const Allocatemap = () => {
       }
     });
   };
+  const getDriverColor =  (avb,totalTrip)=>{
+    let color = "red";
+    if(avg) color = "green";
+    if(totalTrip >0) color = "orange"
+  }
   function handleStatusChange() {
     setFavorite(!favorite);
   }
@@ -229,7 +234,7 @@ const Allocatemap = () => {
               />
               
               </div>
-              {(user?.driverId && driver?.isVerified && driver?.isDocUploaded && driver?.defaultVehicle) && <button className="view_details_btn my-3" onClick={()=>{handleALLocate(true)}}>Alocate Self</button>} 
+              {(user?.driverId && driver?.isVerified && driver?.isDocUploaded && driver?.defaultVehicle) && <button className="view_details_btn my-3" onClick={()=>{handleALLocate(true)}}>Allocate Self</button>} 
                              
               <GoogleMap
 
@@ -320,7 +325,7 @@ const Allocatemap = () => {
                      <div 
                      
                      style={{ 
-                        backgroundColor:driver.is_available ? "green" : "red",
+                        backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
                         height:"45px",
                         width: "45px",
                         marginBottom:"5px",
