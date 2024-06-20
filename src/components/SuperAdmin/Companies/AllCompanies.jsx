@@ -1263,7 +1263,7 @@ const AllCompanyDetails = () => {
       </div>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title class="balance-heading">Total Balance: {parseFloat(selectedPayee?.totalBalance).toFixed(2)}€</Modal.Title>
+          <Modal.Title class="balance-heading">Total Balance: {parseFloat( Math.floor(selectedPayee?.totalBalance * 100) / 100)}€</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CFormLabel htmlFor="inputcname">
