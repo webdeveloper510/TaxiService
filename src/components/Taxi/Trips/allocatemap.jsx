@@ -198,6 +198,7 @@ const Allocatemap = () => {
     let color = "red";
     if(avb) color = "green";
     if(totalTrip >0) color = "orange"
+    return color
   }
   function handleStatusChange() {
     setFavorite(!favorite);
@@ -326,6 +327,7 @@ const Allocatemap = () => {
                      
                      style={{ 
                         backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
+                        // backgroundColor: driver.is_available ? "green" : "red",
                         height:"45px",
                         width: "45px",
                         marginBottom:"5px",

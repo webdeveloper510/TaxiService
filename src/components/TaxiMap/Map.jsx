@@ -18,6 +18,12 @@ const SuperMap=()=> {
       }
     })
   }
+  const getDriverColor =  (avb,totalTrip)=>{
+    let color = "red";
+    if(avb) color = "green";
+    if(totalTrip >0) color = "orange"
+    return color
+  }
   useEffect(()=>{
     const timeoutKey = setInterval(()=>{locationUpdater()},5000);
     return ()=>{
@@ -105,7 +111,9 @@ const SuperMap=()=> {
                      <div 
                      
                      style={{ 
-                        backgroundColor:driver.is_available ? "green" : "red",
+                      backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
+
+                        // backgroundColor:driver.is_available ? "green" : "red",
                         height:"45px",
                         width: "45px",
                         marginBottom:"5px",
