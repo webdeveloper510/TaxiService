@@ -2,6 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GoogleMap, Marker, useLoadScript, InfoWindow, OverlayView } from "@react-google-maps/api";
 import { activeDrivers } from "../../utils/api";
 import { NavItem } from "react-bootstrap";
+import red from '../../assets/images/red.png'
+import green from '../../assets/images/green.png'
+import yellow from '../../assets/images/yellow.png'
+
 const SuperMap=()=> {
   const [driverLocation, setDriverLocation] = useState([]);
   function locationUpdater(){
@@ -22,6 +26,12 @@ const SuperMap=()=> {
     let color = "red";
     if(avb) color = "green";
     if(totalTrip >0) color = "orange"
+    return color
+  }
+  const getBgImage =  (avb,totalTrip)=>{
+    let color = red;
+    if(avb) color = green;
+    if(totalTrip >0) color = yellow
     return color
   }
   useEffect(()=>{
@@ -111,14 +121,18 @@ const SuperMap=()=> {
                      <div 
                      
                      style={{ 
-                      backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
-
+                      // backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
+                      // backgroundImage:getBgImage(driver.is_available, driver.totalBookedTrip),
                         // backgroundColor:driver.is_available ? "green" : "red",
-                        height:"45px",
-                        width: "45px",
+                        backgroundImage: `url(${getBgImage(driver.is_available, driver.totalBookedTrip)})`,
+                        backgroundPosition: 'center', // Adjust as needed
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        height:"90px",
+                        width: "90px",
                         marginBottom:"5px",
                         textAlign:"center",
-                        color: "white",
+                        color: "black",
                         display: "flex",
                         flexDirection: "column",
                         justifyItems: "center",
@@ -127,14 +141,15 @@ const SuperMap=()=> {
                         paddingTop: "8px",
                         paddingRight: "1px",
                         paddingLeft: "1px",
+                        
                         // border: "4px solid white",
                         // borderRadius: "4px",
 
-                        clipPath: "polygon(0% 0%, 100% 0%, 100% 69%, 75% 75%, 48% 100%, 24% 75%, 0 69%)"
+                        // clipPath: "polygon(0% 0%, 100% 0%, 100% 69%, 75% 75%, 48% 100%, 24% 75%, 0 69%)"
                         }}
                         onClick={(e) => handleMarkerClick(driver,e)}
                         >
-                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: "white" }}>
+                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: "black" }}>
                           {driver?.defaultVehicle?.vehicle_type}
                           -
                           {

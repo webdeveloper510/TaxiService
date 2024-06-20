@@ -600,7 +600,7 @@ const RequestNewTrip = () => {
                                   style={{ color: "red" }}
                                   className="text-danger"
                                 >
-                                  Company should first add vehicle fare price before requsting a trip.
+                                  Company should first add vehicle fare price before requesting a trip.
                                 </span>}
                               {errors.vehicle && (
                                 <span

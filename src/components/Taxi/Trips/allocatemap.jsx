@@ -9,6 +9,9 @@ import AppLoader from "../../AppLoader";
 import carLogo from "../../../assets/images/about-car.png";
 import { toast } from "react-toastify";
 import Switch from "react-switch";
+import red from '../../../assets/images/red.png'
+import green from '../../../assets/images/green.png'
+import yellow from '../../../assets/images/yellow.png'
 
 
 const Allocatemap = () => {
@@ -200,6 +203,12 @@ const Allocatemap = () => {
     if(totalTrip >0) color = "orange"
     return color
   }
+  const getBgImage =  (avb,totalTrip)=>{
+    let color = red;
+    if(avb) color = green;
+    if(totalTrip >0) color = yellow
+    return color
+  }
   function handleStatusChange() {
     setFavorite(!favorite);
   }
@@ -326,10 +335,15 @@ const Allocatemap = () => {
                      <div 
                      
                      style={{ 
-                        backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
+                        // backgroundColor:getDriverColor(driver.is_available, driver.totalBookedTrip),
                         // backgroundColor: driver.is_available ? "green" : "red",
-                        height:"45px",
-                        width: "45px",
+                        backgroundImage: `url(${getBgImage(driver.is_available, driver.totalBookedTrip)})`,
+                        backgroundPosition: 'center', // Adjust as needed
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        height:"90px",
+                        width: "90px",
+
                         marginBottom:"5px",
                         textAlign:"center",
                         color: "white",
@@ -348,7 +362,7 @@ const Allocatemap = () => {
                         }}
                         onClick={(e) => handleMarkerClick(driver,e)}
                         >
-                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: "white" }}>
+                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: "black" }}>
                           {driver?.defaultVehicle?.vehicle_type}
                           -
                           {
