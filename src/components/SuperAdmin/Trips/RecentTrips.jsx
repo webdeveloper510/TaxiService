@@ -274,7 +274,7 @@ useEffect(()=>{
                                 <div>{firstIndex + index + 1}</div>
                               </CTableDataCell>
                               <CTableDataCell>
-                                <div>{item.series_id}</div>
+                                <div>{item.trip_id}</div>
                               </CTableDataCell>
                               <CTableDataCell>
                                 <div>{item.company_name}</div>

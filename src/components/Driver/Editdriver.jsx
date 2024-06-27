@@ -426,6 +426,15 @@ const EditdriverData = () => {
                                     onChange={handleGenderChange} // Add the onChange event handler
                                     checked={selectedGender === 'Female'} // Set the checked state if Female is selected
                                   />
+                                   <CFormCheck inline
+                                    type="radio"
+                                    name="gridRadios"
+                                    id="gridRadios2"
+                                    value="Other"
+                                    label="Other"
+                                    onChange={handleGenderChange} // Add the onChange event handler
+                                    checked={selectedGender === 'Other'} // Set the checked state if Female is selected
+                                  />
                                 </CCol>
                               </fieldset>
                             </CCol>

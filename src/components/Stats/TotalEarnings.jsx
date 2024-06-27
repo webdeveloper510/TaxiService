@@ -40,7 +40,8 @@ const TotalEarnings=()=> {
             <MDBCardText>
               <div style={{textDecoration:"none"}}>
                 <h5 style={{textDecoration:"none"}}>Total Earnings</h5>
-                <span style={{textDecoration:"none"}}>{parseFloat(earning.totalEarning).toFixed(2)} €</span>
+                <span style={{textDecoration:"none"}}>{   parseFloat( Math.floor(earning?.totalEarning * 100) / 100)
+                } €</span>
             <hr></hr>
             {/* <p>60% increase in 20 days</p> */}
             </div>

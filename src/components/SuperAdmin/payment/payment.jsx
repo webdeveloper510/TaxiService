@@ -102,6 +102,11 @@ const SuperPayment = ({type, role}) => {
     pageIncreament = <li onClick={handleNextPage}>&hellip;</li>;
   }
   useEffect(() => {
+    setCurrentPage(1);
+ setPageLimit(3);
+  setMaxPage(3);
+  setMinPage(0);
+    
     setLoader(true);
     getTransaction(role=="super"?"SUPER_ADMIN":"COMPANY")
       .then((res) => {
@@ -123,7 +128,7 @@ const SuperPayment = ({type, role}) => {
       });
     
     
-  }, [type]);
+  }, [type,role]);
   const filterByDate = (startDate, endDate) => {
     // Filter transactions based on date range
     const filteredData = allTrans.filter(item => {
@@ -189,9 +194,11 @@ useEffect(()=>{
                     </MDBCol>
                     <MDBCol sm="8">
                       <MDBCardText>
+
                         <div style={{textDecoration:"none"}}>
                           <h5 style={{textDecoration:"none"}}>Total Earning</h5>
-                          <span style={{textDecoration:"none"}}>{(Math.round(earning?.totalEarning* 100) / 100).toFixed(2)} €</span>
+                          <span style={{textDecoration:"none"}}>{   parseFloat( Math.floor(earning?.totalEarning * 100) / 100)
+                          } €</span>
                           <hr></hr>
                         </div>
                       </MDBCardText>
@@ -228,7 +235,7 @@ useEffect(()=>{
                       <MDBCardText>
                         <div>
                           <h5>Current month Earning</h5>
-                          <span>{(Math.round(earning?.totalEarningFromMonth* 100) / 100).toFixed(2)} €</span>
+                          <span>{(Math.floor(earning?.totalEarningFromMonth* 100) / 100)} €</span>
                           <hr></hr>
                           
                         </div>
@@ -247,8 +254,9 @@ useEffect(()=>{
                       <MDBCardText>
                         <div>
                           <h5>Current Year Earning</h5>
+                          
                           <span>{
-                          (Math.round(earning?.totalEarningFromYear* 100) / 100).toFixed(2)} €</span>
+                          (Math.floor(earning?.totalEarningFromYear* 100) / 100)} €</span>
                           <hr></hr>
                        
                         </div>
@@ -270,7 +278,7 @@ useEffect(()=>{
                       <MDBCardText>
                         <div style={{textDecoration:"none"}}>
                           <h5 style={{textDecoration:"none"}}>Total Balance</h5>
-                          <span style={{textDecoration:"none"}}>{(Math.round(earning?.totalBalance* 100) / 100).toFixed(2)} €</span>
+                          <span style={{textDecoration:"none"}}>{(Math.floor(earning?.totalBalance* 100) / 100)} €</span>
                           <hr></hr>
                         </div>
                       </MDBCardText>
@@ -289,7 +297,7 @@ useEffect(()=>{
                         <div>
                           <h5>Total Money received</h5>
                           <span>{
-                          (Math.round(trans.reduce((acc,curr)=>{return acc+curr?.amount},0)* 100) / 100).toFixed(2)} €</span>
+                          (Math.floor(trans.reduce((acc,curr)=>{return acc+curr?.amount},0)* 100) / 100)} €</span>
                           <hr></hr>
                         </div>
                       </MDBCardText>

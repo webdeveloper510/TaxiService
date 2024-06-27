@@ -41,7 +41,7 @@ import { ClipLoader } from "react-spinners";
 import SideBar2 from "../Hotel/SideBar2";
 import profileImg from '../../assets/images/avtar1.jpg'
 import { useFormik } from "formik";
-import { changeForgotPass, changePass, editCompanyDetail } from "../../utils/api";
+import { changeForgotPass, changePass, editCompanyDetail, getProfile } from "../../utils/api";
 import { toast } from "react-toastify";
 import userContext from "../../utils/context";
 import SuperAdminSideBar from "../SuperAdmin/Sidebar/SideBar";
@@ -173,12 +173,13 @@ function EditProfile() {
     onSubmit: async (values) => {
       setLoading(true);
       console.log("values", values);
-      editCompanyDetail(user._id, {
+      const payLoad = {
         first_name: values.firstName.trim(),
         last_name: values.lastName.trim(),
         company_name: values.companyName.trim(),
         phone: values.phone.trim(),
-      }).then((response) => {
+      }
+      editCompanyDetail(user._id, payLoad).then((response) => {
         console.log("response---->>>>", response)
         if (response.data.code === 200
 
@@ -192,7 +193,21 @@ function EditProfile() {
           newUser.last_name = values.lastName.trim();
           formikProfile.setFieldValue("firstName", newUser.first_name);
           formikProfile.setFieldValue("lastName", newUser.last_name);
+          getProfile(localStorage.getItem('token')).then(res => {
+            console.log(res, 'profile data')
+            if (res?.code === 200) {
+              setUser(res.result)
 
+            }else{
+              console.log("remove token from wrong app")
+              localStorage.clear();
+              navigate("/")
+            }
+          }).catch((err)=>{
+            console.log("remove token from catch app")
+            localStorage.clear();
+            navigate("/")
+          })
         } else {
           toast.warning(`${response.data.message}`, {
             position: 'top-right',
